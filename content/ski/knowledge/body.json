@@ -1,0 +1,12 @@
+{
+  "tokens": {
+    "ankle": {"blaze": [27, 28, 31, 32]},
+    "knee": {"blaze": [25, 26]},
+    "hip": {"blaze": [23, 24]},
+    "chest": {"blaze": [11, 12]},
+    "hands": {"blaze": [15, 16]},
+    "neck": {"blaze": [0]},
+    "gaze": {"blaze": [0]},
+    "com": {"blaze": [23, 24]}
+  }
+}

@@ -1,0 +1,108 @@
+# --- Python envs & third-party packages ---
+.venv/
+venv/
+env/
+ENV/
+.env/
+.python-version
+pip-wheel-metadata/
+site-packages/
+
+# --- Python bytecode / packaging ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+develop-eggs/
+wheels/
+sdist/
+*.manifest
+*.spec
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# --- Test / type / lint caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.cache/
+coverage.xml
+*.cover
+.hypothesis/
+
+# --- Node / frontend deps (if added later) ---
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# --- ML / model weights (downloaded) ---
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.pb
+*.h5
+*.ckpt
+models/*.task
+models/**/*.task
+
+# --- Native / C++ build artifacts ---
+native/**/build/
+native/**/out/
+*.dll
+*.so
+*.dylib
+*.o
+*.obj
+*.a
+*.lib
+*.exe
+
+# --- App / runtime data ---
+benchmarks/samples/
+benchmarks/runs/
+result.json
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# --- Secrets & local env ---
+.env
+.env.*
+!.env.example
+*.pem
+credentials.json
+secrets.json
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# --- Editors / IDE ---
+.idea/
+.vscode/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# --- Cursor local (keep project skills) ---
+.cursor/*
+!.cursor/skills/
+!.cursor/skills/**
+!.cursor/rules/
+!.cursor/rules/**

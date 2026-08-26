@@ -1,0 +1,29 @@
+{
+  "schema_version": "0.1.0",
+  "frame": {
+    "source_kind": "image",
+    "timestamp_ms": 0,
+    "width": 1920,
+    "height": 1080,
+    "camera_intrinsics": null
+  },
+  "detections": [
+    {
+      "class_name": "person",
+      "confidence": 0.91,
+      "bbox_xyxy": [100, 80, 400, 900],
+      "track_id": null
+    }
+  ],
+  "poses": [],
+  "tracks": [],
+  "classifications": [],
+  "segments": [],
+  "model_meta": {
+    "backend_id": "yolo11n-pose",
+    "model_name": "yolo11n-pose.pt",
+    "latency_ms": 9.82,
+    "device": "cuda:0"
+  },
+  "error": null
+}

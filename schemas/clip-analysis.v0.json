@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://visual.local/schemas/clip-analysis.v0.json",
+  "title": "ClipAnalysisV0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "clip_id", "fps", "frame_count", "frames"],
+  "properties": {
+    "schema_version": { "const": "0.1.0" },
+    "clip_id": { "type": "string" },
+    "fps": { "type": "number" },
+    "frame_count": { "type": "integer", "minimum": 0 },
+    "frames": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["t_ms", "result"],
+        "properties": {
+          "t_ms": { "type": "number" },
+          "result": { "$ref": "core-inference.v0.json" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "version": "1.0",
+  "pass_score": 75.0,
+  "checkpoint_pass": 60.0,
+  "tree_next": {
+    "pizza_glide": ["pizza"],
+    "pizza": ["wedge_christie"],
+    "wedge_christie": ["parallel"],
+    "parallel": ["skid_short", "carve_long"],
+    "skid_short": ["mogul_absorb"],
+    "carve_long": ["carve_medium"],
+    "carve_medium": ["carve_short"],
+    "carve_short": [],
+    "mogul_absorb": ["mogul_fallline"],
+    "mogul_fallline": [],
+    "ollie": [],
+    "park": [],
+    "gates": [],
+    "switch": []
+  },
+  "level_terrain": {
+    "pizza_glide": "green",
+    "pizza": "green",
+    "wedge_christie": "green",
+    "parallel": "blue",
+    "skid_short": "blue",
+    "carve_long": "blue",
+    "carve_medium": "red",
+    "carve_short": "red",
+    "mogul_absorb": "mogul",
+    "mogul_fallline": "black",
+    "ollie": "park",
+    "park": "park",
+    "gates": "red",
+    "switch": "blue"
+  },
+  "level_category": {
+    "pizza_glide": "alpine_piste",
+    "pizza": "alpine_piste",
+    "wedge_christie": "alpine_piste",
+    "parallel": "alpine_piste",
+    "skid_short": "alpine_piste",
+    "carve_long": "alpine_piste",
+    "carve_medium": "alpine_piste",
+    "carve_short": "alpine_piste",
+    "mogul_absorb": "alpine_moguls",
+    "mogul_fallline": "alpine_moguls",
+    "ollie": "park",
+    "park": "park",
+    "gates": "alpine_race",
+    "switch": "alpine_switch"
+  },
+  "required_on_level": {
+    "skid_short": ["cp_sk_hockey"],
+    "carve_long": ["cp_cv_oneski"],
+    "carve_medium": ["cp_cv_oneski"],
+    "carve_short": ["cp_cv_oneski"]
+  },
+  "heuristic_levels": ["carve_long", "carve_medium", "carve_short"],
+  "catalog_no_score": ["ollie", "park", "gates", "switch"],
+  "no_air_categories": ["park"],
+  "proxy_checkpoints": {
+    "cp_sk_hockey": "hockey_stop",
+    "cp_cv_oneski": "outside_leg",
+    "cp_pz_hip_ir": "hip_internal_rotation",
+    "cp_pz_gaze": "downhill_gaze",
+    "cp_mg_fall": "fall_line_path"
+  }
+}

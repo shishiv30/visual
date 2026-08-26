@@ -1,0 +1,1718 @@
+{
+  "schema_version": "2.1.0",
+  "disclaimer": {
+    "zh": "滑雪教练启发式，非 FIS 裁判分，非医疗建议。2D 骨骼会误判。疼痛或旧伤请线下教练/医师。",
+    "en": "Coach heuristics, not FIS judging or medical advice. 2D pose can misread. Pain or prior injury: see a coach or clinician."
+  },
+  "pass_score": 75.0,
+  "checkpoint_pass": 60.0,
+  "sys_drill": "drill_film",
+  "categories": {
+    "alpine_piste": {
+      "zh": "平整雪道大众滑行",
+      "en": "Groomed-run recreational alpine"
+    },
+    "alpine_moguls": {
+      "zh": "蘑菇滑行",
+      "en": "Mogul skiing"
+    },
+    "park": {
+      "zh": "公园/跳台",
+      "en": "Park / jumps"
+    },
+    "alpine_race": {
+      "zh": "竞技旗门",
+      "en": "Race gates"
+    },
+    "alpine_switch": {
+      "zh": "正倒滑转换",
+      "en": "Switch / fakie alpine"
+    }
+  },
+  "terrains": {
+    "green": {
+      "id": "green",
+      "name": {
+        "zh": "绿道",
+        "en": "Green"
+      },
+      "desc": {
+        "zh": "绿道建议场地，非坡度实测。",
+        "en": "Suggested green terrain; slope is not measured."
+      }
+    },
+    "blue": {
+      "id": "blue",
+      "name": {
+        "zh": "蓝道",
+        "en": "Blue"
+      },
+      "desc": {
+        "zh": "蓝道建议场地，非坡度实测。",
+        "en": "Suggested blue terrain; slope is not measured."
+      }
+    },
+    "red": {
+      "id": "red",
+      "name": {
+        "zh": "红道",
+        "en": "Red"
+      },
+      "desc": {
+        "zh": "红道建议场地，非坡度实测。",
+        "en": "Suggested red terrain; slope is not measured."
+      }
+    },
+    "black": {
+      "id": "black",
+      "name": {
+        "zh": "黑道",
+        "en": "Black"
+      },
+      "desc": {
+        "zh": "黑道建议场地，非坡度实测。",
+        "en": "Suggested black terrain; slope is not measured."
+      }
+    },
+    "park": {
+      "id": "park",
+      "name": {
+        "zh": "公园",
+        "en": "Park"
+      },
+      "desc": {
+        "zh": "公园建议场地，本 App 不评空中。",
+        "en": "Suggested park terrain; this app does not score air."
+      }
+    },
+    "mogul": {
+      "id": "mogul",
+      "name": {
+        "zh": "蘑菇",
+        "en": "Mogul"
+      },
+      "desc": {
+        "zh": "蘑菇场地建议，非包型实测。",
+        "en": "Suggested mogul field; bump shape is not measured."
+      }
+    }
+  },
+  "venues": {
+    "venue_green_groomer": {
+      "id": "venue_green_groomer",
+      "terrain": "green",
+      "name": {
+        "zh": "绿道平整雪道",
+        "en": "Green groomer"
+      },
+      "desc": {
+        "zh": "空、缓、人少的绿道，先把刹车练稳。",
+        "en": "Quiet, easy green groomer; own the brake first."
+      },
+      "tips": {
+        "zh": "选最缓的坡，避开冰面和拥挤出口。",
+        "en": "Pick the gentlest pitch; avoid ice and crowded runouts."
+      }
+    },
+    "venue_blue_groomer": {
+      "id": "venue_blue_groomer",
+      "terrain": "blue",
+      "name": {
+        "zh": "蓝道平整雪道",
+        "en": "Blue groomer"
+      },
+      "desc": {
+        "zh": "中等坡平整道，适合平行、搓雪和大弯。",
+        "en": "Moderate groomed blue; for parallel, skids, and long-radius carve."
+      },
+      "tips": {
+        "zh": "人少、雪软一点更好；冰面减小弯深。",
+        "en": "Prefer fewer people and softer snow; shallower turns on ice."
+      }
+    },
+    "venue_red_piste": {
+      "id": "venue_red_piste",
+      "terrain": "red",
+      "name": {
+        "zh": "红道平整雪道",
+        "en": "Red piste"
+      },
+      "desc": {
+        "zh": "更陡的平整道，适合中小弯卡宾启发式。",
+        "en": "Steeper groomed red; for medium and short carve heuristics."
+      },
+      "tips": {
+        "zh": "先在蓝道能倾再上红道；累了换缓坡。",
+        "en": "Incline on blue before red; move easier when form fades."
+      }
+    },
+    "venue_black_steep": {
+      "id": "venue_black_steep",
+      "terrain": "black",
+      "name": {
+        "zh": "黑色陡坡",
+        "en": "Black steep"
+      },
+      "desc": {
+        "zh": "仅在蘑菇落差线课使用的陡/难建议，仍非实测。",
+        "en": "Steep/hard suggestion for fall-line moguls only; still not measured."
+      },
+      "tips": {
+        "zh": "包圆、线空、能看到沟；不要为了黑道硬上。",
+        "en": "Round bumps, an open line, visible troughs; do not force a black run."
+      }
+    },
+    "venue_mogul_field": {
+      "id": "venue_mogul_field",
+      "terrain": "mogul",
+      "name": {
+        "zh": "蘑菇区",
+        "en": "Mogul field"
+      },
+      "desc": {
+        "zh": "圆而浅的包，先直滑吸收。",
+        "en": "Round, shallow bumps; absorb in a straight line first."
+      },
+      "tips": {
+        "zh": "避开尖包、跳台和过窄的线。",
+        "en": "Avoid sharp bumps, jumps, and a too-narrow line."
+      }
+    },
+    "venue_park": {
+      "id": "venue_park",
+      "terrain": "park",
+      "name": {
+        "zh": "公园",
+        "en": "Park"
+      },
+      "desc": {
+        "zh": "目录课：箱杆跳台请线下教练，软件不打分。",
+        "en": "Catalog: boxes, rails, and jumps with a coach; the app does not score them."
+      },
+      "tips": {
+        "zh": "只在有教练和防护的公园区域尝试。",
+        "en": "Only try park features with a coach and protection."
+      }
+    },
+    "venue_dryland": {
+      "id": "venue_dryland",
+      "terrain": "green",
+      "name": {
+        "zh": "陆地平坦场地",
+        "en": "Dryland / flat"
+      },
+      "desc": {
+        "zh": "室内或平地，练站姿和单腿力量。",
+        "en": "Indoors or flat ground for stance and single-leg strength."
+      },
+      "tips": {
+        "zh": "防滑地面，旁边有扶手更好。",
+        "en": "Non-slip floor; a handhold nearby helps."
+      }
+    }
+  },
+  "level_ids": [
+    "pizza_glide",
+    "pizza",
+    "wedge_christie",
+    "parallel",
+    "skid_short",
+    "carve_long",
+    "carve_medium",
+    "carve_short",
+    "mogul_absorb",
+    "mogul_fallline"
+  ],
+  "catalog_level_ids": [
+    "ollie",
+    "park",
+    "gates",
+    "switch"
+  ],
+  "drills": {
+    "drill_film": {
+      "id": "drill_film",
+      "name": {
+        "zh": "拍摄说明",
+        "en": "How to film"
+      },
+      "desc": {
+        "zh": "画面稳、一人、侧或斜后，才能判定阶段。",
+        "en": "Stable follow-cam, one skier, side or rear-quarter."
+      },
+      "training": [
+        {
+          "zh": "跟拍手机，画面尽量只框一名双板滑者。",
+          "en": "Follow-cam; one alpine skier in frame."
+        },
+        {
+          "zh": "从侧面或斜后方拍完整段，少遮挡、光线足够。",
+          "en": "Side or rear-quarter, whole run, little occlusion."
+        },
+        {
+          "zh": "不要边滑边剧烈甩镜头，否则阶段无法判定。",
+          "en": "Avoid wild camera motion or the stage cannot be judged."
+        }
+      ],
+      "venue_ids": [
+        "venue_green_groomer"
+      ]
+    },
+    "drill_land_stance": {
+      "id": "drill_land_stance",
+      "name": {
+        "zh": "陆上运动站姿",
+        "en": "Athletic stance on land"
+      },
+      "desc": {
+        "zh": "踝膝髋微屈，重心在脚心，不后坐。",
+        "en": "Soft ankles, knees, and hips; center of mass over mid-foot."
+      },
+      "training": [
+        {
+          "zh": "标准：侧面看髋在踝上方，膝不锁死。",
+          "en": "Standard: hip over ankle in profile; knees unlocked."
+        },
+        {
+          "zh": "3 组 × 30 秒，不许塌腰后坐。",
+          "en": "3×30s; no collapsed backseat."
+        }
+      ],
+      "venue_ids": [
+        "venue_dryland"
+      ]
+    },
+    "drill_land_squat": {
+      "id": "drill_land_squat",
+      "name": {
+        "zh": "深蹲与分腿蹲",
+        "en": "Squats and split squats"
+      },
+      "desc": {
+        "zh": "练独立压腿，为半犁收板和卡宾外侧腿做准备。",
+        "en": "Single-leg strength for the christie close and carve outside ski."
+      },
+      "training": [
+        {
+          "zh": "标准：膝沿脚尖，骨盆不左右倾倒。",
+          "en": "Standard: knees track over the toes; pelvis level."
+        },
+        {
+          "zh": "双腿深蹲 3×8；保加利亚分腿蹲每侧 3×6。",
+          "en": "3×8 squats; Bulgarian split squat 3×6 each side."
+        }
+      ],
+      "venue_ids": [
+        "venue_dryland"
+      ]
+    },
+    "drill_wedge_stop": {
+      "id": "drill_wedge_stop",
+      "name": {
+        "zh": "缓坡犁式制动",
+        "en": "Gentle-slope wedge brake"
+      },
+      "desc": {
+        "zh": "用开角和立刃把速度关死，不靠摔倒。",
+        "en": "Open the tails and edge to a stop; do not sit down."
+      },
+      "training": [
+        {
+          "zh": "标准：十次停下板头始终相对、上身对山下。",
+          "en": "Standard: ten stops, tips close, torso facing downhill."
+        },
+        {
+          "zh": "绿道犁式直滑，匀速后再推开板尾立刃停下。",
+          "en": "Wedge-glide on a green run, then open the tails and edge to a stop."
+        }
+      ],
+      "venue_ids": [
+        "venue_green_groomer"
+      ]
+    },
+    "drill_wedge_c": {
+      "id": "drill_wedge_c",
+      "name": {
+        "zh": "犁式浅弧 C 弯",
+        "en": "Shallow wedge C-turns"
+      },
+      "desc": {
+        "zh": "在仍能刹车的前提下划浅 C，外侧板承重。",
+        "en": "Shallow C-turns while the wedge still brakes; load the outside ski."
+      },
+      "training": [
+        {
+          "zh": "标准：连续 S 迹，不冲道边；弯中犁式不消失。",
+          "en": "Standard: linked S-track, no dart to the edge; the wedge stays through the turn."
+        },
+        {
+          "zh": "斜滑降开始，外侧加压划小 C，再换另一侧。",
+          "en": "From a traverse, pressure the outside ski through a small C, then switch sides."
+        }
+      ],
+      "venue_ids": [
+        "venue_green_groomer"
+      ]
+    },
+    "drill_hip_steer": {
+      "id": "drill_hip_steer",
+      "name": {
+        "zh": "髋内旋导向",
+        "en": "Hip internal-rotation steering"
+      },
+      "desc": {
+        "zh": "用腿和髋改变板向，肩不要当方向盘。",
+        "en": "Legs and hips steer; do not use the shoulders as a steering wheel."
+      },
+      "training": [
+        {
+          "zh": "标准：板开始转时肩仍大体对山下。",
+          "en": "Standard: the skis start to turn while the shoulders still face downhill."
+        },
+        {
+          "zh": "陆上模拟：微屈站，左右髋内旋带动脚尖，肩不动。",
+          "en": "On land: athletic stance, rotate the femurs to turn the toes, keep the shoulders still."
+        }
+      ],
+      "venue_ids": [
+        "venue_green_groomer",
+        "venue_dryland"
+      ]
+    },
+    "drill_christie": {
+      "id": "drill_christie",
+      "name": {
+        "zh": "出弯收内侧板",
+        "en": "Close the inside ski"
+      },
+      "desc": {
+        "zh": "入弯犁、出弯逐渐并板，禁止突然并死。",
+        "en": "Wedge to start, gradually match at the finish; do not snap shut."
+      },
+      "training": [
+        {
+          "zh": "标准：出弯后半段站距变小，但不失稳。",
+          "en": "Standard: stance narrows in the last third of the turn, still stable."
+        },
+        {
+          "zh": "绿/蓝道做 8 个弯，只在出弯收板。",
+          "en": "Eight turns on green or blue; close the ski only at the finish."
+        }
+      ],
+      "venue_ids": [
+        "venue_green_groomer",
+        "venue_blue_groomer"
+      ]
+    },
+    "drill_hands": {
+      "id": "drill_hands",
+      "name": {
+        "zh": "手低点杖节奏",
+        "en": "Low hands and pole rhythm"
+      },
+      "desc": {
+        "zh": "杖尖低、手在视野前下方，给左右节拍。",
+        "en": "Pole tips low; hands in the lower visual field for left-right timing."
+      },
+      "training": [
+        {
+          "zh": "标准：回放里手腕不高于肩。",
+          "en": "Standard: on replay, the wrists stay below the shoulders."
+        },
+        {
+          "zh": "缓坡平行或犁式，每弯轻点山下杖。",
+          "en": "Easy slope, parallel or wedge: tap the downhill pole each turn."
+        }
+      ],
+      "venue_ids": [
+        "venue_green_groomer",
+        "venue_blue_groomer"
+      ]
+    },
+    "drill_hockey": {
+      "id": "drill_hockey",
+      "name": {
+        "zh": "冰球刹",
+        "en": "Hockey stop"
+      },
+      "desc": {
+        "zh": "平行板横切急停，搓雪小弯的必过刹车。",
+        "en": "Matched-ski sideslip stop; required braking for short skidded turns."
+      },
+      "training": [
+        {
+          "zh": "标准：左右都能停在预定点，板平行、不犁开。",
+          "en": "Standard: stop on a mark both ways; skis parallel, not in a wedge."
+        },
+        {
+          "zh": "绿道斜滑降，点杖后双板同时横过来立刃停下。",
+          "en": "From a green-run traverse, plant, match both skis, and edge to a stop."
+        },
+        {
+          "zh": "每侧 8 次；速度一起来先回到斜滑再刹。",
+          "en": "Eight each side; if speed builds, reset to a traverse before stopping."
+        }
+      ],
+      "venue_ids": [
+        "venue_green_groomer",
+        "venue_blue_groomer"
+      ]
+    },
+    "drill_skid_short": {
+      "id": "drill_skid_short",
+      "name": {
+        "zh": "搓雪小弯节奏",
+        "en": "Short skidded-turn rhythm"
+      },
+      "desc": {
+        "zh": "平行板快速左右转换控速，允许刃搓混合。",
+        "en": "Linked short skids on parallel skis; mixed edge and skid is acceptable."
+      },
+      "training": [
+        {
+          "zh": "标准：弯与弯之间没有长横切；膝有屈伸。",
+          "en": "Standard: no long traverse between turns; knees flex and extend."
+        },
+        {
+          "zh": "蓝道平整处 10 个短弯一组，肩静手低。",
+          "en": "Ten short turns on a blue groomer; quiet shoulders, hands low."
+        }
+      ],
+      "venue_ids": [
+        "venue_blue_groomer"
+      ]
+    },
+    "drill_one_ski": {
+      "id": "drill_one_ski",
+      "name": {
+        "zh": "单脚滑 / 外侧腿",
+        "en": "One-ski / outside-leg drill"
+      },
+      "desc": {
+        "zh": "卡宾前先能把重量放在一条腿上。",
+        "en": "Own one-legged balance before carving."
+      },
+      "training": [
+        {
+          "zh": "标准：缓坡外侧板滑一段，内侧板轻点雪不承重。",
+          "en": "Standard: glide on the outside ski; the inside ski taps the snow without taking weight."
+        },
+        {
+          "zh": "每侧 6 次斜滑降；失稳就放回双脚，不要硬撑。",
+          "en": "Six traverses per side; put the ski down if you wobble."
+        }
+      ],
+      "venue_ids": [
+        "venue_green_groomer",
+        "venue_blue_groomer"
+      ]
+    },
+    "drill_carve_round": {
+      "id": "drill_carve_round",
+      "name": {
+        "zh": "大弯走圆",
+        "en": "Round long-radius turns"
+      },
+      "desc": {
+        "zh": "把弯做圆，让板有机会走刃（启发式，非 FIS）。",
+        "en": "Round the turn so the ski can bend (heuristic, not FIS)."
+      },
+      "training": [
+        {
+          "zh": "标准：髋向弯心倾，肩不甩；站距保持平行。",
+          "en": "Standard: hips incline into the turn, shoulders quiet, stance parallel."
+        },
+        {
+          "zh": "中等坡画 6 个大 C，外侧腿更长。",
+          "en": "Six large C-turns on a moderate pitch; longer outside leg."
+        }
+      ],
+      "venue_ids": [
+        "venue_blue_groomer"
+      ]
+    },
+    "drill_carve_medium": {
+      "id": "drill_carve_medium",
+      "name": {
+        "zh": "中弯换刃",
+        "en": "Medium-radius edge change"
+      },
+      "desc": {
+        "zh": "在大弯能倾之后缩短半径。",
+        "en": "Shorten the radius only after long-radius inclination works."
+      },
+      "training": [
+        {
+          "zh": "标准：换刃点清楚，不直立横刮。",
+          "en": "Standard: a clear edge change, not an upright scrape."
+        },
+        {
+          "zh": "同一坡面 8 个中弯，频率高于大弯、低于小弯。",
+          "en": "Eight medium turns on the same pitch; cadence between long and short."
+        }
+      ],
+      "venue_ids": [
+        "venue_red_piste"
+      ]
+    },
+    "drill_carve_short": {
+      "id": "drill_carve_short",
+      "name": {
+        "zh": "短半径卡宾节奏",
+        "en": "Short-radius carve cadence"
+      },
+      "desc": {
+        "zh": "快换刃但平行与内倾不能丢。",
+        "en": "Faster edge changes without losing parallel inclination."
+      },
+      "training": [
+        {
+          "zh": "标准：左右对称，肩更静。",
+          "en": "Standard: left-right symmetry, even quieter shoulders."
+        },
+        {
+          "zh": "组数少、质量高，避免以疲劳换变形。",
+          "en": "Few high-quality sets; do not train fatigue into poor form."
+        }
+      ],
+      "venue_ids": [
+        "venue_red_piste"
+      ]
+    },
+    "drill_mogul_absorb": {
+      "id": "drill_mogul_absorb",
+      "name": {
+        "zh": "单包吸收",
+        "en": "Single-mogul absorption"
+      },
+      "desc": {
+        "zh": "包顶变短、沟槽变高，用腿贴雪，不要跳。",
+        "en": "Shorten at the crest, lengthen in the trough; stay on snow, do not jump."
+      },
+      "training": [
+        {
+          "zh": "标准：上身相对静，膝屈振幅大，落地不砸直腿。",
+          "en": "Standard: quiet torso, large knee travel, no straight-leg slam."
+        },
+        {
+          "zh": "选圆而浅的包沿沟直滑 8 次。",
+          "en": "Eight straight lines over round, shallow bumps."
+        }
+      ],
+      "venue_ids": [
+        "venue_mogul_field"
+      ]
+    },
+    "drill_mogul_line": {
+      "id": "drill_mogul_line",
+      "name": {
+        "zh": "沟槽落差线",
+        "en": "Trough fall-line rhythm"
+      },
+      "desc": {
+        "zh": "少横切，连续吸收，仍不开空中评分。",
+        "en": "Fewer traverses, linked absorption; still no air scoring."
+      },
+      "training": [
+        {
+          "zh": "标准：髋横摆相对高度变化不大，膝仍在做功。",
+          "en": "Standard: hips stay near the fall line; the knees still do the work."
+        },
+        {
+          "zh": "八到十二个包一组，累了就停。",
+          "en": "Sets of 8–12 bumps; stop when form fades."
+        }
+      ],
+      "venue_ids": [
+        "venue_mogul_field",
+        "venue_black_steep"
+      ]
+    }
+  },
+  "checkpoints": {
+    "cp_pg_stance": {
+      "id": "cp_pg_stance",
+      "name": {
+        "zh": "犁式站距",
+        "en": "Wedge stance"
+      },
+      "desc": {
+        "zh": "板头近、板尾开，站距宽于髋。",
+        "en": "Tips close, tails open, stance wider than the hips."
+      },
+      "body": [
+        "ankle",
+        "knee",
+        "hip"
+      ],
+      "required": true,
+      "signal": "stance_width",
+      "threshold": {
+        "op": "between",
+        "value": 1.15,
+        "hi": 2.5
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_wedge_stop"
+      ]
+    },
+    "cp_pg_knee": {
+      "id": "cp_pg_knee",
+      "name": {
+        "zh": "膝踝微屈",
+        "en": "Soft knees and ankles"
+      },
+      "desc": {
+        "zh": "膝踝有弹性，不锁直。",
+        "en": "Elastic knees and ankles; not locked."
+      },
+      "body": [
+        "ankle",
+        "knee"
+      ],
+      "required": true,
+      "signal": "knee_flex_mean",
+      "threshold": {
+        "op": "gte",
+        "value": 12.0
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_land_stance",
+        "drill_land_squat"
+      ]
+    },
+    "cp_pg_com": {
+      "id": "cp_pg_com",
+      "name": {
+        "zh": "重心不后坐",
+        "en": "Center of mass not backseat"
+      },
+      "desc": {
+        "zh": "髋在脚上方，压力送到板刃。",
+        "en": "Hips over the feet; pressure into the ski."
+      },
+      "body": [
+        "hip",
+        "com"
+      ],
+      "required": true,
+      "signal": "backseat",
+      "threshold": {
+        "op": "lte",
+        "value": 1.35
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_land_stance"
+      ]
+    },
+    "cp_pg_valgus": {
+      "id": "cp_pg_valgus",
+      "name": {
+        "zh": "膝不内扣",
+        "en": "Knees track"
+      },
+      "desc": {
+        "zh": "膝沿脚尖，不要过度 A 字内扣。",
+        "en": "Knees over the toes; avoid a collapsed A-frame."
+      },
+      "body": [
+        "knee"
+      ],
+      "required": true,
+      "signal": "knee_valgus",
+      "threshold": {
+        "op": "lte",
+        "value": 1.5
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_land_stance"
+      ]
+    },
+    "cp_pz_stance": {
+      "id": "cp_pz_stance",
+      "name": {
+        "zh": "弯中保持犁",
+        "en": "Wedge through the turn"
+      },
+      "desc": {
+        "zh": "转弯中仍保持犁式，外侧承重。",
+        "en": "Stay in a wedge through the turn; load the outside ski."
+      },
+      "body": [
+        "ankle",
+        "hip"
+      ],
+      "required": true,
+      "signal": "stance_width",
+      "threshold": {
+        "op": "between",
+        "value": 1.15,
+        "hi": 2.4
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_wedge_c"
+      ]
+    },
+    "cp_pz_hip_ir": {
+      "id": "cp_pz_hip_ir",
+      "name": {
+        "zh": "髋内旋导向",
+        "en": "Hip internal-rotation steering"
+      },
+      "desc": {
+        "zh": "启发式：膝相对踝内收，用腿转向。",
+        "en": "Heuristic: knees inside the ankles; steer with the legs."
+      },
+      "body": [
+        "hip",
+        "knee"
+      ],
+      "required": true,
+      "signal": "hip_ir_proxy",
+      "threshold": {
+        "op": "gte",
+        "value": 0.08
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_hip_steer"
+      ]
+    },
+    "cp_pz_knee": {
+      "id": "cp_pz_knee",
+      "name": {
+        "zh": "入弯降重心",
+        "en": "Flex into the turn"
+      },
+      "desc": {
+        "zh": "入弯略降重心，膝有弹性。",
+        "en": "Slightly lower in the turn; elastic knees."
+      },
+      "body": [
+        "knee",
+        "com"
+      ],
+      "required": true,
+      "signal": "knee_flex_mean",
+      "threshold": {
+        "op": "gte",
+        "value": 12.0
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_land_squat"
+      ]
+    },
+    "cp_pz_turn": {
+      "id": "cp_pz_turn",
+      "name": {
+        "zh": "连续转向",
+        "en": "Linked turns"
+      },
+      "desc": {
+        "zh": "有左右转向，不是一条直线冲坡。",
+        "en": "Left-right turns, not a straight schuss."
+      },
+      "body": [
+        "com"
+      ],
+      "required": true,
+      "signal": "turn_freq",
+      "threshold": {
+        "op": "gte",
+        "value": 0.15
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_wedge_c"
+      ]
+    },
+    "cp_pz_upper": {
+      "id": "cp_pz_upper",
+      "name": {
+        "zh": "上身对山下",
+        "en": "Torso downhill"
+      },
+      "desc": {
+        "zh": "肩不要跟着板狂转。",
+        "en": "Do not spin the shoulders with the skis."
+      },
+      "body": [
+        "chest"
+      ],
+      "required": false,
+      "signal": "upper_quiet",
+      "threshold": {
+        "op": "lte",
+        "value": 0.45
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_hands"
+      ]
+    },
+    "cp_pz_gaze": {
+      "id": "cp_pz_gaze",
+      "name": {
+        "zh": "视线看山下",
+        "en": "Look downhill"
+      },
+      "desc": {
+        "zh": "2D 头关键点不可靠则不计分。",
+        "en": "Unscored when the head is not visible in 2D pose."
+      },
+      "body": [
+        "neck",
+        "gaze"
+      ],
+      "required": false,
+      "signal": "gaze_ok",
+      "threshold": {
+        "op": "gte",
+        "value": 0.5
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_wedge_c"
+      ]
+    },
+    "cp_wc_openclose": {
+      "id": "cp_wc_openclose",
+      "name": {
+        "zh": "入弯犁出弯收",
+        "en": "Open then close"
+      },
+      "desc": {
+        "zh": "站距有开合，不是全程死犁。",
+        "en": "Stance width varies; not a locked wedge the whole turn."
+      },
+      "body": [
+        "ankle",
+        "hip"
+      ],
+      "required": true,
+      "signal": "stance_width_std",
+      "threshold": {
+        "op": "gte",
+        "value": 0.18
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_christie"
+      ]
+    },
+    "cp_wc_stance": {
+      "id": "cp_wc_stance",
+      "name": {
+        "zh": "半犁站距",
+        "en": "Christie stance"
+      },
+      "desc": {
+        "zh": "平均站距介于大犁与平行之间。",
+        "en": "Mean stance between a full wedge and parallel."
+      },
+      "body": [
+        "ankle"
+      ],
+      "required": true,
+      "signal": "stance_width",
+      "threshold": {
+        "op": "between",
+        "value": 0.95,
+        "hi": 1.45
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_christie"
+      ]
+    },
+    "cp_par_stance": {
+      "id": "cp_par_stance",
+      "name": {
+        "zh": "平行板距",
+        "en": "Parallel stance"
+      },
+      "desc": {
+        "zh": "站距约髋宽，过宽说明犁式残渣。",
+        "en": "About hip width; too wide is leftover wedge."
+      },
+      "body": [
+        "ankle",
+        "hip"
+      ],
+      "required": true,
+      "signal": "stance_width",
+      "threshold": {
+        "op": "between",
+        "value": 0.65,
+        "hi": 1.12
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_land_stance"
+      ]
+    },
+    "cp_par_upper": {
+      "id": "cp_par_upper",
+      "name": {
+        "zh": "上下分离",
+        "en": "Upper-lower separation"
+      },
+      "desc": {
+        "zh": "腿动、上身相对安静。",
+        "en": "Legs move; the torso stays quieter."
+      },
+      "body": [
+        "chest"
+      ],
+      "required": true,
+      "signal": "upper_quiet",
+      "threshold": {
+        "op": "lte",
+        "value": 0.4
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_hands"
+      ]
+    },
+    "cp_par_com": {
+      "id": "cp_par_com",
+      "name": {
+        "zh": "换外侧重心",
+        "en": "Outside-ski center of mass"
+      },
+      "desc": {
+        "zh": "不后坐，才能把重量交给新的外侧板。",
+        "en": "Stay centered so you can move onto the new outside ski."
+      },
+      "body": [
+        "com",
+        "hip"
+      ],
+      "required": true,
+      "signal": "backseat",
+      "threshold": {
+        "op": "lte",
+        "value": 1.35
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_land_squat"
+      ]
+    },
+    "cp_sk_hockey": {
+      "id": "cp_sk_hockey",
+      "name": {
+        "zh": "冰球刹能力",
+        "en": "Hockey-stop capacity"
+      },
+      "desc": {
+        "zh": "搓雪必须能用平行板急停；用膝屈振幅作代理。",
+        "en": "Skidded turns require a matched-ski stop; knee-flex amplitude is the proxy."
+      },
+      "body": [
+        "knee",
+        "ankle",
+        "hip"
+      ],
+      "required": true,
+      "signal": "knee_flex_amp",
+      "threshold": {
+        "op": "gte",
+        "value": 18.0
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_hockey"
+      ]
+    },
+    "cp_sk_rhythm": {
+      "id": "cp_sk_rhythm",
+      "name": {
+        "zh": "短弯节奏",
+        "en": "Short-turn cadence"
+      },
+      "desc": {
+        "zh": "快速左右转换，不要长横切。",
+        "en": "Quick left-right; no long traverse."
+      },
+      "body": [
+        "com"
+      ],
+      "required": true,
+      "signal": "turn_freq",
+      "threshold": {
+        "op": "gte",
+        "value": 0.4
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_skid_short"
+      ]
+    },
+    "cp_sk_knee": {
+      "id": "cp_sk_knee",
+      "name": {
+        "zh": "膝屈伸给节奏",
+        "en": "Flex for rhythm"
+      },
+      "desc": {
+        "zh": "不能直腿跺雪。",
+        "en": "Do not straight-leg the snow."
+      },
+      "body": [
+        "knee"
+      ],
+      "required": true,
+      "signal": "knee_flex_mean",
+      "threshold": {
+        "op": "gte",
+        "value": 14.0
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_skid_short",
+        "drill_land_squat"
+      ]
+    },
+    "cp_sk_hands": {
+      "id": "cp_sk_hands",
+      "name": {
+        "zh": "手低",
+        "en": "Hands low"
+      },
+      "desc": {
+        "zh": "手腕低于肩。",
+        "en": "Wrists below the shoulders."
+      },
+      "body": [
+        "hands"
+      ],
+      "required": false,
+      "signal": "hands_low",
+      "threshold": {
+        "op": "gte",
+        "value": 0.55
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_hands"
+      ]
+    },
+    "cp_cv_oneski": {
+      "id": "cp_cv_oneski",
+      "name": {
+        "zh": "外侧腿 / 单脚",
+        "en": "Outside-leg / one-ski"
+      },
+      "desc": {
+        "zh": "内倾启发式：肩相对髋向弯心。非 FIS 刃角。",
+        "en": "Inclination heuristic: shoulders inside the hips toward the turn. Not a FIS edge angle."
+      },
+      "body": [
+        "hip",
+        "knee",
+        "com"
+      ],
+      "required": true,
+      "signal": "inward_lean",
+      "threshold": {
+        "op": "gte",
+        "value": 0.16
+      },
+      "heuristic_not_fis_carve": true,
+      "drills": [
+        "drill_one_ski",
+        "drill_carve_round"
+      ]
+    },
+    "cp_cv_parallel": {
+      "id": "cp_cv_parallel",
+      "name": {
+        "zh": "卡宾平行板",
+        "en": "Carve parallel"
+      },
+      "desc": {
+        "zh": "站距保持平行，否则倾会变成内倒。",
+        "en": "Stay parallel or inclination becomes banking."
+      },
+      "body": [
+        "ankle"
+      ],
+      "required": true,
+      "signal": "stance_width",
+      "threshold": {
+        "op": "between",
+        "value": 0.65,
+        "hi": 1.1
+      },
+      "heuristic_not_fis_carve": true,
+      "drills": [
+        "drill_one_ski"
+      ]
+    },
+    "cp_cv_upper": {
+      "id": "cp_cv_upper",
+      "name": {
+        "zh": "肩静",
+        "en": "Quiet shoulders"
+      },
+      "desc": {
+        "zh": "甩肩会毁掉倾的几何。",
+        "en": "Throwing the shoulders wrecks the inclination geometry."
+      },
+      "body": [
+        "chest"
+      ],
+      "required": true,
+      "signal": "upper_quiet",
+      "threshold": {
+        "op": "lte",
+        "value": 0.42
+      },
+      "heuristic_not_fis_carve": true,
+      "drills": [
+        "drill_hands"
+      ]
+    },
+    "cp_cvm_freq": {
+      "id": "cp_cvm_freq",
+      "name": {
+        "zh": "中弯频率",
+        "en": "Medium-turn cadence"
+      },
+      "desc": {
+        "zh": "换刃快于大弯。",
+        "en": "Edge changes faster than long-radius."
+      },
+      "body": [
+        "com"
+      ],
+      "required": true,
+      "signal": "turn_freq",
+      "threshold": {
+        "op": "gte",
+        "value": 0.32
+      },
+      "heuristic_not_fis_carve": true,
+      "drills": [
+        "drill_carve_medium"
+      ]
+    },
+    "cp_cvs_freq": {
+      "id": "cp_cvs_freq",
+      "name": {
+        "zh": "小弯频率",
+        "en": "Short-carve cadence"
+      },
+      "desc": {
+        "zh": "频率升高仍保持内倾。",
+        "en": "Higher cadence without losing inclination."
+      },
+      "body": [
+        "com"
+      ],
+      "required": true,
+      "signal": "turn_freq",
+      "threshold": {
+        "op": "gte",
+        "value": 0.45
+      },
+      "heuristic_not_fis_carve": true,
+      "drills": [
+        "drill_carve_short"
+      ]
+    },
+    "cp_mg_amp": {
+      "id": "cp_mg_amp",
+      "name": {
+        "zh": "吸收振幅",
+        "en": "Absorption amplitude"
+      },
+      "desc": {
+        "zh": "膝屈振幅大，贴雪而不是跳。",
+        "en": "Large knee travel; stay on snow rather than jumping."
+      },
+      "body": [
+        "knee",
+        "ankle"
+      ],
+      "required": true,
+      "signal": "knee_flex_amp",
+      "threshold": {
+        "op": "gte",
+        "value": 30.0
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_mogul_absorb"
+      ]
+    },
+    "cp_mg_quiet": {
+      "id": "cp_mg_quiet",
+      "name": {
+        "zh": "上身静",
+        "en": "Quiet upper body"
+      },
+      "desc": {
+        "zh": "让腿做功。",
+        "en": "Let the legs do the work."
+      },
+      "body": [
+        "chest"
+      ],
+      "required": true,
+      "signal": "upper_quiet",
+      "threshold": {
+        "op": "lte",
+        "value": 0.5
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_mogul_absorb"
+      ]
+    },
+    "cp_mg_freq": {
+      "id": "cp_mg_freq",
+      "name": {
+        "zh": "沟槽节奏",
+        "en": "Bump cadence"
+      },
+      "desc": {
+        "zh": "膝屈频率跟上包。",
+        "en": "Knee cadence matches the bumps."
+      },
+      "body": [
+        "knee"
+      ],
+      "required": true,
+      "signal": "knee_flex_freq",
+      "threshold": {
+        "op": "gte",
+        "value": 0.7
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_mogul_line"
+      ]
+    },
+    "cp_mg_fall": {
+      "id": "cp_mg_fall",
+      "name": {
+        "zh": "少横切",
+        "en": "Stay near the fall line"
+      },
+      "desc": {
+        "zh": "髋横摆相对高度变化的代理，弱信号。",
+        "en": "Weak proxy: hip sway versus vertical travel."
+      },
+      "body": [
+        "hip",
+        "com"
+      ],
+      "required": false,
+      "signal": "fall_line",
+      "threshold": {
+        "op": "lte",
+        "value": 1.2
+      },
+      "heuristic_not_fis_carve": false,
+      "drills": [
+        "drill_mogul_line"
+      ]
+    }
+  },
+  "levels": {
+    "pizza_glide": {
+      "id": "pizza_glide",
+      "category_id": "alpine_piste",
+      "in_scope": true,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "犁式直滑",
+        "en": "Wedge glide"
+      },
+      "desc": {
+        "zh": "用犁式板形直线下山并主动停下。",
+        "en": "Glide straight in a wedge and stop on purpose."
+      },
+      "checkpoints": [
+        "cp_pg_stance",
+        "cp_pg_knee",
+        "cp_pg_com",
+        "cp_pg_valgus"
+      ],
+      "next_levels": [
+        "pizza"
+      ],
+      "session_drills": [
+        "drill_wedge_stop",
+        "drill_land_stance"
+      ],
+      "terrain": "green",
+      "venue_ids": [
+        "venue_green_groomer"
+      ]
+    },
+    "pizza": {
+      "id": "pizza",
+      "category_id": "alpine_piste",
+      "in_scope": true,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "犁式转弯",
+        "en": "Wedge turns"
+      },
+      "desc": {
+        "zh": "浅弧 C 弯，髋内旋导向，弯中保持犁。",
+        "en": "Shallow C-turns; hip internal rotation steers; the wedge stays."
+      },
+      "checkpoints": [
+        "cp_pz_stance",
+        "cp_pz_hip_ir",
+        "cp_pz_knee",
+        "cp_pz_turn",
+        "cp_pz_upper",
+        "cp_pz_gaze"
+      ],
+      "next_levels": [
+        "wedge_christie"
+      ],
+      "session_drills": [
+        "drill_wedge_c",
+        "drill_hip_steer"
+      ],
+      "terrain": "green",
+      "venue_ids": [
+        "venue_green_groomer"
+      ]
+    },
+    "wedge_christie": {
+      "id": "wedge_christie",
+      "category_id": "alpine_piste",
+      "in_scope": true,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "半犁式滑雪",
+        "en": "Wedge christie"
+      },
+      "desc": {
+        "zh": "入弯犁、出弯收内侧板。",
+        "en": "Wedge to start, close the inside ski to finish."
+      },
+      "checkpoints": [
+        "cp_wc_openclose",
+        "cp_wc_stance"
+      ],
+      "next_levels": [
+        "parallel"
+      ],
+      "session_drills": [
+        "drill_christie",
+        "drill_land_squat"
+      ],
+      "terrain": "green",
+      "venue_ids": [
+        "venue_green_groomer"
+      ]
+    },
+    "parallel": {
+      "id": "parallel",
+      "category_id": "alpine_piste",
+      "in_scope": true,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "平行式滑雪",
+        "en": "Parallel skiing"
+      },
+      "desc": {
+        "zh": "双板平行，上下分离。过关后可选搓雪或卡宾大弯。",
+        "en": "Matched skis and separation. After passing, choose short skids or long-radius carve."
+      },
+      "checkpoints": [
+        "cp_par_stance",
+        "cp_par_upper",
+        "cp_par_com"
+      ],
+      "next_levels": [
+        "skid_short",
+        "carve_long"
+      ],
+      "session_drills": [
+        "drill_hands",
+        "drill_land_stance"
+      ],
+      "terrain": "blue",
+      "venue_ids": [
+        "venue_blue_groomer"
+      ]
+    },
+    "skid_short": {
+      "id": "skid_short",
+      "category_id": "alpine_piste",
+      "in_scope": true,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "搓雪小弯滑雪",
+        "en": "Short skidded turns"
+      },
+      "desc": {
+        "zh": "短半径搓雪控速；必须掌握冰球刹。过关可进蘑菇。",
+        "en": "Short-radius skids for speed control; hockey stop required. Then moguls."
+      },
+      "checkpoints": [
+        "cp_sk_hockey",
+        "cp_sk_rhythm",
+        "cp_sk_knee",
+        "cp_sk_hands"
+      ],
+      "next_levels": [
+        "mogul_absorb"
+      ],
+      "session_drills": [
+        "drill_hockey",
+        "drill_skid_short"
+      ],
+      "terrain": "blue",
+      "venue_ids": [
+        "venue_blue_groomer"
+      ]
+    },
+    "carve_long": {
+      "id": "carve_long",
+      "category_id": "alpine_piste",
+      "in_scope": true,
+      "heuristic_not_fis_carve": true,
+      "name": {
+        "zh": "卡宾大弯滑行",
+        "en": "Long-radius carve"
+      },
+      "desc": {
+        "zh": "启发式内倾与平行，非 FIS。最好先掌握单脚滑。",
+        "en": "Heuristic inclination and parallel stance, not FIS. Learn one-ski first."
+      },
+      "checkpoints": [
+        "cp_cv_oneski",
+        "cp_cv_parallel",
+        "cp_cv_upper"
+      ],
+      "next_levels": [
+        "carve_medium"
+      ],
+      "session_drills": [
+        "drill_one_ski",
+        "drill_carve_round"
+      ],
+      "terrain": "blue",
+      "venue_ids": [
+        "venue_blue_groomer"
+      ]
+    },
+    "carve_medium": {
+      "id": "carve_medium",
+      "category_id": "alpine_piste",
+      "in_scope": true,
+      "heuristic_not_fis_carve": true,
+      "name": {
+        "zh": "卡宾中弯滑行",
+        "en": "Medium-radius carve"
+      },
+      "desc": {
+        "zh": "在大弯能倾之后缩短半径。",
+        "en": "Shorten the radius only after long-radius inclination works."
+      },
+      "checkpoints": [
+        "cp_cv_oneski",
+        "cp_cv_parallel",
+        "cp_cvm_freq",
+        "cp_cv_upper"
+      ],
+      "next_levels": [
+        "carve_short"
+      ],
+      "session_drills": [
+        "drill_carve_medium"
+      ],
+      "terrain": "red",
+      "venue_ids": [
+        "venue_red_piste"
+      ]
+    },
+    "carve_short": {
+      "id": "carve_short",
+      "category_id": "alpine_piste",
+      "in_scope": true,
+      "heuristic_not_fis_carve": true,
+      "name": {
+        "zh": "卡宾小弯滑行",
+        "en": "Short-radius carve"
+      },
+      "desc": {
+        "zh": "快换刃，肩更静。平整道卡宾枝终点。",
+        "en": "Fast edge change, quieter shoulders. End of the groomed carve branch."
+      },
+      "checkpoints": [
+        "cp_cv_oneski",
+        "cp_cv_parallel",
+        "cp_cvs_freq",
+        "cp_cv_upper"
+      ],
+      "next_levels": [],
+      "session_drills": [
+        "drill_carve_short"
+      ],
+      "terrain": "red",
+      "venue_ids": [
+        "venue_red_piste"
+      ]
+    },
+    "mogul_absorb": {
+      "id": "mogul_absorb",
+      "category_id": "alpine_moguls",
+      "in_scope": true,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "蘑菇滑行（吸收）",
+        "en": "Mogul absorption"
+      },
+      "desc": {
+        "zh": "从搓雪枝进入：先吸收贴雪，不要跳。",
+        "en": "From the skid branch: absorb and stay on snow; do not jump."
+      },
+      "checkpoints": [
+        "cp_mg_amp",
+        "cp_mg_quiet",
+        "cp_mg_freq"
+      ],
+      "next_levels": [
+        "mogul_fallline"
+      ],
+      "session_drills": [
+        "drill_mogul_absorb"
+      ],
+      "terrain": "mogul",
+      "venue_ids": [
+        "venue_mogul_field"
+      ]
+    },
+    "mogul_fallline": {
+      "id": "mogul_fallline",
+      "category_id": "alpine_moguls",
+      "in_scope": true,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "蘑菇落差线",
+        "en": "Mogul fall-line"
+      },
+      "desc": {
+        "zh": "少横切的连续吸收。不评空中。",
+        "en": "Linked absorption near the fall line. No air score."
+      },
+      "checkpoints": [
+        "cp_mg_amp",
+        "cp_mg_quiet",
+        "cp_mg_freq",
+        "cp_mg_fall"
+      ],
+      "next_levels": [],
+      "session_drills": [
+        "drill_mogul_line"
+      ],
+      "terrain": "black",
+      "venue_ids": [
+        "venue_black_steep",
+        "venue_mogul_field"
+      ]
+    },
+    "ollie": {
+      "id": "ollie",
+      "category_id": "park",
+      "in_scope": false,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "豚跳",
+        "en": "Ollie"
+      },
+      "desc": {
+        "zh": "目录节点：2D 骨骼不评空中与板尖。请线下教练。",
+        "en": "Catalog only: 2D pose does not score air or ski tips. Train with a coach."
+      },
+      "checkpoints": [],
+      "next_levels": [],
+      "session_drills": [],
+      "terrain": "park",
+      "venue_ids": [
+        "venue_park"
+      ]
+    },
+    "park": {
+      "id": "park",
+      "category_id": "park",
+      "in_scope": false,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "公园滑行",
+        "en": "Park skiing"
+      },
+      "desc": {
+        "zh": "目录节点：箱、杆、跳台不自动打分。",
+        "en": "Catalog only: boxes, rails, and jumps are not scored."
+      },
+      "checkpoints": [],
+      "next_levels": [],
+      "session_drills": [],
+      "terrain": "park",
+      "venue_ids": [
+        "venue_park"
+      ]
+    },
+    "gates": {
+      "id": "gates",
+      "category_id": "alpine_race",
+      "in_scope": false,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "竞技旗门",
+        "en": "Race gates"
+      },
+      "desc": {
+        "zh": "目录节点：本 App 不做旗门计时。",
+        "en": "Catalog only: this app does not time gates."
+      },
+      "checkpoints": [],
+      "next_levels": [],
+      "session_drills": [],
+      "terrain": "red",
+      "venue_ids": [
+        "venue_red_piste"
+      ]
+    },
+    "switch": {
+      "id": "switch",
+      "category_id": "alpine_switch",
+      "in_scope": false,
+      "heuristic_not_fis_carve": false,
+      "name": {
+        "zh": "倒滑",
+        "en": "Switch / fakie"
+      },
+      "desc": {
+        "zh": "目录节点：v2 视频不自动判定倒滑。",
+        "en": "Catalog only: v2 video does not classify switch."
+      },
+      "checkpoints": [],
+      "next_levels": [],
+      "session_drills": [],
+      "terrain": "blue",
+      "venue_ids": [
+        "venue_blue_groomer"
+      ]
+    }
+  }
+}

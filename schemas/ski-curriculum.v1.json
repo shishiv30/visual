@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SkiCurriculum",
+  "type": "object",
+  "required": ["schema_version", "disclaimer", "sys_drill", "categories", "stage_keypoints"]
+}

@@ -1,0 +1,105 @@
+{
+  "stance_width": {
+    "kind": "clip_median",
+    "unit": "hip_widths",
+    "body": ["ankle", "hip", "knee"],
+    "needs_feet": true,
+    "proxy": false
+  },
+  "stance_width_std": {
+    "kind": "clip_std",
+    "unit": "hip_widths",
+    "body": ["ankle", "hip"],
+    "needs_feet": true,
+    "proxy": false
+  },
+  "knee_flex_mean": {
+    "kind": "clip_median",
+    "unit": "degrees_flex",
+    "body": ["knee", "ankle", "hip", "com"],
+    "needs_feet": false,
+    "proxy": false
+  },
+  "knee_flex_amp": {
+    "kind": "clip_percentile_span",
+    "unit": "degrees_flex",
+    "body": ["knee", "ankle", "hip"],
+    "needs_feet": false,
+    "proxy": true,
+    "proxy_note": "hockey stop and mogul absorb share knee flexion amplitude"
+  },
+  "knee_flex_freq": {
+    "kind": "clip_zero_cross",
+    "unit": "hz",
+    "body": ["knee"],
+    "needs_feet": false,
+    "proxy": false
+  },
+  "upper_quiet": {
+    "kind": "clip_std",
+    "unit": "rad",
+    "body": ["chest"],
+    "needs_feet": false,
+    "proxy": false
+  },
+  "inward_lean": {
+    "kind": "clip_mean_abs",
+    "unit": "hip_widths",
+    "body": ["hip", "chest", "knee", "com"],
+    "needs_feet": false,
+    "proxy": true,
+    "proxy_note": "shoulder vs hip shift, not FIS edge angle or true one-ski"
+  },
+  "turn_freq": {
+    "kind": "clip_zero_cross",
+    "unit": "hz",
+    "body": ["com", "hip"],
+    "needs_feet": false,
+    "proxy": false
+  },
+  "fall_line": {
+    "kind": "clip_ratio",
+    "unit": "dx_over_dy",
+    "body": ["hip", "com"],
+    "needs_feet": false,
+    "proxy": true,
+    "proxy_note": "hip path aspect, not slope instrument"
+  },
+  "backseat": {
+    "kind": "clip_median",
+    "unit": "torso_ratio",
+    "body": ["hip", "com", "ankle"],
+    "needs_feet": false,
+    "proxy": false
+  },
+  "knee_valgus": {
+    "kind": "clip_median",
+    "unit": "hip_widths",
+    "body": ["knee", "ankle"],
+    "needs_feet": true,
+    "proxy": false
+  },
+  "hip_ir_proxy": {
+    "kind": "clip_median",
+    "unit": "ratio",
+    "body": ["hip", "knee", "ankle"],
+    "needs_feet": true,
+    "proxy": true,
+    "proxy_note": "knee span vs ankle span, not 3D hip rotation"
+  },
+  "hands_low": {
+    "kind": "clip_mean",
+    "unit": "fraction",
+    "body": ["hands", "chest"],
+    "needs_feet": false,
+    "proxy": false
+  },
+  "gaze_ok": {
+    "kind": "clip_mean",
+    "unit": "fraction",
+    "body": ["gaze", "neck"],
+    "needs_feet": false,
+    "proxy": true,
+    "proxy_note": "2D nose confidence, not true downhill gaze"
+  }
+}

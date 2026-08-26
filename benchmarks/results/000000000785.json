@@ -1,0 +1,161 @@
+{
+  "schema_version": "0.1.0",
+  "frame": {
+    "source_kind": "image",
+    "timestamp_ms": 0.0,
+    "width": 640,
+    "height": 425,
+    "camera_intrinsics": null
+  },
+  "detections": [
+    {
+      "class_name": "person",
+      "confidence": 0.9292902946472168,
+      "bbox_xyxy": [
+        279.7724914550781,
+        41.84653091430664,
+        494.5903015136719,
+        386.6409912109375
+      ],
+      "track_id": null
+    }
+  ],
+  "poses": [
+    {
+      "skeleton": "coco_17",
+      "keypoints": [
+        {
+          "name": "nose",
+          "x": 367.0624694824219,
+          "y": 80.20606231689453,
+          "z": null,
+          "confidence": 0.9891820549964905
+        },
+        {
+          "name": "left_eye",
+          "x": 374.2594299316406,
+          "y": 72.6776123046875,
+          "z": null,
+          "confidence": 0.9749262928962708
+        },
+        {
+          "name": "right_eye",
+          "x": 361.0863952636719,
+          "y": 73.05736541748047,
+          "z": null,
+          "confidence": 0.932931661605835
+        },
+        {
+          "name": "left_ear",
+          "x": 388.8600769042969,
+          "y": 76.16001892089844,
+          "z": null,
+          "confidence": 0.8958438038825989
+        },
+        {
+          "name": "right_ear",
+          "x": 355.824951171875,
+          "y": 77.54553985595703,
+          "z": null,
+          "confidence": 0.5055508017539978
+        },
+        {
+          "name": "left_shoulder",
+          "x": 406.2281799316406,
+          "y": 115.00257873535156,
+          "z": null,
+          "confidence": 0.9974421262741089
+        },
+        {
+          "name": "right_shoulder",
+          "x": 362.9602355957031,
+          "y": 119.61181640625,
+          "z": null,
+          "confidence": 0.996698260307312
+        },
+        {
+          "name": "left_elbow",
+          "x": 441.6289978027344,
+          "y": 154.89891052246094,
+          "z": null,
+          "confidence": 0.9894790053367615
+        },
+        {
+          "name": "right_elbow",
+          "x": 348.12811279296875,
+          "y": 160.9141387939453,
+          "z": null,
+          "confidence": 0.9798421263694763
+        },
+        {
+          "name": "left_wrist",
+          "x": 438.7472229003906,
+          "y": 166.59934997558594,
+          "z": null,
+          "confidence": 0.984480082988739
+        },
+        {
+          "name": "right_wrist",
+          "x": 309.6548767089844,
+          "y": 177.93304443359375,
+          "z": null,
+          "confidence": 0.9717314839363098
+        },
+        {
+          "name": "left_hip",
+          "x": 427.49346923828125,
+          "y": 210.91673278808594,
+          "z": null,
+          "confidence": 0.9993088245391846
+        },
+        {
+          "name": "right_hip",
+          "x": 398.07281494140625,
+          "y": 211.44287109375,
+          "z": null,
+          "confidence": 0.9991322159767151
+        },
+        {
+          "name": "left_knee",
+          "x": 421.1282958984375,
+          "y": 282.6959533691406,
+          "z": null,
+          "confidence": 0.9982274174690247
+        },
+        {
+          "name": "right_knee",
+          "x": 376.5367431640625,
+          "y": 278.0721130371094,
+          "z": null,
+          "confidence": 0.9977129697799683
+        },
+        {
+          "name": "left_ankle",
+          "x": 468.5970458984375,
+          "y": 354.337646484375,
+          "z": null,
+          "confidence": 0.9879264831542969
+        },
+        {
+          "name": "right_ankle",
+          "x": 403.5050354003906,
+          "y": 344.5109558105469,
+          "z": null,
+          "confidence": 0.9870075583457947
+        }
+      ],
+      "score": 0.9292902946472168,
+      "detection_index": 0
+    }
+  ],
+  "tracks": [],
+  "classifications": [],
+  "segments": [],
+  "model_meta": {
+    "backend_id": "yolo11n-pose",
+    "model_name": "yolo11n-pose.pt",
+    "latency_ms": 1135.0605000043288,
+    "device": "cuda:0"
+  },
+  "error": null
+}

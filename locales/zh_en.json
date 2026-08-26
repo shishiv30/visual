@@ -1,0 +1,418 @@
+{
+  "schema_version": "1.0.0",
+  "role": "translator",
+  "ui": {
+    "app_title": {
+      "zh": "Visual Pose — Windows",
+      "en": "Visual Pose — Windows"
+    },
+    "missing_model": {
+      "zh": "缺少模型 {path}。请先运行：python scripts/download_pose_landmarker.py",
+      "en": "Missing model {path}. Run: python scripts/download_pose_landmarker.py"
+    },
+    "capture": {
+      "zh": "拍摄",
+      "en": "Camera"
+    },
+    "upload": {
+      "zh": "导入",
+      "en": "Import"
+    },
+    "language": {
+      "zh": "语言",
+      "en": "Language"
+    },
+    "no_preview": {
+      "zh": "无预览",
+      "en": "No preview"
+    },
+    "status_pending": {
+      "zh": "待定",
+      "en": "Pending"
+    },
+    "status_processing": {
+      "zh": "处理中",
+      "en": "Processing"
+    },
+    "status_done": {
+      "zh": "处理完毕",
+      "en": "Done"
+    },
+    "status_failed": {
+      "zh": "{status}（失败，可重试）",
+      "en": "{status} (failed, retry)"
+    },
+    "delete": {
+      "zh": "删除",
+      "en": "Delete"
+    },
+    "refresh": {
+      "zh": "重新分析",
+      "en": "Reanalyze"
+    },
+    "report": {
+      "zh": "分析报告",
+      "en": "Report"
+    },
+    "report_unavailable": {
+      "zh": "请先完成分析后再查看报告。",
+      "en": "Analyze the clip first to open the report."
+    },
+    "delete_title": {
+      "zh": "删除",
+      "en": "Delete"
+    },
+    "delete_body": {
+      "zh": "删除该条目及本地文件？此操作不可恢复。",
+      "en": "Delete this clip and its local files? This cannot be undone."
+    },
+    "processing_title": {
+      "zh": "处理中",
+      "en": "Processing"
+    },
+    "processing_body": {
+      "zh": "该条目仍在处理中，完成后才可播放。",
+      "en": "This clip is still processing. Play it when it is done."
+    },
+    "seed_title": {
+      "zh": "选择人物",
+      "en": "Select the person"
+    },
+    "seed_hint": {
+      "zh": "点击胶片跳转；绿色菱形是已记录的框（点击可跳到该帧）。拖蓝色开始/结束边裁剪。Shift+滚轮缩放。在人物上拖框，松手记录到当前帧；同一帧再框选会覆盖该帧。",
+      "en": "Click the filmstrip to seek; green diamonds are saved boxes (click to jump). Drag the blue start/end edges to trim. Shift+wheel zooms. Draw a person box — it saves for this frame; draw again on the same frame to replace."
+    },
+    "seed_empty_title": {
+      "zh": "未框选",
+      "en": "No box"
+    },
+    "seed_empty_body": {
+      "zh": "请拖出一个人物框后再确定。",
+      "en": "Draw a person box before confirming."
+    },
+    "seed_record": {
+      "zh": "记录此帧",
+      "en": "Record box"
+    },
+    "seed_mark_in": {
+      "zh": "入点",
+      "en": "Mark in"
+    },
+    "seed_mark_out": {
+      "zh": "出点",
+      "en": "Mark out"
+    },
+    "seed_start": {
+      "zh": "开始分析",
+      "en": "Start analysis"
+    },
+    "seed_list": {
+      "zh": "已记录的框",
+      "en": "Recorded boxes"
+    },
+    "seed_need_box": {
+      "zh": "请至少记录一帧人物框。",
+      "en": "Record at least one person box."
+    },
+    "seed_range": {
+      "zh": "入点 {lo:.1f}s → 出点 {hi:.1f}s（逻辑裁剪，不改原文件）",
+      "en": "In {lo:.1f}s → out {hi:.1f}s (logical, original file unchanged)"
+    },
+    "seed_range_invalid": {
+      "zh": "出点必须晚于入点。",
+      "en": "Out point must be after in point."
+    },
+    "ok": {
+      "zh": "确定",
+      "en": "OK"
+    },
+    "cancel": {
+      "zh": "取消",
+      "en": "Cancel"
+    },
+    "camera_preview": {
+      "zh": "摄像头预览",
+      "en": "Camera preview"
+    },
+    "record_start": {
+      "zh": "录制",
+      "en": "Record"
+    },
+    "record_stop": {
+      "zh": "停止",
+      "en": "Stop"
+    },
+    "back": {
+      "zh": "返回",
+      "en": "Back"
+    },
+    "pick_file": {
+      "zh": "导入…",
+      "en": "Import…"
+    },
+    "camera_title": {
+      "zh": "摄像头",
+      "en": "Camera"
+    },
+    "camera_fail": {
+      "zh": "无法打开摄像头。",
+      "en": "Could not open the camera."
+    },
+    "pick_title": {
+      "zh": "选择视频或图片",
+      "en": "Choose video or image"
+    },
+    "pick_filter": {
+      "zh": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)",
+      "en": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)"
+    },
+    "format_title": {
+      "zh": "格式",
+      "en": "Format"
+    },
+    "format_unsupported": {
+      "zh": "不支持的文件类型。",
+      "en": "Unsupported file type."
+    },
+    "import_fail": {
+      "zh": "导入失败",
+      "en": "Import failed"
+    },
+    "play": {
+      "zh": "播放",
+      "en": "Play"
+    },
+    "pause": {
+      "zh": "暂停",
+      "en": "Pause"
+    },
+    "trim_title": {
+      "zh": "剪切视频（最长 2 分钟）",
+      "en": "Trim video (max 2 minutes)"
+    },
+    "trim_in": {
+      "zh": "入点",
+      "en": "In"
+    },
+    "trim_out": {
+      "zh": "出点",
+      "en": "Out"
+    },
+    "trim_range": {
+      "zh": "片段 {lo:.1f}s → {hi:.1f}s（{dur:.1f}s，最长 {max:.0f}s）",
+      "en": "Clip {lo:.1f}s → {hi:.1f}s ({dur:.1f}s, max {max:.0f}s)"
+    },
+    "speed": {
+      "zh": "速度",
+      "en": "Speed"
+    },
+    "download": {
+      "zh": "下载",
+      "en": "Download"
+    },
+    "share": {
+      "zh": "分享",
+      "en": "Share"
+    },
+    "locator_copy": {
+      "zh": "复制当前帧定位",
+      "en": "Copy frame locator"
+    },
+    "locator_copied": {
+      "zh": "已复制帧定位 JSON",
+      "en": "Frame locator JSON copied"
+    },
+    "feedback_like": {
+      "zh": "Like",
+      "en": "Like"
+    },
+    "feedback_unlike": {
+      "zh": "Unlike",
+      "en": "Unlike"
+    },
+    "feedback_skeleton_bad": {
+      "zh": "骨骼差",
+      "en": "Bad skeleton"
+    },
+    "export_fail": {
+      "zh": "导出失败",
+      "en": "Export failed"
+    },
+    "share_youtube": {
+      "zh": "YouTube",
+      "en": "YouTube"
+    },
+    "share_tiktok": {
+      "zh": "TikTok",
+      "en": "TikTok"
+    },
+    "share_x": {
+      "zh": "X",
+      "en": "X"
+    },
+    "share_facebook": {
+      "zh": "Facebook",
+      "en": "Facebook"
+    },
+    "share_weibo": {
+      "zh": "微博",
+      "en": "Weibo"
+    },
+    "share_bilibili": {
+      "zh": "哔哩哔哩",
+      "en": "Bilibili"
+    },
+    "coach_title": {
+      "zh": "教练报告（启发式）",
+      "en": "Coach report (heuristics)"
+    },
+    "coach_category": {
+      "zh": "种类",
+      "en": "Category"
+    },
+    "coach_stage": {
+      "zh": "阶段",
+      "en": "Stage"
+    },
+    "coach_ready": {
+      "zh": "已过关，可选下一阶段（技能树分叉）。",
+      "en": "Passed this level. Choose a next level on the skill tree."
+    },
+    "coach_not_ready": {
+      "zh": "尚未过关：按得分最低的要点训练。",
+      "en": "Not passed — train the lowest-scoring checkpoint."
+    },
+    "coach_weakest": {
+      "zh": "最弱要点",
+      "en": "Weakest checkpoint"
+    },
+    "coach_pass": {
+      "zh": "通过",
+      "en": "Pass"
+    },
+    "coach_fail": {
+      "zh": "需改进",
+      "en": "Needs work"
+    },
+    "coach_unknown": {
+      "zh": "未知",
+      "en": "Unknown"
+    },
+    "coach_drills": {
+      "zh": "训练",
+      "en": "Drills"
+    },
+    "coach_no_report": {
+      "zh": "暂无阶段报告。请先离线分析视频。",
+      "en": "No stage report yet. Analyze a clip offline first."
+    },
+    "coach_heuristic": {
+      "zh": "卡宾要点为启发式，不是 FIS 刻滑得分。",
+      "en": "Carve points are heuristics, not FIS carving scores."
+    },
+    "coach_focus": {
+      "zh": "本阶段动作重点",
+      "en": "Stage focus"
+    },
+    "coach_training": {
+      "zh": "训练重点",
+      "en": "Training emphasis"
+    },
+    "coach_advance": {
+      "zh": "如何进入下一阶段",
+      "en": "How to advance"
+    },
+    "coach_session": {
+      "zh": "本阶段课时安排",
+      "en": "Session plan for this stage"
+    },
+    "coach_score": {
+      "zh": "启发式得分（0-100，非 FIS）",
+      "en": "Heuristic score (0-100, not FIS)"
+    },
+    "coach_next": {
+      "zh": "下一阶段",
+      "en": "Next stage"
+    },
+    "coach_next_goal": {
+      "zh": "若未进阶，按下述目标训练",
+      "en": "If not advancing, train toward"
+    },
+    "coach_essay": {
+      "zh": "滑雪教练说明（知识库）",
+      "en": "Coach (from knowledge base)"
+    },
+    "coach_tech": {
+      "zh": "技术专家：骨骼判定（知识库）",
+      "en": "Tech: skeleton criteria (from knowledge base)"
+    },
+    "coach_research": {
+      "zh": "调研说明（知识库）",
+      "en": "Research notes (from knowledge base)"
+    },
+    "coach_scoring": {
+      "zh": "评分口径（知识库）",
+      "en": "Scoring rules (from knowledge base)"
+    },
+    "coach_confidence": {
+      "zh": "置信度",
+      "en": "Confidence"
+    },
+    "coach_keypoints": {
+      "zh": "动作要点",
+      "en": "Key points"
+    },
+    "report_ch1": {
+      "zh": "总结",
+      "en": "Summary"
+    },
+    "report_ch2": {
+      "zh": "分项",
+      "en": "Checkpoints"
+    },
+    "report_ch3": {
+      "zh": "下一步",
+      "en": "Next steps"
+    },
+    "report_ch4": {
+      "zh": "技能树",
+      "en": "Skill tree"
+    },
+    "report_ch5": {
+      "zh": "拍摄与评分",
+      "en": "Filming and scoring"
+    },
+    "report_terrain": {
+      "zh": "建议雪道级别",
+      "en": "Suggested trail rating"
+    },
+    "report_venue": {
+      "zh": "训练场地",
+      "en": "Training venue"
+    },
+    "report_open_player": {
+      "zh": "请在播放页打开报告以跳到该帧。",
+      "en": "Open the report on the player page to jump to this frame."
+    },
+    "report_problem_frame": {
+      "zh": "问题帧",
+      "en": "Problem frame"
+    },
+    "loading_upload": {
+      "zh": "正在导入视频…",
+      "en": "Uploading and loading…"
+    },
+    "loading_analyze": {
+      "zh": "正在分析姿态…",
+      "en": "Analyzing pose…"
+    },
+    "report_radar": {
+      "zh": "分项雷达（分数）",
+      "en": "Checkpoint radar (scores)"
+    },
+    "report_timeline": {
+      "zh": "发挥稳定度（时间 × 当前帧分数）",
+      "en": "Stability over time (time × frame score)"
+    }
+  }
+}

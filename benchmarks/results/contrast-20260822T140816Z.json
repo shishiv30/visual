@@ -1,0 +1,39 @@
+{
+  "preset": "contrast",
+  "weights": "yolo11n.pt",
+  "recorded_at": "2026-08-22T14:08:13.985311+00:00",
+  "gpu": {
+    "cuda": true,
+    "device_name": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "total_memory_bytes": 25650855936,
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8"
+  },
+  "batch_size": 1,
+  "resolutions": [
+    {
+      "height": 720,
+      "width": 1081,
+      "imgsz": 720,
+      "warmup": 10,
+      "iters": 50,
+      "latency_ms_mean": 6.700986013747752,
+      "latency_ms_p50": 6.653300020843744,
+      "fps": 149.23176946622462,
+      "peak_memory_bytes": 69568512,
+      "peak_memory_mib": 66.345703125
+    },
+    {
+      "height": 1080,
+      "width": 1622,
+      "imgsz": 1080,
+      "warmup": 10,
+      "iters": 50,
+      "latency_ms_mean": 9.30968799162656,
+      "latency_ms_p50": 9.256500052288175,
+      "fps": 107.41498543231877,
+      "peak_memory_bytes": 98549760,
+      "peak_memory_mib": 93.984375
+    }
+  ]
+}
