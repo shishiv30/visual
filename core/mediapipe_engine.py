@@ -65,9 +65,15 @@ class MediaPipeEngine:
         self._last_result: CoreInferenceResult | None = None
         self._last_ts = -1
         self.last_blaze33: np.ndarray | None = None
+        import sys
+        # macOS Metal GPU delegate crashes from a background thread; force CPU there only.
+        # On Windows leave delegate unset so mediapipe auto-selects (GPU when available).
+        base_kwargs: dict = {"model_asset_path": str(path)}
+        if sys.platform == "darwin":
+            base_kwargs["delegate"] = BaseOptions.Delegate.CPU
         mode = RunningMode.VIDEO if video else RunningMode.IMAGE
         options = PoseLandmarkerOptions(
-            base_options=BaseOptions(model_asset_path=str(path)),
+            base_options=BaseOptions(**base_kwargs),
             running_mode=mode,
             num_poses=num_poses,
             min_pose_detection_confidence=min_score,
@@ -76,7 +82,7 @@ class MediaPipeEngine:
         )
         self._landmarker = PoseLandmarker.create_from_options(options)
         crop_options = PoseLandmarkerOptions(
-            base_options=BaseOptions(model_asset_path=str(path)),
+            base_options=BaseOptions(**base_kwargs),
             running_mode=RunningMode.IMAGE,
             num_poses=1,
             min_pose_detection_confidence=min_score,

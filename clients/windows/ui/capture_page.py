@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import sys
 import tempfile
 from pathlib import Path
 
@@ -123,6 +124,14 @@ class CapturePage(QWidget):
             self._record_btn.setText(t("Record"))
 
     def start_camera(self) -> None:
+        if sys.platform == "darwin":
+            QMessageBox.information(
+                self,
+                t("Camera not available"),
+                t("Camera capture is not supported on macOS. Use Import to load a video file."),
+            )
+            self.back_requested.emit()
+            return
         self._overlay.dismiss()
         self._set_chrome_visible(True)
         self._cam = cv2.VideoCapture(0)
