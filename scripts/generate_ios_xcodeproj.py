@@ -234,13 +234,14 @@ def main() -> None:
     lines.append("\t\t\toutputPaths = (")
     lines.append("\t\t\t);")
     lines.append("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
-    lines.append(
-        "\t\t\tshellScript = "
-        '"ROOT=\\"$SRCROOT/../..\\"; DEST=\\"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\\"; '
-        "cp -f \\"$ROOT/locales/strings.json\\" \\"$DEST/strings.json\\"; "
-        "cp -f \\"$ROOT/content/ski/curriculum.v2.json\\" \\"$DEST/curriculum.v2.json\\"; "
-        "cp -f \\"$ROOT/models/pose_landmarker_full.task\\" \\"$DEST/pose_landmarker_full.task\\";\\n\";"
+    copy_script = (
+        'ROOT="$SRCROOT/../.."; DEST="$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH"; '
+        'cp -f "$ROOT/locales/strings.json" "$DEST/strings.json"; '
+        'cp -f "$ROOT/content/ski/curriculum.v2.json" "$DEST/curriculum.v2.json"; '
+        'cp -f "$ROOT/models/pose_landmarker_full.task" "$DEST/pose_landmarker_full.task";'
     )
+    escaped = copy_script.replace("\\", "\\\\").replace('"', '\\"')
+    lines.append(f'\t\t\tshellScript = "{escaped}\\n";')
     lines.append("\t\t\tshellPath = /bin/sh;")
     lines.append("\t\t};")
     lines.append("/* End PBXShellScriptBuildPhase section */\n")

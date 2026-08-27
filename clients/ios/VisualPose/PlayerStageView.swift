@@ -11,6 +11,7 @@ final class PlayerStageView: UIView {
         backgroundColor = .black
         clipsToBounds = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        tap.cancelsTouchesInView = false
         addGestureRecognizer(tap)
     }
 
@@ -28,9 +29,20 @@ final class PlayerStageView: UIView {
         }
         srcW = nextW
         srcH = nextH
+        updateHeight()
         invalidateIntrinsicContentSize()
         setNeedsLayout()
         superview?.setNeedsLayout()
+    }
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        if heightConstraint == nil {
+            let c = heightAnchor.constraint(equalToConstant: stagedHeight(for: bounds.width))
+            c.priority = .required
+            c.isActive = true
+            heightConstraint = c
+        }
     }
 
     override var intrinsicContentSize: CGSize {
@@ -40,12 +52,14 @@ final class PlayerStageView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let h = stagedHeight(for: bounds.width)
-        if abs(bounds.height - h) > 0.5 {
-            invalidateIntrinsicContentSize()
-        }
-        for sub in subviews {
-            sub.frame = bounds
+        updateHeight()
+    }
+
+    private func updateHeight() {
+        let width = bounds.width > 1 ? bounds.width : UIScreen.main.bounds.width - Theme.pageInset * 2
+        let h = stagedHeight(for: width)
+        if heightConstraint?.constant != h {
+            heightConstraint?.constant = h
         }
     }
 

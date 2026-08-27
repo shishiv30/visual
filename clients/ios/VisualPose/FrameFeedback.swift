@@ -54,15 +54,13 @@ enum FrameFeedback {
     static func save(_ file: URL, _ doc: FrameFeedbackFile) {
         var frames: [String: Any] = [:]
         for (key, entry) in doc.frames {
-            var item: [String: Any] = [
+            frames[key] = [
                 "t_ms": entry.tMs,
                 "skeleton_ok": entry.skeletonOk,
                 "updated_at": entry.updatedAt,
                 "pose_index": entry.poseIndex ?? NSNull(),
                 "stage_vote": entry.stageVote ?? NSNull(),
-            ]
-            _ = item
-            frames[key] = item
+            ] as [String: Any]
         }
         Json.write(
             file,

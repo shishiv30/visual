@@ -96,7 +96,7 @@ final class TimelineStripView: UIView {
     }
 
     func setRange(startMs: Int, endMs: Int?) {
-        let clamped = TimelineMath.clampRange(startMs, endMs, durationMs)
+        let clamped = TimelineMath.clampRange(inMs: startMs, outMs: endMs, durationMs: durationMs)
         inMs = clamped.0
         outMs = clamped.1
         setNeedsDisplay()
@@ -157,13 +157,13 @@ final class TimelineStripView: UIView {
         case .pan:
             setScroll(pressScroll - Double(dx))
         case .inHandle:
-            let clamped = TimelineMath.clampRange(msOf(x), outMs, durationMs)
+            let clamped = TimelineMath.clampRange(inMs: msOf(x), outMs: outMs, durationMs: durationMs)
             inMs = clamped.0
             outMs = clamped.1
             emitPlayhead(inMs)
             onRange?(inMs, outMs)
         case .outHandle:
-            let clamped = TimelineMath.clampRange(inMs, msOf(x), durationMs)
+            let clamped = TimelineMath.clampRange(inMs: inMs, outMs: msOf(x), durationMs: durationMs)
             inMs = clamped.0
             outMs = clamped.1
             emitPlayhead(outMs)
@@ -210,7 +210,7 @@ final class TimelineStripView: UIView {
         rulerBg.setFill()
         UIBezierPath(rect: CGRect(x: contentLeft(), y: 0, width: contentRight() - contentLeft(), height: rulerH)).fill()
         let span = Double(durationMs)
-        let step = TimelineMath.rulerTickMs(span, Int(viewportW()), zoom)
+        let step = TimelineMath.rulerTickMs(durationMs: span, viewportWidth: Int(viewportW()), zoom: zoom)
         let fine = step < 1000
         tick.setStroke()
         var tMs = 0.0
@@ -226,7 +226,7 @@ final class TimelineStripView: UIView {
                 tickPath.addLine(to: CGPoint(x: x, y: rulerH))
                 tickPath.lineWidth = 1
                 tickPath.stroke()
-                (TimelineMath.formatRulerTime(tMs, fine) as NSString).draw(
+                (TimelineMath.formatRulerTime(tMs, fine: fine) as NSString).draw(
                     at: CGPoint(x: x + 3, y: 2),
                     withAttributes: attrs
                 )
@@ -240,7 +240,7 @@ final class TimelineStripView: UIView {
             tickPath.addLine(to: CGPoint(x: endX, y: rulerH))
             tickPath.lineWidth = 1
             tickPath.stroke()
-            let label = TimelineMath.formatRulerTime(span, fine) as NSString
+            let label = TimelineMath.formatRulerTime(span, fine: fine) as NSString
             let w = label.size(withAttributes: attrs).width
             label.draw(at: CGPoint(x: endX - w, y: 2), withAttributes: attrs)
         }
@@ -249,7 +249,7 @@ final class TimelineStripView: UIView {
     private func paintFilm() {
         filmBg.setFill()
         UIBezierPath(rect: CGRect(x: contentLeft(), y: rulerH, width: contentRight() - contentLeft(), height: filmH)).fill()
-        let content = TimelineMath.contentWidthPx(Int(viewportW()), zoom)
+        let content = TimelineMath.contentWidthPx(viewportWidth: Int(viewportW()), zoom: zoom)
         let n = max(1, Int((content / Double(cellW)).rounded()))
         let cell = content / Double(n)
         let startI = max(0, Int(scrollXpx / cell) - 1)
@@ -323,7 +323,7 @@ final class TimelineStripView: UIView {
     }
 
     private func paintScrollBar() {
-        let maximum = TimelineMath.maxScrollX(Int(viewportW()), zoom)
+        let maximum = TimelineMath.maxScrollX(viewportWidth: Int(viewportW()), zoom: zoom)
         if maximum <= 0 { return }
         let track = CGRect(x: contentLeft(), y: rulerH + filmH, width: contentRight() - contentLeft(), height: barH)
         UIColor(rgb: 0x1A1A1A).setFill()
@@ -384,13 +384,13 @@ final class TimelineStripView: UIView {
 
     private func hitKeyframe(_ x: CGFloat) -> Int? {
         TimelineMath.nearestKeyframeMs(
-            Double(x - edgePad),
-            keyframesMs,
-            Double(durationMs),
-            Int(viewportW()),
-            zoom,
-            scrollXpx,
-            10
+            x: Double(x - edgePad),
+            keyframeMs: keyframesMs,
+            durationMs: Double(durationMs),
+            viewportWidth: Int(viewportW()),
+            zoom: zoom,
+            scrollX: scrollXpx,
+            hitPx: 10
         )
     }
 
@@ -406,12 +406,12 @@ final class TimelineStripView: UIView {
 
     private func applyZoom(_ nextZoom: Double, anchorX: Double) {
         let kept = TimelineMath.zoomKeepingMs(
-            nextZoom,
-            anchorX - Double(edgePad),
-            Double(durationMs),
-            Int(viewportW()),
-            zoom,
-            scrollXpx
+            zoom: nextZoom,
+            anchorX: anchorX - Double(edgePad),
+            durationMs: Double(durationMs),
+            viewportWidth: Int(viewportW()),
+            oldZoom: zoom,
+            oldScrollX: scrollXpx
         )
         zoom = kept.0
         scrollXpx = kept.1
@@ -419,7 +419,7 @@ final class TimelineStripView: UIView {
     }
 
     private func setScroll(_ next: Double) {
-        scrollXpx = TimelineMath.clampScrollX(next, Int(viewportW()), zoom)
+        scrollXpx = TimelineMath.clampScrollX(next, viewportWidth: Int(viewportW()), zoom: zoom)
         setNeedsDisplay()
     }
 
@@ -428,10 +428,22 @@ final class TimelineStripView: UIView {
     private func contentRight() -> CGFloat { bounds.width - edgePad }
 
     private func xOf(_ tMs: Double) -> CGFloat {
-        contentLeft() + CGFloat(TimelineMath.msToX(tMs, Double(durationMs), Int(viewportW()), zoom, scrollXpx))
+        contentLeft() + CGFloat(TimelineMath.msToX(
+            tMs: tMs,
+            durationMs: Double(durationMs),
+            viewportWidth: Int(viewportW()),
+            zoom: zoom,
+            scrollX: scrollXpx
+        ))
     }
 
     private func msOf(_ x: CGFloat) -> Int {
-        Int(TimelineMath.xToMs(Double(x - edgePad), Double(durationMs), Int(viewportW()), zoom, scrollXpx).rounded())
+        Int(TimelineMath.xToMs(
+            x: Double(x - edgePad),
+            durationMs: Double(durationMs),
+            viewportWidth: Int(viewportW()),
+            zoom: zoom,
+            scrollX: scrollXpx
+        ).rounded())
     }
 }

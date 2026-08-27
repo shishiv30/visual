@@ -125,7 +125,7 @@ final class Library {
     }
 
     static func toJson(_ meta: ClipMeta) -> [String: Any] {
-        var obj: [String: Any] = [
+        [
             "clip_id": meta.clipId,
             "created_at": meta.createdAt,
             "display_name": meta.displayName,
@@ -148,8 +148,6 @@ final class Library {
             "athlete_key": meta.athleteKey ?? NSNull(),
             "athlete": meta.athlete.map { $0.toJson() as Any } ?? NSNull(),
         ]
-        _ = obj
-        return obj
     }
 
     static func fromJson(_ obj: [String: Any]) -> ClipMeta {

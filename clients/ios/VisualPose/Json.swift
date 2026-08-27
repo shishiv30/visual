@@ -94,6 +94,9 @@ enum Json {
 
     static func number(_ value: Any) -> Double? {
         if let n = value as? NSNumber { return n.doubleValue }
+        if let d = value as? Double { return d }
+        if let i = value as? Int { return Double(i) }
+        if let f = value as? Float { return Double(f) }
         if let s = value as? String { return Double(s) }
         return nil
     }

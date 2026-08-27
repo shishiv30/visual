@@ -22,7 +22,10 @@ final class SkillTreeView: UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        CGSize(width: UIView.noIntrinsicMetric, height: SkillTreeLayout.heightPx(count: nodes.count, density: 1))
+        CGSize(
+            width: UIView.noIntrinsicMetric,
+            height: CGFloat(SkillTreeLayout.heightPx(count: nodes.count, density: 1))
+        )
     }
 
     override func draw(_ rect: CGRect) {
@@ -33,20 +36,26 @@ final class SkillTreeView: UIView {
         if n == 0 {
             let attrs: [NSAttributedString.Key: Any] = [
                 .font: textFont,
-                .foregroundColor: SkillTreeLayout.pending,
+                .foregroundColor: argb(SkillTreeLayout.pending),
             ]
-            let y = SkillTreeLayout.rowDp * density / 2
-            (I18n.t("—") as NSString).draw(at: CGPoint(x: SkillTreeLayout.textX(density: density), y: y - 10), withAttributes: attrs)
+            let y = CGFloat(SkillTreeLayout.rowDp) * density / 2
+            (I18n.t("—") as NSString).draw(
+                at: CGPoint(x: CGFloat(SkillTreeLayout.textX(Float(density))), y: y - 10),
+                withAttributes: attrs
+            )
             return
         }
         let currentI = SkillTreeLayout.currentIndex(nodes)
-        let cx = SkillTreeLayout.lineXDp * density
-        let row = SkillTreeLayout.rowDp * density
-        let r = SkillTreeLayout.dotRadiusDp * density
+        let cx = CGFloat(SkillTreeLayout.lineXDp) * density
+        let row = CGFloat(SkillTreeLayout.rowDp) * density
+        let r = CGFloat(SkillTreeLayout.dotRadiusDp) * density
         if n > 1 {
-            ctx.setStrokeColor(SkillTreeLayout.line.cgColor)
+            ctx.setStrokeColor(argb(SkillTreeLayout.line).cgColor)
             ctx.setLineWidth(max(1, density))
-            ctx.setLineDash(phase: 0, lengths: [SkillTreeLayout.dashDp * density, SkillTreeLayout.gapDp * density])
+            ctx.setLineDash(
+                phase: 0,
+                lengths: [CGFloat(SkillTreeLayout.dashDp) * density, CGFloat(SkillTreeLayout.gapDp) * density]
+            )
             ctx.move(to: CGPoint(x: cx, y: row / 2))
             ctx.addLine(to: CGPoint(x: cx, y: CGFloat(n - 1) * row + row / 2))
             ctx.strokePath()
@@ -54,7 +63,7 @@ final class SkillTreeView: UIView {
         }
         for (i, node) in nodes.enumerated() {
             let kind = SkillTreeLayout.kind(index: i, currentIndex: currentI)
-            let color = SkillTreeLayout.color(kind)
+            let color = argb(SkillTreeLayout.color(kind))
             let cy = CGFloat(i) * row + row / 2
             if kind == .pending {
                 ctx.setStrokeColor(color.cgColor)
@@ -68,9 +77,13 @@ final class SkillTreeView: UIView {
             let attrs: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: color]
             let size = (node.name as NSString).size(withAttributes: attrs)
             (node.name as NSString).draw(
-                at: CGPoint(x: SkillTreeLayout.textX(density: density), y: cy - size.height / 2),
+                at: CGPoint(x: CGFloat(SkillTreeLayout.textX(Float(density))), y: cy - size.height / 2),
                 withAttributes: attrs
             )
         }
+    }
+
+    private func argb(_ value: UInt32) -> UIColor {
+        UIColor(rgb: value & 0x00FFFFFF)
     }
 }

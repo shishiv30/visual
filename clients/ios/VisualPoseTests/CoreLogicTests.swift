@@ -45,9 +45,12 @@ final class I18nTests: XCTestCase {
 
 final class PlayerExportTests: XCTestCase {
     func testDownloadNameAndShareUrl() {
-        XCTAssertEqual(PlayerExport.downloadFileName(nil, clipId: nil), "overlay.jpg")
-        XCTAssertEqual(PlayerExport.downloadFileName("a/b", clipId: "x"), "a_b.jpg")
-        let url = PlayerExport.shareUrl("https://twitter.com/intent/tweet?text={text}", "Visual Pose")
+        XCTAssertEqual(PlayerExport.downloadFileName(displayName: nil, clipId: nil), "overlay.jpg")
+        XCTAssertEqual(PlayerExport.downloadFileName(displayName: "a/b", clipId: "x"), "a_b.jpg")
+        let url = PlayerExport.shareUrl(
+            template: "https://twitter.com/intent/tweet?text={text}",
+            text: "Visual Pose"
+        )
         XCTAssertTrue(url.contains("Visual%20Pose"))
     }
 }
