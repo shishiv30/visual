@@ -37,6 +37,15 @@ class FrameScorePoint(BaseModel):
     score: float
 
 
+class PostureScores(BaseModel):
+    """Heuristic coach composites 0–100 (not lab SI metrics)."""
+
+    stability: float = 0.0
+    coordination: float = 0.0
+    control: float = 0.0
+    balance: float = 0.0
+
+
 class StageReport(BaseModel):
     schema_version: Literal["2.1.0"] = "2.1.0"
     clip_id: str
@@ -64,3 +73,4 @@ class StageReport(BaseModel):
     keypoints: list[KeypointResult]
     score_series: list[FrameScorePoint] = Field(default_factory=list)
     heuristic_not_fis_carve: bool = False
+    posture: PostureScores | None = None

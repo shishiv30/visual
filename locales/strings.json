@@ -1,0 +1,1013 @@
+{
+  "schema_version": "2.0.0",
+  "strings": {
+    " cm": {
+      "zh": " cm"
+    },
+    " kg": {
+      "zh": " kg"
+    },
+    "--": {
+      "zh": "--"
+    },
+    "3×30s; no collapsed backseat.": {
+      "zh": "3 组 × 30 秒，不许塌腰后坐。"
+    },
+    "3×8 squats; Bulgarian split squat 3×6 each side.": {
+      "zh": "双腿深蹲 3×8；保加利亚分腿蹲每侧 3×6。"
+    },
+    "About hip-width; wider usually means you're still in a wedge.": {
+      "zh": "站距约髋宽；过宽说明犁式没收干净。"
+    },
+    "Allow camera": {
+      "zh": "允许相机"
+    },
+    "Analyze the clip first to open the report.": {
+      "zh": "请先完成分析后再查看报告。"
+    },
+    "Analyzing pose…": {
+      "zh": "正在分析姿态…"
+    },
+    "Athlete info required": {
+      "zh": "需要运动员信息"
+    },
+    "Athletic stance on land": {
+      "zh": "陆上运动站姿"
+    },
+    "Avoid sharp bumps, jumps, and a too-narrow line.": {
+      "zh": "避开尖包、跳台和过窄的线。"
+    },
+    "Back": {
+      "zh": "返回"
+    },
+    "Bad skeleton": {
+      "zh": "骨骼差"
+    },
+    "Balance": {
+      "zh": "平衡性"
+    },
+    "Balance on the outside ski before carving.": {
+      "zh": "刻滑前先能把重量放在外侧板上。"
+    },
+    "Bilibili": {
+      "zh": "哔哩哔哩"
+    },
+    "Birthday": {
+      "zh": "生日"
+    },
+    "Black run": {
+      "zh": "黑道"
+    },
+    "Black steep": {
+      "zh": "黑色陡坡"
+    },
+    "Blue run": {
+      "zh": "蓝道"
+    },
+    "Bump cadence": {
+      "zh": "雪包节奏"
+    },
+    "Camera": {
+      "zh": "拍摄"
+    },
+    "Camera device": {
+      "zh": "摄像头"
+    },
+    "Camera preview": {
+      "zh": "摄像头预览"
+    },
+    "Camera permission required": {
+      "zh": "需要相机权限"
+    },
+    "Camera unavailable": {
+      "zh": "无法使用相机"
+    },
+    "Cancel": {
+      "zh": "取消"
+    },
+    "carve": {
+      "zh": "刻滑"
+    },
+    "Carve parallel": {
+      "zh": "平行板刻滑"
+    },
+    "Carve points are heuristics, not FIS carving scores.": {
+      "zh": "刻滑要点为经验估分，不是 FIS 刻滑得分。"
+    },
+    "Category": {
+      "zh": "种类"
+    },
+    "Center of mass not backseat": {
+      "zh": "重心不后坐"
+    },
+    "Checkpoint radar (scores)": {
+      "zh": "分项雷达（分数）"
+    },
+    "Checkpoints": {
+      "zh": "分项"
+    },
+    "Choose video or image": {
+      "zh": "选择视频或图片"
+    },
+    "Christie stance": {
+      "zh": "半犁站距"
+    },
+    "Click the filmstrip to seek; green diamonds are saved boxes (click to jump). Drag the blue start/end edges to trim. Shift+wheel zooms. Draw a person box — it saves for this frame; draw again on the same frame to replace.": {
+      "zh": "点击胶片跳转；绿色菱形是已记录的框（点击可跳到该帧）。拖蓝色开始/结束边裁剪。Shift+滚轮缩放。在人物上拖框，松手记录到当前帧；同一帧再框选会覆盖该帧。"
+    },
+    "Clip {lo:.1f}s → {hi:.1f}s ({dur:.1f}s, max {max:.0f}s)": {
+      "zh": "片段 {lo:.1f}s → {hi:.1f}s（{dur:.1f}s，最长 {max:.0f}s）"
+    },
+    "Close the inside ski": {
+      "zh": "出弯收内侧板"
+    },
+    "Coach (from knowledge base)": {
+      "zh": "滑雪教练说明（知识库）"
+    },
+    "Coach heuristics, not FIS judging or medical advice. 2D pose can misread. Pain or prior injury: see a coach or clinician.": {
+      "zh": "滑雪教练经验估分，非 FIS 裁判分，非医疗建议。2D 骨骼会误判。疼痛或旧伤请线下教练/医师。"
+    },
+    "Coach report (heuristics)": {
+      "zh": "教练报告（经验估分）"
+    },
+    "Confidence": {
+      "zh": "置信度"
+    },
+    "Control": {
+      "zh": "控制力"
+    },
+    "Coordination": {
+      "zh": "协调性"
+    },
+    "Copy frame locator": {
+      "zh": "复制当前帧定位"
+    },
+    "Could not open the camera.": {
+      "zh": "无法打开摄像头。"
+    },
+    "Could not read video.": {
+      "zh": "无法读取视频。"
+    },
+    "Delete": {
+      "zh": "删除"
+    },
+    "Delete this clip and its local files? This cannot be undone.": {
+      "zh": "删除该条目及本地文件？此操作不可恢复。"
+    },
+    "Display only: 2D pose does not score air or ski tips. Train with a coach.": {
+      "zh": "仅目录展示：2D 骨骼不评空中与板尖。请线下教练。"
+    },
+    "Display only: boxes, rails, and jumps are not scored.": {
+      "zh": "仅目录展示：箱、杆、跳台不自动打分。"
+    },
+    "Display only: boxes, rails, and jumps with a coach; the app does not score them.": {
+      "zh": "仅目录展示：箱、杆、跳台需教练指导；本 App 不评分。"
+    },
+    "Display only: this app does not time gates.": {
+      "zh": "仅目录展示：本 App 不做旗门计时。"
+    },
+    "Display only: v2 video does not classify switch.": {
+      "zh": "仅目录展示：v2 视频不自动判定倒滑。"
+    },
+    "Do not spin the shoulders with the skis.": {
+      "zh": "肩不要跟着板狂转。"
+    },
+    "Don't land or absorb with locked, straight legs.": {
+      "zh": "不要用锁死的直腿落地或缓冲。"
+    },
+    "Done": {
+      "zh": "完成"
+    },
+    "Download": {
+      "zh": "下载"
+    },
+    "Draw a person box before confirming.": {
+      "zh": "请拖出一个人物框后再确定。"
+    },
+    "Drills": {
+      "zh": "训练"
+    },
+    "Dryland / flat": {
+      "zh": "陆地平坦场地"
+    },
+    "Easy slope, parallel or wedge: tap the downhill pole each turn.": {
+      "zh": "缓坡平行或犁式，每弯轻点山下杖。"
+    },
+    "Edge changes faster than long-radius.": {
+      "zh": "换刃快于大弯。"
+    },
+    "Eight each side; if speed builds, reset to a traverse before stopping.": {
+      "zh": "每侧 8 次；速度一起来先回到斜滑再刹。"
+    },
+    "Eight medium turns on the same pitch; cadence between long and short.": {
+      "zh": "同一坡面 8 个中弯，频率高于大弯、低于小弯。"
+    },
+    "Eight straight lines over round, shallow bumps.": {
+      "zh": "选圆而浅的包沿沟直滑 8 次。"
+    },
+    "Eight turns on green or blue; match the inside ski only in the last third of the turn.": {
+      "zh": "绿/蓝道做 8 个弯，只在出弯后三分之一并内侧板。"
+    },
+    "Elastic knees and ankles; not locked.": {
+      "zh": "膝踝有弹性，不锁直。"
+    },
+    "Enter name, height, weight, and ski length, or pick a saved profile.": {
+      "zh": "请填写姓名、身高、体重和雪板长度，或选择已存档案。"
+    },
+    "Export failed": {
+      "zh": "导出失败"
+    },
+    "Facebook": {
+      "zh": "Facebook"
+    },
+    "Fast edge change, quieter shoulders. End of the groomed carve branch.": {
+      "zh": "快换刃，肩更静。平整道刻滑枝终点。"
+    },
+    "Faster edge changes without losing parallel inclination.": {
+      "zh": "快换刃但平行与内倾不能丢。"
+    },
+    "Female": {
+      "zh": "女"
+    },
+    "Few high-quality sets; do not train fatigue into poor form.": {
+      "zh": "组数少、质量高，避免以疲劳换变形。"
+    },
+    "Fewer traverses, linked absorption; still no air scoring.": {
+      "zh": "少横切，连续吸收，仍不开空中评分。"
+    },
+    "Filming and scoring": {
+      "zh": "拍摄与评分"
+    },
+    "Flex for rhythm": {
+      "zh": "膝屈伸给节奏"
+    },
+    "Flex into the turn": {
+      "zh": "入弯降重心"
+    },
+    "Follow-cam; one alpine skier in frame.": {
+      "zh": "跟拍手机，画面尽量只框一名双板滑者。"
+    },
+    "Format": {
+      "zh": "格式"
+    },
+    "Four posture scores are coach heuristics (0–100), not lab biomechanics; they are not true speed, meter turn radius, or peak ski pressure.": {
+      "zh": "姿态四维为教练经验估分评分（0–100），非实验室生物力学测量；不含真实滑行速度、转弯半径米制或板底峰值压力。"
+    },
+    "Frame locator JSON copied": {
+      "zh": "已复制帧定位 JSON"
+    },
+    "From a gentle traverse, pivot both skis across the hill and set the edges to a stop.": {
+      "zh": "从缓坡斜滑降开始，双板同时横切并立刃停下。"
+    },
+    "From a traverse, pressure the outside ski through a small C, then switch sides.": {
+      "zh": "斜滑降开始，外侧加压划小 C，再换另一侧。"
+    },
+    "From the skid branch: absorb and stay on snow; do not jump.": {
+      "zh": "从搓雪枝进入：先吸收贴雪，不要跳。"
+    },
+    "Gender": {
+      "zh": "性别"
+    },
+    "Gentle-slope wedge brake": {
+      "zh": "缓坡犁式制动"
+    },
+    "Glide straight in a wedge and stop on purpose.": {
+      "zh": "用犁式板形直线下山并主动停下。"
+    },
+    "Green run": {
+      "zh": "绿道"
+    },
+    "Groomed-run recreational alpine": {
+      "zh": "平整雪道大众滑行"
+    },
+    "Grant camera access to run pose tracking.": {
+      "zh": "请允许相机权限以进行姿态跟踪。"
+    },
+    "Hands low": {
+      "zh": "手低"
+    },
+    "Height": {
+      "zh": "身高"
+    },
+    "Heuristic inclination and parallel stance, not FIS. Learn one-ski first.": {
+      "zh": "经验估分内倾与平行，非 FIS。最好先掌握单脚滑。"
+    },
+    "Heuristic score (0-100, not FIS)": {
+      "zh": "经验评分（0-100，非 FIS）"
+    },
+    "Heuristic: steer with the legs — rotate the femurs so the ski tips turn while the torso stays quiet.": {
+      "zh": "经验提示：用腿转向——髋内旋带动板头转向，上身保持安静。"
+    },
+    "Higher cadence without losing inclination.": {
+      "zh": "频率升高仍保持内倾。"
+    },
+    "Hip internal-rotation steering": {
+      "zh": "髋内旋导向"
+    },
+    "Hips over the feet; pressure into the ski.": {
+      "zh": "髋在脚上方，压力送到板刃。"
+    },
+    "Hockey stop": {
+      "zh": "冰球刹"
+    },
+    "hockey stop": {
+      "zh": "冰球刹"
+    },
+    "Hockey-stop capacity": {
+      "zh": "冰球刹能力"
+    },
+    "How to advance": {
+      "zh": "如何进入下一阶段"
+    },
+    "How to film": {
+      "zh": "拍摄说明"
+    },
+    "If not advancing, train toward": {
+      "zh": "若未进阶，按下述目标训练"
+    },
+    "Import": {
+      "zh": "导入"
+    },
+    "Import failed": {
+      "zh": "导入失败"
+    },
+    "Import…": {
+      "zh": "导入…"
+    },
+    "In": {
+      "zh": "入点"
+    },
+    "In {lo:.1f}s → out {hi:.1f}s (logical, original file unchanged)": {
+      "zh": "入点 {lo:.1f}s → 出点 {hi:.1f}s（逻辑裁剪，不改原文件）"
+    },
+    "Inclination into the turn": {
+      "zh": "向弯心内倾"
+    },
+    "Indoors or flat ground for stance and single-leg strength.": {
+      "zh": "室内或平地，练站姿和单腿力量。"
+    },
+    "JPEG (*.jpg)": {
+      "zh": "JPEG (*.jpg)"
+    },
+    "Keep pole tips low and hands in front of the body, about waist to mid-torso, to time left–right turns.": {
+      "zh": "杖尖放低，手在身前约腰至胸中，给左右转弯节拍。"
+    },
+    "Keep the camera steady — shaky or wild motion prevents a reliable stage assessment.": {
+      "zh": "保持镜头稳定——剧烈晃动会导致阶段无法可靠判定。"
+    },
+    "Key points": {
+      "zh": "动作要点"
+    },
+    "Knee absorption travel": {
+      "zh": "缓冲幅度"
+    },
+    "Knee flex cadence matches the bumps.": {
+      "zh": "膝屈伸节奏与雪包合拍。"
+    },
+    "Knees track": {
+      "zh": "膝不内扣"
+    },
+    "Knees track over the toes; don't let the knees collapse inward.": {
+      "zh": "膝沿脚尖方向；不要让膝盖向内塌。"
+    },
+    "Language": {
+      "zh": "语言"
+    },
+    "Large knee travel; stay on snow rather than jumping.": {
+      "zh": "膝屈振幅大，贴雪而不是跳。"
+    },
+    "Left-right turns, not a straight schuss.": {
+      "zh": "有左右转向，不是一条直线冲坡。"
+    },
+    "Legs and hips steer; do not use the shoulders as a steering wheel.": {
+      "zh": "用腿和髋改变板向，肩不要当方向盘。"
+    },
+    "Legs move; the torso stays quieter.": {
+      "zh": "腿动、上身相对安静。"
+    },
+    "Let the legs do the work.": {
+      "zh": "让腿做功。"
+    },
+    "Like": {
+      "zh": "Like"
+    },
+    "Link bumps near the fall line with less traversing.": {
+      "zh": "少横切，沿落差线连贯过包。"
+    },
+    "Linked absorption near the fall line. No air score.": {
+      "zh": "少横切的连续吸收。不评空中。"
+    },
+    "Linked short skids on parallel skis; mixed edge and skid is acceptable.": {
+      "zh": "平行板快速左右转换控速，允许刃搓混合。"
+    },
+    "Linked turns": {
+      "zh": "连续转向"
+    },
+    "Long-radius carve": {
+      "zh": "大弯刻滑"
+    },
+    "Look downhill": {
+      "zh": "视线看山下"
+    },
+    "Low hands and pole rhythm": {
+      "zh": "手低点杖节奏"
+    },
+    "Male": {
+      "zh": "男"
+    },
+    "Mark in": {
+      "zh": "入点"
+    },
+    "Mark out": {
+      "zh": "出点"
+    },
+    "Matched skis and separation. After passing, choose short skids or long-radius carve.": {
+      "zh": "双板平行，上下分离。过关后可选搓雪或刻滑大弯。"
+    },
+    "Mean stance between a full wedge and parallel.": {
+      "zh": "平均站距介于大犁与平行之间。"
+    },
+    "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)": {
+      "zh": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)"
+    },
+    "Medium-radius carve": {
+      "zh": "中弯刻滑"
+    },
+    "Medium-radius edge change": {
+      "zh": "中弯换刃"
+    },
+    "Medium-turn cadence": {
+      "zh": "中弯频率"
+    },
+    "Missing model {path}. Run: python scripts/download_pose_landmarker.py": {
+      "zh": "缺少模型 {path}。请先运行：python scripts/download_pose_landmarker.py"
+    },
+    "MM/dd/yyyy": {
+      "zh": "yyyy/MM/dd"
+    },
+    "Moderate groomed blue run; for parallel, skids, and long-radius carve.": {
+      "zh": "中等平整蓝道；适合平行、搓雪与大弯刻滑。"
+    },
+    "Mogul": {
+      "zh": "雪包"
+    },
+    "mogul": {
+      "zh": "雪包"
+    },
+    "Mogul absorption": {
+      "zh": "雪包滑行（吸收）"
+    },
+    "Mogul fall-line": {
+      "zh": "雪包落差线"
+    },
+    "Mogul field": {
+      "zh": "雪包区"
+    },
+    "Mogul skiing": {
+      "zh": "雪包滑行"
+    },
+    "MP4 (*.mp4)": {
+      "zh": "MP4 (*.mp4)"
+    },
+    "Name": {
+      "zh": "姓名"
+    },
+    "Needs work": {
+      "zh": "需改进"
+    },
+    "New profile": {
+      "zh": "新建档案"
+    },
+    "Next stage": {
+      "zh": "下一阶段"
+    },
+    "Next steps": {
+      "zh": "下一步"
+    },
+    "No box": {
+      "zh": "未框选"
+    },
+    "No preview": {
+      "zh": "无预览"
+    },
+    "No stage report yet. Analyze a clip offline first.": {
+      "zh": "暂无阶段报告。请先离线分析视频。"
+    },
+    "Non-slip floor; a handhold nearby helps.": {
+      "zh": "防滑地面，旁边有扶手更好。"
+    },
+    "No pose": {
+      "zh": "未检测到姿态"
+    },
+    "No camera found. On the emulator, use a virtual scene or webcam.": {
+      "zh": "未找到相机。模拟器请启用虚拟场景或电脑摄像头。"
+    },
+    "Not passed — train the lowest-scoring checkpoint.": {
+      "zh": "尚未过关：按得分最低的要点训练。"
+    },
+    "Not set": {
+      "zh": "未填写"
+    },
+    "OK": {
+      "zh": "确定"
+    },
+    "Ollie": {
+      "zh": "豚跳"
+    },
+    "ollie": {
+      "zh": "豚跳"
+    },
+    "On land: athletic stance, rotate the femurs to turn the toes, keep the shoulders still.": {
+      "zh": "陆上模拟：微屈站，左右髋内旋带动脚尖，肩不动。"
+    },
+    "one-ski": {
+      "zh": "单脚滑"
+    },
+    "One-ski / outside-leg drill": {
+      "zh": "单脚滑 / 外侧腿"
+    },
+    "Only try boxes, rails, or jumps with a coach, a helmet, and a supervised park.": {
+      "zh": "只在有教练、戴头盔且受监管的公园尝试箱、杆或跳台。"
+    },
+    "Open the report on the player page to jump to this frame.": {
+      "zh": "请在播放页打开报告以跳到该帧。"
+    },
+    "Open the tails and edge to a stop; do not sit down.": {
+      "zh": "推开板尾并立刃急停；不要一屁股坐下。"
+    },
+    "Open then close": {
+      "zh": "入弯犁出弯收"
+    },
+    "Other": {
+      "zh": "其他"
+    },
+    "Out": {
+      "zh": "出点"
+    },
+    "Out point must be after in point.": {
+      "zh": "出点必须晚于入点。"
+    },
+    "Outside-ski center of mass": {
+      "zh": "换外侧重心"
+    },
+    "parallel": {
+      "zh": "平行"
+    },
+    "Parallel skiing": {
+      "zh": "平行式滑雪"
+    },
+    "Parallel stance": {
+      "zh": "平行板距"
+    },
+    "Parallel-ski emergency stop; required braking skill before short skidded turns.": {
+      "zh": "平行板急停；进入搓雪小弯前的必过刹车技能。"
+    },
+    "Park": {
+      "zh": "公园"
+    },
+    "park": {
+      "zh": "公园"
+    },
+    "Park / jumps": {
+      "zh": "公园/跳台"
+    },
+    "Park skiing": {
+      "zh": "公园滑行"
+    },
+    "Pass": {
+      "zh": "通过"
+    },
+    "Passed this level. Choose a next level on the skill tree.": {
+      "zh": "已过关，可选下一阶段（技能树分叉）。"
+    },
+    "Pause": {
+      "zh": "暂停"
+    },
+    "Pending": {
+      "zh": "待定"
+    },
+    "Pick the gentlest pitch; avoid ice and crowded runouts.": {
+      "zh": "选最缓的坡，避开冰面和拥挤出口。"
+    },
+    "Play": {
+      "zh": "播放"
+    },
+    "Poses: {count}": {
+      "zh": "姿态：{count}"
+    },
+    "Practice inclination on blue before moving to red; drop to an easier pitch when form fades.": {
+      "zh": "先在蓝道练内倾再上红道；动作变形时降到更缓的坡。"
+    },
+    "Prefer fewer people and softer snow; shallower turns on ice.": {
+      "zh": "人少、雪软一点更好；冰面减小弯深。"
+    },
+    "Problem frame": {
+      "zh": "问题帧"
+    },
+    "Processing": {
+      "zh": "处理中"
+    },
+    "Quick left-right; no long traverse.": {
+      "zh": "快速左右转换，不要长横切。"
+    },
+    "Quiet shoulders": {
+      "zh": "肩静"
+    },
+    "Quiet upper body": {
+      "zh": "上身静"
+    },
+    "Quiet, easy green run — master the wedge stop first.": {
+      "zh": "安静缓坡绿道——先掌握犁式制动。"
+    },
+    "Race gates": {
+      "zh": "竞技旗门"
+    },
+    "race gates": {
+      "zh": "旗门"
+    },
+    "Re-film": {
+      "zh": "请重拍"
+    },
+    "Reanalyze": {
+      "zh": "重新分析"
+    },
+    "Record": {
+      "zh": "录制"
+    },
+    "Record at least one person box.": {
+      "zh": "请至少记录一帧人物框。"
+    },
+    "Record box": {
+      "zh": "记录此帧"
+    },
+    "Recorded boxes": {
+      "zh": "已记录的框"
+    },
+    "Red (steep groomed) run": {
+      "zh": "红道（较陡平整道）"
+    },
+    "Report": {
+      "zh": "分析报告"
+    },
+    "Research notes (from knowledge base)": {
+      "zh": "调研说明（知识库）"
+    },
+    "Retry": {
+      "zh": "重试"
+    },
+    "Round bumps, an open line, visible troughs; do not force a black run.": {
+      "zh": "包圆、线空、能看到沟；不要为了黑道硬上。"
+    },
+    "Round long-radius turns": {
+      "zh": "大弯走圆"
+    },
+    "Round, progressive long turns with parallel skis and inclination — coach heuristic, not a race carve score.": {
+      "zh": "平行板内倾做圆顺大弯——教练经验估分，非竞速刻滑得分。"
+    },
+    "Round, shallow bumps; absorb in a straight line first.": {
+      "zh": "圆而浅的包，先直滑吸收。"
+    },
+    "Saved profile": {
+      "zh": "已存档案"
+    },
+    "Scoring rules (from knowledge base)": {
+      "zh": "评分口径（知识库）"
+    },
+    "Select the person": {
+      "zh": "选择运动员"
+    },
+    "Session plan for this stage": {
+      "zh": "本阶段课时安排"
+    },
+    "Sets of 8–12 bumps; stop when form fades.": {
+      "zh": "八到十二个包一组，累了就停。"
+    },
+    "Shallow C-turns while the wedge still brakes; load the outside ski.": {
+      "zh": "在仍能刹车的前提下划浅 C，外侧板承重。"
+    },
+    "Shallow C-turns; hip internal rotation steers; the wedge stays.": {
+      "zh": "浅弧 C 弯，髋内旋导向，弯中保持犁。"
+    },
+    "Shallow wedge C-turns": {
+      "zh": "犁式浅弧 C 弯"
+    },
+    "Share": {
+      "zh": "分享"
+    },
+    "Short skidded turns": {
+      "zh": "搓雪小弯滑雪"
+    },
+    "Short skidded-turn rhythm": {
+      "zh": "搓雪小弯节奏"
+    },
+    "Short-carve cadence": {
+      "zh": "小弯频率"
+    },
+    "Short-radius carve": {
+      "zh": "小弯刻滑"
+    },
+    "Short-radius carve cadence": {
+      "zh": "短半径刻滑节奏"
+    },
+    "Short-radius skids for speed control; hockey stop required. Then moguls.": {
+      "zh": "短半径搓雪控速；必须掌握冰球刹。过关可进雪包。"
+    },
+    "Short-turn cadence": {
+      "zh": "短弯节奏"
+    },
+    "Shorten the legs at the crest, lengthen in the trough; stay on snow, do not jump.": {
+      "zh": "包顶缩短腿、沟底伸长；腿贴雪，不要跳。"
+    },
+    "Shorten the radius only after long-radius inclination works.": {
+      "zh": "在大弯能倾之后缩短半径。"
+    },
+    "Show you can stop on command with parallel skis (both directions).": {
+      "zh": "展示能用平行板按指令急停（左右两侧）。"
+    },
+    "Side or rear-quarter, whole run, little occlusion.": {
+      "zh": "从侧面或斜后方拍完整段，少遮挡、光线足够。"
+    },
+    "Single-leg strength for the christie close and carve outside ski.": {
+      "zh": "练单腿力量，为半犁收板与刻滑外侧承重做准备。"
+    },
+    "Single-mogul absorption": {
+      "zh": "单包吸收"
+    },
+    "Six large C-turns on a moderate pitch; longer outside leg.": {
+      "zh": "中等坡画 6 个大 C，外侧腿更长。"
+    },
+    "Six traverses per side; put the ski down if you wobble.": {
+      "zh": "每侧 6 次斜滑降；失稳就放回双脚，不要硬撑。"
+    },
+    "Ski length": {
+      "zh": "雪板长度"
+    },
+    "skid": {
+      "zh": "搓雪"
+    },
+    "Skill tree": {
+      "zh": "技能树"
+    },
+    "Slightly lower in the turn; elastic knees.": {
+      "zh": "入弯略降重心，膝有弹性。"
+    },
+    "Soft ankles, knees, and hips; center of mass over mid-foot.": {
+      "zh": "踝膝髋微屈，重心在脚心，不后坐。"
+    },
+    "Soft knees and ankles": {
+      "zh": "膝踝微屈"
+    },
+    "Speed": {
+      "zh": "速度"
+    },
+    "Squats and split squats": {
+      "zh": "深蹲与分腿蹲"
+    },
+    "Stability": {
+      "zh": "稳定性"
+    },
+    "Stability over time (time × frame score)": {
+      "zh": "发挥稳定度（时间 × 当前帧分数）"
+    },
+    "Stable follow-cam, one skier, side or rear-quarter.": {
+      "zh": "画面稳、一人、侧或斜后，才能判定阶段。"
+    },
+    "Stage": {
+      "zh": "阶段"
+    },
+    "Stage cannot be judged when the shot is unstable, occluded, or out of curriculum scope.": {
+      "zh": "镜头不稳、遮挡或非本课程种类时不判定阶段。"
+    },
+    "Stage focus": {
+      "zh": "本阶段动作重点"
+    },
+    "Stance width varies; not a locked wedge the whole turn.": {
+      "zh": "站距有开合，不是全程死犁。"
+    },
+    "Standard: a clear edge change, not an upright scrape.": {
+      "zh": "标准：换刃点清楚，不直立横刮。"
+    },
+    "Standard: glide on the outside ski; the inside ski taps the snow without taking weight.": {
+      "zh": "标准：缓坡外侧板滑一段，内侧板轻点雪不承重。"
+    },
+    "Standard: hip over ankle in profile; knees unlocked.": {
+      "zh": "标准：侧面看髋在踝上方，膝不锁死。"
+    },
+    "Standard: hips incline into the turn, shoulders quiet, stance parallel.": {
+      "zh": "标准：髋向弯心倾，肩不甩；站距保持平行。"
+    },
+    "Standard: hips stay near the fall line; the knees still do the work.": {
+      "zh": "标准：髋大致沿落差线，少横切；仍由膝屈伸做功。"
+    },
+    "Standard: knees track over the toes; pelvis level.": {
+      "zh": "标准：膝沿脚尖，骨盆不左右倾倒。"
+    },
+    "Standard: left-right symmetry, even quieter shoulders.": {
+      "zh": "标准：左右对称，肩更静。"
+    },
+    "Standard: linked S-track, no dart to the edge; the wedge stays through the turn.": {
+      "zh": "标准：连续 S 迹，不冲道边；弯中犁式不消失。"
+    },
+    "Standard: no long traverse between turns; knees flex and extend.": {
+      "zh": "标准：弯与弯之间没有长横切；膝有屈伸。"
+    },
+    "Standard: on replay, the wrists stay below the shoulders.": {
+      "zh": "标准：回放里手腕不高于肩。"
+    },
+    "Standard: quiet torso, large knee travel, no straight-leg slam.": {
+      "zh": "标准：上身相对静，膝屈振幅大，落地不砸直腿。"
+    },
+    "Standard: stance narrows in the last third of the turn, still stable.": {
+      "zh": "标准：出弯后半段站距变小，但不失稳。"
+    },
+    "Standard: stop on a mark both ways; skis parallel, not in a wedge.": {
+      "zh": "标准：左右都能停在预定点，板平行、不犁开。"
+    },
+    "Standard: ten stops, tips close, torso facing downhill.": {
+      "zh": "标准：十次停下板头始终相对、上身对山下。"
+    },
+    "Standard: the skis start to turn while the shoulders still face downhill.": {
+      "zh": "标准：板开始转时肩仍大体对山下。"
+    },
+    "Start analysis": {
+      "zh": "开始分析"
+    },
+    "Stay centered so you can move onto the new outside ski.": {
+      "zh": "不后坐，才能把重量交给新的外侧板。"
+    },
+    "Stay in a wedge through the turn; load the outside ski.": {
+      "zh": "转弯中仍保持犁式，外侧承重。"
+    },
+    "Stay near the fall line": {
+      "zh": "少横切"
+    },
+    "Stay parallel or inclination becomes banking.": {
+      "zh": "站距保持平行，否则倾会变成内倒。"
+    },
+    "Steep/hard suggestion for fall-line moguls only; still not measured.": {
+      "zh": "仅在雪包落差线课使用的陡/难建议，仍非实测。"
+    },
+    "Steeper groomed red run; for medium and short carve heuristics.": {
+      "zh": "更陡的平整红道；适合中小弯刻滑经验课。"
+    },
+    "Stop": {
+      "zh": "停止"
+    },
+    "Suggested black run; slope is not measured.": {
+      "zh": "建议黑道；坡度未经实测。"
+    },
+    "Suggested blue run; slope is not measured.": {
+      "zh": "建议蓝道；坡度未经实测。"
+    },
+    "Suggested green run; slope is not measured.": {
+      "zh": "建议绿道；坡度未经实测。"
+    },
+    "Suggested mogul field; bump shape is not measured.": {
+      "zh": "雪包场地建议，非包型实测。"
+    },
+    "Suggested park terrain; this app does not score air.": {
+      "zh": "公园建议场地，本 App 不评空中。"
+    },
+    "Suggested red run; slope is not measured.": {
+      "zh": "建议红道；坡度未经实测。"
+    },
+    "Suggested trail rating": {
+      "zh": "建议雪道级别"
+    },
+    "Summary": {
+      "zh": "总结"
+    },
+    "switch": {
+      "zh": "倒滑"
+    },
+    "Switch alpine": {
+      "zh": "倒滑双板"
+    },
+    "Tech: skeleton criteria (from knowledge base)": {
+      "zh": "技术专家：骨骼判定（知识库）"
+    },
+    "Ten short turns on a blue run; quiet shoulders, hands low.": {
+      "zh": "蓝道平整处 10 个短弯一组，肩静手低。"
+    },
+    "This clip is still processing. Play it when it is done.": {
+      "zh": "该条目仍在处理中，完成后才可播放。"
+    },
+    "Throwing the shoulders wrecks inclination.": {
+      "zh": "甩肩会破坏内倾。"
+    },
+    "TikTok": {
+      "zh": "TikTok"
+    },
+    "Tip the body into the turn (hips inside the arc). Heuristic only — not a measured edge angle or FIS score.": {
+      "zh": "向弯心倾斜身体（髋在弧内）。仅为经验估分——非实测刃角或 FIS 得分。"
+    },
+    "Tips close, tails open, stance wider than the hips.": {
+      "zh": "板头近、板尾开，站距宽于髋。"
+    },
+    "Torso downhill": {
+      "zh": "上身对山下"
+    },
+    "Training emphasis": {
+      "zh": "训练重点"
+    },
+    "Training venue": {
+      "zh": "训练场地"
+    },
+    "Trim video (max 2 minutes)": {
+      "zh": "剪切视频（最长 2 分钟）"
+    },
+    "Trough fall-line rhythm": {
+      "zh": "沟底落差线节奏"
+    },
+    "Unknown": {
+      "zh": "未知"
+    },
+    "Unlike": {
+      "zh": "Unlike"
+    },
+    "Unscored when the head is not visible in 2D pose.": {
+      "zh": "2D 头关键点不可靠则不计分。"
+    },
+    "Unspecified": {
+      "zh": "未指定"
+    },
+    "Unstable camera, occlusion, or out-of-scope terrain: no stage claim.": {
+      "zh": "镜头不稳、遮挡或非本课程种类时不判定阶段。"
+    },
+    "Unsupported file type.": {
+      "zh": "不支持的文件类型。"
+    },
+    "Uploading and loading…": {
+      "zh": "正在导入视频…"
+    },
+    "Upper-lower separation": {
+      "zh": "上下分离"
+    },
+    "Visual Pose": {
+      "zh": "Visual Pose"
+    },
+    "Visual Pose — Windows": {
+      "zh": "Visual Pose — Windows"
+    },
+    "Weakest checkpoint": {
+      "zh": "最弱要点"
+    },
+    "wedge": {
+      "zh": "犁式"
+    },
+    "Wedge christie": {
+      "zh": "半犁式滑雪"
+    },
+    "wedge christie": {
+      "zh": "半犁"
+    },
+    "Wedge glide": {
+      "zh": "犁式直滑"
+    },
+    "Wedge stance": {
+      "zh": "犁式站距"
+    },
+    "Wedge through the turn": {
+      "zh": "弯中保持犁"
+    },
+    "Wedge to start, close the inside ski to finish.": {
+      "zh": "入弯犁、出弯收内侧板。"
+    },
+    "Wedge to start, gradually match at the finish; do not snap shut.": {
+      "zh": "入弯犁、出弯逐渐并板，禁止突然并死。"
+    },
+    "Wedge turns": {
+      "zh": "犁式转弯"
+    },
+    "Wedge-glide on a green run, then open the tails and edge to a stop.": {
+      "zh": "绿道犁式直滑，匀速后再推开板尾立刃停下。"
+    },
+    "Weibo": {
+      "zh": "微博"
+    },
+    "Weight": {
+      "zh": "体重"
+    },
+    "Wrists below the shoulders.": {
+      "zh": "手腕低于肩。"
+    },
+    "X": {
+      "zh": "X"
+    },
+    "YouTube": {
+      "zh": "YouTube"
+    },
+    "{sec:.1f}s": {
+      "zh": "{sec:.1f}秒"
+    },
+    "{sec:.1f}s  σ {std:.0f}": {
+      "zh": "{sec:.1f}秒  σ {std:.0f}"
+    },
+    "{status} (failed, retry)": {
+      "zh": "{status}（失败，可重试）"
+    },
+    "—": {
+      "zh": "—"
+    }
+  }
+}

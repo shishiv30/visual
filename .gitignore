@@ -93,6 +93,15 @@ Thumbs.db
 Desktop.ini
 ehthumbs.db
 
+# --- Android client ---
+clients/android/.gradle/
+clients/android/local.properties
+clients/android/**/.cxx/
+*.apk
+*.aab
+*.ap_
+clients/android/app/src/main/assets/*.task
+
 # --- Editors / IDE ---
 .idea/
 .vscode/

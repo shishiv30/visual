@@ -1,7 +1,7 @@
 {
   "schema_version": "2.1.0",
   "disclaimer": {
-    "zh": "滑雪教练启发式，非 FIS 裁判分，非医疗建议。2D 骨骼会误判。疼痛或旧伤请线下教练/医师。",
+    "zh": "滑雪教练经验估分，非 FIS 裁判分，非医疗建议。2D 骨骼会误判。疼痛或旧伤请线下教练/医师。",
     "en": "Coach heuristics, not FIS judging or medical advice. 2D pose can misread. Pain or prior injury: see a coach or clinician."
   },
   "pass_score": 75.0,
@@ -13,7 +13,7 @@
       "en": "Groomed-run recreational alpine"
     },
     "alpine_moguls": {
-      "zh": "蘑菇滑行",
+      "zh": "雪包滑行",
       "en": "Mogul skiing"
     },
     "park": {
@@ -25,8 +25,8 @@
       "en": "Race gates"
     },
     "alpine_switch": {
-      "zh": "正倒滑转换",
-      "en": "Switch / fakie alpine"
+      "zh": "倒滑双板",
+      "en": "Switch alpine"
     }
   },
   "terrains": {
@@ -34,44 +34,44 @@
       "id": "green",
       "name": {
         "zh": "绿道",
-        "en": "Green"
+        "en": "Green run"
       },
       "desc": {
-        "zh": "绿道建议场地，非坡度实测。",
-        "en": "Suggested green terrain; slope is not measured."
+        "zh": "建议绿道；坡度未经实测。",
+        "en": "Suggested green run; slope is not measured."
       }
     },
     "blue": {
       "id": "blue",
       "name": {
         "zh": "蓝道",
-        "en": "Blue"
+        "en": "Blue run"
       },
       "desc": {
-        "zh": "蓝道建议场地，非坡度实测。",
-        "en": "Suggested blue terrain; slope is not measured."
+        "zh": "建议蓝道；坡度未经实测。",
+        "en": "Suggested blue run; slope is not measured."
       }
     },
     "red": {
       "id": "red",
       "name": {
-        "zh": "红道",
-        "en": "Red"
+        "zh": "红道（较陡平整道）",
+        "en": "Red (steep groomed) run"
       },
       "desc": {
-        "zh": "红道建议场地，非坡度实测。",
-        "en": "Suggested red terrain; slope is not measured."
+        "zh": "建议红道；坡度未经实测。",
+        "en": "Suggested red run; slope is not measured."
       }
     },
     "black": {
       "id": "black",
       "name": {
         "zh": "黑道",
-        "en": "Black"
+        "en": "Black run"
       },
       "desc": {
-        "zh": "黑道建议场地，非坡度实测。",
-        "en": "Suggested black terrain; slope is not measured."
+        "zh": "建议黑道；坡度未经实测。",
+        "en": "Suggested black run; slope is not measured."
       }
     },
     "park": {
@@ -88,11 +88,11 @@
     "mogul": {
       "id": "mogul",
       "name": {
-        "zh": "蘑菇",
+        "zh": "雪包",
         "en": "Mogul"
       },
       "desc": {
-        "zh": "蘑菇场地建议，非包型实测。",
+        "zh": "雪包场地建议，非包型实测。",
         "en": "Suggested mogul field; bump shape is not measured."
       }
     }
@@ -102,12 +102,12 @@
       "id": "venue_green_groomer",
       "terrain": "green",
       "name": {
-        "zh": "绿道平整雪道",
-        "en": "Green groomer"
+        "zh": "绿道",
+        "en": "Green run"
       },
       "desc": {
-        "zh": "空、缓、人少的绿道，先把刹车练稳。",
-        "en": "Quiet, easy green groomer; own the brake first."
+        "zh": "安静缓坡绿道——先掌握犁式制动。",
+        "en": "Quiet, easy green run — master the wedge stop first."
       },
       "tips": {
         "zh": "选最缓的坡，避开冰面和拥挤出口。",
@@ -118,12 +118,12 @@
       "id": "venue_blue_groomer",
       "terrain": "blue",
       "name": {
-        "zh": "蓝道平整雪道",
-        "en": "Blue groomer"
+        "zh": "蓝道",
+        "en": "Blue run"
       },
       "desc": {
-        "zh": "中等坡平整道，适合平行、搓雪和大弯。",
-        "en": "Moderate groomed blue; for parallel, skids, and long-radius carve."
+        "zh": "中等平整蓝道；适合平行、搓雪与大弯刻滑。",
+        "en": "Moderate groomed blue run; for parallel, skids, and long-radius carve."
       },
       "tips": {
         "zh": "人少、雪软一点更好；冰面减小弯深。",
@@ -134,16 +134,16 @@
       "id": "venue_red_piste",
       "terrain": "red",
       "name": {
-        "zh": "红道平整雪道",
-        "en": "Red piste"
+        "zh": "红道（较陡平整道）",
+        "en": "Red (steep groomed) run"
       },
       "desc": {
-        "zh": "更陡的平整道，适合中小弯卡宾启发式。",
-        "en": "Steeper groomed red; for medium and short carve heuristics."
+        "zh": "更陡的平整红道；适合中小弯刻滑经验课。",
+        "en": "Steeper groomed red run; for medium and short carve heuristics."
       },
       "tips": {
-        "zh": "先在蓝道能倾再上红道；累了换缓坡。",
-        "en": "Incline on blue before red; move easier when form fades."
+        "zh": "先在蓝道练内倾再上红道；动作变形时降到更缓的坡。",
+        "en": "Practice inclination on blue before moving to red; drop to an easier pitch when form fades."
       }
     },
     "venue_black_steep": {
@@ -154,7 +154,7 @@
         "en": "Black steep"
       },
       "desc": {
-        "zh": "仅在蘑菇落差线课使用的陡/难建议，仍非实测。",
+        "zh": "仅在雪包落差线课使用的陡/难建议，仍非实测。",
         "en": "Steep/hard suggestion for fall-line moguls only; still not measured."
       },
       "tips": {
@@ -166,7 +166,7 @@
       "id": "venue_mogul_field",
       "terrain": "mogul",
       "name": {
-        "zh": "蘑菇区",
+        "zh": "雪包区",
         "en": "Mogul field"
       },
       "desc": {
@@ -186,12 +186,12 @@
         "en": "Park"
       },
       "desc": {
-        "zh": "目录课：箱杆跳台请线下教练，软件不打分。",
-        "en": "Catalog: boxes, rails, and jumps with a coach; the app does not score them."
+        "zh": "仅目录展示：箱、杆、跳台需教练指导；本 App 不评分。",
+        "en": "Display only: boxes, rails, and jumps with a coach; the app does not score them."
       },
       "tips": {
-        "zh": "只在有教练和防护的公园区域尝试。",
-        "en": "Only try park features with a coach and protection."
+        "zh": "只在有教练、戴头盔且受监管的公园尝试箱、杆或跳台。",
+        "en": "Only try boxes, rails, or jumps with a coach, a helmet, and a supervised park."
       }
     },
     "venue_dryland": {
@@ -250,8 +250,8 @@
           "en": "Side or rear-quarter, whole run, little occlusion."
         },
         {
-          "zh": "不要边滑边剧烈甩镜头，否则阶段无法判定。",
-          "en": "Avoid wild camera motion or the stage cannot be judged."
+          "zh": "保持镜头稳定——剧烈晃动会导致阶段无法可靠判定。",
+          "en": "Keep the camera steady — shaky or wild motion prevents a reliable stage assessment."
         }
       ],
       "venue_ids": [
@@ -289,7 +289,7 @@
         "en": "Squats and split squats"
       },
       "desc": {
-        "zh": "练独立压腿，为半犁收板和卡宾外侧腿做准备。",
+        "zh": "练单腿力量，为半犁收板与刻滑外侧承重做准备。",
         "en": "Single-leg strength for the christie close and carve outside ski."
       },
       "training": [
@@ -313,7 +313,7 @@
         "en": "Gentle-slope wedge brake"
       },
       "desc": {
-        "zh": "用开角和立刃把速度关死，不靠摔倒。",
+        "zh": "推开板尾并立刃急停；不要一屁股坐下。",
         "en": "Open the tails and edge to a stop; do not sit down."
       },
       "training": [
@@ -395,8 +395,8 @@
           "en": "Standard: stance narrows in the last third of the turn, still stable."
         },
         {
-          "zh": "绿/蓝道做 8 个弯，只在出弯收板。",
-          "en": "Eight turns on green or blue; close the ski only at the finish."
+          "zh": "绿/蓝道做 8 个弯，只在出弯后三分之一并内侧板。",
+          "en": "Eight turns on green or blue; match the inside ski only in the last third of the turn."
         }
       ],
       "venue_ids": [
@@ -411,8 +411,8 @@
         "en": "Low hands and pole rhythm"
       },
       "desc": {
-        "zh": "杖尖低、手在视野前下方，给左右节拍。",
-        "en": "Pole tips low; hands in the lower visual field for left-right timing."
+        "zh": "杖尖放低，手在身前约腰至胸中，给左右转弯节拍。",
+        "en": "Keep pole tips low and hands in front of the body, about waist to mid-torso, to time left–right turns."
       },
       "training": [
         {
@@ -436,8 +436,8 @@
         "en": "Hockey stop"
       },
       "desc": {
-        "zh": "平行板横切急停，搓雪小弯的必过刹车。",
-        "en": "Matched-ski sideslip stop; required braking for short skidded turns."
+        "zh": "平行板急停；进入搓雪小弯前的必过刹车技能。",
+        "en": "Parallel-ski emergency stop; required braking skill before short skidded turns."
       },
       "training": [
         {
@@ -445,8 +445,8 @@
           "en": "Standard: stop on a mark both ways; skis parallel, not in a wedge."
         },
         {
-          "zh": "绿道斜滑降，点杖后双板同时横过来立刃停下。",
-          "en": "From a green-run traverse, plant, match both skis, and edge to a stop."
+          "zh": "从缓坡斜滑降开始，双板同时横切并立刃停下。",
+          "en": "From a gentle traverse, pivot both skis across the hill and set the edges to a stop."
         },
         {
           "zh": "每侧 8 次；速度一起来先回到斜滑再刹。",
@@ -475,7 +475,7 @@
         },
         {
           "zh": "蓝道平整处 10 个短弯一组，肩静手低。",
-          "en": "Ten short turns on a blue groomer; quiet shoulders, hands low."
+          "en": "Ten short turns on a blue run; quiet shoulders, hands low."
         }
       ],
       "venue_ids": [
@@ -489,8 +489,8 @@
         "en": "One-ski / outside-leg drill"
       },
       "desc": {
-        "zh": "卡宾前先能把重量放在一条腿上。",
-        "en": "Own one-legged balance before carving."
+        "zh": "刻滑前先能把重量放在外侧板上。",
+        "en": "Balance on the outside ski before carving."
       },
       "training": [
         {
@@ -514,8 +514,8 @@
         "en": "Round long-radius turns"
       },
       "desc": {
-        "zh": "把弯做圆，让板有机会走刃（启发式，非 FIS）。",
-        "en": "Round the turn so the ski can bend (heuristic, not FIS)."
+        "zh": "平行板内倾做圆顺大弯——教练经验估分，非竞速刻滑得分。",
+        "en": "Round, progressive long turns with parallel skis and inclination — coach heuristic, not a race carve score."
       },
       "training": [
         {
@@ -558,7 +558,7 @@
     "drill_carve_short": {
       "id": "drill_carve_short",
       "name": {
-        "zh": "短半径卡宾节奏",
+        "zh": "短半径刻滑节奏",
         "en": "Short-radius carve cadence"
       },
       "desc": {
@@ -586,8 +586,8 @@
         "en": "Single-mogul absorption"
       },
       "desc": {
-        "zh": "包顶变短、沟槽变高，用腿贴雪，不要跳。",
-        "en": "Shorten at the crest, lengthen in the trough; stay on snow, do not jump."
+        "zh": "包顶缩短腿、沟底伸长；腿贴雪，不要跳。",
+        "en": "Shorten the legs at the crest, lengthen in the trough; stay on snow, do not jump."
       },
       "training": [
         {
@@ -606,7 +606,7 @@
     "drill_mogul_line": {
       "id": "drill_mogul_line",
       "name": {
-        "zh": "沟槽落差线",
+        "zh": "沟底落差线节奏",
         "en": "Trough fall-line rhythm"
       },
       "desc": {
@@ -615,7 +615,7 @@
       },
       "training": [
         {
-          "zh": "标准：髋横摆相对高度变化不大，膝仍在做功。",
+          "zh": "标准：髋大致沿落差线，少横切；仍由膝屈伸做功。",
           "en": "Standard: hips stay near the fall line; the knees still do the work."
         },
         {
@@ -715,8 +715,8 @@
         "en": "Knees track"
       },
       "desc": {
-        "zh": "膝沿脚尖，不要过度 A 字内扣。",
-        "en": "Knees over the toes; avoid a collapsed A-frame."
+        "zh": "膝沿脚尖方向；不要让膝盖向内塌。",
+        "en": "Knees track over the toes; don't let the knees collapse inward."
       },
       "body": [
         "knee"
@@ -765,8 +765,8 @@
         "en": "Hip internal-rotation steering"
       },
       "desc": {
-        "zh": "启发式：膝相对踝内收，用腿转向。",
-        "en": "Heuristic: knees inside the ankles; steer with the legs."
+        "zh": "经验提示：用腿转向——髋内旋带动板头转向，上身保持安静。",
+        "en": "Heuristic: steer with the legs — rotate the femurs so the ski tips turn while the torso stays quiet."
       },
       "body": [
         "hip",
@@ -938,8 +938,8 @@
         "en": "Parallel stance"
       },
       "desc": {
-        "zh": "站距约髋宽，过宽说明犁式残渣。",
-        "en": "About hip width; too wide is leftover wedge."
+        "zh": "站距约髋宽；过宽说明犁式没收干净。",
+        "en": "About hip-width; wider usually means you're still in a wedge."
       },
       "body": [
         "ankle",
@@ -1013,8 +1013,8 @@
         "en": "Hockey-stop capacity"
       },
       "desc": {
-        "zh": "搓雪必须能用平行板急停；用膝屈振幅作代理。",
-        "en": "Skidded turns require a matched-ski stop; knee-flex amplitude is the proxy."
+        "zh": "展示能用平行板按指令急停（左右两侧）。",
+        "en": "Show you can stop on command with parallel skis (both directions)."
       },
       "body": [
         "knee",
@@ -1063,8 +1063,8 @@
         "en": "Flex for rhythm"
       },
       "desc": {
-        "zh": "不能直腿跺雪。",
-        "en": "Do not straight-leg the snow."
+        "zh": "不要用锁死的直腿落地或缓冲。",
+        "en": "Don't land or absorb with locked, straight legs."
       },
       "body": [
         "knee"
@@ -1108,12 +1108,12 @@
     "cp_cv_oneski": {
       "id": "cp_cv_oneski",
       "name": {
-        "zh": "外侧腿 / 单脚",
-        "en": "Outside-leg / one-ski"
+        "zh": "向弯心内倾",
+        "en": "Inclination into the turn"
       },
       "desc": {
-        "zh": "内倾启发式：肩相对髋向弯心。非 FIS 刃角。",
-        "en": "Inclination heuristic: shoulders inside the hips toward the turn. Not a FIS edge angle."
+        "zh": "向弯心倾斜身体（髋在弧内）。仅为经验估分——非实测刃角或 FIS 得分。",
+        "en": "Tip the body into the turn (hips inside the arc). Heuristic only — not a measured edge angle or FIS score."
       },
       "body": [
         "hip",
@@ -1135,7 +1135,7 @@
     "cp_cv_parallel": {
       "id": "cp_cv_parallel",
       "name": {
-        "zh": "卡宾平行板",
+        "zh": "平行板刻滑",
         "en": "Carve parallel"
       },
       "desc": {
@@ -1164,8 +1164,8 @@
         "en": "Quiet shoulders"
       },
       "desc": {
-        "zh": "甩肩会毁掉倾的几何。",
-        "en": "Throwing the shoulders wrecks the inclination geometry."
+        "zh": "甩肩会破坏内倾。",
+        "en": "Throwing the shoulders wrecks inclination."
       },
       "body": [
         "chest"
@@ -1232,8 +1232,8 @@
     "cp_mg_amp": {
       "id": "cp_mg_amp",
       "name": {
-        "zh": "吸收振幅",
-        "en": "Absorption amplitude"
+        "zh": "缓冲幅度",
+        "en": "Knee absorption travel"
       },
       "desc": {
         "zh": "膝屈振幅大，贴雪而不是跳。",
@@ -1281,12 +1281,12 @@
     "cp_mg_freq": {
       "id": "cp_mg_freq",
       "name": {
-        "zh": "沟槽节奏",
+        "zh": "雪包节奏",
         "en": "Bump cadence"
       },
       "desc": {
-        "zh": "膝屈频率跟上包。",
-        "en": "Knee cadence matches the bumps."
+        "zh": "膝屈伸节奏与雪包合拍。",
+        "en": "Knee flex cadence matches the bumps."
       },
       "body": [
         "knee"
@@ -1309,8 +1309,8 @@
         "en": "Stay near the fall line"
       },
       "desc": {
-        "zh": "髋横摆相对高度变化的代理，弱信号。",
-        "en": "Weak proxy: hip sway versus vertical travel."
+        "zh": "少横切，沿落差线连贯过包。",
+        "en": "Link bumps near the fall line with less traversing."
       },
       "body": [
         "hip",
@@ -1432,7 +1432,7 @@
         "en": "Parallel skiing"
       },
       "desc": {
-        "zh": "双板平行，上下分离。过关后可选搓雪或卡宾大弯。",
+        "zh": "双板平行，上下分离。过关后可选搓雪或刻滑大弯。",
         "en": "Matched skis and separation. After passing, choose short skids or long-radius carve."
       },
       "checkpoints": [
@@ -1463,7 +1463,7 @@
         "en": "Short skidded turns"
       },
       "desc": {
-        "zh": "短半径搓雪控速；必须掌握冰球刹。过关可进蘑菇。",
+        "zh": "短半径搓雪控速；必须掌握冰球刹。过关可进雪包。",
         "en": "Short-radius skids for speed control; hockey stop required. Then moguls."
       },
       "checkpoints": [
@@ -1490,11 +1490,11 @@
       "in_scope": true,
       "heuristic_not_fis_carve": true,
       "name": {
-        "zh": "卡宾大弯滑行",
+        "zh": "大弯刻滑",
         "en": "Long-radius carve"
       },
       "desc": {
-        "zh": "启发式内倾与平行，非 FIS。最好先掌握单脚滑。",
+        "zh": "经验估分内倾与平行，非 FIS。最好先掌握单脚滑。",
         "en": "Heuristic inclination and parallel stance, not FIS. Learn one-ski first."
       },
       "checkpoints": [
@@ -1520,7 +1520,7 @@
       "in_scope": true,
       "heuristic_not_fis_carve": true,
       "name": {
-        "zh": "卡宾中弯滑行",
+        "zh": "中弯刻滑",
         "en": "Medium-radius carve"
       },
       "desc": {
@@ -1550,11 +1550,11 @@
       "in_scope": true,
       "heuristic_not_fis_carve": true,
       "name": {
-        "zh": "卡宾小弯滑行",
+        "zh": "小弯刻滑",
         "en": "Short-radius carve"
       },
       "desc": {
-        "zh": "快换刃，肩更静。平整道卡宾枝终点。",
+        "zh": "快换刃，肩更静。平整道刻滑枝终点。",
         "en": "Fast edge change, quieter shoulders. End of the groomed carve branch."
       },
       "checkpoints": [
@@ -1578,7 +1578,7 @@
       "in_scope": true,
       "heuristic_not_fis_carve": false,
       "name": {
-        "zh": "蘑菇滑行（吸收）",
+        "zh": "雪包滑行（吸收）",
         "en": "Mogul absorption"
       },
       "desc": {
@@ -1607,7 +1607,7 @@
       "in_scope": true,
       "heuristic_not_fis_carve": false,
       "name": {
-        "zh": "蘑菇落差线",
+        "zh": "雪包落差线",
         "en": "Mogul fall-line"
       },
       "desc": {
@@ -1640,8 +1640,8 @@
         "en": "Ollie"
       },
       "desc": {
-        "zh": "目录节点：2D 骨骼不评空中与板尖。请线下教练。",
-        "en": "Catalog only: 2D pose does not score air or ski tips. Train with a coach."
+        "zh": "仅目录展示：2D 骨骼不评空中与板尖。请线下教练。",
+        "en": "Display only: 2D pose does not score air or ski tips. Train with a coach."
       },
       "checkpoints": [],
       "next_levels": [],
@@ -1661,8 +1661,8 @@
         "en": "Park skiing"
       },
       "desc": {
-        "zh": "目录节点：箱、杆、跳台不自动打分。",
-        "en": "Catalog only: boxes, rails, and jumps are not scored."
+        "zh": "仅目录展示：箱、杆、跳台不自动打分。",
+        "en": "Display only: boxes, rails, and jumps are not scored."
       },
       "checkpoints": [],
       "next_levels": [],
@@ -1682,8 +1682,8 @@
         "en": "Race gates"
       },
       "desc": {
-        "zh": "目录节点：本 App 不做旗门计时。",
-        "en": "Catalog only: this app does not time gates."
+        "zh": "仅目录展示：本 App 不做旗门计时。",
+        "en": "Display only: this app does not time gates."
       },
       "checkpoints": [],
       "next_levels": [],
@@ -1699,12 +1699,12 @@
       "in_scope": false,
       "heuristic_not_fis_carve": false,
       "name": {
-        "zh": "倒滑",
-        "en": "Switch / fakie"
+        "zh": "倒滑双板",
+        "en": "Switch alpine"
       },
       "desc": {
-        "zh": "目录节点：v2 视频不自动判定倒滑。",
-        "en": "Catalog only: v2 video does not classify switch."
+        "zh": "仅目录展示：v2 视频不自动判定倒滑。",
+        "en": "Display only: v2 video does not classify switch."
       },
       "checkpoints": [],
       "next_levels": [],

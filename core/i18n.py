@@ -1,4 +1,9 @@
-"""Load shared locale JSON for Windows / iOS / Android clients."""
+"""Load shared locale catalog for Windows / iOS / Android clients.
+
+Dictionary keys are the English display text. There is no ``en`` field:
+``t(key, lang=\"en\")`` returns ``key`` directly. Other languages look up
+``strings[key][lang]`` and fall back to the key.
+"""
 
 from __future__ import annotations
 
@@ -7,6 +12,7 @@ import locale
 from pathlib import Path
 
 LOCALES_DIR = Path(__file__).resolve().parents[1] / "locales"
+STRINGS_PATH = LOCALES_DIR / "strings.json"
 DEFAULT_LANG = "en"
 SUPPORTED = ("en", "es", "zh", "ko", "ja", "fr", "de", "it", "pt")
 LANG_LABELS = {
@@ -21,8 +27,7 @@ LANG_LABELS = {
     "pt": "Português",
 }
 
-_en: dict[str, str] = {}
-_catalog: dict[str, str] = {}
+_strings: dict[str, dict[str, str]] = {}
 _lang = DEFAULT_LANG
 
 
@@ -30,16 +35,24 @@ def locales_dir() -> Path:
     return LOCALES_DIR
 
 
-def _read_json(path: Path) -> dict[str, str]:
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return {str(k): str(v) for k, v in data.items()}
-
-
-def _ensure_en() -> dict[str, str]:
-    global _en
-    if not _en:
-        _en = _read_json(LOCALES_DIR / "en.json")
-    return _en
+def _load_strings() -> dict[str, dict[str, str]]:
+    global _strings
+    if _strings:
+        return _strings
+    data = json.loads(STRINGS_PATH.read_text(encoding="utf-8"))
+    raw = data.get("strings") or {}
+    catalog: dict[str, dict[str, str]] = {}
+    for key, entry in raw.items():
+        if not isinstance(entry, dict):
+            continue
+        cleaned = {
+            str(code): str(text)
+            for code, text in entry.items()
+            if code != "en" and str(text).strip()
+        }
+        catalog[str(key)] = cleaned
+    _strings = catalog
+    return _strings
 
 
 def normalize_lang(code: str | None) -> str:
@@ -61,12 +74,9 @@ def detect_system_language() -> str:
 
 
 def set_language(code: str) -> str:
-    global _catalog, _lang
-    lang = normalize_lang(code)
-    _ensure_en()
-    path = LOCALES_DIR / f"{lang}.json"
-    _catalog = _read_json(path) if path.is_file() else dict(_en)
-    _lang = lang
+    global _lang
+    _load_strings()
+    _lang = normalize_lang(code)
     return _lang
 
 
@@ -74,10 +84,19 @@ def language() -> str:
     return _lang
 
 
-def t(key: str, **kwargs: object) -> str:
-    if not _catalog and not _en:
-        set_language(DEFAULT_LANG)
-    text = _catalog.get(key) or _en.get(key) or _ensure_en().get(key) or key
+def has_key(key: str) -> bool:
+    return key in _load_strings()
+
+
+def t(key: str, lang: str | None = None, **kwargs: object) -> str:
+    """Resolve display text. English returns the key; other langs look up."""
+    _load_strings()
+    code = normalize_lang(lang) if lang is not None else _lang
+    if code == "en":
+        text = key
+    else:
+        entry = _strings.get(key) or {}
+        text = (entry.get(code) or "").strip() or key
     if kwargs:
         try:
             return text.format(**kwargs)

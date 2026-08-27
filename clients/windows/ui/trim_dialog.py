@@ -24,7 +24,7 @@ from core.i18n import t
 class TrimDialog(QDialog):
     def __init__(self, src: Path, parent=None) -> None:
         super().__init__(parent)
-        self.setWindowTitle(t("trim_title"))
+        self.setWindowTitle(t("Trim video (max 2 minutes)"))
         self._src = src
         self._duration_s = max(probe_duration_ms(src) / 1000.0, 0.1)
         self._cap = cv2.VideoCapture(str(src))
@@ -72,9 +72,9 @@ class TrimDialog(QDialog):
         self._on_change()
 
     def retranslate(self) -> None:
-        self.setWindowTitle(t("trim_title"))
-        self._in_label.setText(t("trim_in"))
-        self._out_label.setText(t("trim_out"))
+        self.setWindowTitle(t("Trim video (max 2 minutes)"))
+        self._in_label.setText(t("In"))
+        self._out_label.setText(t("Out"))
         apply_dialog_button_icons(self._buttons)
 
     def start_s(self) -> float:
@@ -99,7 +99,7 @@ class TrimDialog(QDialog):
     def _on_change(self) -> None:
         lo, hi = self._range_s()
         self._label.setText(
-            t("trim_range", lo=lo, hi=hi, dur=hi - lo, max=MAX_SECONDS)
+            t("Clip {lo:.1f}s → {hi:.1f}s ({dur:.1f}s, max {max:.0f}s)", lo=lo, hi=hi, dur=hi - lo, max=MAX_SECONDS)
         )
         if self._cap.isOpened():
             self._cap.set(cv2.CAP_PROP_POS_MSEC, lo * 1000.0)

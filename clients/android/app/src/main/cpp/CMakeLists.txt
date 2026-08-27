@@ -6,4 +6,4 @@ add_library(core_map SHARED
     core_map_jni.cpp)
 target_include_directories(core_map PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/../../../../../../native/core_map)
-target_compile_definitions(core_map PRIVATE CORE_MAP_EXPORTS)
+target_link_options(core_map PRIVATE "-Wl,-z,max-page-size=16384")

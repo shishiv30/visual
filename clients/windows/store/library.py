@@ -48,6 +48,8 @@ class ClipMeta(BaseModel):
     seeds: list[SeedMark] = Field(default_factory=list)
     play_start_ms: int = 0
     play_end_ms: int | None = None
+    athlete_key: str | None = None
+    athlete: dict | None = None
 
 
 class FrameFeedbackEntry(BaseModel):

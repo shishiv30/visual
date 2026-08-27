@@ -1,0 +1,38 @@
+---
+description: Ski coach + translator must review every display-copy change
+globs: locales/**/*.{json},content/ski/**/*,core/sports/catalog/**/*.py,clients/windows/ui/**/*.py
+alwaysApply: false
+---
+
+# Copy review: ski coach then translator
+
+Whenever user-visible text changes (new or edited English keys, `zh`/other translations, curriculum/catalog phrases, UI labels), do **not** ship the wording until both roles have checked it.
+
+## 1. Ski coach (English first)
+
+Act as an alpine ski coach reviewing the **English key** (source of truth):
+
+- Technique terms match common coaching English (wedge, christie, carve, skid, mogul, edge, angulation, etc.).
+- No FIS-score claims unless the product explicitly marks heuristics.
+- Instructions are actionable and unambiguous for recreational learners.
+- Prefer concise coaching phrasing over marketing fluff.
+
+If English is wrong or vague, **fix the key first**, then update translations.
+
+## 2. Translator (all registered langs)
+
+After English is solid, review each language field in `locales/strings.json` (at least `zh`; others if present):
+
+- Idiomatic, not word-for-word calque.
+- No ambiguous ski terms (e.g. 卡宾 vs 刻滑 context; 搓雪 vs 犁式).
+- Same meaning and tone as the English key; keep `{placeholders}` intact.
+- Missing lang → leave unset (runtime falls back to English key); do not invent filler.
+
+## Checklist before finishing
+
+- [ ] English key approved by coach lens
+- [ ] `zh` (and any other langs) approved by translator lens
+- [ ] Key registered under `strings` with **no `en` field**
+- [ ] Call sites use `t("English key")` only
+
+Rebuild if needed: `python scripts/build_locales.py` and, for curriculum copy, `python scripts/build_ski_curriculum.py`.

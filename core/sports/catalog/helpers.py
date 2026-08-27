@@ -1,4 +1,4 @@
-"""Curriculum factory helpers (Chinese copy only; English from glossary)."""
+"""Curriculum factory helpers (English keys; zh from locales/strings.json)."""
 
 from __future__ import annotations
 

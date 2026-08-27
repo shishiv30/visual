@@ -1,0 +1,33 @@
+---
+description: User-visible display strings must go through English-key t()
+alwaysApply: true
+---
+
+# i18n display strings
+
+All user-visible text (UI chrome, dialogs, enums, report copy, curriculum phrases) must use:
+
+```python
+from core.i18n import t
+
+t("English key")           # active language
+t("English key", lang="zh")
+t("Hello {name}", name=value)
+```
+
+## Dictionary
+
+- Source of truth: `locales/strings.json` under `strings`.
+- **Key = English display text.** There is **no `en` field** — English returns the key.
+- Every key must register at least `zh`. Other langs optional; missing → English key.
+- Never invent ad-hoc display literals in Python/UI. Register the key first, then call `t`.
+
+## Do not
+
+- Hardcode Chinese or English prose in widgets, reports, or catalog factories.
+- Store `"en": "..."` in the catalog (redundant with the key).
+- Use snake_case locale keys (`refresh`, `seed_start`, …).
+
+## After edits
+
+Run `python scripts/build_locales.py` if flat `locales/{lang}.json` are needed for other clients.

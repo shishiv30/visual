@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingEnd="8dp">
+
+    <ImageView
+        android:id="@+id/thumb"
+        android:layout_width="128dp"
+        android:layout_height="72dp"
+        android:background="#000000"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingVertical="4dp">
+
+        <TextView
+            android:id="@+id/clip_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/on_surface"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/clip_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/on_surface"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/clip_spinner"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="6dp"
+                android:indeterminateTint="@color/accent_blue"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/clip_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_report"
+                style="@style/Widget.VisualPose.AccentButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text=""
+                android:visibility="gone"
+                app:icon="@drawable/ic_report" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_reanalyze"
+                style="@style/Widget.VisualPose.ReanalyzeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text=""
+                app:icon="@drawable/ic_reanalyze" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete"
+                style="@style/Widget.VisualPose.DeleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text=""
+                app:icon="@drawable/ic_delete" />
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

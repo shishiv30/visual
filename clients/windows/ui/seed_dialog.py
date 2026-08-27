@@ -103,14 +103,14 @@ class SeedCanvas(QLabel):
 class SeedDialog(QDialog):
     def __init__(self, media: Path, parent=None) -> None:
         super().__init__(parent)
-        self.setWindowTitle(t("seed_title"))
+        self.setWindowTitle(t("Select the person"))
         self._box: tuple[float, float, float, float] | None = None
         frame = first_frame_bgr(str(media))
         if frame is None:
             raise ValueError("cannot read first frame")
         pix = bgr_to_pixmap(frame, max_width=720)
         self._canvas = SeedCanvas(pix)
-        hint = QLabel(t("seed_hint"))
+        hint = QLabel(t("Click the filmstrip to seek; green diamonds are saved boxes (click to jump). Drag the blue start/end edges to trim. Shift+wheel zooms. Draw a person box — it saves for this frame; draw again on the same frame to replace."))
         self._buttons = QDialogButtonBox(
             QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
         )
@@ -129,7 +129,7 @@ class SeedDialog(QDialog):
     def _accept(self) -> None:
         box = self._canvas.box_norm()
         if box is None:
-            QMessageBox.information(self, t("seed_empty_title"), t("seed_empty_body"))
+            QMessageBox.information(self, t("No box"), t("Draw a person box before confirming."))
             return
         self._box = box
         self.accept()

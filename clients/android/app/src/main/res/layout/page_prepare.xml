@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/page_inset"
+        android:paddingTop="56dp">
+
+        <local.visual.corepose.SeedCanvasView
+            android:id="@+id/prepare_canvas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#111111"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/prepare_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_panel"
+            android:textColor="@color/on_surface" />
+
+        <local.visual.corepose.TimelineStripView
+            android:id="@+id/prepare_timeline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_panel"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ScrollView
+            android:id="@+id/prepare_form_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_panel"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/page_inset">
+
+                <LinearLayout
+                    android:id="@+id/athlete_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/label_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/on_surface" />
+
+                    <Spinner
+                        android:id="@+id/spinner_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_spinner"
+                        android:popupBackground="@color/card" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_text"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/label_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface" />
+
+                            <EditText
+                                android:id="@+id/input_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_spinner"
+                                android:importantForAutofill="no"
+                                android:inputType="textPersonName"
+                                android:paddingHorizontal="12dp"
+                                android:textColor="@color/on_surface"
+                                android:textColorHint="#9E9E9E" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_panel"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/label_birthday"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface" />
+
+                            <TextView
+                                android:id="@+id/input_birthday"
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_spinner"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center_vertical"
+                                android:paddingHorizontal="12dp"
+                                android:textColor="@color/on_surface" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_text"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/label_height"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_spinner"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingEnd="12dp">
+
+                                <EditText
+                                    android:id="@+id/input_height"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:background="@null"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberDecimal"
+                                    android:paddingHorizontal="12dp"
+                                    android:text="170"
+                                    android:textColor="@color/on_surface" />
+
+                                <TextView
+                                    android:id="@+id/unit_height"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#9E9E9E" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_panel"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/label_gender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface" />
+
+                            <Spinner
+                                android:id="@+id/spinner_gender"
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_spinner"
+                                android:popupBackground="@color/card" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_text"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/label_weight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_spinner"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingEnd="12dp">
+
+                                <EditText
+                                    android:id="@+id/input_weight"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:background="@null"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberDecimal"
+                                    android:paddingHorizontal="12dp"
+                                    android:text="65"
+                                    android:textColor="@color/on_surface" />
+
+                                <TextView
+                                    android:id="@+id/unit_weight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#9E9E9E" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/space_panel"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/label_ski"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="44dp"
+                                android:layout_marginTop="6dp"
+                                android:background="@drawable/bg_spinner"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingEnd="12dp">
+
+                                <EditText
+                                    android:id="@+id/input_ski"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:background="@null"
+                                    android:importantForAutofill="no"
+                                    android:inputType="numberDecimal"
+                                    android:paddingHorizontal="12dp"
+                                    android:text="160"
+                                    android:textColor="@color/on_surface" />
+
+                                <TextView
+                                    android:id="@+id/unit_ski"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#9E9E9E" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_start_analysis"
+                    style="@style/Widget.VisualPose.AccentButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="@dimen/space_panel"
+                    android:minHeight="44dp"
+                    app:icon="@drawable/ic_ok" />
+
+                <TextView
+                    android:id="@+id/prepare_range"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_panel"
+                    android:textColor="@color/on_surface" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_prepare_back"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_margin="@dimen/page_inset"
+        android:background="@drawable/bg_floating_back"
+        android:contentDescription="Back"
+        android:src="@drawable/ic_back" />
+</FrameLayout>

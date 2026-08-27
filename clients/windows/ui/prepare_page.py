@@ -4,29 +4,67 @@ from __future__ import annotations
 
 import cv2
 import numpy as np
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import QDate, Qt, Signal
+from PySide6.QtGui import QResizeEvent
 from PySide6.QtWidgets import (
+    QComboBox,
+    QDateEdit,
+    QDoubleSpinBox,
+    QGridLayout,
     QHBoxLayout,
     QLabel,
+    QLineEdit,
     QMessageBox,
     QPushButton,
+    QSizePolicy,
     QVBoxLayout,
     QWidget,
 )
 
 from clients.windows.pipeline.clip_range import play_window_ms
+from clients.windows.store.athletes import (
+    AthleteGender,
+    AthleteProfile,
+    get_by_key,
+    list_athletes,
+    upsert_athlete,
+)
 from clients.windows.store.library import ClipKind, ClipMeta, SeedMark, load_meta, media_path
-from clients.windows.ui.qtutil import bgr_to_pixmap, format_duration_ms, set_button_icon
-from clients.windows.ui.report_layout import add_text_stack
+from clients.windows.ui.qtutil import (
+    bgr_to_pixmap,
+    format_duration_ms,
+    make_floating_back,
+    place_floating_back,
+    set_button_icon,
+    style_floating_back,
+)
 from clients.windows.ui.seed_dialog import SeedCanvas
-from clients.windows.ui.theme import BLUE, SPACE_PANEL, SPACE_TEXT
+from clients.windows.ui.theme import BLUE, PAGE_INSET, SPACE_PANEL, SPACE_TEXT
 from clients.windows.ui.timeline_strip import TimelineStrip
 from core.i18n import t
+
+CONTROL_HEIGHT = 44
+DEFAULT_BIRTHDAY = QDate(1990, 1, 1)
+
+
+def _labeled_field(label: QLabel, control: QWidget) -> QWidget:
+    wrap = QWidget()
+    col = QVBoxLayout(wrap)
+    col.setContentsMargins(0, 0, 0, 0)
+    col.setSpacing(6)
+    col.addWidget(label)
+    col.addWidget(control)
+    return wrap
+
+
+def _style_control(widget: QWidget) -> None:
+    widget.setFixedHeight(CONTROL_HEIGHT)
+    widget.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
 
 
 class PreparePage(QWidget):
     back_requested = Signal()
-    analysis_requested = Signal(str, list, int, object)
+    analysis_requested = Signal(str, list, int, object, object)
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -39,6 +77,7 @@ class PreparePage(QWidget):
         self._seeds: dict[int, SeedMark] = {}
         self._in_ms = 0
         self._out_ms: int | None = None
+        self._loading_profile = False
 
         self._hint = QLabel()
         self._hint.setWordWrap(True)
@@ -54,37 +93,120 @@ class PreparePage(QWidget):
         self._start_btn = QPushButton()
         set_button_icon(self._start_btn, "ok", BLUE)
         self._start_btn.clicked.connect(self._start)
-        self._back_btn = QPushButton()
-        self._back_btn.clicked.connect(self._on_back)
+        _style_control(self._start_btn)
 
-        self._seed_list = QWidget()
-        self._seed_list_layout = QVBoxLayout(self._seed_list)
-        self._seed_list_layout.setContentsMargins(0, 0, 0, 0)
-        self._seed_list_layout.setSpacing(SPACE_TEXT)
         self._range = QLabel()
         self._range.setWordWrap(True)
 
+        self._profile_label = QLabel()
+        self._profile = QComboBox()
+        _style_control(self._profile)
+        self._profile.currentIndexChanged.connect(self._on_profile_picked)
+
+        self._name_label = QLabel()
+        self._name = QLineEdit()
+        _style_control(self._name)
+        self._birthday_label = QLabel()
+        self._birthday = QDateEdit()
+        self._birthday.setCalendarPopup(True)
+        self._birthday.setDate(DEFAULT_BIRTHDAY)
+        _style_control(self._birthday)
+        self._height_label = QLabel()
+        self._height = QDoubleSpinBox()
+        self._height.setRange(50.0, 250.0)
+        self._height.setDecimals(1)
+        self._height.setValue(170.0)
+        _style_control(self._height)
+        self._gender_label = QLabel()
+        self._gender = QComboBox()
+        _style_control(self._gender)
+        self._weight_label = QLabel()
+        self._weight = QDoubleSpinBox()
+        self._weight.setRange(20.0, 200.0)
+        self._weight.setDecimals(1)
+        self._weight.setValue(65.0)
+        _style_control(self._weight)
+        self._ski_label = QLabel()
+        self._ski = QDoubleSpinBox()
+        self._ski.setRange(80.0, 220.0)
+        self._ski.setDecimals(1)
+        self._ski.setValue(160.0)
+        _style_control(self._ski)
+
+        form = QGridLayout()
+        form.setContentsMargins(0, 0, 0, 0)
+        form.setHorizontalSpacing(SPACE_PANEL)
+        form.setVerticalSpacing(SPACE_TEXT)
+        form.setColumnStretch(0, 1)
+        form.setColumnStretch(1, 1)
+        profile_field = _labeled_field(self._profile_label, self._profile)
+        form.addWidget(profile_field, 0, 0, 1, 2)
+        form.addWidget(_labeled_field(self._name_label, self._name), 1, 0)
+        form.addWidget(_labeled_field(self._birthday_label, self._birthday), 1, 1)
+        form.addWidget(_labeled_field(self._height_label, self._height), 2, 0)
+        form.addWidget(_labeled_field(self._gender_label, self._gender), 2, 1)
+        form.addWidget(_labeled_field(self._weight_label, self._weight), 3, 0)
+        form.addWidget(_labeled_field(self._ski_label, self._ski), 3, 1)
+        self._form_box = QWidget()
+        self._form_box.setObjectName("athleteForm")
+        self._form_box.setLayout(form)
+
         bar = QHBoxLayout()
-        bar.addWidget(self._back_btn)
+        bar.setSpacing(SPACE_TEXT)
         bar.addWidget(self._start_btn)
+        bar.addStretch(1)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setContentsMargins(PAGE_INSET, PAGE_INSET, PAGE_INSET, PAGE_INSET)
         layout.setSpacing(SPACE_PANEL)
         layout.addWidget(self._hint)
         layout.addWidget(self._canvas, alignment=Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self._time)
         layout.addWidget(self._timeline)
+        layout.addWidget(self._form_box)
         layout.addLayout(bar)
         layout.addWidget(self._range)
-        layout.addWidget(self._seed_list)
+        self._back_btn = make_floating_back(self)
+        self._back_btn.clicked.connect(self._on_back)
         self.retranslate()
+        self._reload_profiles()
+
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        super().resizeEvent(event)
+        place_floating_back(self._back_btn, self)
 
     def retranslate(self) -> None:
-        self._hint.setText(t("seed_hint"))
-        self._start_btn.setText(t("seed_start"))
+        self._hint.setText(t("Click the filmstrip to seek; green diamonds are saved boxes (click to jump). Drag the blue start/end edges to trim. Shift+wheel zooms. Draw a person box — it saves for this frame; draw again on the same frame to replace."))
+        self._start_btn.setText(t("Start analysis"))
         set_button_icon(self._start_btn, "ok", BLUE)
-        self._back_btn.setText(t("back"))
+        style_floating_back(self._back_btn, tooltip=t("Back"))
+        self._profile_label.setText(t("Saved profile"))
+        self._name_label.setText(t("Name"))
+        self._birthday_label.setText(t("Birthday"))
+        self._height_label.setText(t("Height"))
+        self._gender_label.setText(t("Gender"))
+        self._weight_label.setText(t("Weight"))
+        self._ski_label.setText(t("Ski length"))
+        self._birthday.setDisplayFormat(t("MM/dd/yyyy"))
+        self._height.setSuffix(t(" cm"))
+        self._weight.setSuffix(t(" kg"))
+        self._ski.setSuffix(t(" cm"))
+        current_gender = self._gender.currentData()
+        self._gender.blockSignals(True)
+        self._gender.clear()
+        for value, key in (
+            (AthleteGender.UNSPECIFIED, "Unspecified"),
+            (AthleteGender.FEMALE, "Female"),
+            (AthleteGender.MALE, "Male"),
+            (AthleteGender.OTHER, "Other"),
+        ):
+            self._gender.addItem(t(key), value.value)
+        if current_gender is not None:
+            idx = self._gender.findData(current_gender)
+            if idx >= 0:
+                self._gender.setCurrentIndex(idx)
+        self._gender.blockSignals(False)
+        self._reload_profiles(preserve_key=self._profile.currentData())
         self._refresh_labels()
 
     def open_clip(self, clip_id: str) -> None:
@@ -97,6 +219,11 @@ class PreparePage(QWidget):
         self._in_ms = int(self._meta.play_start_ms or 0)
         self._out_ms = self._meta.play_end_ms
         path = media_path(self._meta)
+        self._reload_profiles(preserve_key=self._meta.athlete_key)
+        if self._meta.athlete_key:
+            self._apply_profile_key(self._meta.athlete_key)
+        elif self._meta.athlete:
+            self._fill_from_dict(self._meta.athlete)
         if self._meta.kind == ClipKind.IMAGE:
             self._seeds = {0: loaded[0]} if loaded else {}
             bgr = cv2.imread(str(path))
@@ -189,15 +316,99 @@ class PreparePage(QWidget):
         self._sync_keyframes()
         self._refresh_labels()
 
+    def _reload_profiles(self, preserve_key: str | None = None) -> None:
+        self._loading_profile = True
+        want = preserve_key
+        self._profile.blockSignals(True)
+        self._profile.clear()
+        self._profile.addItem(t("New profile"), "")
+        for item in list_athletes():
+            self._profile.addItem(item.key, item.key)
+        if want:
+            idx = self._profile.findData(want)
+            if idx >= 0:
+                self._profile.setCurrentIndex(idx)
+        self._profile.blockSignals(False)
+        self._loading_profile = False
+
+    def _on_profile_picked(self, _index: int) -> None:
+        if self._loading_profile:
+            return
+        key = str(self._profile.currentData() or "")
+        if not key:
+            return
+        self._apply_profile_key(key)
+
+    def _apply_profile_key(self, key: str) -> None:
+        profile = get_by_key(key)
+        if profile is None:
+            return
+        self._fill_from_profile(profile)
+        self._loading_profile = True
+        idx = self._profile.findData(profile.key)
+        if idx >= 0:
+            self._profile.setCurrentIndex(idx)
+        self._loading_profile = False
+
+    def _fill_from_profile(self, profile: AthleteProfile) -> None:
+        self._name.setText(profile.name)
+        self._height.setValue(profile.height_cm)
+        self._weight.setValue(profile.weight_kg)
+        self._ski.setValue(profile.ski_cm)
+        gender_idx = self._gender.findData(profile.gender.value)
+        if gender_idx >= 0:
+            self._gender.setCurrentIndex(gender_idx)
+        if profile.birthday:
+            parsed = QDate.fromString(profile.birthday, Qt.DateFormat.ISODate)
+            if parsed.isValid():
+                self._birthday.setDate(parsed)
+            else:
+                self._birthday.setDate(DEFAULT_BIRTHDAY)
+        else:
+            self._birthday.setDate(DEFAULT_BIRTHDAY)
+
+    def _fill_from_dict(self, data: dict) -> None:
+        try:
+            profile = AthleteProfile.model_validate(data)
+        except Exception:
+            return
+        self._fill_from_profile(profile)
+
+    def _birthday_iso(self) -> str:
+        return self._birthday.date().toString(Qt.DateFormat.ISODate)
+
+    def _read_athlete(self) -> AthleteProfile | None:
+        name = self._name.text().strip()
+        if not name:
+            return None
+        try:
+            return upsert_athlete(
+                name=name,
+                weight_kg=float(self._weight.value()),
+                height_cm=float(self._height.value()),
+                ski_cm=float(self._ski.value()),
+                birthday=self._birthday_iso(),
+                gender=str(self._gender.currentData() or AthleteGender.UNSPECIFIED.value),
+            )
+        except ValueError:
+            return None
+
     def _start(self) -> None:
         if self._meta is None:
             return
         if not self._seeds:
-            QMessageBox.information(self, t("seed_empty_title"), t("seed_need_box"))
+            QMessageBox.information(self, t("No box"), t("Record at least one person box."))
             return
+        athlete = self._read_athlete()
+        if athlete is None:
+            QMessageBox.information(
+                self, t("Athlete info required"), t("Enter name, height, weight, and ski length, or pick a saved profile.")
+            )
+            return
+        self._reload_profiles(preserve_key=athlete.key)
         seeds = sorted(self._seeds.values(), key=lambda item: item.t_ms)
         self.analysis_requested.emit(
-            self._meta.clip_id, seeds, self._in_ms, self._out_ms
+            self._meta.clip_id, seeds, self._in_ms, self._out_ms, athlete
         )
 
     def _refresh_labels(self) -> None:
@@ -205,26 +416,13 @@ class PreparePage(QWidget):
         if self._meta is not None:
             total = self._meta.duration_ms
         self._time.setText(
-            f"{format_duration_ms(int(self._t_ms))} / {format_duration_ms(total)}  f{self._frame_index}"
+            f"{format_duration_ms(int(self._t_ms))} / {format_duration_ms(total)}"
         )
         out = self._out_ms if self._out_ms is not None else total
         self._range.setText(
             t(
-                "seed_range",
+                "In {lo:.1f}s → out {hi:.1f}s (logical, original file unchanged)",
                 lo=self._in_ms / 1000.0,
                 hi=(out / 1000.0) if out else 0.0,
             )
         )
-        while self._seed_list_layout.count():
-            item = self._seed_list_layout.takeAt(0)
-            widget = item.widget()
-            if widget is not None:
-                widget.setParent(None)
-                widget.deleteLater()
-        if self._seeds:
-            lines = [t("seed_list")]
-            for mark in sorted(self._seeds.values(), key=lambda m: m.t_ms):
-                lines.append(f"t={mark.t_ms:.0f}ms")
-            add_text_stack(self._seed_list_layout, lines)
-        else:
-            add_text_stack(self._seed_list_layout, [t("seed_list") + " —"])

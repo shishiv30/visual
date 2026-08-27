@@ -5,10 +5,10 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 
+from core.i18n import has_key, t
 from core.sports.assess import assess_clip
 from core.sports.curriculum import CURRICULUM_PATH, load_curriculum
 from core.sports.report_cases import CASES, ReportCase, clip_for
-from core.sports.translator import MissingTranslationError, en_for
 from schemas.stage_report import KeypointStatus, StageReport
 
 CJK = ("\u4e00", "\u9fff")
@@ -27,6 +27,11 @@ def audit_layout(report: StageReport, *, expect_stages: tuple[str, ...] | None =
         issues.append("ch1 missing stage_name")
     if not 0 <= report.score_0_100 <= 100:
         issues.append("ch1 score out of range")
+    if report.posture is not None:
+        for name in ("stability", "coordination", "control", "balance"):
+            value = getattr(report.posture, name)
+            if not 0 <= value <= 100:
+                issues.append(f"ch1 posture {name} out of range")
     if report.stage_id != "unknown":
         if report.terrain_id not in KNOWN_TERRAIN:
             issues.append(f"ch1 terrain {report.terrain_id!r}")
@@ -105,11 +110,10 @@ def audit_bilingual(zh_report: StageReport, en_report: StageReport) -> list[str]
         issues.append("zh stage_name has no CJK")
     if _has_cjk(en_report.stage_name):
         issues.append("en stage_name still has CJK")
-    try:
-        if en_for(zh_report.stage_name) != en_report.stage_name:
-            issues.append("en stage_name != glossary")
-    except MissingTranslationError:
-        issues.append(f"glossary missing {zh_report.stage_name}")
+    if not has_key(en_report.stage_name):
+        issues.append(f"strings missing {en_report.stage_name}")
+    elif t(en_report.stage_name, lang="zh") != zh_report.stage_name:
+        issues.append("zh stage_name != strings catalog")
     if len(zh_report.next_plans) != len(en_report.next_plans):
         issues.append("zh/en next_plans length mismatch")
     if len(zh_report.film_steps) != len(en_report.film_steps):

@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import assert_never
 
 import core.i18n as i18n
+from core.i18n import t
 from core.sports.curriculum import (
     CheckpointSpec,
     Curriculum,
@@ -14,8 +15,8 @@ from core.sports.curriculum import (
     load_curriculum,
     level_by_id,
 )
+from core.sports.posture import posture_scores
 from core.sports.signals import FeaturePack, FrameSample, extract_features, signal_value
-from core.sports.translator import loc
 from schemas.clip_analysis import ClipAnalysis
 from schemas.stage_report import (
     FrameScorePoint,
@@ -31,35 +32,52 @@ CONF_GATE = 0.35
 QUALITY_GATE = 0.2
 
 
-def _loc(zh: str, en: str, lang: str) -> str:
-    return zh if lang.startswith("zh") else en
-
-
-def _t(zh: str, lang: str) -> str:
-    pair = loc(zh)
-    return _loc(pair["zh"], pair["en"], lang)
+def _text(item: object, lang: str) -> str:
+    """Resolve Localized or English key via i18n catalog."""
+    if hasattr(item, "en"):
+        return t(str(getattr(item, "en")), lang=lang)
+    return t(str(item), lang=lang)
 
 
 def classify(pack: FeaturePack) -> tuple[str, str, float]:
+    """Pick category/stage from kinematics.
+
+    Strong mogul (large knee absorb) wins first. Carve-like angulation on a
+    narrow stance is checked before soft mogul so groomed green-piste carving
+    is not swallowed by knee rhythm alone. Soft mogul requires wide stance.
+    """
     if pack.n < 4 or pack.quality < QUALITY_GATE:
         return SYS_CATEGORY, UNKNOWN, 0.0
-    mogul = pack.knee_flex_amp > 35.0 and pack.knee_flex_freq > 0.6
-    if mogul and pack.upper_quiet < 0.45:
+
+    def _mogul_stage() -> tuple[str, str, float]:
         stage = "mogul_absorb"
         if pack.fall_line < 0.85 and pack.knee_flex_freq > 1.1:
             stage = "mogul_fallline"
         return "alpine_moguls", stage, min(1.0, 0.45 + pack.knee_flex_freq / 4.0)
-    if pack.stance_width >= 1.2:
-        conf = min(1.0, 0.4 + (pack.stance_width - 1.2))
-        if pack.turn_freq < 0.18:
-            return "alpine_piste", "pizza_glide", conf
-        return "alpine_piste", "pizza", conf
+
+    # Strong mogul: clear bump absorption (real mogul clips ~amp 70+).
+    if pack.knee_flex_amp > 50.0 and pack.knee_flex_freq > 0.8:
+        return _mogul_stage()
+    # Carve / angulated piste before soft mogul (green-piste false positives).
     if pack.inward_lean >= 0.18 and pack.stance_width < 1.2:
         if pack.turn_freq >= 0.45:
             return "alpine_piste", "carve_short", 0.5
         if pack.turn_freq >= 0.32:
             return "alpine_piste", "carve_medium", 0.5
         return "alpine_piste", "carve_long", 0.5
+    # Soft mogul: medium knee work with wide projected stance.
+    if (
+        pack.knee_flex_amp > 35.0
+        and pack.knee_flex_freq > 0.6
+        and pack.stance_width >= 1.2
+    ):
+        return _mogul_stage()
+    # Pizza / glide: wide stance without mogul-like knee rhythm.
+    if pack.stance_width >= 1.2 and pack.knee_flex_freq <= 0.6:
+        conf = min(1.0, 0.4 + (pack.stance_width - 1.2))
+        if pack.turn_freq < 0.18:
+            return "alpine_piste", "pizza_glide", conf
+        return "alpine_piste", "pizza", conf
     if (
         pack.stance_width_std >= 0.22
         and pack.stance_width >= 0.95
@@ -114,12 +132,12 @@ def assess_clip(
             if nxt is None or not nxt.in_scope:
                 continue
             next_ids.append(nid)
-            next_names.append(_loc(nxt.name.zh, nxt.name.en, lang_code))
+            next_names.append(_text(nxt.name, lang_code))
             next_plans.append(_level_plan(nxt, cur, lang_code))
     weakest = _weakest_id(results)
     cat_loc = cur.categories.get(stage.category_id)
     cat_name = (
-        _loc(cat_loc.zh, cat_loc.en, lang_code) if cat_loc else category_id
+        _text(cat_loc, lang_code) if cat_loc else category_id
     )
     terrain = cur.terrains.get(stage.terrain)
     sys_drill = cur.drills[cur.sys_drill]
@@ -128,18 +146,18 @@ def assess_clip(
         category_id=stage.category_id,
         stage_id=stage_id,
         category_name=cat_name,
-        stage_name=_loc(stage.name.zh, stage.name.en, lang_code),
+        stage_name=_text(stage.name, lang_code),
         confidence=confidence,
         ready_for_next_stage=ready,
-        disclaimer=_loc(cur.disclaimer.zh, cur.disclaimer.en, lang_code),
-        stage_focus=_loc(stage.desc.zh, stage.desc.en, lang_code),
+        disclaimer=_text(cur.disclaimer, lang_code),
+        stage_focus=_text(stage.desc, lang_code),
         score_0_100=score,
         terrain_id=stage.terrain,
         terrain_name=(
-            _loc(terrain.name.zh, terrain.name.en, lang_code) if terrain else ""
+            _text(terrain.name, lang_code) if terrain else ""
         ),
         terrain_desc=(
-            _loc(terrain.desc.zh, terrain.desc.en, lang_code) if terrain else ""
+            _text(terrain.desc, lang_code) if terrain else ""
         ),
         weakest_checkpoint_id="" if ready else weakest,
         next_level_ids=next_ids,
@@ -152,11 +170,12 @@ def assess_clip(
         ],
         tree_path=_tree_path(cur, stage_id, lang_code),
         film_steps=[
-            _loc(row.zh, row.en, lang_code) for row in sys_drill.training
+            _text(row, lang_code) for row in sys_drill.training
         ],
         keypoints=results,
         score_series=_score_series(stage, pack, cur),
         heuristic_not_fis_carve=heuristic,
+        posture=posture_scores(pack, results),
     )
 
 
@@ -266,13 +285,13 @@ def _eval_checkpoint(
         )
     return KeypointResult(
         id=spec.id,
-        name=_loc(spec.name.zh, spec.name.en, lang),
+        name=_text(spec.name, lang),
         status=status,
         score=score,
         value=value,
         evidence_ms=evidence,
-        good=_loc(spec.desc.zh, spec.desc.en, lang),
-        bad=_loc(spec.desc.zh, spec.desc.en, lang),
+        good=_text(spec.desc, lang),
+        bad=_text(spec.desc, lang),
         drills=drills,
     )
 
@@ -374,9 +393,9 @@ def _venue_payload(cur: Curriculum, venue_id: str, lang: str) -> dict | None:
         return None
     return {
         "id": venue.id,
-        "name": _loc(venue.name.zh, venue.name.en, lang),
-        "desc": _loc(venue.desc.zh, venue.desc.en, lang),
-        "tips": _loc(venue.tips.zh, venue.tips.en, lang),
+        "name": _text(venue.name, lang),
+        "desc": _text(venue.desc, lang),
+        "tips": _text(venue.tips, lang),
         "terrain": venue.terrain,
     }
 
@@ -389,11 +408,11 @@ def _drill_payload(drill: Drill, cur: Curriculum, lang: str) -> dict:
     ]
     return {
         "id": drill.id,
-        "title": _loc(drill.name.zh, drill.name.en, lang),
-        "name": _loc(drill.name.zh, drill.name.en, lang),
-        "desc": _loc(drill.desc.zh, drill.desc.en, lang),
-        "steps": [_loc(row.zh, row.en, lang) for row in drill.training],
-        "training": [_loc(row.zh, row.en, lang) for row in drill.training],
+        "title": _text(drill.name, lang),
+        "name": _text(drill.name, lang),
+        "desc": _text(drill.desc, lang),
+        "steps": [_text(row, lang) for row in drill.training],
+        "training": [_text(row, lang) for row in drill.training],
         "venues": venues,
     }
 
@@ -411,7 +430,7 @@ def _level_plan(stage: LevelSpec, cur: Curriculum, lang: str) -> dict:
     ]
     return {
         "level_id": stage.id,
-        "level_name": _loc(stage.name.zh, stage.name.en, lang),
+        "level_name": _text(stage.name, lang),
         "drills": drills,
         "venues": venues,
     }
@@ -438,7 +457,7 @@ def _tree_path(cur: Curriculum, stage_id: str, lang: str) -> list[TreeNode]:
         nodes.append(
             TreeNode(
                 id=lid,
-                name=_loc(spec.name.zh, spec.name.en, lang),
+                name=_text(spec.name, lang),
                 current=lid == stage_id,
             )
         )
@@ -457,7 +476,7 @@ def _tree_path(cur: Curriculum, stage_id: str, lang: str) -> list[TreeNode]:
         nodes.append(
             TreeNode(
                 id=nxt,
-                name=_loc(next_spec.name.zh, next_spec.name.en, lang),
+                name=_text(next_spec.name, lang),
                 current=False,
             )
         )
@@ -475,25 +494,26 @@ def _unknown_report(
         clip_id=clip_id,
         category_id=SYS_CATEGORY,
         stage_id=UNKNOWN,
-        category_name=_t("未识别", lang),
-        stage_name=_t("请重拍", lang),
+        category_name=_text("Unknown", lang),
+        stage_name=_text("Re-film", lang),
         confidence=min(pack.quality, 0.34),
         ready_for_next_stage=False,
-        disclaimer=_loc(cur.disclaimer.zh, cur.disclaimer.en, lang),
+        disclaimer=_text(cur.disclaimer, lang),
         weakest_checkpoint_id="KP-SYS-01",
-        film_steps=[_loc(row.zh, row.en, lang) for row in drill.training],
+        film_steps=[_text(row, lang) for row in drill.training],
         keypoints=[
             KeypointResult(
                 id="KP-SYS-01",
-                name=_loc(drill.name.zh, drill.name.en, lang),
+                name=_text(drill.name, lang),
                 status=KeypointStatus.UNKNOWN,
                 value=None,
-                good=_loc(drill.name.zh, drill.name.en, lang),
-                bad=_t(
-                    "镜头不稳、遮挡或非本课程种类时不判定阶段。",
+                good=_text(drill.name, lang),
+                bad=_text(
+                    "Stage cannot be judged when the shot is unstable, occluded, or out of curriculum scope.",
                     lang,
                 ),
                 drills=[payload],
             )
         ],
+        posture=posture_scores(pack, []),
     )

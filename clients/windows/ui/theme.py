@@ -20,6 +20,7 @@ CARD_RADIUS = 10
 SPACE_CHAPTER = 36
 SPACE_PANEL = 24
 SPACE_TEXT = 16
+PAGE_INSET = 12
 MEDAL_BEGINNER = QColor("#43A047")
 MEDAL_INTERMEDIATE = QColor("#1E88E5")
 MEDAL_ADVANCED = QColor("#8E24AA")
@@ -27,7 +28,7 @@ MEDAL_ELITE = QColor("#FFC107")
 TERRAIN_GREEN = QColor("#2E7D32")
 TERRAIN_BLUE = QColor("#1565C0")
 TERRAIN_RED = QColor("#C62828")
-TERRAIN_BLACK = QColor("#212121")
+TERRAIN_BLACK = QColor("#000000")
 
 
 def score_purple(score: float | None) -> QColor:
@@ -330,6 +331,46 @@ def app_stylesheet() -> str:
     }
     QLabel#reportTerrainChip {
         font-weight: 600;
+    }
+    QPushButton#floatingBack {
+        min-height: 44px;
+        max-height: 44px;
+        min-width: 44px;
+        max-width: 44px;
+        padding: 0;
+        border-radius: 8px;
+        background: rgba(30, 30, 30, 0.88);
+        border: 1px solid #3d3d3d;
+        color: #f5f5f5;
+    }
+    QPushButton#floatingBack:hover {
+        background: rgba(255, 255, 255, 0.14);
+    }
+    QWidget#athleteForm QLineEdit,
+    QWidget#athleteForm QComboBox,
+    QWidget#athleteForm QDateEdit,
+    QWidget#athleteForm QDoubleSpinBox {
+        min-height: 44px;
+        max-height: 44px;
+        padding: 0 12px;
+        border-radius: 8px;
+        border: 1px solid #3d3d3d;
+        background: #2a2a2a;
+        color: #f5f5f5;
+    }
+    QWidget#athleteForm QComboBox::drop-down {
+        width: 28px;
+        border: none;
+    }
+    QWidget#athleteForm QDateEdit::drop-down {
+        width: 28px;
+        border: none;
+    }
+    QWidget#preparePage QPushButton {
+        min-height: 44px;
+        max-height: 44px;
+        border-radius: 8px;
+        padding: 0 16px;
     }
     QGroupBox#reportEssay {
         border: 1px solid #3d3d3d;

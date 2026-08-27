@@ -23,7 +23,7 @@ def load_language() -> str:
     if path.is_file():
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
-            raw = data.get("language")
+            raw = data.get("Language")
             if raw:
                 return normalize_lang(str(raw))
         except (OSError, ValueError, json.JSONDecodeError):

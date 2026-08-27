@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/page_inset"
+        android:paddingTop="56dp">
+
+        <local.visual.corepose.PlayerStageView
+            android:id="@+id/player_stage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextureView
+                android:id="@+id/player_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/player_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:visibility="gone" />
+
+            <local.visual.corepose.PoseOverlayView
+                android:id="@+id/player_overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <HorizontalScrollView
+                android:id="@+id/player_chrome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="#99000000"
+                android:fillViewport="true"
+                android:padding="8dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_play"
+                        style="@style/Widget.VisualPose.ChromeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_play" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_locator"
+                        style="@style/Widget.VisualPose.ChromeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="44dp"
+                        android:textColor="@color/paper"
+                        android:textSize="12sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_speed"
+                        style="@style/Widget.VisualPose.ChromeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="44dp"
+                        android:text="1×"
+                        android:textColor="@color/paper" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_like"
+                        style="@style/Widget.VisualPose.ChromeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        app:icon="@drawable/ic_like" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_unlike"
+                        style="@style/Widget.VisualPose.ChromeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        app:icon="@drawable/ic_unlike" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_skeleton"
+                        style="@style/Widget.VisualPose.ChromeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checkable="true"
+                        app:icon="@drawable/ic_reanalyze" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_download"
+                        style="@style/Widget.VisualPose.ChromeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_download" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_share"
+                        style="@style/Widget.VisualPose.ChromeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:icon="@drawable/ic_share" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </local.visual.corepose.PlayerStageView>
+
+        <local.visual.corepose.TimelineStripView
+            android:id="@+id/player_timeline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ScrollView
+            android:id="@+id/player_report_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_chapter"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:overScrollMode="never">
+
+            <local.visual.corepose.ReportPanelView
+                android:id="@+id/player_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </ScrollView>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_player_back"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_margin="@dimen/page_inset"
+        android:background="@drawable/bg_floating_back"
+        android:contentDescription="Back"
+        android:src="@drawable/ic_back" />
+</FrameLayout>

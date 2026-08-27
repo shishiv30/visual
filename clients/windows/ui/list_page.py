@@ -126,11 +126,11 @@ class ThumbLabel(QLabel):
 def _status_key(status: ClipStatus) -> str:
     match status:
         case ClipStatus.PENDING:
-            return "status_pending"
+            return "Pending"
         case ClipStatus.PROCESSING:
-            return "status_processing"
+            return "Processing"
         case ClipStatus.DONE:
-            return "status_done"
+            return "Done"
         case _:
             unreachable: Never = status
             raise ValueError(unreachable)
@@ -192,11 +192,11 @@ class ListPage(QWidget):
         self.reload()
 
     def retranslate(self) -> None:
-        self._capture_btn.setText(t("capture"))
+        self._capture_btn.setText(t("Camera"))
         set_button_icon(self._capture_btn, "camera", BLUE)
-        self._upload_btn.setText(t("upload"))
+        self._upload_btn.setText(t("Import"))
         set_button_icon(self._upload_btn, "import", BLUE)
-        self._lang_label.setText(t("language"))
+        self._lang_label.setText(t("Language"))
         self._lang.blockSignals(True)
         idx = max(0, self._lang.findData(language()))
         self._lang.setCurrentIndex(idx)
@@ -231,14 +231,14 @@ class ListPage(QWidget):
         if path.is_file():
             thumb.setPixmap(QPixmap(str(path)))
         else:
-            thumb.setText(t("no_preview"))
+            thumb.setText(t("No preview"))
         name = QLabel(meta.display_name)
         duration = QLabel(
             format_duration_ms(meta.duration_ms, image=meta.kind == ClipKind.IMAGE)
         )
         status = t(_status_key(meta.status))
         if meta.error:
-            status = t("status_failed", status=status)
+            status = t("{status} (failed, retry)", status=status)
         st = QLabel(status)
         st.setObjectName("statusChip")
         kind = {
@@ -251,12 +251,12 @@ class ListPage(QWidget):
         st.style().polish(st)
         spinner = LoadingSpinner(22)
         spinner.setVisible(meta.status == ClipStatus.PROCESSING)
-        delete_btn = QPushButton(t("delete"))
+        delete_btn = QPushButton(t("Delete"))
         set_button_icon(delete_btn, "delete", WATERMELON)
-        refresh_btn = QPushButton(t("refresh"))
+        refresh_btn = QPushButton(t("Reanalyze"))
         set_button_icon(refresh_btn, "reanalyze", PURPLE)
         refresh_btn.setVisible(meta.status != ClipStatus.PROCESSING)
-        report_btn = QPushButton(t("report"))
+        report_btn = QPushButton(t("Report"))
         set_button_icon(report_btn, "report", BLUE)
         report = (
             load_stage_report(meta.clip_id)
@@ -313,7 +313,7 @@ class ListPage(QWidget):
             return
         if meta.status == ClipStatus.PROCESSING:
             QMessageBox.information(
-                self, t("processing_title"), t("processing_body")
+                self, t("Processing"), t("This clip is still processing. Play it when it is done.")
             )
             return
         self.play_requested.emit(clip_id)
@@ -322,8 +322,8 @@ class ListPage(QWidget):
         self._ignore_item_click = True
         answer = QMessageBox.question(
             self,
-            t("delete_title"),
-            t("delete_body"),
+            t("Delete"),
+            t("Delete this clip and its local files? This cannot be undone."),
             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
             QMessageBox.StandardButton.No,
         )

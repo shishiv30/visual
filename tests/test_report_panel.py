@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QLabel
 
 from clients.windows.store.library import ClipStatus
 from clients.windows.ui.list_page import report_button_enabled
-from clients.windows.ui.report_layout import ReportLink
+from clients.windows.ui.report_layout import ReportLink, SkillTreeRoute
 from clients.windows.ui.report_panel import StageReportPanel
 from core.i18n import set_language
 from schemas.stage_report import FrameScorePoint, KeypointResult, KeypointStatus, StageReport, TreeNode
@@ -59,7 +59,7 @@ def _sample_report() -> StageReport:
                         "venues": [
                             {
                                 "id": "venue_green_groomer",
-                                "name": "Green groomer",
+                                "name": "Green run",
                                 "tips": "Easy pitch",
                             }
                         ],
@@ -141,7 +141,7 @@ def test_stage_report_panel_five_chapters() -> None:
     assert "5." not in panel._ch5.title()
     ch3_text = " ".join(lab.text() for lab in panel._ch3.findChildren(QLabel))
     assert "Hockey stop" in ch3_text
-    assert "Green groomer" in ch3_text
+    assert "Green run" in ch3_text
     panel.set_report(_ready_report())
     ch3_ready = " ".join(lab.text() for lab in panel._ch3.findChildren(QLabel))
     assert "Mogul absorption" in ch3_ready or "Mogul field" in ch3_ready
@@ -211,6 +211,49 @@ def test_report_labels_have_no_newline_layout() -> None:
     del app
 
 
+def test_skill_tree_route_is_vertical_list() -> None:
+    app = QApplication.instance() or QApplication([])
+    route = SkillTreeRoute()
+    route.set_route([])
+    assert route.sizeHint().height() == SkillTreeRoute.ROW_H
+    route.set_route(
+        [
+            TreeNode(id="a", name="Wedge glide"),
+            TreeNode(id="b", name="Short skids", current=True),
+            TreeNode(id="c", name="Parallel"),
+        ]
+    )
+    assert route.sizeHint().height() == 3 * SkillTreeRoute.ROW_H
+    panel = StageReportPanel()
+    panel.set_report(_sample_report())
+    trees = panel.findChildren(SkillTreeRoute)
+    assert trees
+    assert trees[0].sizeHint().height() >= 2 * SkillTreeRoute.ROW_H
+    del app
+
+
+def test_spacing_tokens_drive_report_layout() -> None:
+    from clients.windows.ui.report_layout import ReportCard, ReportChapter, ReportGrid
+    from clients.windows.ui.theme import PAGE_INSET, SPACE_CHAPTER, SPACE_PANEL, SPACE_TEXT
+
+    assert SPACE_CHAPTER == 36
+    assert SPACE_PANEL == 24
+    assert SPACE_TEXT == 16
+    assert PAGE_INSET == 12
+    app = QApplication.instance() or QApplication([])
+    card = ReportCard()
+    assert card.body().spacing() == SPACE_TEXT
+    assert card.body().contentsMargins().left() == PAGE_INSET
+    chapter = ReportChapter()
+    assert chapter.layout().spacing() == SPACE_TEXT
+    grid = ReportGrid()
+    assert grid.layout().spacing() == SPACE_PANEL
+    panel = StageReportPanel()
+    inner = panel._scroll.widget()
+    assert inner.layout().spacing() == SPACE_CHAPTER
+    del app
+
+
 def test_score_purple_brighter_when_higher() -> None:
     from clients.windows.ui.theme import DEEP_PURPLE, LIGHT_PURPLE, score_purple
 
@@ -236,4 +279,6 @@ def test_level_medal_and_terrain_diamonds() -> None:
     assert level_medal_color("pizza_glide") == MEDAL_BEGINNER
     assert level_medal_color("carve_short") == MEDAL_ELITE
     assert terrain_diamond_colors("blue") == [TERRAIN_BLUE]
+    assert terrain_diamond_colors("black") == [TERRAIN_BLACK]
     assert terrain_diamond_colors("double_black") == [TERRAIN_BLACK, TERRAIN_BLACK]
+    assert TERRAIN_BLACK.name() == "#000000"

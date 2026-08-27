@@ -223,6 +223,55 @@ def test_mogul_absorption_stage() -> None:
     assert conf >= 0.35
 
 
+def test_mogul_beats_wide_stance_when_torso_shaken() -> None:
+    """Real mogul clips often look wide + noisy upper body; still mogul."""
+    seq = []
+    for i in range(24):
+        seq.append(
+            _joints(
+                stance=2.4,
+                knee_drop=35.0,
+                knee_in=5.0 if i % 2 else 70.0,
+                lean=0.15 + (i % 5) * 0.08,
+                hip_x=200.0 + (i % 3) * 4.0,
+            )
+        )
+    pack = extract_features(_clip(seq, "mogul-wide"))
+    assert pack.knee_flex_amp > 30.0
+    assert pack.knee_flex_freq > 0.6
+    cat, stage, conf = classify(pack)
+    assert cat == "alpine_moguls"
+    assert stage in {"mogul_absorb", "mogul_fallline"}
+    assert conf >= 0.35
+    report = assess_clip(_clip(seq, "mogul-wide"), lang="zh")
+    assert report.stage_id in {"mogul_absorb", "mogul_fallline"}
+    assert report.terrain_id == "mogul"
+    assert "雪包" in report.terrain_name or "mogul" in report.terrain_name.lower()
+
+
+def test_green_piste_carve_not_mogul() -> None:
+    """Groomed carve: moderate knee work + lean must stay alpine_piste."""
+    seq = []
+    for i in range(24):
+        seq.append(
+            _joints(
+                stance=1.05,
+                knee_drop=42.0 + (8.0 if i % 2 else 0.0),
+                knee_in=4.0 if i % 2 else 18.0,
+                lean=0.45,
+                hip_x=200.0 + (i % 6) * 12.0,
+            )
+        )
+    pack = extract_features(_clip(seq, "green-carve"))
+    cat, stage, _ = classify(pack)
+    assert cat == "alpine_piste"
+    assert stage in {"carve_long", "carve_medium", "carve_short"}
+    assert stage not in {"mogul_absorb", "mogul_fallline"}
+    report = assess_clip(_clip(seq, "green-carve"), lang="zh")
+    assert report.category_id == "alpine_piste"
+    assert report.terrain_id in {"green", "blue", "red"}
+
+
 def test_missing_feet_unknown_stance_point() -> None:
     seq = []
     for _ in range(8):

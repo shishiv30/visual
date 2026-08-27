@@ -22,8 +22,14 @@ from PySide6.QtWidgets import (
 from clients.windows.pipeline.ingest import IngestWorker
 from clients.windows.pipeline.normalize import MAX_SECONDS, probe_duration_ms
 from clients.windows.ui.loading_overlay import LoadingOverlay
-from clients.windows.ui.qtutil import bgr_to_pixmap, set_button_icon
-from clients.windows.ui.theme import BLUE, SPACE_PANEL
+from clients.windows.ui.qtutil import (
+    bgr_to_pixmap,
+    make_floating_back,
+    place_floating_back,
+    set_button_icon,
+    style_floating_back,
+)
+from clients.windows.ui.theme import BLUE, PAGE_INSET, SPACE_PANEL
 from clients.windows.ui.trim_dialog import TrimDialog
 from core.i18n import t
 
@@ -55,9 +61,6 @@ class CapturePage(QWidget):
 
         self._record_btn = QPushButton()
         self._record_btn.clicked.connect(self._toggle_record)
-        self._back_btn = QPushButton()
-        set_button_icon(self._back_btn, "back")
-        self._back_btn.clicked.connect(self._on_back)
         self._pick_btn = QPushButton()
         set_button_icon(self._pick_btn, "import", BLUE)
         self._pick_btn.clicked.connect(self._pick_file)
@@ -66,27 +69,30 @@ class CapturePage(QWidget):
         bar.addWidget(self._record_btn)
         bar.addWidget(self._pick_btn)
         bar.addStretch()
-        bar.addWidget(self._back_btn)
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setContentsMargins(PAGE_INSET, PAGE_INSET, PAGE_INSET, PAGE_INSET)
         layout.setSpacing(SPACE_PANEL)
         layout.addWidget(self._preview)
         layout.addLayout(bar)
         self._overlay = LoadingOverlay(self)
+        self._back_btn = make_floating_back(self)
+        self._back_btn.clicked.connect(self._on_back)
         self.retranslate()
 
     def retranslate(self) -> None:
         if not self._recording:
-            self._preview.setText(t("camera_preview"))
+            self._preview.setText(t("Camera preview"))
         self._sync_record_button()
-        self._back_btn.setText(t("back"))
-        self._pick_btn.setText(t("pick_file"))
+        style_floating_back(self._back_btn, tooltip=t("Back"))
+        self._pick_btn.setText(t("Import…"))
         set_button_icon(self._pick_btn, "import", BLUE)
         self._overlay.retranslate()
 
     def resizeEvent(self, event: QResizeEvent) -> None:
         super().resizeEvent(event)
         self._overlay.setGeometry(self.rect())
+        place_floating_back(self._back_btn, self)
+        self._back_btn.raise_()
 
     def prepare_import(self) -> None:
         self.stop_camera()
@@ -100,7 +106,7 @@ class CapturePage(QWidget):
         self._overlay.dismiss()
         self._set_chrome_visible(True)
         if not self._recording:
-            self._preview.setText(t("camera_preview"))
+            self._preview.setText(t("Camera preview"))
 
     def _set_chrome_visible(self, visible: bool) -> None:
         self._preview.setVisible(visible)
@@ -111,10 +117,10 @@ class CapturePage(QWidget):
     def _sync_record_button(self) -> None:
         if self._recording:
             set_button_icon(self._record_btn, "stop")
-            self._record_btn.setText(t("record_stop"))
+            self._record_btn.setText(t("Stop"))
         else:
             set_button_icon(self._record_btn, "record")
-            self._record_btn.setText(t("record_start"))
+            self._record_btn.setText(t("Record"))
 
     def start_camera(self) -> None:
         self._overlay.dismiss()
@@ -151,7 +157,7 @@ class CapturePage(QWidget):
                 self.start_camera()
             ok, frame = self._cam.read() if self._cam is not None else (False, None)
             if not ok or frame is None:
-                QMessageBox.warning(self, t("camera_title"), t("camera_fail"))
+                QMessageBox.warning(self, t("Camera device"), t("Could not open the camera."))
                 return
             h, w = frame.shape[:2]
             fd, name = tempfile.mkstemp(suffix=".avi")
@@ -180,9 +186,9 @@ class CapturePage(QWidget):
     def pick_file(self) -> bool:
         path_str, _ = QFileDialog.getOpenFileName(
             self,
-            t("pick_title"),
+            t("Choose video or image"),
             "",
-            t("pick_filter"),
+            t("Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)"),
         )
         if not path_str:
             return False
@@ -192,7 +198,7 @@ class CapturePage(QWidget):
             return True
         if path.suffix.lower() in VIDEO_EXT:
             return self._ingest_video(path, delete_src=False)
-        QMessageBox.warning(self, t("format_title"), t("format_unsupported"))
+        QMessageBox.warning(self, t("Format"), t("Unsupported file type."))
         return False
 
     def _pick_file(self) -> None:
@@ -259,4 +265,4 @@ class CapturePage(QWidget):
         self._overlay.dismiss()
         self.import_busy.emit(False)
         self._set_chrome_visible(True)
-        QMessageBox.critical(self, t("import_fail"), message)
+        QMessageBox.critical(self, t("Import failed"), message)

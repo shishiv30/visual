@@ -36,7 +36,7 @@ def assemble() -> dict:
     return {
         "schema_version": "2.1.0",
         "disclaimer": L(
-            "滑雪教练启发式，非 FIS 裁判分，非医疗建议。2D 骨骼会误判。疼痛或旧伤请线下教练/医师。"
+            "Coach heuristics, not FIS judging or medical advice. 2D pose can misread. Pain or prior injury: see a coach or clinician."
         ),
         "pass_score": float(expert["pass_score"]),
         "checkpoint_pass": float(expert["checkpoint_pass"]),

@@ -71,9 +71,9 @@ class LoadingOverlay(QWidget):
 
     def retranslate(self) -> None:
         if self.property("kind") == "import":
-            self._caption.setText(t("loading_upload"))
+            self._caption.setText(t("Uploading and loading…"))
         else:
-            self._caption.setText(t("loading_analyze"))
+            self._caption.setText(t("Analyzing pose…"))
 
     def show_kind(self, kind: str) -> None:
         self.setProperty("kind", kind)

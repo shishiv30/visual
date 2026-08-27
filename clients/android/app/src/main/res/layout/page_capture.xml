@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/capture_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="72dp" />
+
+    <TextView
+        android:id="@+id/capture_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="#DDDDDD"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/capture_denied"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/surface"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/space_panel"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/capture_denied_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/on_surface"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/capture_denied_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_text"
+            android:gravity="center"
+            android:textColor="@color/on_surface"
+            android:textSize="16sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_allow_camera"
+            style="@style/Widget.VisualPose.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_panel" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/capture_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/page_inset">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_record"
+            style="@style/Widget.VisualPose.ChromeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_record" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_capture_import"
+            style="@style/Widget.VisualPose.AccentButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:icon="@drawable/ic_import" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_capture_back"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_margin="@dimen/page_inset"
+        android:background="@drawable/bg_floating_back"
+        android:contentDescription="Back"
+        android:src="@drawable/ic_back" />
+</FrameLayout>

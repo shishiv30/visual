@@ -17,6 +17,7 @@ from PySide6.QtGui import QColor, QFont, QPainter, QPaintEvent, QPainterPath, QP
 from PySide6.QtWidgets import QSizePolicy, QWidget
 
 from clients.windows.ui.theme import DEEP_PURPLE, LIGHT_PURPLE, WATERMELON
+from core.i18n import t
 from schemas.stage_report import FrameScorePoint, KeypointResult
 
 
@@ -108,7 +109,7 @@ class ScorePieChart(QWidget):
             painter.drawText(
                 QRectF(cx - outer / 2.0, cy - outer / 2.0, outer, outer),
                 int(Qt.AlignmentFlag.AlignCenter),
-                "—",
+                t("—"),
             )
         caption_font = QFont(self.font())
         caption_font.setPointSize(9)
@@ -259,7 +260,7 @@ class ScoreTimelineChart(QWidget):
             painter.drawText(
                 QRectF(x0, y0, x1 - x0, y1 - y0),
                 int(Qt.AlignmentFlag.AlignCenter),
-                "—",
+                t("—"),
             )
             return
         t0 = self._points[0].t_ms
@@ -300,12 +301,12 @@ class ScoreTimelineChart(QWidget):
         painter.drawText(
             QRectF(x0, y1 + 2, x1 - x0, 18),
             int(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter),
-            f"{t0 / 1000.0:.1f}s",
+            t("{sec:.1f}s", sec=t0 / 1000.0),
         )
         painter.drawText(
             QRectF(x0, y1 + 2, x1 - x0, 18),
             int(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter),
-            f"{t1 / 1000.0:.1f}s  σ {std:.0f}",
+            t("{sec:.1f}s  σ {std:.0f}", sec=t1 / 1000.0, std=std),
         )
 
     def mousePressEvent(self, event) -> None:

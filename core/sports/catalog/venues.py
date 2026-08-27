@@ -33,12 +33,12 @@ TERRAIN_VENUES = {
 
 def terrains() -> dict:
     return {
-        "green": {"id": "green", "name": L("绿道"), "desc": L("绿道建议场地，非坡度实测。")},
-        "blue": {"id": "blue", "name": L("蓝道"), "desc": L("蓝道建议场地，非坡度实测。")},
-        "red": {"id": "red", "name": L("红道"), "desc": L("红道建议场地，非坡度实测。")},
-        "black": {"id": "black", "name": L("黑道"), "desc": L("黑道建议场地，非坡度实测。")},
-        "park": {"id": "park", "name": L("公园"), "desc": L("公园建议场地，本 App 不评空中。")},
-        "mogul": {"id": "mogul", "name": L("蘑菇"), "desc": L("蘑菇场地建议，非包型实测。")},
+        "green": {"id": "green", "name": L("Green run"), "desc": L("Suggested green run; slope is not measured.")},
+        "blue": {"id": "blue", "name": L("Blue run"), "desc": L("Suggested blue run; slope is not measured.")},
+        "red": {"id": "red", "name": L("Red (steep groomed) run"), "desc": L("Suggested red run; slope is not measured.")},
+        "black": {"id": "black", "name": L("Black run"), "desc": L("Suggested black run; slope is not measured.")},
+        "park": {"id": "park", "name": L("Park"), "desc": L("Suggested park terrain; this app does not score air.")},
+        "mogul": {"id": "mogul", "name": L("Mogul"), "desc": L("Suggested mogul field; bump shape is not measured.")},
     }
 
 
@@ -47,60 +47,60 @@ def venues() -> dict:
         "venue_green_groomer": {
             "id": "venue_green_groomer",
             "terrain": "green",
-            "name": L("绿道平整雪道"),
-            "desc": L("空、缓、人少的绿道，先把刹车练稳。"),
-            "tips": L("选最缓的坡，避开冰面和拥挤出口。"),
+            "name": L("Green run"),
+            "desc": L("Quiet, easy green run — master the wedge stop first."),
+            "tips": L("Pick the gentlest pitch; avoid ice and crowded runouts."),
         },
         "venue_blue_groomer": {
             "id": "venue_blue_groomer",
             "terrain": "blue",
-            "name": L("蓝道平整雪道"),
-            "desc": L("中等坡平整道，适合平行、搓雪和大弯。"),
-            "tips": L("人少、雪软一点更好；冰面减小弯深。"),
+            "name": L("Blue run"),
+            "desc": L("Moderate groomed blue run; for parallel, skids, and long-radius carve."),
+            "tips": L("Prefer fewer people and softer snow; shallower turns on ice."),
         },
         "venue_red_piste": {
             "id": "venue_red_piste",
             "terrain": "red",
-            "name": L("红道平整雪道"),
-            "desc": L("更陡的平整道，适合中小弯卡宾启发式。"),
-            "tips": L("先在蓝道能倾再上红道；累了换缓坡。"),
+            "name": L("Red (steep groomed) run"),
+            "desc": L("Steeper groomed red run; for medium and short carve heuristics."),
+            "tips": L("Practice inclination on blue before moving to red; drop to an easier pitch when form fades."),
         },
         "venue_black_steep": {
             "id": "venue_black_steep",
             "terrain": "black",
-            "name": L("黑色陡坡"),
-            "desc": L("仅在蘑菇落差线课使用的陡/难建议，仍非实测。"),
-            "tips": L("包圆、线空、能看到沟；不要为了黑道硬上。"),
+            "name": L("Black steep"),
+            "desc": L("Steep/hard suggestion for fall-line moguls only; still not measured."),
+            "tips": L("Round bumps, an open line, visible troughs; do not force a black run."),
         },
         "venue_mogul_field": {
             "id": "venue_mogul_field",
             "terrain": "mogul",
-            "name": L("蘑菇区"),
-            "desc": L("圆而浅的包，先直滑吸收。"),
-            "tips": L("避开尖包、跳台和过窄的线。"),
+            "name": L("Mogul field"),
+            "desc": L("Round, shallow bumps; absorb in a straight line first."),
+            "tips": L("Avoid sharp bumps, jumps, and a too-narrow line."),
         },
         "venue_park": {
             "id": "venue_park",
             "terrain": "park",
-            "name": L("公园"),
-            "desc": L("目录课：箱杆跳台请线下教练，软件不打分。"),
-            "tips": L("只在有教练和防护的公园区域尝试。"),
+            "name": L("Park"),
+            "desc": L("Display only: boxes, rails, and jumps with a coach; the app does not score them."),
+            "tips": L("Only try boxes, rails, or jumps with a coach, a helmet, and a supervised park."),
         },
         "venue_dryland": {
             "id": "venue_dryland",
             "terrain": "green",
-            "name": L("陆地平坦场地"),
-            "desc": L("室内或平地，练站姿和单腿力量。"),
-            "tips": L("防滑地面，旁边有扶手更好。"),
+            "name": L("Dryland / flat"),
+            "desc": L("Indoors or flat ground for stance and single-leg strength."),
+            "tips": L("Non-slip floor; a handhold nearby helps."),
         },
     }
 
 
 def categories() -> dict:
     return {
-        "alpine_piste": L("平整雪道大众滑行"),
-        "alpine_moguls": L("蘑菇滑行"),
-        "park": L("公园/跳台"),
-        "alpine_race": L("竞技旗门"),
-        "alpine_switch": L("正倒滑转换"),
+        "alpine_piste": L("Groomed-run recreational alpine"),
+        "alpine_moguls": L("Mogul skiing"),
+        "park": L("Park / jumps"),
+        "alpine_race": L("Race gates"),
+        "alpine_switch": L("Switch alpine"),
     }

@@ -123,12 +123,12 @@ class StageReportPanel(QWidget):
             self._scroll.setMaximumHeight(height)
 
     def retranslate(self) -> None:
-        self._empty.setText(t("coach_no_report"))
-        self._ch1.set_title(t("report_ch1"))
-        self._ch2.set_title(t("report_ch2"))
-        self._ch3.set_title(t("report_ch3"))
-        self._ch4.set_title(t("report_ch4"))
-        self._ch5.set_title(t("report_ch5"))
+        self._empty.setText(t("No stage report yet. Analyze a clip offline first."))
+        self._ch1.set_title(t("Summary"))
+        self._ch2.set_title(t("Checkpoints"))
+        self._ch3.set_title(t("Next steps"))
+        self._ch4.set_title(t("Skill tree"))
+        self._ch5.set_title(t("Filming and scoring"))
         self.set_report(self._report)
 
     def set_report(self, report: StageReport | None) -> None:
@@ -167,9 +167,9 @@ class StageReportPanel(QWidget):
         self._ch1_grid.add(overview, per_row=1)
 
         terrain = ReportCard()
-        gate = t("coach_ready") if report.ready_for_next_stage else t("coach_not_ready")
-        trail = report.terrain_name or "—"
-        terrain_line = f"{t('report_terrain')}: {trail} · {gate}"
+        gate = t("Passed this level. Choose a next level on the skill tree.") if report.ready_for_next_stage else t("Not passed — train the lowest-scoring checkpoint.")
+        trail = report.terrain_name or t("—")
+        terrain_line = f"{t('Suggested trail rating')}: {trail} · {gate}"
         diamonds = [("diamond", c) for c in terrain_diamond_colors(report.terrain_id)]
         terrain.body().addWidget(
             IconTextRow(diamonds, terrain_line, object_name="reportAdvice")
@@ -185,7 +185,7 @@ class StageReportPanel(QWidget):
         self._gauge = ScorePieChart()
         self._gauge.set_score(
             report.score_0_100,
-            t("coach_score"),
+            t("Heuristic score (0-100, not FIS)"),
             ring_color=score_purple(report.score_0_100),
         )
         self._ch1_grid.add(_score_card(self._gauge), per_row=2)
@@ -194,10 +194,29 @@ class StageReportPanel(QWidget):
         confidence = ScorePieChart()
         confidence.set_score(
             conf_score,
-            t("coach_confidence"),
+            t("Confidence"),
             ring_color=score_purple(conf_score),
         )
         self._ch1_grid.add(_score_card(confidence), per_row=2)
+
+        if report.posture is not None:
+            note = ReportCard()
+            add_text_stack(
+                note.body(),
+                [t("Four posture scores are coach heuristics (0–100), not lab biomechanics; they are not true speed, meter turn radius, or peak ski pressure.")],
+                object_name="reportMeta",
+            )
+            self._ch1_grid.add(note, per_row=1)
+            for key, label_key in (
+                ("stability", "Stability"),
+                ("coordination", "Coordination"),
+                ("control", "Control"),
+                ("balance", "Balance"),
+            ):
+                value = float(getattr(report.posture, key))
+                pie = ScorePieChart()
+                pie.set_score(value, t(label_key), ring_color=score_purple(value))
+                self._ch1_grid.add(_score_card(pie), per_row=2)
 
         per_row = 3 if len(report.keypoints) >= 5 else 2
         for item in _sorted_keypoints(report.keypoints):
@@ -210,7 +229,7 @@ class StageReportPanel(QWidget):
             self._ch1_grid.add(_score_card(pie), per_row=per_row)
 
         timeline_card = ReportCard()
-        caption = QLabel(t("report_timeline"))
+        caption = QLabel(t("Stability over time (time × frame score)"))
         caption.setObjectName("reportMeta")
         caption.setWordWrap(True)
         timeline_card.body().addWidget(caption)
@@ -246,7 +265,7 @@ class StageReportPanel(QWidget):
     def _fill_ch3(self, report: StageReport) -> None:
         if report.ready_for_next_stage:
             ready = ReportCard()
-            add_text_stack(ready.body(), [t("coach_ready")], object_name="reportAdvice")
+            add_text_stack(ready.body(), [t("Passed this level. Choose a next level on the skill tree.")], object_name="reportAdvice")
             self._ch3_grid.add(ready, per_row=1)
             for plan in report.next_plans:
                 self._ch3_grid.add(self._plan_card(plan), per_row=1)
@@ -254,13 +273,13 @@ class StageReportPanel(QWidget):
             return
 
         summary = ReportCard()
-        lines = [t("coach_not_ready")]
+        lines = [t("Not passed — train the lowest-scoring checkpoint.")]
         weak = next(
             (k for k in report.keypoints if k.id == report.weakest_checkpoint_id),
             None,
         )
         if weak is not None:
-            lines.append(f"{t('coach_weakest')}: {weak.name}")
+            lines.append(f"{t('Weakest checkpoint')}: {weak.name}")
             lines.append(weak.bad)
         add_text_stack(summary.body(), lines, object_name="reportAdvice")
         self._ch3_grid.add(summary, per_row=1)
@@ -268,7 +287,7 @@ class StageReportPanel(QWidget):
         if weak is not None and weak.evidence_ms is not None:
             link_card = ReportCard()
             link = FrameSeekLink(
-                f"{t('report_problem_frame')} {format_evidence_ms(weak.evidence_ms)}"
+                f"{t('Problem frame')} {format_evidence_ms(weak.evidence_ms)}"
             )
             self._wire_link(link, int(weak.evidence_ms))
             link_card.body().addWidget(link)
@@ -297,7 +316,7 @@ class StageReportPanel(QWidget):
         route.set_route(report.tree_path)
         card.body().addWidget(route)
         if report.ready_for_next_stage and report.next_level_names:
-            extra = QLabel(t("coach_next") + ": " + " · ".join(report.next_level_names))
+            extra = QLabel(t("Next stage") + ": " + " · ".join(report.next_level_names))
             extra.setObjectName("reportMeta")
             extra.setWordWrap(True)
             card.body().addWidget(extra)
@@ -307,7 +326,7 @@ class StageReportPanel(QWidget):
     def _fill_ch5(self, report: StageReport) -> None:
         film_lines = [report.disclaimer]
         if report.heuristic_not_fis_carve:
-            film_lines.append(t("coach_heuristic"))
+            film_lines.append(t("Carve points are heuristics, not FIS carving scores."))
         film_lines.extend(f"• {step}" for step in report.film_steps)
         card = ReportCard()
         add_text_stack(card.body(), film_lines, object_name="reportDisclaimer")
@@ -323,7 +342,7 @@ class StageReportPanel(QWidget):
         if self._seek_enabled:
             link.clicked.connect(lambda *, ms=t_ms: self.seekRequested.emit(ms))
         else:
-            link.setToolTip(t("report_open_player"))
+            link.setToolTip(t("Open the report on the player page to jump to this frame."))
 
     def _plan_card(self, plan: dict) -> ReportCard:
         card = ReportCard()
@@ -339,7 +358,7 @@ class StageReportPanel(QWidget):
             )
         lines = self._drill_lines(plan.get("drills") or [])
         for venue in plan.get("venues") or []:
-            lines.append(f"{t('report_venue')}: {venue.get('name', '')}")
+            lines.append(f"{t('Training venue')}: {venue.get('name', '')}")
             if venue.get("desc"):
                 lines.append(str(venue["desc"]))
             if venue.get("tips"):
@@ -357,13 +376,13 @@ class StageReportPanel(QWidget):
     def _drill_lines(self, drills: list[dict]) -> list[str]:
         lines: list[str] = []
         for drill in drills:
-            lines.append(f"{t('coach_drills')}: {drill.get('title', '')}")
+            lines.append(f"{t('Drills')}: {drill.get('title', '')}")
             if drill.get("desc"):
                 lines.append(str(drill["desc"]))
             for step in drill.get("training") or drill.get("steps") or []:
                 lines.append(f"• {step}")
             for venue in drill.get("venues") or []:
-                lines.append(f"{t('report_venue')}: {venue.get('name', '')}")
+                lines.append(f"{t('Training venue')}: {venue.get('name', '')}")
                 if venue.get("tips"):
                     lines.append(str(venue["tips"]))
         return lines

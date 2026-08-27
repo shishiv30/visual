@@ -7,13 +7,16 @@ from pathlib import Path
 import cv2
 import numpy as np
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QColor, QIcon, QImage, QPainter, QPalette, QPixmap
+from PySide6.QtGui import QColor, QIcon, QImage, QPainter, QPainterPath, QPalette, QPen, QPixmap
 from PySide6.QtSvg import QSvgRenderer
-from PySide6.QtWidgets import QAbstractButton, QDialogButtonBox, QWidget
+from PySide6.QtWidgets import QAbstractButton, QDialogButtonBox, QPushButton, QWidget
 
+from clients.windows.ui.theme import TERRAIN_BLACK
 from core.i18n import t
 
 ICONS_DIR = Path(__file__).resolve().parent / "icons"
+FLOATING_BACK_MARGIN = 12
+FLOATING_BACK_SIZE = 44
 
 
 def _svg_pixmap(name: str, color: QColor, size: int = 16) -> QPixmap:
@@ -24,6 +27,33 @@ def _svg_pixmap(name: str, color: QColor, size: int = 16) -> QPixmap:
     renderer.render(painter)
     painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
     painter.fillRect(pix.rect(), color)
+    painter.end()
+    return pix
+
+
+def _diamond_pixmap(color: QColor, size: int = 18) -> QPixmap:
+    pix = QPixmap(size, size)
+    pix.fill(Qt.GlobalColor.transparent)
+    painter = QPainter(pix)
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+    outlined = color == TERRAIN_BLACK
+    width = 1.0 if outlined else 0.0
+    inset = max(1.0, width / 2.0 + 0.5)
+    cx = size / 2.0
+    cy = size / 2.0
+    radius = size / 2.0 - inset
+    path = QPainterPath()
+    path.moveTo(cx, cy - radius)
+    path.lineTo(cx + radius, cy)
+    path.lineTo(cx, cy + radius)
+    path.lineTo(cx - radius, cy)
+    path.closeSubpath()
+    painter.setBrush(color)
+    if outlined:
+        painter.setPen(QPen(QColor("#FFFFFF"), width))
+    else:
+        painter.setPen(Qt.PenStyle.NoPen)
+    painter.drawPath(path)
     painter.end()
     return pix
 
@@ -93,15 +123,42 @@ def set_button_icon(
         button.unsetCursor()
 
 
+def make_floating_back(parent: QWidget) -> QPushButton:
+    """Top-left floating back control shared by non-list pages."""
+    button = QPushButton(parent)
+    button.setObjectName("floatingBack")
+    button.setFixedSize(FLOATING_BACK_SIZE, FLOATING_BACK_SIZE)
+    button.raise_()
+    place_floating_back(button, parent)
+    return button
+
+
+def place_floating_back(
+    button: QPushButton,
+    parent: QWidget,
+    *,
+    margin: int = FLOATING_BACK_MARGIN,
+) -> None:
+    button.move(margin, margin)
+    button.raise_()
+
+
+def style_floating_back(button: QPushButton, *, tooltip: str | None = None) -> None:
+    button.setText("")
+    if tooltip is not None:
+        button.setToolTip(tooltip)
+    set_button_icon(button, "back", QColor("#F5F5F5"), restyle=False)
+
+
 def apply_dialog_button_icons(box: QDialogButtonBox) -> None:
     ok = box.button(QDialogButtonBox.StandardButton.Ok)
     cancel = box.button(QDialogButtonBox.StandardButton.Cancel)
     if ok is not None:
         set_button_icon(ok, "ok")
-        ok.setText(t("ok"))
+        ok.setText(t("OK"))
     if cancel is not None:
         set_button_icon(cancel, "cancel")
-        cancel.setText(t("cancel"))
+        cancel.setText(t("Cancel"))
 
 
 def bgr_to_pixmap(bgr: np.ndarray, max_width: int | None = None) -> QPixmap:
@@ -116,7 +173,7 @@ def bgr_to_pixmap(bgr: np.ndarray, max_width: int | None = None) -> QPixmap:
 
 def format_duration_ms(duration_ms: int, *, image: bool = False) -> str:
     if image or duration_ms <= 0:
-        return "--"
+        return t("--")
     total = int(round(duration_ms / 1000.0))
     minutes, seconds = divmod(total, 60)
     return f"{minutes}:{seconds:02d}"

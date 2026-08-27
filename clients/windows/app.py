@@ -73,9 +73,9 @@ class MainWindow(QMainWindow):
         self.retranslate()
 
     def retranslate(self) -> None:
-        self.setWindowTitle(t("app_title"))
+        self.setWindowTitle(t("Visual Pose — Windows"))
         if not DEFAULT_TASK.is_file():
-            self.statusBar().showMessage(t("missing_model", path=str(DEFAULT_TASK)))
+            self.statusBar().showMessage(t("Missing model {path}. Run: python scripts/download_pose_landmarker.py", path=str(DEFAULT_TASK)))
         self._list.retranslate()
         self._capture.retranslate()
         self._player.retranslate()
@@ -110,6 +110,7 @@ class MainWindow(QMainWindow):
         set_language(code)
         save_language(code)
         self.retranslate()
+        self._player.reproject_report()
 
     def _open_list(self) -> None:
         self._list.reload()
@@ -138,12 +139,18 @@ class MainWindow(QMainWindow):
         self._prepare.open_clip(clip_id)
         self._stack.setCurrentWidget(self._prepare)
 
-    def _on_prepare_done(self, clip_id: str, seeds: list, in_ms: int, out_ms: object) -> None:
+    def _on_prepare_done(
+        self, clip_id: str, seeds: list, in_ms: int, out_ms: object, athlete: object
+    ) -> None:
         meta = load_meta(clip_id)
         meta.seeds = list(seeds)
         meta.seed_box = seeds[0].box if seeds else None
         meta.play_start_ms = int(in_ms)
         meta.play_end_ms = None if out_ms is None else int(out_ms)
+        if athlete is not None and hasattr(athlete, "model_dump"):
+            snapshot = athlete.model_dump()
+            meta.athlete_key = str(snapshot.get("key") or "") or None
+            meta.athlete = snapshot
         meta.status = ClipStatus.PROCESSING
         meta.error = None
         save_meta(meta)

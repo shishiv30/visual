@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Visual Pose</string>
+    <string name="allow_camera">允许相机</string>
+    <string name="analyzing_pose">正在分析姿态…</string>
+    <string name="camera">拍摄</string>
+    <string name="camera_permission_required">需要相机权限</string>
+    <string name="camera_unavailable">无法使用相机</string>
+    <string name="could_not_read_video">无法读取视频。</string>
+    <string name="grant_camera_access">请允许相机权限以进行姿态跟踪。</string>
+    <string name="import_video">导入</string>
+    <string name="no_camera_found">未找到相机。模拟器请启用虚拟场景或电脑摄像头。</string>
+    <string name="no_pose">未检测到姿态</string>
+    <string name="poses_count">姿态：%d</string>
+    <string name="retry">重试</string>
+</resources>

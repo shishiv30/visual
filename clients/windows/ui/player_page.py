@@ -9,7 +9,7 @@ from urllib.parse import quote
 
 import cv2
 from PySide6.QtCore import QEvent, Qt, QTimer, QUrl, Signal
-from PySide6.QtGui import QColor, QDesktopServices, QGuiApplication, QPainter, QPixmap
+from PySide6.QtGui import QColor, QDesktopServices, QGuiApplication, QPainter, QPixmap, QResizeEvent
 from PySide6.QtWidgets import (
     QComboBox,
     QFileDialog,
@@ -47,14 +47,22 @@ from clients.windows.store.library import (
     load_meta,
     load_stage_report,
     media_path,
+    save_stage_report,
     toggle_frame_skeleton_ok,
     toggle_frame_stage_vote,
 )
-from clients.windows.ui.qtutil import bgr_to_pixmap, set_button_icon
+from clients.windows.ui.qtutil import (
+    bgr_to_pixmap,
+    make_floating_back,
+    place_floating_back,
+    set_button_icon,
+    style_floating_back,
+)
 from clients.windows.ui.report_panel import StageReportPanel
-from clients.windows.ui.theme import LIGHT_PURPLE, SPACE_CHAPTER, UNKNOWN_GRAY, WATERMELON
+from clients.windows.ui.theme import LIGHT_PURPLE, PAGE_INSET, SPACE_CHAPTER, UNKNOWN_GRAY, WATERMELON
 from clients.windows.ui.timeline_strip import TimelineStrip
 from core.i18n import t
+from core.sports.assess import assess_clip
 from schemas.clip_analysis import ClipAnalysis
 
 CHROME_ICON = QColor("#F5F5F5")
@@ -145,10 +153,6 @@ class PlayerPage(QWidget):
         self._play_btn = QPushButton()
         self._play_btn.setFlat(True)
         self._play_btn.clicked.connect(self._toggle)
-        self._back_btn = QPushButton()
-        self._back_btn.setFlat(True)
-        set_button_icon(self._back_btn, "back", CHROME_ICON, restyle=False)
-        self._back_btn.clicked.connect(self._on_back)
         self._speed_box = QComboBox()
         for speed in SPEEDS:
             self._speed_box.addItem(f"{speed:g}x", speed)
@@ -192,7 +196,6 @@ class PlayerPage(QWidget):
         self._chrome.installEventFilter(self)
         bar = QHBoxLayout(self._chrome)
         bar.setContentsMargins(8, 8, 8, 8)
-        bar.addWidget(self._back_btn)
         bar.addWidget(self._play_btn)
         bar.addWidget(self._locator_btn)
         bar.addStretch(1)
@@ -228,11 +231,17 @@ class PlayerPage(QWidget):
         self._report.seekRequested.connect(self._on_report_seek)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setContentsMargins(PAGE_INSET, PAGE_INSET, PAGE_INSET, PAGE_INSET)
         layout.setSpacing(SPACE_CHAPTER)
         layout.addWidget(player_block, stretch=1)
         layout.addWidget(self._report, stretch=2)
+        self._back_btn = make_floating_back(self)
+        self._back_btn.clicked.connect(self._on_back)
         self.retranslate()
+
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        super().resizeEvent(event)
+        place_floating_back(self._back_btn, self)
 
     def eventFilter(self, watched, event) -> bool:
         if watched is self._chrome and event.type() in (
@@ -244,27 +253,25 @@ class PlayerPage(QWidget):
 
     def retranslate(self) -> None:
         self._sync_play_button()
-        self._back_btn.setText("")
-        self._back_btn.setToolTip(t("back"))
-        set_button_icon(self._back_btn, "back", CHROME_ICON, restyle=False)
+        style_floating_back(self._back_btn, tooltip=t("Back"))
         self._download_btn.setText("")
-        self._download_btn.setToolTip(t("download"))
+        self._download_btn.setToolTip(t("Download"))
         set_button_icon(self._download_btn, "download", CHROME_ICON, restyle=False)
         self._share_btn.setText("")
-        self._share_btn.setToolTip(t("share"))
+        self._share_btn.setToolTip(t("Share"))
         set_button_icon(self._share_btn, "share", CHROME_ICON, restyle=False)
-        self._locator_btn.setToolTip(t("locator_copy"))
+        self._locator_btn.setToolTip(t("Copy frame locator"))
         set_button_icon(self._locator_btn, "tag", CHROME_ICON, restyle=False)
         self._like_btn.setText("")
-        self._like_btn.setToolTip(t("feedback_like"))
+        self._like_btn.setToolTip(t("Like"))
         set_button_icon(self._like_btn, "thumb_up", LIGHT_PURPLE, restyle=False)
         self._unlike_btn.setText("")
-        self._unlike_btn.setToolTip(t("feedback_unlike"))
+        self._unlike_btn.setToolTip(t("Unlike"))
         set_button_icon(self._unlike_btn, "thumb_down", WATERMELON, restyle=False)
         self._skeleton_btn.setText("")
-        self._skeleton_btn.setToolTip(t("feedback_skeleton_bad"))
+        self._skeleton_btn.setToolTip(t("Bad skeleton"))
         set_button_icon(self._skeleton_btn, "reanalyze", UNKNOWN_GRAY, restyle=False)
-        self._speed_box.setToolTip(t("speed"))
+        self._speed_box.setToolTip(t("Speed"))
         self._report.retranslate()
 
     def _set_playback_controls_visible(self, visible: bool) -> None:
@@ -276,10 +283,10 @@ class PlayerPage(QWidget):
         self._play_btn.setText("")
         if self._playing:
             set_button_icon(self._play_btn, "pause", CHROME_ICON, restyle=False)
-            self._play_btn.setToolTip(t("pause"))
+            self._play_btn.setToolTip(t("Pause"))
         else:
             set_button_icon(self._play_btn, "play", CHROME_ICON, restyle=False)
-            self._play_btn.setToolTip(t("play"))
+            self._play_btn.setToolTip(t("Play"))
 
     def open_clip(self, clip_id: str) -> None:
         self._release()
@@ -289,9 +296,8 @@ class PlayerPage(QWidget):
             self._analysis = load_analysis(clip_id)
         except (OSError, ValueError):
             self._analysis = None
-        self._report_model = load_stage_report(clip_id)
         self._feedback = load_frame_feedback(clip_id)
-        self._refresh_report()
+        self.reproject_report()
         path = media_path(self._meta)
         if self._meta.kind == ClipKind.IMAGE:
             self._timeline.clear()
@@ -325,6 +331,18 @@ class PlayerPage(QWidget):
         self._timer.start(self._interval_ms())
         self._sync_play_button()
         self._show_chrome(auto_hide=True)
+
+    def reproject_report(self) -> None:
+        """Rebuild stage report strings for the active UI language."""
+        if self._meta is None:
+            return
+        if self._analysis is not None:
+            report = assess_clip(self._analysis)
+            save_stage_report(report)
+            self._report_model = report
+        else:
+            self._report_model = load_stage_report(self._meta.clip_id)
+        self._refresh_report()
 
     def _interval_ms(self) -> int:
         return max(8, int(1000.0 / self._fps / self._speed))
@@ -469,7 +487,7 @@ class PlayerPage(QWidget):
         QGuiApplication.clipboard().setText(locator_payload_json(payload))
         QToolTip.showText(
             self._locator_btn.mapToGlobal(self._locator_btn.rect().center()),
-            t("locator_copied"),
+            t("Frame locator JSON copied"),
             self._locator_btn,
             self._locator_btn.rect(),
             1500,
@@ -543,7 +561,7 @@ class PlayerPage(QWidget):
             return
         self._export_path = path
         QGuiApplication.clipboard().setText(str(path))
-        text = quote(t("app_title"))
+        text = quote(t("Visual Pose — Windows"))
         url = ""
         for item_key, template in SHARE_TARGETS:
             if item_key == key:
@@ -557,8 +575,8 @@ class PlayerPage(QWidget):
             return None
         image = self._meta.kind == ClipKind.IMAGE
         if ask_path:
-            filt = "JPEG (*.jpg)" if image else "MP4 (*.mp4)"
-            chosen, _ = QFileDialog.getSaveFileName(self, t("download"), "", filt)
+            filt = t("JPEG (*.jpg)") if image else t("MP4 (*.mp4)")
+            chosen, _ = QFileDialog.getSaveFileName(self, t("Download"), "", filt)
             if not chosen:
                 return None
             dest = Path(chosen)
@@ -575,7 +593,7 @@ class PlayerPage(QWidget):
                 image=image,
             )
         except Exception as exc:  # noqa: BLE001
-            QMessageBox.warning(self, t("download"), f"{t('export_fail')}\n{exc}")
+            QMessageBox.warning(self, t("Download"), f"{t('Export failed')}\n{exc}")
             return None
         finally:
             self._download_btn.setEnabled(True)

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Visual Pose</string>
+    <string name="allow_camera">Allow camera</string>
+    <string name="analyzing_pose">Analyzing pose…</string>
+    <string name="camera">Camera</string>
+    <string name="camera_permission_required">Camera permission required</string>
+    <string name="camera_unavailable">Camera unavailable</string>
+    <string name="could_not_read_video">Could not read video.</string>
+    <string name="grant_camera_access">Grant camera access to run pose tracking.</string>
+    <string name="import_video">Import</string>
+    <string name="no_camera_found">No camera found. On the emulator, use a virtual scene or webcam.</string>
+    <string name="no_pose">No pose</string>
+    <string name="poses_count">Poses: %d</string>
+    <string name="retry">Retry</string>
+</resources>

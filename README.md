@@ -15,7 +15,7 @@ Research docs plus a runnable **Core** engine: YOLO11n-pose → versioned `CoreI
 | `core/` | Inference engine and CLI (YOLO + MediaPipe) |
 | `native/core_map/` | Shared C ABI: BlazePose 33 → Core JSON |
 | `clients/windows/` | 离线 PySide6 三界面客户端 |
-| `docs/clients/` | 客户端实现规格 |
+| `docs/clients/` | 客户端实现规格；[移动端遗漏清单](docs/clients/mobile-parity-checklist.md) |
 | `clients/android/` | Offline CameraX + MediaPipe demo |
 | `clients/ios/` | Offline AVFoundation + MediaPipe demo |
 | `models/` | Shared `pose_landmarker_full.task` (download script) |

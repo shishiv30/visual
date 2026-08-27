@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QColor
+from PySide6.QtCore import QPoint, QRect, QSize, Qt, Signal
+from PySide6.QtGui import QColor, QFont, QPainter, QPen
 from PySide6.QtWidgets import (
     QFrame,
     QHBoxLayout,
@@ -14,8 +14,9 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from clients.windows.ui.qtutil import _svg_pixmap
-from clients.windows.ui.theme import LINK_CYAN, SPACE_PANEL, SPACE_TEXT
+from clients.windows.ui.qtutil import _diamond_pixmap, _svg_pixmap
+from clients.windows.ui.theme import LINK_CYAN, PAGE_INSET, SPACE_PANEL, SPACE_TEXT
+from core.i18n import t
 from schemas.stage_report import TreeNode
 
 
@@ -42,7 +43,7 @@ class ReportCard(QFrame):
         self.setObjectName("reportCard")
         self.setFrameShape(QFrame.Shape.NoFrame)
         self._body = QVBoxLayout(self)
-        self._body.setContentsMargins(12, 12, 12, 12)
+        self._body.setContentsMargins(PAGE_INSET, PAGE_INSET, PAGE_INSET, PAGE_INSET)
         self._body.setSpacing(SPACE_TEXT)
 
     def body(self) -> QVBoxLayout:
@@ -158,7 +159,10 @@ class IconTextRow(QWidget):
         row.setSpacing(8)
         for name, color in icons:
             icon = QLabel()
-            icon.setPixmap(_svg_pixmap(name, color, 18))
+            if name == "diamond":
+                icon.setPixmap(_diamond_pixmap(color, 18))
+            else:
+                icon.setPixmap(_svg_pixmap(name, color, 18))
             icon.setFixedSize(18, 18)
             row.addWidget(icon, alignment=Qt.AlignmentFlag.AlignTop)
         lab = QLabel(text)
@@ -229,34 +233,89 @@ class FrameSeekLink(QWidget):
         super().mouseReleaseEvent(event)
 
 
-class SkillTreeRoute(QLabel):
-    """Full progression route: completed bold, current highlighted, pending gray."""
+class SkillTreeRoute(QWidget):
+    """Vertical list of skill nodes joined by a white dashed spine."""
+
+    ROW_H = 32
+    DOT_X = 8
+    DOT_R = 5
+    TEXT_GAP = 12
+    CURRENT = QColor("#E1BEE7")
+    COMPLETED = QColor("#CE93D8")
+    PENDING = QColor("#757575")
+    LINE = QColor("#F5F5F5")
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.setObjectName("skillTreeRoute")
-        self.setWordWrap(True)
-        self.setTextFormat(Qt.TextFormat.RichText)
-        self.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self._nodes: list[TreeNode] = []
 
     def set_route(self, nodes: list[TreeNode]) -> None:
+        self._nodes = list(nodes)
+        self.updateGeometry()
+        self.update()
+
+    def sizeHint(self) -> QSize:
+        n = max(1, len(self._nodes))
+        return QSize(160, n * self.ROW_H)
+
+    def minimumSizeHint(self) -> QSize:
+        return self.sizeHint()
+
+    def paintEvent(self, event) -> None:  # noqa: ARG002
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        nodes = self._nodes
         if not nodes:
-            self.setText("—")
+            painter.setPen(self.PENDING)
+            painter.drawText(
+                QRect(self.DOT_X + self.DOT_R + self.TEXT_GAP, 0, max(0, self.width() - 24), self.ROW_H),
+                Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft,
+                t("—"),
+            )
             return
         current_i = next((i for i, node in enumerate(nodes) if node.current), len(nodes) - 1)
-        parts: list[str] = []
+        cx = self.DOT_X
+        if len(nodes) > 1:
+            pen = QPen(self.LINE)
+            pen.setWidth(1)
+            pen.setDashPattern([3, 3])
+            y0 = self.ROW_H // 2
+            y1 = (len(nodes) - 1) * self.ROW_H + self.ROW_H // 2
+            painter.setPen(pen)
+            painter.drawLine(cx, y0, cx, y1)
+        font = QFont(painter.font())
         for i, node in enumerate(nodes):
-            name = node.name.replace("&", "&amp;").replace("<", "&lt;")
+            cy = i * self.ROW_H + self.ROW_H // 2
             if node.current:
-                parts.append(
-                    f'<span style="color:#E1BEE7;font-weight:700;">{name}</span>'
-                )
+                color = self.CURRENT
+                font.setBold(True)
+                filled = True
             elif i < current_i:
-                parts.append(
-                    f'<span style="color:#CE93D8;font-weight:700;">{name}</span>'
-                )
+                color = self.COMPLETED
+                font.setBold(True)
+                filled = True
             else:
-                parts.append(f'<span style="color:#757575;">{name}</span>')
-            if i < len(nodes) - 1:
-                parts.append('<span style="color:#616161;"> → </span>')
-        self.setText("".join(parts))
+                color = self.PENDING
+                font.setBold(False)
+                filled = False
+            painter.setFont(font)
+            painter.setPen(QPen(color, 1))
+            if filled:
+                painter.setBrush(color)
+            else:
+                painter.setBrush(Qt.BrushStyle.NoBrush)
+            painter.drawEllipse(QPoint(cx, cy), self.DOT_R, self.DOT_R)
+            painter.setPen(color)
+            text_rect = QRect(
+                cx + self.DOT_R + self.TEXT_GAP,
+                i * self.ROW_H,
+                max(0, self.width() - cx - self.DOT_R - self.TEXT_GAP - 4),
+                self.ROW_H,
+            )
+            painter.drawText(
+                text_rect,
+                Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft,
+                node.name,
+            )

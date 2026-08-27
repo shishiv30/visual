@@ -35,8 +35,10 @@ Layout rhythm: never join paragraphs with `\n` in one `QLabel` — use separate 
 - List rows are cards: rounded thumb, title / duration / status chip, actions on the right
 - Player chrome floats on the video; do not steal a permanent strip that shrinks the picture
 - Back / Play / Record / dialog OK·Cancel follow system or chrome text color, not accent blue/green/red
+- Floating back (`make_floating_back` / `#floatingBack`) sits top-left on prepare, capture, and player; list has no back
 - One stylesheet from `app_stylesheet()` on the `QApplication` or main window
 - Pointer cursor: `PointerButtonFilter` in code. Qt Style Sheets do **not** support CSS `cursor`; it logs `Unknown property cursor`
+- Display copy: always `t("English key")` from `locales/strings.json` (key is English; no `en` field; at least `zh`). Never hardcode UI/report prose.
 
 ## Do not
 

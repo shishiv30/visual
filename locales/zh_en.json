@@ -122,6 +122,66 @@
       "zh": "出点必须晚于入点。",
       "en": "Out point must be after in point."
     },
+    "athlete_profile": {
+      "zh": "已存人物",
+      "en": "Saved profile"
+    },
+    "athlete_profile_new": {
+      "zh": "新建人物",
+      "en": "New profile"
+    },
+    "athlete_name": {
+      "zh": "姓名",
+      "en": "Name"
+    },
+    "athlete_birthday": {
+      "zh": "生日",
+      "en": "Birthday"
+    },
+    "athlete_birthday_unset": {
+      "zh": "未填写",
+      "en": "Not set"
+    },
+    "athlete_height": {
+      "zh": "身高",
+      "en": "Height"
+    },
+    "athlete_gender": {
+      "zh": "性别",
+      "en": "Gender"
+    },
+    "athlete_gender_unspecified": {
+      "zh": "未指定",
+      "en": "Unspecified"
+    },
+    "athlete_gender_female": {
+      "zh": "女",
+      "en": "Female"
+    },
+    "athlete_gender_male": {
+      "zh": "男",
+      "en": "Male"
+    },
+    "athlete_gender_other": {
+      "zh": "其他",
+      "en": "Other"
+    },
+    "athlete_weight": {
+      "zh": "体重",
+      "en": "Weight"
+    },
+    "athlete_ski": {
+      "zh": "雪板长度",
+      "en": "Ski length"
+    },
+    "athlete_required_title": {
+      "zh": "需要人物信息",
+      "en": "Athlete info required"
+    },
+    "athlete_required_body": {
+      "zh": "请填写姓名、身高、体重和雪板长度，或选择已存人物。",
+      "en": "Enter name, height, weight, and ski length, or pick a saved profile."
+    },
     "ok": {
       "zh": "确定",
       "en": "OK"
@@ -329,6 +389,26 @@
     "coach_score": {
       "zh": "启发式得分（0-100，非 FIS）",
       "en": "Heuristic score (0-100, not FIS)"
+    },
+    "posture_stability": {
+      "zh": "稳定性",
+      "en": "Stability"
+    },
+    "posture_coordination": {
+      "zh": "协调性",
+      "en": "Coordination"
+    },
+    "posture_control": {
+      "zh": "控制力",
+      "en": "Control"
+    },
+    "posture_balance": {
+      "zh": "平衡性",
+      "en": "Balance"
+    },
+    "posture_disclaimer": {
+      "zh": "姿态四维为教练启发式评分（0–100），非实验室生物力学测量；不含真实滑行速度、转弯半径米制或板底峰值压力。",
+      "en": "Four posture scores are coach heuristics (0–100), not lab biomechanics; they are not true speed, meter turn radius, or peak ski pressure."
     },
     "coach_next": {
       "zh": "下一阶段",
