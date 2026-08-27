@@ -102,6 +102,17 @@ clients/android/**/.cxx/
 *.ap_
 clients/android/app/src/main/assets/*.task
 
+# --- iOS client (Xcode / CocoaPods / SPM caches) ---
+clients/ios/**/xcuserdata/
+clients/ios/**/DerivedData/
+clients/ios/**/Pods/
+clients/ios/**/*.xcuserstate
+clients/ios/.swiftpm/xcode/
+*.xcuserdatad/
+
+# --- Locale migration dumps ---
+locales/_snake_to_en.json
+
 # --- Editors / IDE ---
 .idea/
 .vscode/
