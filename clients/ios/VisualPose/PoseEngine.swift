@@ -88,7 +88,7 @@ final class MediaPipeMarker: PoseMarker {
     private static func mapLandmarks(_ result: PoseLandmarkerResult) -> [[any PoseLandmarkPoint]] {
         result.landmarks.map { person in
             person.map { lm in
-                LandmarkXYZ(x: lm.x, y: lm.y, z: lm.z, visibility: lm.visibility)
+                LandmarkXYZ(x: lm.x, y: lm.y, z: lm.z, visibility: lm.visibility?.floatValue)
             }
         }
     }

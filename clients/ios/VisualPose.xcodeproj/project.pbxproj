@@ -7,177 +7,134 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		545E8C5509F2575AB64EEC3D /* AnalysisJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723D7B531CAC5BDCB604D6EF /* AnalysisJson.swift */; };
-		172445DE185D566AAAD23637 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F002E63A01A5236927B3A86 /* AppDelegate.swift */; };
-		806612BD54715D1DBE33EE80 /* Assess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EBB43B43315E46B20FD2EC /* Assess.swift */; };
-		DE0CE5E6AA3C5F5A8C83D64E /* Athletes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1531E6C09405720B1884124 /* Athletes.swift */; };
-		4B175B5A67AF5B43BA61CAB0 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4C7C2EAD2053C78D15F891 /* CaptureViewController.swift */; };
-		9B5F37ADCE66591D8D99B9AF /* ClipRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 591B7EA166A45E4EA1A16A8A /* ClipRange.swift */; };
-		BE4868E1AB05537BBD97847E /* CoreJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F95BD152CF25B6589A7DF2D /* CoreJson.swift */; };
-		983A6E05DDAA51CD967CF85D /* CoreMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2B0FB91395C74AB580B93 /* CoreMap.swift */; };
-		03552E2E7BB25BAAAD9CFFFD /* Curriculum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D515AC07DA495A3394F713D4 /* Curriculum.swift */; };
-		22CCE1B58BE8580493C3D9CD /* FloatingBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A06E8686D264528A950059B7 /* FloatingBackButton.swift */; };
-		6E50C47FCB44585BBDF2A34C /* FrameFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88D4F9863015DCEA7679069 /* FrameFeedback.swift */; };
-		0C001D3D20C1587FB444EA90 /* I18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755C65D485CF5455A6E096FE /* I18n.swift */; };
-		EEB54D9B5778548DA7FB5362 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E42EF5B539E57F3919BB16C /* Icons.swift */; };
-		93CD7B2B539B59E292057D4F /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEECEB8866725417B76FB4F0 /* Json.swift */; };
-		CC7FC8B38E3851B9ADC528B6 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30278DC3D525B16BF02FF48 /* Library.swift */; };
-		C1F19CBB32ED5D9DA62DD90A /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BFEB5FDA5A15E5EA10DB84F /* ListViewController.swift */; };
-		0870994580E55C8E8128827E /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6094FB8051C259EFB1ABAC42 /* Models.swift */; };
-		B4E18F518AC955D0991A3F9E /* OverlayMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D027E9F438145C6E830AEF73 /* OverlayMath.swift */; };
-		F2DE04B2F74352BF8B361235 /* PersonRoi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745CF799359251B6AF5D25FB /* PersonRoi.swift */; };
-		3021C254E0E7550BA417CAF4 /* PlayerExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9537511399A592A9E185DDD /* PlayerExport.swift */; };
-		8D32C4AC079156D3B216A02C /* PlayerStageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778C163062EC51EDB0D5B50E /* PlayerStageView.swift */; };
-		DA5948C9C703550E8B8ABBD9 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49FD0F843555647A3C621A7 /* PlayerViewController.swift */; };
-		AB246DC76DD753B282438448 /* PoseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89312D4C1755254BFB30207 /* PoseEngine.swift */; };
-		07F2B172C59F5DCA855FF483 /* PoseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD25483EACAD53EAA255AC68 /* PoseFilter.swift */; };
-		0939185EEE8B5A6A8AA176B2 /* PoseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDC9B9308F759539CA0A24E /* PoseMapper.swift */; };
-		958A8FA3E94A57F48933E8F7 /* PoseOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B639594E65CC28BB2BD09 /* PoseOverlayView.swift */; };
-		0BD562D0B23652A4B4F09D1D /* PoseTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F2B9B4C8EA543581CFEDAB /* PoseTimeline.swift */; };
-		8C7F3C60B4F45324AC32A2F9 /* PoseTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA65C76A20D59498DADDE7B /* PoseTrack.swift */; };
-		CB4157AA7A7B560A946101DA /* Posture.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2871C7FE99551EA9968D169 /* Posture.swift */; };
-		BB26BC71ADA05FEFBD3ED986 /* PrepareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 710E326935BA5990863E6E0D /* PrepareViewController.swift */; };
-		54CE4C748052599E90BD2174 /* ReportPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 487FE27447C35D5C9E008C59 /* ReportPanelView.swift */; };
-		A7E6C0E066C9553A96C81D6C /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCA7D69F5F954D4ACEC34C9 /* RootViewController.swift */; };
-		78A3C454797D5B9DB285B43A /* ScoreRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EBB7FA1B085BA7A875EA39 /* ScoreRingView.swift */; };
-		F9EFA7ADB4525DAEB3F91420 /* ScoreTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29F6A3FC59F58849759A5BB /* ScoreTimelineView.swift */; };
-		B6147AAD38A357349DD55908 /* SeedCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA212CCFC1415BCFAAF83F2D /* SeedCanvasView.swift */; };
-		271E5FF5253A5BADB92D0BBB /* SkillTreeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14ABFDEA1515536BC326D41 /* SkillTreeLayout.swift */; };
-		0AD8B3B7AC4352FB8CDB8C63 /* SkillTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C7E087095052BA9A9238D2 /* SkillTreeView.swift */; };
-		0F4E551B40715FAB92043AF3 /* SportsMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E1ADB2D93C57199C5F3202 /* SportsMath.swift */; };
-		22902C35A2985EB19EB9D30E /* SportsSignals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9744F102EA935F39A758E625 /* SportsSignals.swift */; };
-		01BBEF5EC4C751BE8977AE0C /* StageReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548C79A8CB9555C879E4595 /* StageReport.swift */; };
-		4CD1F5829E8A5519A3207A8E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6212C6A132E95F5F8F736600 /* Theme.swift */; };
-		EE6AEF05681D5DEB8EACB4CC /* TimelineMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7248DCD179C5186A5571DF4 /* TimelineMath.swift */; };
-		CF13714E96695B94A16DB74F /* TimelineStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13269FA690195EB6A6BC1CA6 /* TimelineStripView.swift */; };
-		D858C151F3CE52D58548F22F /* VideoPose.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C7C27C23CB568EB16530E3 /* VideoPose.swift */; };
-		550AD82819D55EB094338C62 /* CoreLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3FB24AAF165C82B16ABA44 /* CoreLogicTests.swift */; };
+		03517A4B677A59C3A0A4C00F /* PoseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF97C009AF5DB4A97FC712 /* PoseEngine.swift */; };
+		049C79C27534583AAF41ACDF /* Json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3050B96F4E57C8AB97E530 /* Json.swift */; };
+		0830F396970F5144AC4F9CDF /* SportsMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D306AC73CF435B78803B24B4 /* SportsMath.swift */; };
+		0D132FE7711F5836B154C879 /* Curriculum.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC46D83465D5E62AC10BA70 /* Curriculum.swift */; };
+		0F651CDC1C115A1DA3B506FE /* PoseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695489866845A758E43E4F9 /* PoseFilter.swift */; };
+		1971399BC17552D0B6510513 /* SkillTreeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4102EC3603055C1BE699CD6 /* SkillTreeLayout.swift */; };
+		1C7336CFA4E05B03900E92F6 /* ScoreRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC31DB1FDA2557599BACCF3 /* ScoreRingView.swift */; };
+		272C2943FFF457C0B07C24C4 /* ClipRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733DAD079B3651BBA56168A8 /* ClipRange.swift */; };
+		3278BCBB5A615AF9AF218677 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D3AFA432DF5CB4AFF34652 /* Library.swift */; };
+		37BB3389C11253DFAF34845E /* FloatingBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1696DB9C7A582BBF730D75 /* FloatingBackButton.swift */; };
+		398E2D473E885C608EEB03F4 /* SeedCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA90585FAC465BA3BAFD1013 /* SeedCanvasView.swift */; };
+		3B7978FF384654D4B1F6FB46 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF313A5A9C357B889072FAF /* Theme.swift */; };
+		44F5E53DAB145B059FF9BB55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B68568F8AE62513CB829C923 /* AppDelegate.swift */; };
+		459D001FF51C522580C0CCA6 /* PrepareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDBDB052A912549A8BFE6EBC /* PrepareViewController.swift */; };
+		4D1F51A93D0A55E7A7C916EE /* CoreLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C640C072DC4459DD9256149A /* CoreLogicTests.swift */; };
+		4D8166728D07592EB4AC6CE6 /* I18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF221F4B52655978A0CB6CA7 /* I18n.swift */; };
+		56115D74CB305E508ED6510F /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F35AA0B71B5D58A18B2152 /* ListViewController.swift */; };
+		57DECFBABF565166BBDD94B5 /* FrameFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F9B3E5144252B3A0B7BA52 /* FrameFeedback.swift */; };
+		59E17355CB15500D928C37EB /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34D4279EB815EED86BD64C4 /* PlayerViewController.swift */; };
+		60571104ADC3519DA9954458 /* Posture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E466B2121925585AB8F26344 /* Posture.swift */; };
+		61D7B0D9FAF1543F9FC45EAC /* Athletes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2DCD4967E7573E840B1A91 /* Athletes.swift */; };
+		6D0AFF8666735726AA278D94 /* CoreMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 450E34C4A1F75AB59F4EB301 /* CoreMap.swift */; };
+		6E581F5F6A5150AA921EBC59 /* Assess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02775652435551D08ACA7CAA /* Assess.swift */; };
+		72BA63F1844E547291742A58 /* SportsSignals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F490633845FE5A82785F2 /* SportsSignals.swift */; };
+		7E3A8AE9477C5BD586E2ED72 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692E4EF206E2546393BA2650 /* RootViewController.swift */; };
+		8FF0A6F33B2D5232B2BACAC3 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEEDBD2C149650E5A11EF99E /* CaptureViewController.swift */; };
+		915E85C6D0FF55D9883EDE43 /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8542B752D0556D97CF5494 /* Icons.swift */; };
+		966DADD6634355409BA69ED3 /* OverlayMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC963F58EC65B409F1F8B3E /* OverlayMath.swift */; };
+		980383A5E3555566A0AD85ED /* TimelineStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D47A3B915B554D98672ECB6 /* TimelineStripView.swift */; };
+		9FFC33877D24533B8B00090D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651844AFA5C257ACAA066D04 /* Models.swift */; };
+		A0582564CFD7B9898EFF5D0F /* Pods_VisualPose.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551BD35C62D2BFD06F1AF951 /* Pods_VisualPose.framework */; };
+		A27BCDEADA43583AA94BFD20 /* PersonRoi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F9BE0FB11552338FFABC47 /* PersonRoi.swift */; };
+		A4C8515CFB055D39B3EA96A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA4B5580CCA058D1981610E5 /* Assets.xcassets */; };
+		A50E4ABCD86557069B2549EC /* PlayerStageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 144C3E5EC6145D348022C1DE /* PlayerStageView.swift */; };
+		A98E90C2236E534BB66DC804 /* VideoPose.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52DA0454F5F551D9A7E293E /* VideoPose.swift */; };
+		AFEF983DAA675E19A609C4ED /* CoreJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE2EF0FE016502297911DA1 /* CoreJson.swift */; };
+		BA0D0BD20FFC5B91A0BD850F /* ScoreTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B72067EE972C5D45AE0F302A /* ScoreTimelineView.swift */; };
 		BA275B1E08545C9DAAE61CF9 /* core_map.c in Sources */ = {isa = PBXBuildFile; fileRef = DBA2805FE79C5F6BBD8FD1B3 /* core_map.c */; };
+		C449284F2B3850C6B5E2B818 /* PoseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448597D4B99F5FBBB5F918F1 /* PoseMapper.swift */; };
+		C7EADCBE0B3C515B9C9151DE /* ReportPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2FEFDBCF555B65A1BC6B83 /* ReportPanelView.swift */; };
+		C80885E48E7050249C397618 /* PoseOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA5B853DD8D5EF19535924B /* PoseOverlayView.swift */; };
+		D57CD1C8860151EB9526598E /* SkillTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A0313F4C07D5D6BA1D35E7B /* SkillTreeView.swift */; };
+		D5A887C6791D508F9D5FCD0F /* AnalysisJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70FD1FA33E0569F870DB721 /* AnalysisJson.swift */; };
+		D7F70F43F57D532BB8B541DC /* TimelineMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = C85159E2AD045C2A9A0CBFB1 /* TimelineMath.swift */; };
+		E1F0A59B86915B4585D92071 /* PoseTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423B432FC6F556ABB5060F3 /* PoseTimeline.swift */; };
+		F5E09E41B9485B6096DCEB9A /* StageReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F867CCBD2F5D46AD723B95 /* StageReport.swift */; };
+		F605D44EA82452529B2EAED2 /* PlayerExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442D46FAB89C57DE91989567 /* PlayerExport.swift */; };
+		F8A5F3EF8F7E5E40A38E7D67 /* PoseTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9ED11BF7F4560E9599A7C9 /* PoseTrack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02775652435551D08ACA7CAA /* Assess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assess.swift; sourceTree = "<group>"; };
+		0CE2EF0FE016502297911DA1 /* CoreJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreJson.swift; sourceTree = "<group>"; };
+		144C3E5EC6145D348022C1DE /* PlayerStageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStageView.swift; sourceTree = "<group>"; };
+		1A0313F4C07D5D6BA1D35E7B /* SkillTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTreeView.swift; sourceTree = "<group>"; };
+		1BC31DB1FDA2557599BACCF3 /* ScoreRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreRingView.swift; sourceTree = "<group>"; };
+		1D47A3B915B554D98672ECB6 /* TimelineStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStripView.swift; sourceTree = "<group>"; };
+		1F2DCD4967E7573E840B1A91 /* Athletes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athletes.swift; sourceTree = "<group>"; };
+		205CD93283750CA9075658E1 /* Pods-VisualPose.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisualPose.release.xcconfig"; path = "Target Support Files/Pods-VisualPose/Pods-VisualPose.release.xcconfig"; sourceTree = "<group>"; };
 		2B2D076422C65D339D11B9AD /* VisualPose.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VisualPose.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		702E1053D58550429FC70D8D /* VisualPoseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisualPoseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		723D7B531CAC5BDCB604D6EF /* AnalysisJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisJson.swift; sourceTree = "<group>"; };
-		1F002E63A01A5236927B3A86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		78EBB43B43315E46B20FD2EC /* Assess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assess.swift; sourceTree = "<group>"; };
-		F1531E6C09405720B1884124 /* Athletes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Athletes.swift; sourceTree = "<group>"; };
-		7D4C7C2EAD2053C78D15F891 /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
-		591B7EA166A45E4EA1A16A8A /* ClipRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipRange.swift; sourceTree = "<group>"; };
-		7F95BD152CF25B6589A7DF2D /* CoreJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreJson.swift; sourceTree = "<group>"; };
-		A1B2B0FB91395C74AB580B93 /* CoreMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMap.swift; sourceTree = "<group>"; };
-		D515AC07DA495A3394F713D4 /* Curriculum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curriculum.swift; sourceTree = "<group>"; };
-		A06E8686D264528A950059B7 /* FloatingBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingBackButton.swift; sourceTree = "<group>"; };
-		A88D4F9863015DCEA7679069 /* FrameFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameFeedback.swift; sourceTree = "<group>"; };
-		755C65D485CF5455A6E096FE /* I18n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I18n.swift; sourceTree = "<group>"; };
-		3E42EF5B539E57F3919BB16C /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
-		AEECEB8866725417B76FB4F0 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
-		F30278DC3D525B16BF02FF48 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
-		7BFEB5FDA5A15E5EA10DB84F /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		6094FB8051C259EFB1ABAC42 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		D027E9F438145C6E830AEF73 /* OverlayMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayMath.swift; sourceTree = "<group>"; };
-		745CF799359251B6AF5D25FB /* PersonRoi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonRoi.swift; sourceTree = "<group>"; };
-		E9537511399A592A9E185DDD /* PlayerExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerExport.swift; sourceTree = "<group>"; };
-		778C163062EC51EDB0D5B50E /* PlayerStageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerStageView.swift; sourceTree = "<group>"; };
-		A49FD0F843555647A3C621A7 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
-		C89312D4C1755254BFB30207 /* PoseEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseEngine.swift; sourceTree = "<group>"; };
-		AD25483EACAD53EAA255AC68 /* PoseFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseFilter.swift; sourceTree = "<group>"; };
-		2DDC9B9308F759539CA0A24E /* PoseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseMapper.swift; sourceTree = "<group>"; };
-		423B639594E65CC28BB2BD09 /* PoseOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseOverlayView.swift; sourceTree = "<group>"; };
-		69F2B9B4C8EA543581CFEDAB /* PoseTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseTimeline.swift; sourceTree = "<group>"; };
-		6BA65C76A20D59498DADDE7B /* PoseTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseTrack.swift; sourceTree = "<group>"; };
-		D2871C7FE99551EA9968D169 /* Posture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posture.swift; sourceTree = "<group>"; };
-		710E326935BA5990863E6E0D /* PrepareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareViewController.swift; sourceTree = "<group>"; };
-		487FE27447C35D5C9E008C59 /* ReportPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPanelView.swift; sourceTree = "<group>"; };
-		9BCA7D69F5F954D4ACEC34C9 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
-		45EBB7FA1B085BA7A875EA39 /* ScoreRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreRingView.swift; sourceTree = "<group>"; };
-		D29F6A3FC59F58849759A5BB /* ScoreTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTimelineView.swift; sourceTree = "<group>"; };
-		CA212CCFC1415BCFAAF83F2D /* SeedCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedCanvasView.swift; sourceTree = "<group>"; };
-		B14ABFDEA1515536BC326D41 /* SkillTreeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTreeLayout.swift; sourceTree = "<group>"; };
-		10C7E087095052BA9A9238D2 /* SkillTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTreeView.swift; sourceTree = "<group>"; };
-		25E1ADB2D93C57199C5F3202 /* SportsMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsMath.swift; sourceTree = "<group>"; };
-		9744F102EA935F39A758E625 /* SportsSignals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsSignals.swift; sourceTree = "<group>"; };
-		A548C79A8CB9555C879E4595 /* StageReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageReport.swift; sourceTree = "<group>"; };
-		6212C6A132E95F5F8F736600 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		E7248DCD179C5186A5571DF4 /* TimelineMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMath.swift; sourceTree = "<group>"; };
-		13269FA690195EB6A6BC1CA6 /* TimelineStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineStripView.swift; sourceTree = "<group>"; };
-		14C7C27C23CB568EB16530E3 /* VideoPose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPose.swift; sourceTree = "<group>"; };
-		CD3FB24AAF165C82B16ABA44 /* CoreLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLogicTests.swift; sourceTree = "<group>"; };
 		2B5423287EF5533B9B227609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B9ED11BF7F4560E9599A7C9 /* PoseTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseTrack.swift; sourceTree = "<group>"; };
+		3DA5B853DD8D5EF19535924B /* PoseOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseOverlayView.swift; sourceTree = "<group>"; };
+		43AF97C009AF5DB4A97FC712 /* PoseEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseEngine.swift; sourceTree = "<group>"; };
+		442D46FAB89C57DE91989567 /* PlayerExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerExport.swift; sourceTree = "<group>"; };
+		448597D4B99F5FBBB5F918F1 /* PoseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseMapper.swift; sourceTree = "<group>"; };
+		449F490633845FE5A82785F2 /* SportsSignals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsSignals.swift; sourceTree = "<group>"; };
+		450E34C4A1F75AB59F4EB301 /* CoreMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMap.swift; sourceTree = "<group>"; };
+		46F9BE0FB11552338FFABC47 /* PersonRoi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonRoi.swift; sourceTree = "<group>"; };
+		551BD35C62D2BFD06F1AF951 /* Pods_VisualPose.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VisualPose.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		60F9B3E5144252B3A0B7BA52 /* FrameFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameFeedback.swift; sourceTree = "<group>"; };
 		618D05C93B1A579B8F89230A /* VisualPose-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VisualPose-Bridging-Header.h"; sourceTree = "<group>"; };
+		651844AFA5C257ACAA066D04 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		692E4EF206E2546393BA2650 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		702E1053D58550429FC70D8D /* VisualPoseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VisualPoseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		733DAD079B3651BBA56168A8 /* ClipRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipRange.swift; sourceTree = "<group>"; };
+		75F867CCBD2F5D46AD723B95 /* StageReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageReport.swift; sourceTree = "<group>"; };
+		7A2FEFDBCF555B65A1BC6B83 /* ReportPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPanelView.swift; sourceTree = "<group>"; };
+		93F35AA0B71B5D58A18B2152 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		97D3AFA432DF5CB4AFF34652 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
+		9B3050B96F4E57C8AB97E530 /* Json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Json.swift; sourceTree = "<group>"; };
+		ACC46D83465D5E62AC10BA70 /* Curriculum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curriculum.swift; sourceTree = "<group>"; };
+		AE8542B752D0556D97CF5494 /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		AF221F4B52655978A0CB6CA7 /* I18n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I18n.swift; sourceTree = "<group>"; };
+		B34D4279EB815EED86BD64C4 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		B68568F8AE62513CB829C923 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B70FD1FA33E0569F870DB721 /* AnalysisJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisJson.swift; sourceTree = "<group>"; };
+		B72067EE972C5D45AE0F302A /* ScoreTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreTimelineView.swift; sourceTree = "<group>"; };
+		BA90585FAC465BA3BAFD1013 /* SeedCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeedCanvasView.swift; sourceTree = "<group>"; };
+		C52DA0454F5F551D9A7E293E /* VideoPose.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPose.swift; sourceTree = "<group>"; };
+		C640C072DC4459DD9256149A /* CoreLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLogicTests.swift; sourceTree = "<group>"; };
+		C85159E2AD045C2A9A0CBFB1 /* TimelineMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineMath.swift; sourceTree = "<group>"; };
+		CA4B5580CCA058D1981610E5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CCF313A5A9C357B889072FAF /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		CDBDB052A912549A8BFE6EBC /* PrepareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareViewController.swift; sourceTree = "<group>"; };
+		D306AC73CF435B78803B24B4 /* SportsMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsMath.swift; sourceTree = "<group>"; };
+		D4102EC3603055C1BE699CD6 /* SkillTreeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillTreeLayout.swift; sourceTree = "<group>"; };
 		DBA2805FE79C5F6BBD8FD1B3 /* core_map.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = core_map.c; path = ../../native/core_map/core_map.c; sourceTree = SOURCE_ROOT; };
+		E466B2121925585AB8F26344 /* Posture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Posture.swift; sourceTree = "<group>"; };
+		E695489866845A758E43E4F9 /* PoseFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseFilter.swift; sourceTree = "<group>"; };
+		EDC963F58EC65B409F1F8B3E /* OverlayMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayMath.swift; sourceTree = "<group>"; };
+		EF1696DB9C7A582BBF730D75 /* FloatingBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingBackButton.swift; sourceTree = "<group>"; };
+		F423B432FC6F556ABB5060F3 /* PoseTimeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseTimeline.swift; sourceTree = "<group>"; };
 		FB4C4BB2A70752A891748F63 /* core_map.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = core_map.h; path = ../../native/core_map/core_map.h; sourceTree = SOURCE_ROOT; };
+		FCDC2B9F6265AED6075A26F3 /* Pods-VisualPose.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VisualPose.debug.xcconfig"; path = "Target Support Files/Pods-VisualPose/Pods-VisualPose.debug.xcconfig"; sourceTree = "<group>"; };
+		FEEDBD2C149650E5A11EF99E /* CaptureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		69AB19BADCB25A66BCCF13B7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0582564CFD7B9898EFF5D0F /* Pods_VisualPose.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
-		B29DC138E721556AB1BF4604 = {
+		04105ED8E07F8D5FC289BCBD /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FA87492D0B445C83BB607F6F /* VisualPose */,
-				C3FE2DBCF7A85AEA815658B5 /* VisualPoseTests */,
-				14783336FD1A56DCB4111101 /* core_map */,
+				FCDC2B9F6265AED6075A26F3 /* Pods-VisualPose.debug.xcconfig */,
+				205CD93283750CA9075658E1 /* Pods-VisualPose.release.xcconfig */,
 			);
-			sourceTree = "<group>";
-		};
-		FA87492D0B445C83BB607F6F /* VisualPose */ = {
-			isa = PBXGroup;
-			children = (
-				723D7B531CAC5BDCB604D6EF /* AnalysisJson.swift */,
-				1F002E63A01A5236927B3A86 /* AppDelegate.swift */,
-				78EBB43B43315E46B20FD2EC /* Assess.swift */,
-				F1531E6C09405720B1884124 /* Athletes.swift */,
-				7D4C7C2EAD2053C78D15F891 /* CaptureViewController.swift */,
-				591B7EA166A45E4EA1A16A8A /* ClipRange.swift */,
-				7F95BD152CF25B6589A7DF2D /* CoreJson.swift */,
-				A1B2B0FB91395C74AB580B93 /* CoreMap.swift */,
-				D515AC07DA495A3394F713D4 /* Curriculum.swift */,
-				A06E8686D264528A950059B7 /* FloatingBackButton.swift */,
-				A88D4F9863015DCEA7679069 /* FrameFeedback.swift */,
-				755C65D485CF5455A6E096FE /* I18n.swift */,
-				3E42EF5B539E57F3919BB16C /* Icons.swift */,
-				AEECEB8866725417B76FB4F0 /* Json.swift */,
-				F30278DC3D525B16BF02FF48 /* Library.swift */,
-				7BFEB5FDA5A15E5EA10DB84F /* ListViewController.swift */,
-				6094FB8051C259EFB1ABAC42 /* Models.swift */,
-				D027E9F438145C6E830AEF73 /* OverlayMath.swift */,
-				745CF799359251B6AF5D25FB /* PersonRoi.swift */,
-				E9537511399A592A9E185DDD /* PlayerExport.swift */,
-				778C163062EC51EDB0D5B50E /* PlayerStageView.swift */,
-				A49FD0F843555647A3C621A7 /* PlayerViewController.swift */,
-				C89312D4C1755254BFB30207 /* PoseEngine.swift */,
-				AD25483EACAD53EAA255AC68 /* PoseFilter.swift */,
-				2DDC9B9308F759539CA0A24E /* PoseMapper.swift */,
-				423B639594E65CC28BB2BD09 /* PoseOverlayView.swift */,
-				69F2B9B4C8EA543581CFEDAB /* PoseTimeline.swift */,
-				6BA65C76A20D59498DADDE7B /* PoseTrack.swift */,
-				D2871C7FE99551EA9968D169 /* Posture.swift */,
-				710E326935BA5990863E6E0D /* PrepareViewController.swift */,
-				487FE27447C35D5C9E008C59 /* ReportPanelView.swift */,
-				9BCA7D69F5F954D4ACEC34C9 /* RootViewController.swift */,
-				45EBB7FA1B085BA7A875EA39 /* ScoreRingView.swift */,
-				D29F6A3FC59F58849759A5BB /* ScoreTimelineView.swift */,
-				CA212CCFC1415BCFAAF83F2D /* SeedCanvasView.swift */,
-				B14ABFDEA1515536BC326D41 /* SkillTreeLayout.swift */,
-				10C7E087095052BA9A9238D2 /* SkillTreeView.swift */,
-				25E1ADB2D93C57199C5F3202 /* SportsMath.swift */,
-				9744F102EA935F39A758E625 /* SportsSignals.swift */,
-				A548C79A8CB9555C879E4595 /* StageReport.swift */,
-				6212C6A132E95F5F8F736600 /* Theme.swift */,
-				E7248DCD179C5186A5571DF4 /* TimelineMath.swift */,
-				13269FA690195EB6A6BC1CA6 /* TimelineStripView.swift */,
-				14C7C27C23CB568EB16530E3 /* VideoPose.swift */,
-				2B5423287EF5533B9B227609 /* Info.plist */,
-				618D05C93B1A579B8F89230A /* VisualPose-Bridging-Header.h */,
-			);
-			path = VisualPose;
-			sourceTree = "<group>";
-		};
-		C3FE2DBCF7A85AEA815658B5 /* VisualPoseTests */ = {
-			isa = PBXGroup;
-			children = (
-				CD3FB24AAF165C82B16ABA44 /* CoreLogicTests.swift */,
-			);
-			path = VisualPoseTests;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		14783336FD1A56DCB4111101 /* core_map */ = {
@@ -189,6 +146,87 @@
 			name = core_map;
 			sourceTree = "<group>";
 		};
+		B29DC138E721556AB1BF4604 = {
+			isa = PBXGroup;
+			children = (
+				FA87492D0B445C83BB607F6F /* VisualPose */,
+				C3FE2DBCF7A85AEA815658B5 /* VisualPoseTests */,
+				14783336FD1A56DCB4111101 /* core_map */,
+				04105ED8E07F8D5FC289BCBD /* Pods */,
+				B2E53E851399F1C952AC69AC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B2E53E851399F1C952AC69AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				551BD35C62D2BFD06F1AF951 /* Pods_VisualPose.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C3FE2DBCF7A85AEA815658B5 /* VisualPoseTests */ = {
+			isa = PBXGroup;
+			children = (
+				C640C072DC4459DD9256149A /* CoreLogicTests.swift */,
+			);
+			path = VisualPoseTests;
+			sourceTree = "<group>";
+		};
+		FA87492D0B445C83BB607F6F /* VisualPose */ = {
+			isa = PBXGroup;
+			children = (
+				B70FD1FA33E0569F870DB721 /* AnalysisJson.swift */,
+				B68568F8AE62513CB829C923 /* AppDelegate.swift */,
+				02775652435551D08ACA7CAA /* Assess.swift */,
+				1F2DCD4967E7573E840B1A91 /* Athletes.swift */,
+				FEEDBD2C149650E5A11EF99E /* CaptureViewController.swift */,
+				733DAD079B3651BBA56168A8 /* ClipRange.swift */,
+				0CE2EF0FE016502297911DA1 /* CoreJson.swift */,
+				450E34C4A1F75AB59F4EB301 /* CoreMap.swift */,
+				ACC46D83465D5E62AC10BA70 /* Curriculum.swift */,
+				EF1696DB9C7A582BBF730D75 /* FloatingBackButton.swift */,
+				60F9B3E5144252B3A0B7BA52 /* FrameFeedback.swift */,
+				AF221F4B52655978A0CB6CA7 /* I18n.swift */,
+				AE8542B752D0556D97CF5494 /* Icons.swift */,
+				9B3050B96F4E57C8AB97E530 /* Json.swift */,
+				97D3AFA432DF5CB4AFF34652 /* Library.swift */,
+				93F35AA0B71B5D58A18B2152 /* ListViewController.swift */,
+				651844AFA5C257ACAA066D04 /* Models.swift */,
+				EDC963F58EC65B409F1F8B3E /* OverlayMath.swift */,
+				46F9BE0FB11552338FFABC47 /* PersonRoi.swift */,
+				442D46FAB89C57DE91989567 /* PlayerExport.swift */,
+				144C3E5EC6145D348022C1DE /* PlayerStageView.swift */,
+				B34D4279EB815EED86BD64C4 /* PlayerViewController.swift */,
+				43AF97C009AF5DB4A97FC712 /* PoseEngine.swift */,
+				E695489866845A758E43E4F9 /* PoseFilter.swift */,
+				448597D4B99F5FBBB5F918F1 /* PoseMapper.swift */,
+				3DA5B853DD8D5EF19535924B /* PoseOverlayView.swift */,
+				F423B432FC6F556ABB5060F3 /* PoseTimeline.swift */,
+				2B9ED11BF7F4560E9599A7C9 /* PoseTrack.swift */,
+				E466B2121925585AB8F26344 /* Posture.swift */,
+				CDBDB052A912549A8BFE6EBC /* PrepareViewController.swift */,
+				7A2FEFDBCF555B65A1BC6B83 /* ReportPanelView.swift */,
+				692E4EF206E2546393BA2650 /* RootViewController.swift */,
+				1BC31DB1FDA2557599BACCF3 /* ScoreRingView.swift */,
+				B72067EE972C5D45AE0F302A /* ScoreTimelineView.swift */,
+				BA90585FAC465BA3BAFD1013 /* SeedCanvasView.swift */,
+				D4102EC3603055C1BE699CD6 /* SkillTreeLayout.swift */,
+				1A0313F4C07D5D6BA1D35E7B /* SkillTreeView.swift */,
+				D306AC73CF435B78803B24B4 /* SportsMath.swift */,
+				449F490633845FE5A82785F2 /* SportsSignals.swift */,
+				75F867CCBD2F5D46AD723B95 /* StageReport.swift */,
+				CCF313A5A9C357B889072FAF /* Theme.swift */,
+				C85159E2AD045C2A9A0CBFB1 /* TimelineMath.swift */,
+				1D47A3B915B554D98672ECB6 /* TimelineStripView.swift */,
+				C52DA0454F5F551D9A7E293E /* VideoPose.swift */,
+				2B5423287EF5533B9B227609 /* Info.plist */,
+				CA4B5580CCA058D1981610E5 /* Assets.xcassets */,
+				618D05C93B1A579B8F89230A /* VisualPose-Bridging-Header.h */,
+			);
+			path = VisualPose;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -196,9 +234,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50A58A9EFD9C5FA28B84D93E /* Build configuration list for PBXNativeTarget "VisualPose" */;
 			buildPhases = (
+				895EEDA7A3BC55AE16494682 /* [CP] Check Pods Manifest.lock */,
 				6FBD980ECA145BE5A57EE262 /* Copy shared assets */,
 				10DE8A1C59B9528988DFD2B8 /* Sources */,
-				C751C74512715885B2E0E5ED /* Native */,
 				69AB19BADCB25A66BCCF13B7 /* Frameworks */,
 				F80FB1B246FE5AEAA51F1873 /* Resources */,
 			);
@@ -255,6 +293,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		F80FB1B246FE5AEAA51F1873 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A4C8515CFB055D39B3EA96A9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXShellScriptBuildPhase section */
 		6FBD980ECA145BE5A57EE262 /* Copy shared assets */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -268,8 +317,30 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellScript = "ROOT=\"$SRCROOT/../..\"; DEST=\"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"; cp -f \"$ROOT/locales/strings.json\" \"$DEST/strings.json\"; cp -f \"$ROOT/content/ski/curriculum.v2.json\" \"$DEST/curriculum.v2.json\"; cp -f \"$ROOT/models/pose_landmarker_full.task\" \"$DEST/pose_landmarker_full.task\";\n";
 			shellPath = /bin/sh;
+			shellScript = "ROOT=\"$SRCROOT/../..\"; DEST=\"$BUILT_PRODUCTS_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\"; cp -f \"$ROOT/locales/strings.json\" \"$DEST/strings.json\"; cp -f \"$ROOT/content/ski/curriculum.v2.json\" \"$DEST/curriculum.v2.json\"; cp -f \"$ROOT/models/pose_landmarker_full.task\" \"$DEST/pose_landmarker_full.task\";\n";
+		};
+		895EEDA7A3BC55AE16494682 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VisualPose-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -278,57 +349,50 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				545E8C5509F2575AB64EEC3D /* AnalysisJson.swift in Sources */,
-				172445DE185D566AAAD23637 /* AppDelegate.swift in Sources */,
-				806612BD54715D1DBE33EE80 /* Assess.swift in Sources */,
-				DE0CE5E6AA3C5F5A8C83D64E /* Athletes.swift in Sources */,
-				4B175B5A67AF5B43BA61CAB0 /* CaptureViewController.swift in Sources */,
-				9B5F37ADCE66591D8D99B9AF /* ClipRange.swift in Sources */,
-				BE4868E1AB05537BBD97847E /* CoreJson.swift in Sources */,
-				983A6E05DDAA51CD967CF85D /* CoreMap.swift in Sources */,
-				03552E2E7BB25BAAAD9CFFFD /* Curriculum.swift in Sources */,
-				22CCE1B58BE8580493C3D9CD /* FloatingBackButton.swift in Sources */,
-				6E50C47FCB44585BBDF2A34C /* FrameFeedback.swift in Sources */,
-				0C001D3D20C1587FB444EA90 /* I18n.swift in Sources */,
-				EEB54D9B5778548DA7FB5362 /* Icons.swift in Sources */,
-				93CD7B2B539B59E292057D4F /* Json.swift in Sources */,
-				CC7FC8B38E3851B9ADC528B6 /* Library.swift in Sources */,
-				C1F19CBB32ED5D9DA62DD90A /* ListViewController.swift in Sources */,
-				0870994580E55C8E8128827E /* Models.swift in Sources */,
-				B4E18F518AC955D0991A3F9E /* OverlayMath.swift in Sources */,
-				F2DE04B2F74352BF8B361235 /* PersonRoi.swift in Sources */,
-				3021C254E0E7550BA417CAF4 /* PlayerExport.swift in Sources */,
-				8D32C4AC079156D3B216A02C /* PlayerStageView.swift in Sources */,
-				DA5948C9C703550E8B8ABBD9 /* PlayerViewController.swift in Sources */,
-				AB246DC76DD753B282438448 /* PoseEngine.swift in Sources */,
-				07F2B172C59F5DCA855FF483 /* PoseFilter.swift in Sources */,
-				0939185EEE8B5A6A8AA176B2 /* PoseMapper.swift in Sources */,
-				958A8FA3E94A57F48933E8F7 /* PoseOverlayView.swift in Sources */,
-				0BD562D0B23652A4B4F09D1D /* PoseTimeline.swift in Sources */,
-				8C7F3C60B4F45324AC32A2F9 /* PoseTrack.swift in Sources */,
-				CB4157AA7A7B560A946101DA /* Posture.swift in Sources */,
-				BB26BC71ADA05FEFBD3ED986 /* PrepareViewController.swift in Sources */,
-				54CE4C748052599E90BD2174 /* ReportPanelView.swift in Sources */,
-				A7E6C0E066C9553A96C81D6C /* RootViewController.swift in Sources */,
-				78A3C454797D5B9DB285B43A /* ScoreRingView.swift in Sources */,
-				F9EFA7ADB4525DAEB3F91420 /* ScoreTimelineView.swift in Sources */,
-				B6147AAD38A357349DD55908 /* SeedCanvasView.swift in Sources */,
-				271E5FF5253A5BADB92D0BBB /* SkillTreeLayout.swift in Sources */,
-				0AD8B3B7AC4352FB8CDB8C63 /* SkillTreeView.swift in Sources */,
-				0F4E551B40715FAB92043AF3 /* SportsMath.swift in Sources */,
-				22902C35A2985EB19EB9D30E /* SportsSignals.swift in Sources */,
-				01BBEF5EC4C751BE8977AE0C /* StageReport.swift in Sources */,
-				4CD1F5829E8A5519A3207A8E /* Theme.swift in Sources */,
-				EE6AEF05681D5DEB8EACB4CC /* TimelineMath.swift in Sources */,
-				CF13714E96695B94A16DB74F /* TimelineStripView.swift in Sources */,
-				D858C151F3CE52D58548F22F /* VideoPose.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C751C74512715885B2E0E5ED /* Native */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				D5A887C6791D508F9D5FCD0F /* AnalysisJson.swift in Sources */,
+				44F5E53DAB145B059FF9BB55 /* AppDelegate.swift in Sources */,
+				6E581F5F6A5150AA921EBC59 /* Assess.swift in Sources */,
+				61D7B0D9FAF1543F9FC45EAC /* Athletes.swift in Sources */,
+				8FF0A6F33B2D5232B2BACAC3 /* CaptureViewController.swift in Sources */,
+				272C2943FFF457C0B07C24C4 /* ClipRange.swift in Sources */,
+				AFEF983DAA675E19A609C4ED /* CoreJson.swift in Sources */,
+				6D0AFF8666735726AA278D94 /* CoreMap.swift in Sources */,
+				0D132FE7711F5836B154C879 /* Curriculum.swift in Sources */,
+				37BB3389C11253DFAF34845E /* FloatingBackButton.swift in Sources */,
+				57DECFBABF565166BBDD94B5 /* FrameFeedback.swift in Sources */,
+				4D8166728D07592EB4AC6CE6 /* I18n.swift in Sources */,
+				915E85C6D0FF55D9883EDE43 /* Icons.swift in Sources */,
+				049C79C27534583AAF41ACDF /* Json.swift in Sources */,
+				3278BCBB5A615AF9AF218677 /* Library.swift in Sources */,
+				56115D74CB305E508ED6510F /* ListViewController.swift in Sources */,
+				9FFC33877D24533B8B00090D /* Models.swift in Sources */,
+				966DADD6634355409BA69ED3 /* OverlayMath.swift in Sources */,
+				A27BCDEADA43583AA94BFD20 /* PersonRoi.swift in Sources */,
+				F605D44EA82452529B2EAED2 /* PlayerExport.swift in Sources */,
+				A50E4ABCD86557069B2549EC /* PlayerStageView.swift in Sources */,
+				59E17355CB15500D928C37EB /* PlayerViewController.swift in Sources */,
+				03517A4B677A59C3A0A4C00F /* PoseEngine.swift in Sources */,
+				0F651CDC1C115A1DA3B506FE /* PoseFilter.swift in Sources */,
+				C449284F2B3850C6B5E2B818 /* PoseMapper.swift in Sources */,
+				C80885E48E7050249C397618 /* PoseOverlayView.swift in Sources */,
+				E1F0A59B86915B4585D92071 /* PoseTimeline.swift in Sources */,
+				F8A5F3EF8F7E5E40A38E7D67 /* PoseTrack.swift in Sources */,
+				60571104ADC3519DA9954458 /* Posture.swift in Sources */,
+				459D001FF51C522580C0CCA6 /* PrepareViewController.swift in Sources */,
+				C7EADCBE0B3C515B9C9151DE /* ReportPanelView.swift in Sources */,
+				7E3A8AE9477C5BD586E2ED72 /* RootViewController.swift in Sources */,
+				1C7336CFA4E05B03900E92F6 /* ScoreRingView.swift in Sources */,
+				BA0D0BD20FFC5B91A0BD850F /* ScoreTimelineView.swift in Sources */,
+				398E2D473E885C608EEB03F4 /* SeedCanvasView.swift in Sources */,
+				1971399BC17552D0B6510513 /* SkillTreeLayout.swift in Sources */,
+				D57CD1C8860151EB9526598E /* SkillTreeView.swift in Sources */,
+				0830F396970F5144AC4F9CDF /* SportsMath.swift in Sources */,
+				72BA63F1844E547291742A58 /* SportsSignals.swift in Sources */,
+				F5E09E41B9485B6096DCEB9A /* StageReport.swift in Sources */,
+				3B7978FF384654D4B1F6FB46 /* Theme.swift in Sources */,
+				D7F70F43F57D532BB8B541DC /* TimelineMath.swift in Sources */,
+				980383A5E3555566A0AD85ED /* TimelineStripView.swift in Sources */,
+				A98E90C2236E534BB66DC804 /* VideoPose.swift in Sources */,
 				BA275B1E08545C9DAAE61CF9 /* core_map.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,136 +401,113 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				550AD82819D55EB094338C62 /* CoreLogicTests.swift in Sources */,
+				4D1F51A93D0A55E7A7C916EE /* CoreLogicTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXFrameworksBuildPhase section */
-		69AB19BADCB25A66BCCF13B7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXResourcesBuildPhase section */
-		F80FB1B246FE5AEAA51F1873 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin XCBuildConfiguration section */
-		DEFB63AE6FBA5111AF671ABE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				SDKROOT = iphoneos;
-				SWIFT_VERSION = 5.0;
-
-			};
-			name = Debug;
-		};
 		2639957D33745D5C8E6094F9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Release;
 		};
-		B60B7FCA99595A95A65F29EF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = VisualPose/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = local.visual.corepose;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "VisualPose/VisualPose-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../native/core_map";
-
-			};
-			name = Debug;
-		};
 		8C693C11EA5E581885697F8A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 205CD93283750CA9075658E1 /* Pods-VisualPose.release.xcconfig */;
 			buildSettings = {
-
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../native/core_map";
 				INFOPLIST_FILE = VisualPose/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = local.visual.corepose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "VisualPose/VisualPose-Bridging-Header.h";
-								SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../native/core_map";
-
 			};
 			name = Release;
 		};
 		9F1ABA41B1DA58AD8F2D6098 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../native/core_map";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				PRODUCT_BUNDLE_IDENTIFIER = local.visual.corepose.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VisualPose.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VisualPose";
+			};
+			name = Debug;
+		};
+		B60B7FCA99595A95A65F29EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FCDC2B9F6265AED6075A26F3 /* Pods-VisualPose.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../native/core_map";
-
+				INFOPLIST_FILE = VisualPose/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = local.visual.corepose;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "VisualPose/VisualPose-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		DEFB63AE6FBA5111AF671ABE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EBFAC4DFA74351A0BA0E60BC /* Build configuration list for PBXProject "VisualPose" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DEFB63AE6FBA5111AF671ABE /* Debug */,
-				2639957D33745D5C8E6094F9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		50A58A9EFD9C5FA28B84D93E /* Build configuration list for PBXNativeTarget "VisualPose" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -480,6 +521,15 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9F1ABA41B1DA58AD8F2D6098 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EBFAC4DFA74351A0BA0E60BC /* Build configuration list for PBXProject "VisualPose" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEFB63AE6FBA5111AF671ABE /* Debug */,
+				2639957D33745D5C8E6094F9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

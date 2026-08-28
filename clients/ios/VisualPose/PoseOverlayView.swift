@@ -45,8 +45,11 @@ final class PoseOverlayView: UIView {
             ctx.setLineWidth(3)
             ctx.stroke(CGRect(x: CGFloat(l), y: CGFloat(t), width: CGFloat(r - l), height: CGFloat(b - t)))
         }
+        let compact = bounds.width < 640
+        let lineW: CGFloat = compact ? 1 : 6
+        let dotR: CGFloat  = compact ? 1 : 8
         ctx.setStrokeColor(Theme.bone.cgColor)
-        ctx.setLineWidth(6)
+        ctx.setLineWidth(lineW)
         ctx.setLineCap(.round)
         for pose in poses {
             for seg in OverlayMath.visibleSegments(pose: pose, srcW: srcW, srcH: srcH, viewW: vw, viewH: vh, letterbox: letterbox) {
@@ -58,7 +61,7 @@ final class PoseOverlayView: UIView {
         ctx.setFillColor(Theme.joint.cgColor)
         for pose in poses {
             for joint in OverlayMath.visibleJoints(pose: pose, srcW: srcW, srcH: srcH, viewW: vw, viewH: vh, letterbox: letterbox) {
-                ctx.fillEllipse(in: CGRect(x: CGFloat(joint.x) - 8, y: CGFloat(joint.y) - 8, width: 16, height: 16))
+                ctx.fillEllipse(in: CGRect(x: CGFloat(joint.x) - dotR, y: CGFloat(joint.y) - dotR, width: dotR * 2, height: dotR * 2))
             }
         }
     }
@@ -81,8 +84,11 @@ enum OverlayStamp {
                 ctx.cgContext.setLineWidth(4)
                 ctx.cgContext.stroke(CGRect(x: CGFloat(l), y: CGFloat(t), width: CGFloat(r - l), height: CGFloat(b - t)))
             }
+            let stampCompact = size.width < 640
+            let sLineW: CGFloat = stampCompact ? 1 : 6
+            let sDotR: CGFloat  = stampCompact ? 1 : 8
             ctx.cgContext.setStrokeColor(Theme.bone.cgColor)
-            ctx.cgContext.setLineWidth(6)
+            ctx.cgContext.setLineWidth(sLineW)
             ctx.cgContext.setLineCap(.round)
             for pose in frame.poses {
                 for seg in OverlayMath.visibleSegments(
@@ -99,7 +105,7 @@ enum OverlayStamp {
                     pose: pose, srcW: frame.width, srcH: frame.height, viewW: vw, viewH: vh, letterbox: true
                 ) {
                     ctx.cgContext.fillEllipse(
-                        in: CGRect(x: CGFloat(joint.x) - 8, y: CGFloat(joint.y) - 8, width: 16, height: 16)
+                        in: CGRect(x: CGFloat(joint.x) - sDotR, y: CGFloat(joint.y) - sDotR, width: sDotR * 2, height: sDotR * 2)
                     )
                 }
             }

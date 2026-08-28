@@ -4,20 +4,22 @@ Swift + UIKit + AVFoundation + MediaPipe Tasks Vision. Same workflow as Windows/
 
 This machine that authors the repo may be Windows: **open the project on a Mac** to compile. Do not treat the old `CorePoseDemo` camera logger as the product.
 
-## Open on a Mac
+## Build on a Mac
 
 ```bash
 cd /path/to/visual
 python3 scripts/download_pose_landmarker.py
 python3 scripts/generate_ios_xcodeproj.py
-open clients/ios/VisualPose.xcodeproj
+cd clients/ios && pod install && cd ../..
+open clients/ios/VisualPose.xcworkspace   # use the workspace, not the xcodeproj
 ```
 
 In Xcode:
 
-1. File → Add Package Dependencies → `https://github.com/google-ai-edge/MediaPipeTasksVision` (or CocoaPods `MediaPipeTasksVision` **0.10.29**, same as Android).
-2. Signing: your team, bundle id `local.visual.corepose`.
-3. Run on a **simulator or device**. The simulator camera is not a skier — Import a clip from Photos/Files.
+1. Signing: select your team, bundle id `local.visual.corepose`.
+2. Run on a **simulator or device**. The simulator camera is not a skier — Import a clip from Photos/Files.
+
+MediaPipe is installed via CocoaPods (`MediaPipeTasksVision` **0.10.35** — note: 0.10.29 does not exist on CocoaPods; 0.10.35 is the closest release).
 
 Build copies `locales/strings.json`, `content/ski/curriculum.v2.json`, and `models/pose_landmarker_full.task` into the app bundle.
 

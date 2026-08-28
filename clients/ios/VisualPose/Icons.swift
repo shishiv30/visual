@@ -14,10 +14,10 @@ enum Icons {
         return renderer.image { _ in
             fill.setFill()
             let scale = pointSize / 24
-            var transform = CGAffineTransform(scaleX: scale, y: scale)
-            if let scaled = bezier.copy(using: &transform) {
-                scaled.fill()
-            }
+            let transform = CGAffineTransform(scaleX: scale, y: scale)
+            let scaled = bezier.copy() as! UIBezierPath
+            scaled.apply(transform)
+            scaled.fill()
         }
     }
 

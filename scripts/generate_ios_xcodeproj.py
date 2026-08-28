@@ -34,12 +34,13 @@ def main() -> None:
     pbx_test_sources = hid("phase-test-sources")
     pbx_frameworks = hid("phase-frameworks")
     pbx_resources = hid("phase-resources")
-    pbx_native = hid("phase-native")
     pbx_group_root = hid("group-root")
     pbx_group_app = hid("group-app")
     pbx_group_tests = hid("group-tests")
     pbx_group_native = hid("group-native")
     pbx_plist = hid("file-plist")
+    pbx_assets = hid("file-assets")
+    pbx_assets_build = hid("build-assets")
     pbx_bridge = hid("file-bridge")
     pbx_c = hid("file-core-c")
     pbx_h = hid("file-core-h")
@@ -103,6 +104,12 @@ def main() -> None:
         f"\t\t{pbx_plist} /* Info.plist */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = \"<group>\"; }};"
     )
     lines.append(
+        f"\t\t{pbx_assets} /* Assets.xcassets */ = {{isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = \"<group>\"; }};"
+    )
+    lines.append(
+        f"\t\t{pbx_assets_build} /* Assets.xcassets in Resources */ = {{isa = PBXBuildFile; fileRef = {pbx_assets} /* Assets.xcassets */; }};"
+    )
+    lines.append(
         f"\t\t{pbx_bridge} /* VisualPose-Bridging-Header.h */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = \"VisualPose-Bridging-Header.h\"; sourceTree = \"<group>\"; }};"
     )
     lines.append(
@@ -131,6 +138,7 @@ def main() -> None:
     for p in app_files:
         lines.append(f"\t\t\t\t{file_ids[p]} /* {p.name} */,")
     lines.append(f"\t\t\t\t{pbx_plist} /* Info.plist */,")
+    lines.append(f"\t\t\t\t{pbx_assets} /* Assets.xcassets */,")
     lines.append(f"\t\t\t\t{pbx_bridge} /* VisualPose-Bridging-Header.h */,")
     lines.append("\t\t\t);")
     lines.append("\t\t\tpath = VisualPose;")
@@ -163,7 +171,6 @@ def main() -> None:
     lines.append("\t\t\tbuildPhases = (")
     lines.append(f"\t\t\t\t{hid('phase-copy')} /* Copy shared assets */,")
     lines.append(f"\t\t\t\t{pbx_app_sources} /* Sources */,")
-    lines.append(f"\t\t\t\t{pbx_native} /* Native */,")
     lines.append(f"\t\t\t\t{pbx_frameworks} /* Frameworks */,")
     lines.append(f"\t\t\t\t{pbx_resources} /* Resources */,")
     lines.append("\t\t\t);")
@@ -253,13 +260,6 @@ def main() -> None:
     lines.append("\t\t\tfiles = (")
     for p in app_files:
         lines.append(f"\t\t\t\t{build_ids[p]} /* {p.name} in Sources */,")
-    lines.append("\t\t\t);")
-    lines.append("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
-    lines.append("\t\t};")
-    lines.append(f"\t\t{pbx_native} /* Native */ = {{")
-    lines.append("\t\t\tisa = PBXSourcesBuildPhase;")
-    lines.append("\t\t\tbuildActionMask = 2147483647;")
-    lines.append("\t\t\tfiles = (")
     lines.append(f"\t\t\t\t{build_c} /* core_map.c in Sources */,")
     lines.append("\t\t\t);")
     lines.append("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
@@ -290,6 +290,7 @@ def main() -> None:
     lines.append("\t\t\tisa = PBXResourcesBuildPhase;")
     lines.append("\t\t\tbuildActionMask = 2147483647;")
     lines.append("\t\t\tfiles = (")
+    lines.append(f"\t\t\t\t{pbx_assets_build} /* Assets.xcassets in Resources */,")
     lines.append("\t\t\t);")
     lines.append("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
     lines.append("\t\t};")
@@ -314,7 +315,10 @@ def main() -> None:
 """
     app_debug = """
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = VisualPose/Info.plist;
@@ -322,6 +326,7 @@ def main() -> None:
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = local.visual.corepose;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "VisualPose/VisualPose-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -373,6 +378,49 @@ def main() -> None:
 
     (project / "project.pbxproj").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Wrote {project / 'project.pbxproj'} ({len(app_files)} app, {len(test_files)} tests)")
+
+    # Write workspace contents file (required for SPM resolution)
+    ws_dir = project / "project.xcworkspace"
+    ws_dir.mkdir(parents=True, exist_ok=True)
+    (ws_dir / "contents.xcworkspacedata").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<Workspace version = "1.0">\n'
+        '   <FileRef location = "self:"></FileRef>\n'
+        '</Workspace>\n',
+        encoding="utf-8",
+    )
+
+    # Write shared scheme so xcodebuild can find it without opening Xcode first
+    schemes_dir = project / "xcshareddata" / "xcschemes"
+    schemes_dir.mkdir(parents=True, exist_ok=True)
+    scheme_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<Scheme LastUpgradeVersion="1600" version="1.7">
+   <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
+      <BuildActionEntries>
+         <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{pbx_app_target}" BuildableName="VisualPose.app" BlueprintName="VisualPose" ReferencedContainer="container:VisualPose.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+      </BuildActionEntries>
+   </BuildAction>
+   <TestAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES">
+      <Testables>
+         <TestableReference skipped="NO">
+            <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{pbx_test_target}" BuildableName="VisualPoseTests.xctest" BlueprintName="VisualPoseTests" ReferencedContainer="container:VisualPose.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
+   </TestAction>
+   <LaunchAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.DebuggerFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO" ignoresPersistentStateOnLaunch="NO" debugDocumentVersioning="YES" debugServiceExtension="internal" allowLocationSimulation="YES">
+      <BuildableProductRunnable runnableDebuggingMode="0">
+         <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{pbx_app_target}" BuildableName="VisualPose.app" BlueprintName="VisualPose" ReferencedContainer="container:VisualPose.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+   </LaunchAction>
+</Scheme>
+"""
+    (schemes_dir / "VisualPose.xcscheme").write_text(scheme_xml, encoding="utf-8")
+    print(f"Wrote {schemes_dir / 'VisualPose.xcscheme'}")
 
 
 if __name__ == "__main__":

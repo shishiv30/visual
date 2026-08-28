@@ -1,8 +1,9 @@
 import AVFoundation
+import PhotosUI
 import UniformTypeIdentifiers
 import UIKit
 
-final class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, UIDocumentPickerDelegate {
+final class CaptureViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, UIDocumentPickerDelegate, PHPickerViewControllerDelegate {
     var library: Library!
     var onBack: (() -> Void)?
     var onImported: (() -> Void)?
@@ -170,17 +171,33 @@ final class CaptureViewController: UIViewController, AVCaptureFileOutputRecordin
     }
 
     private func pickMedia() {
-        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.movie, .image, .jpeg, .png], asCopy: true)
+        var config = PHPickerConfiguration()
+        config.filter = .videos
+        config.selectionLimit = 1
+        let picker = PHPickerViewController(configuration: config)
         picker.delegate = self
-        picker.allowsMultipleSelection = false
         present(picker, animated: true)
     }
 
-    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        if pendingImport {
-            pendingImport = false
-            onBack?()
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        guard let result = results.first else {
+            if pendingImport { pendingImport = false; onBack?() }
+            return
         }
+        result.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.movie.identifier) { [weak self] url, error in
+            guard let url = url, error == nil else {
+                if self?.pendingImport == true { DispatchQueue.main.async { self?.onBack?() } }
+                return
+            }
+            let tmp = FileManager.default.temporaryDirectory.appendingPathComponent(url.lastPathComponent)
+            try? FileManager.default.copyItem(at: url, to: tmp)
+            DispatchQueue.main.async { self?.ingest(url: tmp) }
+        }
+    }
+
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        if pendingImport { pendingImport = false; onBack?() }
     }
 
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
