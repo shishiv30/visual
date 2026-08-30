@@ -13,6 +13,7 @@ Research docs plus a runnable **Core** engine: YOLO11n-pose → versioned `CoreI
 | `benchmarks/` | Thin CUDA timing harness |
 | `schemas/` | Versioned Core JSON Schema / Pydantic |
 | `core/` | Inference engine and CLI (YOLO + MediaPipe) |
+| `content/ski/knowledge/kb.v1.json` | Bilingual ski knowledge pack (16 `kb_stage`s + module slices) imported from the wiki curriculum by `scripts/import_ski_knowledge.py`; `--check` verifies it is current |
 | `native/core_map/` | Shared C ABI: BlazePose 33 → Core JSON |
 | `clients/windows/` | 离线 PySide6 三界面客户端 |
 | `docs/clients/` | 客户端实现规格；[移动端遗漏清单](docs/clients/mobile-parity-checklist.md) |
