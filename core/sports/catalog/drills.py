@@ -143,6 +143,51 @@ def drills() -> list[dict]:
             ],
         ),
         drill(
+            "drill_sideslip",
+            "Falling-leaf sideslip",
+            "Slip down and across, forward then back, with the torso facing downhill.",
+            [
+                "Standard: the skis stay across the hill and the torso does not turn with them.",
+                "On a green run, stand across the hill, flatten both skis to slip, then edge to stop; ten repeats each way.",
+            ],
+        ),
+        drill(
+            "drill_flex_extend",
+            "Flex-and-extend rhythm",
+            "Extend into the new turn and flex through the arc; count the rhythm out loud.",
+            [
+                "Standard: the same count on every turn, with the deepest flexion in the middle of the arc.",
+                "Ten linked parallel turns on a blue run, counting one-two through every turn.",
+            ],
+        ),
+        drill(
+            "drill_firm_edge",
+            "Early edge on firm snow",
+            "Set the edge above the fall line so the ski grips before it points down the hill.",
+            [
+                "Standard: a clean, narrow track on hardpack with no scraped-out tail.",
+                "Six long turns on firm blue groomers; shorten the radius only while the track stays clean.",
+            ],
+        ),
+        drill(
+            "drill_steep_pivot",
+            "Pivot-slip on a steep pitch",
+            "Pivot both skis under a quiet upper body, slip a short distance, then pivot back.",
+            [
+                "Standard: the shoulders keep facing down the pitch through every pivot.",
+                "On a short steep section, pivot-slip eight times; link short turns only once the upper body stays quiet.",
+            ],
+        ),
+        drill(
+            "drill_powder_bounce",
+            "Two-footed powder bounce",
+            "Bounce both skis together in soft snow to feel the snow push back.",
+            [
+                "Standard: both skis surface together; no single-ski dive.",
+                "Straight-run a soft slope and bounce six times, then link the bounces into turns.",
+            ],
+        ),
+        drill(
             "drill_mogul_line",
             "Trough fall-line rhythm",
             "Fewer traverses, linked absorption; still no air scoring.",

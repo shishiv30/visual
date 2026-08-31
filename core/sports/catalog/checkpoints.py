@@ -1,6 +1,26 @@
+"""Checkpoints for the ski curriculum.
+
+Two flavours live here:
+
+* ``checkpoint(...)`` — v2 rows keyed to a whole-clip **signal** id
+  (``content/ski/knowledge/signals.json``). Thresholds are unchanged.
+* ``metric_checkpoint(...)`` — v3 rows keyed to a **metric** id
+  (``content/ski/knowledge/metrics.json``, design doc §3.4), one per gate metric
+  of the new stages.
+
+CALIBRATION NOTE — the v3 threshold values below are **first-pass expert
+estimates, not calibrated bands**. The design doc's §6 fixes the scoring shape
+but no numeric bands, and the new metrics (edge_angle_proxy,
+pressure_peak_phase, pole_touch_rate, turn_duration_var, edge_change_duration,
+braking_count, com_vertical_travel, turn_shape_index, separation_angle,
+upper_body_quiet in degrees) have never been measured on real clips in this
+repo. Every ``metric_checkpoint`` threshold must be re-fitted against a labelled
+clip set before any of it is shown as a pass/fail to a skier.
+"""
+
 from __future__ import annotations
 
-from core.sports.catalog.helpers import checkpoint
+from core.sports.catalog.helpers import checkpoint, metric_checkpoint
 
 
 def checkpoints() -> list[dict]:
@@ -298,5 +318,128 @@ def checkpoints() -> list[dict]:
             1.2,
             ["drill_mogul_line"],
             required=False,
+        ),
+        # ------------------------------------------------------------------
+        # v3 metric-backed gates. All thresholds below are FIRST-PASS EXPERT
+        # ESTIMATES awaiting calibration — see the module docstring.
+        # ------------------------------------------------------------------
+        # sideslip (st-04): gates edge_angle_proxy, upper_body_quiet
+        metric_checkpoint(
+            "cp_ss_edge",
+            "Edge release and re-set",
+            "Flatten both skis to slip sideways, then edge again to stop — neither a locked edge nor a free slide.",
+            ["ankle", "knee"],
+            "edge_angle_proxy",
+            "between",
+            5.0,  # estimate: below this the skis are flat and running away
+            ["drill_sideslip"],
+            hi=25.0,  # estimate: above this the edge grips and the slip stops
+        ),
+        metric_checkpoint(
+            "cp_ss_quiet",
+            "Torso faces downhill",
+            "The shoulders stay square to the fall line while the skis slip.",
+            ["chest"],
+            "upper_body_quiet",
+            "lte",
+            6.0,  # estimate: std of separation_angle, in degrees
+            ["drill_sideslip", "drill_hands"],
+        ),
+        # dynamic_parallel (st-07): gates pressure_peak_phase, pole_touch_rate,
+        # turn_duration_var
+        metric_checkpoint(
+            "cp_dp_pressure",
+            "Pressure peaks in the shaping phase",
+            "Deepest flexion in the middle of the arc, not at the finish — no park-and-ride.",
+            ["knee", "hip"],
+            "pressure_peak_phase",
+            "between",
+            0.35,  # estimate: 0 = initiation, 1 = finish; shaping is the middle third
+            ["drill_flex_extend"],
+            hi=0.7,
+        ),
+        metric_checkpoint(
+            "cp_dp_pole",
+            "Pole touch every turn",
+            "A light pole touch at each edge change, hands kept in front.",
+            ["hands"],
+            "pole_touch_rate",
+            "gte",
+            0.8,  # estimate: a touch on 8 of 10 turns
+            ["drill_hands"],
+        ),
+        metric_checkpoint(
+            "cp_dp_rhythm",
+            "Even turn rhythm",
+            "Turn durations stay close to each other; no long traverse between turns.",
+            ["hip", "com"],
+            "turn_duration_var",
+            "lte",
+            0.2,  # estimate: CV of turn duration
+            ["drill_flex_extend", "drill_skid_short"],
+        ),
+        # firm_snow (st-08): gates edge_change_duration, braking_count
+        metric_checkpoint(
+            "cp_fs_edgechange",
+            "Quick edge change on firm snow",
+            "Cross from edge to edge quickly; a ski left flat slides away on hardpack.",
+            ["ankle", "knee"],
+            "edge_change_duration",
+            "lte",
+            0.35,  # estimate: seconds in the transition window
+            ["drill_firm_edge"],
+        ),
+        metric_checkpoint(
+            "cp_fs_braking",
+            "No braking scrape",
+            "Control speed with turn shape, not by scraping the tails across the fall line.",
+            ["hip", "com"],
+            "braking_count",
+            "lte",
+            2.0,  # estimate: the curriculum's allowance of 2 faulty turns in 20
+            ["drill_firm_edge", "drill_carve_round"],
+        ),
+        # steeps (st-12): gates separation_angle, braking_count
+        metric_checkpoint(
+            "cp_st_separation",
+            "Upper body down the fall line",
+            "The shoulders keep facing down the pitch while the legs turn underneath.",
+            ["chest", "hip"],
+            "separation_angle",
+            "gte",
+            25.0,  # estimate: degrees of shoulder-to-pelvis separation
+            ["drill_steep_pivot"],
+        ),
+        metric_checkpoint(
+            "cp_st_braking",
+            "Turn instead of side-slipping the pitch",
+            "Most turns finish with a shaped arc; a slip to recover is fine, a slipped descent is not.",
+            ["hip", "com"],
+            "braking_count",
+            "lte",
+            3.0,  # estimate: a wider allowance than firm_snow, steeps are defensive
+            ["drill_steep_pivot", "drill_hockey"],
+        ),
+        # powder (st-14): gates com_vertical_travel, turn_shape_index
+        metric_checkpoint(
+            "cp_pw_travel",
+            "Flex and extend to surface the skis",
+            "Clear up-and-down movement in every turn; a static stance sinks the tips.",
+            ["hip", "com"],
+            "com_vertical_travel",
+            "gte",
+            0.1,  # estimate: hip_y range within a turn ÷ leg length
+            ["drill_powder_bounce"],
+        ),
+        metric_checkpoint(
+            "cp_pw_shape",
+            "Round turns in soft snow",
+            "Keep the arc round with both skis working; do not throw the skis sideways.",
+            ["hip", "com"],
+            "turn_shape_index",
+            "between",
+            0.4,  # estimate: shaping-phase share of the turn; below = Z-shape
+            ["drill_powder_bounce"],
+            hi=0.75,
         ),
     ]

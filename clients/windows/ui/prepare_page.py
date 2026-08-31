@@ -42,9 +42,41 @@ from clients.windows.ui.seed_dialog import SeedCanvas
 from clients.windows.ui.theme import BLUE, PAGE_INSET, SPACE_PANEL, SPACE_TEXT
 from clients.windows.ui.timeline_strip import TimelineStrip
 from core.i18n import t
+from core.sports.scene import (
+    SceneContext,
+    SlopeBand,
+    SnowSurface,
+    TerrainType,
+    parse_slope_band,
+    parse_snow_surface,
+    parse_terrain_type,
+)
 
 CONTROL_HEIGHT = 44
 DEFAULT_BIRTHDAY = QDate(1990, 1, 1)
+NOT_SURE = ""
+SNOW_CHOICES: tuple[tuple[SnowSurface, str], ...] = (
+    (SnowSurface.CORDUROY, "Corduroy"),
+    (SnowSurface.PACKED, "Packed"),
+    (SnowSurface.HARDPACK, "Hardpack"),
+    (SnowSurface.ICE, "Ice"),
+    (SnowSurface.SOFT, "Soft"),
+    (SnowSurface.POWDER, "Powder"),
+    (SnowSurface.CRUD, "Crud"),
+    (SnowSurface.SLUSH, "Slush"),
+)
+SLOPE_CHOICES: tuple[tuple[SlopeBand, str], ...] = (
+    (SlopeBand.GREEN, "Green run"),
+    (SlopeBand.BLUE, "Blue run"),
+    (SlopeBand.BLACK, "Black run"),
+    (SlopeBand.DOUBLE_BLACK, "Double black run"),
+)
+TERRAIN_CHOICES: tuple[tuple[TerrainType, str], ...] = (
+    (TerrainType.PISTE, "Groomed piste"),
+    (TerrainType.MOGUL, "Mogul run"),
+    (TerrainType.PARK, "Terrain park"),
+    (TerrainType.OFFPISTE, "Off-piste / powder"),
+)
 
 
 def _labeled_field(label: QLabel, control: QWidget) -> QWidget:
@@ -64,7 +96,8 @@ def _style_control(widget: QWidget) -> None:
 
 class PreparePage(QWidget):
     back_requested = Signal()
-    analysis_requested = Signal(str, list, int, object, object)
+    # clip_id, seeds, in_ms, out_ms, athlete, scene
+    analysis_requested = Signal(str, list, int, object, object, object)
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -151,6 +184,32 @@ class PreparePage(QWidget):
         self._form_box.setObjectName("athleteForm")
         self._form_box.setLayout(form)
 
+        self._scene_hint = QLabel()
+        self._scene_hint.setWordWrap(True)
+        self._snow_label = QLabel()
+        self._snow = QComboBox()
+        _style_control(self._snow)
+        self._slope_label = QLabel()
+        self._slope = QComboBox()
+        _style_control(self._slope)
+        self._terrain_label = QLabel()
+        self._terrain = QComboBox()
+        _style_control(self._terrain)
+
+        scene_grid = QGridLayout()
+        scene_grid.setContentsMargins(0, 0, 0, 0)
+        scene_grid.setHorizontalSpacing(SPACE_PANEL)
+        scene_grid.setVerticalSpacing(SPACE_TEXT)
+        scene_grid.setColumnStretch(0, 1)
+        scene_grid.setColumnStretch(1, 1)
+        scene_grid.setColumnStretch(2, 1)
+        scene_grid.addWidget(_labeled_field(self._terrain_label, self._terrain), 0, 0)
+        scene_grid.addWidget(_labeled_field(self._slope_label, self._slope), 0, 1)
+        scene_grid.addWidget(_labeled_field(self._snow_label, self._snow), 0, 2)
+        self._scene_box = QWidget()
+        self._scene_box.setObjectName("sceneForm")
+        self._scene_box.setLayout(scene_grid)
+
         bar = QHBoxLayout()
         bar.setSpacing(SPACE_TEXT)
         bar.addWidget(self._start_btn)
@@ -164,6 +223,8 @@ class PreparePage(QWidget):
         layout.addWidget(self._time)
         layout.addWidget(self._timeline)
         layout.addWidget(self._form_box)
+        layout.addWidget(self._scene_hint)
+        layout.addWidget(self._scene_box)
         layout.addLayout(bar)
         layout.addWidget(self._range)
         self._back_btn = make_floating_back(self)
@@ -206,8 +267,30 @@ class PreparePage(QWidget):
             if idx >= 0:
                 self._gender.setCurrentIndex(idx)
         self._gender.blockSignals(False)
+        self._scene_hint.setText(t("Terrain, slope and snow are optional — set Terrain to Mogul run for mogul detection."))
+        self._terrain_label.setText(t("Terrain"))
+        self._snow_label.setText(t("Snow surface"))
+        self._slope_label.setText(t("Slope"))
+        self._fill_scene_combo(self._terrain, TERRAIN_CHOICES)
+        self._fill_scene_combo(self._snow, SNOW_CHOICES)
+        self._fill_scene_combo(self._slope, SLOPE_CHOICES)
         self._reload_profiles(preserve_key=self._profile.currentData())
         self._refresh_labels()
+
+    def _fill_scene_combo(
+        self, combo: QComboBox, choices: tuple[tuple[object, str], ...]
+    ) -> None:
+        current = combo.currentData()
+        combo.blockSignals(True)
+        combo.clear()
+        combo.addItem(t("Not sure"), NOT_SURE)
+        for value, key in choices:
+            combo.addItem(t(key), value.value)
+        if current:
+            idx = combo.findData(current)
+            if idx >= 0:
+                combo.setCurrentIndex(idx)
+        combo.blockSignals(False)
 
     def open_clip(self, clip_id: str) -> None:
         self._release()
@@ -224,6 +307,7 @@ class PreparePage(QWidget):
             self._apply_profile_key(self._meta.athlete_key)
         elif self._meta.athlete:
             self._fill_from_dict(self._meta.athlete)
+        self._fill_scene(self._meta.scene)
         if self._meta.kind == ClipKind.IMAGE:
             self._seeds = {0: loaded[0]} if loaded else {}
             bgr = cv2.imread(str(path))
@@ -374,6 +458,27 @@ class PreparePage(QWidget):
             return
         self._fill_from_profile(profile)
 
+    def _fill_scene(self, data: dict | None) -> None:
+        scene = SceneContext.from_dict(data)
+        for combo, value in (
+            (self._terrain, scene.terrain_type),
+            (self._snow, scene.snow_surface),
+            (self._slope, scene.slope_band),
+        ):
+            idx = combo.findData(NOT_SURE if value is None else value.value)
+            combo.setCurrentIndex(max(0, idx))
+
+    def _scene_payload(self) -> dict:
+        """Scene block for ClipMeta. Not-sure picks stay None, never a guess."""
+        terrain = str(self._terrain.currentData() or "")
+        snow = str(self._snow.currentData() or "")
+        slope = str(self._slope.currentData() or "")
+        return SceneContext(
+            terrain_type=parse_terrain_type(terrain),
+            snow_surface=parse_snow_surface(snow),
+            slope_band=parse_slope_band(slope),
+        ).to_dict()
+
     def _birthday_iso(self) -> str:
         return self._birthday.date().toString(Qt.DateFormat.ISODate)
 
@@ -408,7 +513,12 @@ class PreparePage(QWidget):
         self._reload_profiles(preserve_key=athlete.key)
         seeds = sorted(self._seeds.values(), key=lambda item: item.t_ms)
         self.analysis_requested.emit(
-            self._meta.clip_id, seeds, self._in_ms, self._out_ms, athlete
+            self._meta.clip_id,
+            seeds,
+            self._in_ms,
+            self._out_ms,
+            athlete,
+            self._scene_payload(),
         )
 
     def _refresh_labels(self) -> None:

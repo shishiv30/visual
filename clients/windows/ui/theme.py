@@ -6,6 +6,8 @@ from PySide6.QtCore import QEvent, QObject, Qt
 from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import QAbstractButton, QApplication
 
+from schemas.stage_report import MetricState, NodeState, Rubric
+
 DEEP_PURPLE = QColor("#5E35B1")
 LIGHT_PURPLE = QColor("#CE93D8")
 LINK_CYAN = QColor("#4FC3F7")
@@ -21,6 +23,7 @@ SPACE_CHAPTER = 36
 SPACE_PANEL = 24
 SPACE_TEXT = 16
 PAGE_INSET = 12
+TAP_TARGET = 44
 MEDAL_BEGINNER = QColor("#43A047")
 MEDAL_INTERMEDIATE = QColor("#1E88E5")
 MEDAL_ADVANCED = QColor("#8E24AA")
@@ -29,6 +32,27 @@ TERRAIN_GREEN = QColor("#2E7D32")
 TERRAIN_BLUE = QColor("#1565C0")
 TERRAIN_RED = QColor("#C62828")
 TERRAIN_BLACK = QColor("#000000")
+
+# --- report v3 states (design doc §7, §8) -------------------------------------
+SLATE = QColor("#546E7A")
+DIM_GRAY = QColor("#616161")
+STEEL = QColor("#B0BEC5")
+SPINE_WHITE = PAPER
+STATE_UNKNOWN = UNKNOWN_GRAY
+STATE_NOT_APPLICABLE = SLATE
+TREE_CURRENT = QColor("#E1BEE7")
+TREE_COMPLETED = LIGHT_PURPLE
+TREE_AVAILABLE = STEEL
+TREE_LOCKED = DIM_GRAY
+TREE_NOT_APPLICABLE = SLATE
+TURN_CLEAN = LIGHT_PURPLE
+TURN_FAULTY = WATERMELON
+
+# --- chart chrome (report_charts painters; no private per-page palettes) ------
+CHART_TRACK = QColor("#2a3544")
+CHART_GRID = QColor("#424242")
+CHART_AXIS = QColor("#3d3d3d")
+CAPTION_GRAY = QColor("#B0BEC5")
 
 
 def score_purple(score: float | None) -> QColor:
@@ -56,6 +80,60 @@ def level_medal_color(stage_id: str) -> QColor:
             return MEDAL_ELITE
         case _:
             return MEDAL_INTERMEDIATE
+
+
+def rubric_color(rubric: str) -> QColor:
+    """not_yet → watermelon, pass → light purple, strong → gold."""
+    match rubric:
+        case Rubric.STRONG.value:
+            return MEDAL_ELITE
+        case Rubric.PASS.value:
+            return LIGHT_PURPLE
+        case Rubric.NOT_YET.value:
+            return WATERMELON
+        case _:
+            return UNKNOWN_GRAY
+
+
+def metric_state_color(state: str, score: float | None = None) -> QColor:
+    """Colour a metric row. ``unknown``/``not_applicable`` never look like 0."""
+    match state:
+        case MetricState.OK.value:
+            return score_purple(score)
+        case MetricState.NOT_APPLICABLE.value:
+            return STATE_NOT_APPLICABLE
+        case _:
+            return STATE_UNKNOWN
+
+
+def tree_node_color(state: str, tier: str = "full") -> QColor:
+    """Skill-tree rung colour by state; catalog rungs are always greyed."""
+    if tier == "catalog" and state not in (
+        NodeState.CURRENT.value,
+        NodeState.COMPLETED.value,
+    ):
+        return TREE_LOCKED
+    match state:
+        case NodeState.CURRENT.value:
+            return TREE_CURRENT
+        case NodeState.COMPLETED.value:
+            return TREE_COMPLETED
+        case NodeState.AVAILABLE.value:
+            return TREE_AVAILABLE
+        case NodeState.NOT_APPLICABLE.value:
+            return TREE_NOT_APPLICABLE
+        case _:
+            return TREE_LOCKED
+
+
+def severity_color(severity: str) -> QColor:
+    match severity:
+        case "blocker":
+            return WATERMELON
+        case "warn":
+            return MEDAL_ELITE
+        case _:
+            return UNKNOWN_GRAY
 
 
 def terrain_diamond_colors(terrain_id: str) -> list[QColor]:
@@ -136,16 +214,32 @@ def app_stylesheet() -> str:
     QPushButton:hover { background: #7e57c2; }
     QPushButton:disabled { color: #6f6f6f; background: #1e1e1e; border-color: #3d3d3d; }
     QComboBox {
-        padding: 1px 6px;
+        padding: 5px 10px;
         border-radius: 6px;
         border: 1px solid #3d3d3d;
         background: #2a2a2a;
         color: #f5f5f5;
+        min-height: 28px;
+    }
+    QComboBox::drop-down {
+        width: 20px;
+        border: none;
     }
     QComboBox QAbstractItemView {
-        background: #1a1a1a;
+        background: #1e1e1e;
         color: #f5f5f5;
         selection-background-color: #5e35b1;
+        padding: 4px 0;
+        border: 1px solid #4d4d4d;
+        border-radius: 6px;
+        outline: none;
+    }
+    QComboBox QAbstractItemView::item {
+        padding: 6px 12px;
+        min-height: 28px;
+    }
+    QComboBox QAbstractItemView::item:selected {
+        background: #5e35b1;
     }
     QWidget#listPage {
         background: #121212;
@@ -241,6 +335,47 @@ def app_stylesheet() -> str:
         border-radius: 12px;
         border: 1px solid #2a3544;
     }
+    QFrame#reportGateCard {
+        background: #1a2433;
+        border-radius: 12px;
+        border: 1px solid #5E35B1;
+    }
+    QLabel#reportChip {
+        border: 1px solid #3d3d3d;
+        border-radius: 10px;
+        padding: 2px 8px;
+        color: #b0bec5;
+        background: transparent;
+        font-weight: 600;
+    }
+    QLabel#reportChip[kind="strong"] { color: #FFC107; border-color: #FFC107; }
+    QLabel#reportChip[kind="pass"] { color: #CE93D8; border-color: #CE93D8; }
+    QLabel#reportChip[kind="not_yet"] { color: #E94B6A; border-color: #E94B6A; }
+    QLabel#reportChip[kind="unknown"] { color: #9E9E9E; border-color: #9E9E9E; }
+    QLabel#reportChip[kind="not_applicable"] { color: #546E7A; border-color: #546E7A; }
+    QLabel#reportChip[kind="not_rated"] { color: #9E9E9E; border-color: #3d3d3d; }
+    QLabel#reportChip[kind="gate"] { color: #CE93D8; border-color: #5E35B1; background: #221a35; }
+    QLabel#reportChip[kind="blocker"] { color: #E94B6A; border-color: #E94B6A; }
+    QLabel#reportChip[kind="warn"] { color: #FFC107; border-color: #FFC107; }
+    QLabel#reportChip[kind="info"] { color: #9E9E9E; border-color: #9E9E9E; }
+    QWidget#reportChipRow { background: transparent; }
+    QPushButton#chapterDisclosure {
+        min-height: 44px;
+        text-align: left;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: #9e9e9e;
+        font-size: 32px;
+        font-weight: 600;
+    }
+    QPushButton#chapterDisclosure:hover { color: #b0bec5; background: transparent; }
+    QPushButton#chapterDisclosure:disabled { color: #9e9e9e; background: transparent; }
+    QWidget#skillTreeView { background: transparent; }
+    QWidget#skillTreeRow { background: transparent; }
+    QLabel#reportTreeName { color: #f5f5f5; font-weight: 600; }
+    QLabel#reportTreeNameMuted { color: #9e9e9e; }
+    QLabel#reportTreeMeta { color: #b0bec5; }
     QWidget#reportSectionHeader {
         background: transparent;
     }
@@ -349,7 +484,8 @@ def app_stylesheet() -> str:
     QWidget#athleteForm QLineEdit,
     QWidget#athleteForm QComboBox,
     QWidget#athleteForm QDateEdit,
-    QWidget#athleteForm QDoubleSpinBox {
+    QWidget#athleteForm QDoubleSpinBox,
+    QWidget#sceneForm QComboBox {
         min-height: 44px;
         max-height: 44px;
         padding: 0 12px;
@@ -358,7 +494,8 @@ def app_stylesheet() -> str:
         background: #2a2a2a;
         color: #f5f5f5;
     }
-    QWidget#athleteForm QComboBox::drop-down {
+    QWidget#athleteForm QComboBox::drop-down,
+    QWidget#sceneForm QComboBox::drop-down {
         width: 28px;
         border: none;
     }

@@ -1,16 +1,73 @@
+"""v3 stage ladder (design doc §1.2, §1.3, §4).
+
+``kb_stage`` bridges to the wiki curriculum's 16 stages; it is declared here and
+cross-checked against ``content/ski/knowledge/kb.v1.json``'s ``level_map``.
+``core_metrics`` / ``gate_metrics`` are transcribed verbatim from §4; ``tier`` is
+the observability statement from §1.1 (full = scorable from the clip alone,
+scene = needs one scene fact, catalog = a real rung a camera cannot judge).
+"""
+
 from __future__ import annotations
 
-from core.sports.catalog.helpers import level
+from core.sports.catalog.helpers import adaptations, level
+
+# §4: carve_medium / carve_short / mogul_fallline are stated as deltas on the
+# preceding level, so they are composed rather than retyped.
+CARVE_LONG_CORE = [
+    "edge_angle_proxy",
+    "banking_index",
+    "angulation",
+    "turn_shape_index",
+    "stance_width",
+    "asymmetry_index",
+]
+CARVE_LONG_GATES = ["edge_angle_proxy", "banking_index", "turn_shape_index"]
+CARVE_MEDIUM_CORE = [*CARVE_LONG_CORE, "turn_rate"]
+CARVE_MEDIUM_GATES = [*CARVE_LONG_GATES, "turn_rate"]
+CARVE_SHORT_CORE = [*CARVE_MEDIUM_CORE, "edge_change_duration", "separation_angle"]
+CARVE_SHORT_GATES = [*CARVE_MEDIUM_GATES, "edge_change_duration"]
+MOGUL_ABSORB_CORE = [
+    "flexion_range",
+    "flexion_rate",
+    "com_vertical_travel",
+    "upper_body_quiet",
+    "hands_in_view",
+]
+MOGUL_ABSORB_GATES = ["flexion_range", "com_vertical_travel", "upper_body_quiet"]
+MOGUL_FALLLINE_CORE = [*MOGUL_ABSORB_CORE, "turn_rate", "pressure_peak_phase"]
+MOGUL_FALLLINE_GATES = [*MOGUL_ABSORB_GATES, "turn_rate"]
 
 
 def levels() -> list[dict]:
     return [
+        level(
+            "first_slide",
+            "First slide and equipment",
+            "Put the gear on, walk on the flat, glide a few metres, and get up after a fall.",
+            [],
+            ["drill_land_stance", "drill_wedge_stop"],
+            kb_stage="st-01",
+            tier="catalog",
+            profile_notes=adaptations(wide_stance_ok=True),
+        ),
         level(
             "pizza_glide",
             "Wedge glide",
             "Glide straight in a wedge and stop on purpose.",
             ["cp_pg_stance", "cp_pg_knee", "cp_pg_com", "cp_pg_valgus"],
             ["drill_wedge_stop", "drill_land_stance"],
+            kb_stage="st-02",
+            tier="full",
+            core_metrics=[
+                "stance_width",
+                "wedge_angle",
+                "shin_angle_fore_aft",
+                "knee_valgus",
+                "hip_over_foot",
+            ],
+            gate_metrics=["stance_width", "wedge_angle", "hip_over_foot"],
+            prereq_levels=["first_slide"],
+            profile_notes=adaptations(wide_stance_ok=True),
         ),
         level(
             "pizza",
@@ -25,6 +82,40 @@ def levels() -> list[dict]:
                 "cp_pz_gaze",
             ],
             ["drill_wedge_c", "drill_hip_steer"],
+            kb_stage="st-03",
+            tier="full",
+            core_metrics=[
+                "turn_rate",
+                "turn_amplitude",
+                "stance_width",
+                "separation_angle",
+                "turn_shape_index",
+                "asymmetry_index",
+            ],
+            gate_metrics=["turn_rate", "turn_shape_index", "asymmetry_index"],
+            prereq_levels=["pizza_glide"],
+            prereq_checkpoints=["cp_pg_stance", "cp_pg_com"],
+            profile_notes=adaptations(wide_stance_ok=True),
+        ),
+        level(
+            "sideslip",
+            "Sideslip and edge release",
+            "Release both edges to slip sideways, then re-set them to stop; the torso keeps facing downhill.",
+            ["cp_ss_edge", "cp_ss_quiet"],
+            ["drill_sideslip", "drill_land_stance"],
+            kb_stage="st-04",
+            tier="full",
+            core_metrics=[
+                "edge_angle_proxy",
+                "upper_body_quiet",
+                "com_vertical_travel",
+                "flexion_range",
+                "hip_over_foot",
+            ],
+            gate_metrics=["edge_angle_proxy", "upper_body_quiet"],
+            prereq_levels=["pizza"],
+            prereq_checkpoints=["cp_pz_stance", "cp_pz_turn"],
+            profile_notes=adaptations(),
         ),
         level(
             "wedge_christie",
@@ -32,6 +123,18 @@ def levels() -> list[dict]:
             "Wedge to start, close the inside ski to finish.",
             ["cp_wc_openclose", "cp_wc_stance"],
             ["drill_christie", "drill_land_squat"],
+            kb_stage="st-05",
+            tier="full",
+            core_metrics=[
+                "wedge_angle",
+                "stance_width_var",
+                "knee_valgus",
+                "separation_angle",
+            ],
+            gate_metrics=["wedge_angle", "stance_width_var"],
+            prereq_levels=["sideslip"],
+            prereq_checkpoints=["cp_ss_edge", "cp_ss_quiet"],
+            profile_notes=adaptations(),
         ),
         level(
             "parallel",
@@ -39,6 +142,63 @@ def levels() -> list[dict]:
             "Matched skis and separation. After passing, choose short skids or long-radius carve.",
             ["cp_par_stance", "cp_par_upper", "cp_par_com"],
             ["drill_hands", "drill_land_stance"],
+            kb_stage="st-06",
+            tier="full",
+            core_metrics=[
+                "stem_count",
+                "stance_width",
+                "turn_shape_index",
+                "hip_over_foot",
+                "banking_index",
+                "hands_in_view",
+                "backseat_count",
+            ],
+            gate_metrics=["stem_count", "turn_shape_index", "hip_over_foot"],
+            prereq_levels=["wedge_christie"],
+            prereq_checkpoints=["cp_wc_openclose", "cp_wc_stance"],
+            profile_notes=adaptations(),
+        ),
+        level(
+            "dynamic_parallel",
+            "Dynamic parallel: rhythm and poles",
+            "Linked parallel turns with an even rhythm, a flex-and-extend move, and a pole touch at every edge change.",
+            ["cp_dp_pressure", "cp_dp_pole", "cp_dp_rhythm"],
+            ["drill_flex_extend", "drill_hands"],
+            kb_stage="st-07",
+            tier="full",
+            core_metrics=[
+                "flexion_range",
+                "com_vertical_travel",
+                "pressure_peak_phase",
+                "pole_touch_rate",
+                "pole_touch_timing",
+                "turn_duration_var",
+            ],
+            gate_metrics=["pressure_peak_phase", "pole_touch_rate", "turn_duration_var"],
+            prereq_levels=["parallel"],
+            prereq_checkpoints=["cp_par_stance", "cp_par_upper"],
+            profile_notes=adaptations(),
+        ),
+        level(
+            "firm_snow",
+            "Firm snow and ice",
+            "Hold a clean edge on hardpack: edge early, change edges quickly, no braking scrape.",
+            ["cp_fs_edgechange", "cp_fs_braking"],
+            ["drill_firm_edge", "drill_hockey"],
+            kb_stage="st-08",
+            tier="scene",
+            requires_scene=["snow_surface:hardpack|ice"],
+            core_metrics=[
+                "edge_angle_proxy",
+                "edge_change_duration",
+                "turn_shape_index",
+                "braking_count",
+                "upper_body_quiet",
+            ],
+            gate_metrics=["edge_change_duration", "braking_count"],
+            prereq_levels=["dynamic_parallel"],
+            prereq_checkpoints=["cp_dp_pressure"],
+            profile_notes=adaptations(),
         ),
         level(
             "skid_short",
@@ -46,6 +206,20 @@ def levels() -> list[dict]:
             "Short-radius skids for speed control; hockey stop required. Then moguls.",
             ["cp_sk_hockey", "cp_sk_rhythm", "cp_sk_knee", "cp_sk_hands"],
             ["drill_hockey", "drill_skid_short"],
+            kb_stage="st-09",
+            tier="full",
+            core_metrics=[
+                "turn_rate",
+                "turn_duration_var",
+                "separation_angle",
+                "flexion_range",
+                "pole_touch_rate",
+                "upper_body_quiet",
+            ],
+            gate_metrics=["turn_rate", "turn_duration_var", "separation_angle"],
+            prereq_levels=["dynamic_parallel"],
+            prereq_checkpoints=["cp_dp_rhythm"],
+            profile_notes=adaptations(),
         ),
         level(
             "carve_long",
@@ -53,6 +227,13 @@ def levels() -> list[dict]:
             "Heuristic inclination and parallel stance, not FIS. Learn one-ski first.",
             ["cp_cv_oneski", "cp_cv_parallel", "cp_cv_upper"],
             ["drill_one_ski", "drill_carve_round"],
+            kb_stage="st-10",
+            tier="full",
+            core_metrics=CARVE_LONG_CORE,
+            gate_metrics=CARVE_LONG_GATES,
+            prereq_levels=["dynamic_parallel"],
+            prereq_checkpoints=["cp_dp_pressure"],
+            profile_notes=adaptations(carving=True),
         ),
         level(
             "carve_medium",
@@ -60,6 +241,13 @@ def levels() -> list[dict]:
             "Shorten the radius only after long-radius inclination works.",
             ["cp_cv_oneski", "cp_cv_parallel", "cp_cvm_freq", "cp_cv_upper"],
             ["drill_carve_medium"],
+            kb_stage="st-10",
+            tier="full",
+            core_metrics=CARVE_MEDIUM_CORE,
+            gate_metrics=CARVE_MEDIUM_GATES,
+            prereq_levels=["carve_long"],
+            prereq_checkpoints=["cp_cv_oneski"],
+            profile_notes=adaptations(carving=True),
         ),
         level(
             "carve_short",
@@ -67,6 +255,34 @@ def levels() -> list[dict]:
             "Fast edge change, quieter shoulders. End of the groomed carve branch.",
             ["cp_cv_oneski", "cp_cv_parallel", "cp_cvs_freq", "cp_cv_upper"],
             ["drill_carve_short"],
+            kb_stage="st-11",
+            tier="full",
+            core_metrics=CARVE_SHORT_CORE,
+            gate_metrics=CARVE_SHORT_GATES,
+            prereq_levels=["carve_medium"],
+            prereq_checkpoints=["cp_cv_oneski", "cp_cvm_freq"],
+            profile_notes=adaptations(carving=True),
+        ),
+        level(
+            "steeps",
+            "Steeps",
+            "Short turns on a steep pitch: the upper body faces down the fall line and turn shape controls the speed.",
+            ["cp_st_separation", "cp_st_braking"],
+            ["drill_steep_pivot", "drill_hockey"],
+            kb_stage="st-12",
+            tier="scene",
+            requires_scene=["slope_band:black|double-black"],
+            core_metrics=[
+                "turn_rate",
+                "edge_change_duration",
+                "separation_angle",
+                "com_vertical_travel",
+                "braking_count",
+            ],
+            gate_metrics=["separation_angle", "braking_count"],
+            prereq_levels=["skid_short"],
+            prereq_checkpoints=["cp_sk_hockey", "cp_sk_rhythm"],
+            profile_notes=adaptations(),
         ),
         level(
             "mogul_absorb",
@@ -74,6 +290,13 @@ def levels() -> list[dict]:
             "From the skid branch: absorb and stay on snow; do not jump.",
             ["cp_mg_amp", "cp_mg_quiet", "cp_mg_freq"],
             ["drill_mogul_absorb"],
+            kb_stage="st-13",
+            tier="full",
+            core_metrics=MOGUL_ABSORB_CORE,
+            gate_metrics=MOGUL_ABSORB_GATES,
+            prereq_levels=["skid_short"],
+            prereq_checkpoints=["cp_sk_hockey"],
+            profile_notes=adaptations(),
         ),
         level(
             "mogul_fallline",
@@ -81,13 +304,70 @@ def levels() -> list[dict]:
             "Linked absorption near the fall line. No air score.",
             ["cp_mg_amp", "cp_mg_quiet", "cp_mg_freq", "cp_mg_fall"],
             ["drill_mogul_line"],
+            kb_stage="st-13",
+            tier="full",
+            core_metrics=MOGUL_FALLLINE_CORE,
+            gate_metrics=MOGUL_FALLLINE_GATES,
+            prereq_levels=["mogul_absorb"],
+            prereq_checkpoints=["cp_mg_amp", "cp_mg_quiet"],
+            profile_notes=adaptations(),
         ),
+        level(
+            "powder",
+            "Powder and soft snow",
+            "Two-footed, rounder turns in soft snow; flex and extend to make the skis surface.",
+            ["cp_pw_travel", "cp_pw_shape"],
+            ["drill_powder_bounce", "drill_flex_extend"],
+            kb_stage="st-14",
+            tier="scene",
+            requires_scene=["snow_surface:soft|powder"],
+            core_metrics=[
+                "stance_width",
+                "com_vertical_travel",
+                "flexion_rate",
+                "turn_shape_index",
+                "asymmetry_index",
+            ],
+            gate_metrics=["com_vertical_travel", "turn_shape_index"],
+            prereq_levels=["dynamic_parallel"],
+            prereq_checkpoints=["cp_dp_pressure"],
+            profile_notes=adaptations(),
+        ),
+        level(
+            "trees",
+            "Crud, trees and complex terrain",
+            "Read the terrain and pick a line in crud, cut-up snow and gladed trees. Inside the resort boundary only.",
+            [],
+            ["drill_steep_pivot", "drill_powder_bounce"],
+            kb_stage="st-15",
+            tier="catalog",
+            prereq_levels=["powder"],
+            prereq_checkpoints=["cp_pw_travel", "cp_pw_shape"],
+            profile_notes=adaptations(),
+        ),
+        level(
+            "specialization",
+            "Specialization and self-coaching",
+            "Pick a branch, film your own skiing, and run your own practice cycle.",
+            [],
+            ["drill_film"],
+            kb_stage="st-16",
+            tier="catalog",
+            prereq_levels=["trees"],
+            profile_notes=adaptations(),
+        ),
+        # Display-only branches beyond the 16-stage ladder. They sit under
+        # st-16 (specialization) because that is the only stage the wiki
+        # curriculum offers for self-directed branches; no stage drills or
+        # faults are claimed for them.
         level(
             "ollie",
             "Ollie",
             "Display only: 2D pose does not score air or ski tips. Train with a coach.",
             [],
             [],
+            kb_stage="st-16",
+            tier="catalog",
         ),
         level(
             "park",
@@ -95,6 +375,8 @@ def levels() -> list[dict]:
             "Display only: boxes, rails, and jumps are not scored.",
             [],
             [],
+            kb_stage="st-16",
+            tier="catalog",
         ),
         level(
             "gates",
@@ -102,6 +384,8 @@ def levels() -> list[dict]:
             "Display only: this app does not time gates.",
             [],
             [],
+            kb_stage="st-16",
+            tier="catalog",
         ),
         level(
             "switch",
@@ -109,5 +393,7 @@ def levels() -> list[dict]:
             "Display only: v2 video does not classify switch.",
             [],
             [],
+            kb_stage="st-16",
+            tier="catalog",
         ),
     ]

@@ -3,14 +3,22 @@
 from __future__ import annotations
 
 from core.sports.curriculum import Curriculum, load_curriculum
-from core.sports.knowledge import body_tokens, load_expert, load_signals, signal_ids
+from core.sports.knowledge import (
+    body_tokens,
+    expert_view,
+    load_metrics,
+    load_signals,
+    metric_ids,
+    signal_ids,
+)
 from core.sports.signals import CLIP_SIGNALS
 
 
 def accept_curriculum(cur: Curriculum | None = None) -> list[str]:
     bundle = cur or load_curriculum()
-    expert = load_expert()
+    expert = expert_view(bundle.schema_version)
     signals = load_signals()
+    metrics = load_metrics()
     bodies = body_tokens()
     issues: list[str] = []
 
@@ -31,6 +39,7 @@ def accept_curriculum(cur: Curriculum | None = None) -> list[str]:
     heuristic_levels = set(expert["heuristic_levels"])
     catalog = set(expert["catalog_no_score"])
     proxy_cps = expert["proxy_checkpoints"]
+    scene_levels: dict = expert.get("scene_levels") or {}
 
     if set(tree_next) != set(bundle.levels):
         issues.append("expert tree ids != curriculum levels")
@@ -84,18 +93,39 @@ def accept_curriculum(cur: Curriculum | None = None) -> list[str]:
         for did in level.session_drills:
             if did not in bundle.drills:
                 issues.append(f"{lid} unknown session drill {did}")
+        want_scene = scene_levels.get(lid)
+        if want_scene is not None:
+            if list(level.requires_scene) != list(want_scene):
+                issues.append(f"{lid} requires_scene {level.requires_scene} != expert")
+            if level.tier != "scene":
+                issues.append(f"{lid} needs a scene fact but tier is {level.tier}")
+        elif scene_levels and level.requires_scene:
+            issues.append(f"{lid} requires_scene set but expert lists no scene fact")
+        for mid in (*level.core_metrics, *level.gate_metrics):
+            if mid not in metric_ids():
+                issues.append(f"{lid} unknown metric {mid}")
+        if not set(level.gate_metrics) <= set(level.core_metrics):
+            issues.append(f"{lid} gate_metrics not a subset of core_metrics")
 
     for cid, spec in bundle.checkpoints.items():
-        if spec.signal not in signal_ids():
+        source = spec.signal or spec.metric
+        if spec.metric is not None:
+            if spec.metric not in metric_ids():
+                issues.append(f"{cid} unknown metric {spec.metric}")
+                continue
+            if not metrics[spec.metric].get("scored", True):
+                issues.append(f"{cid} metric {spec.metric} is never scored")
+            allowed = set(metrics[spec.metric]["body"])
+        elif spec.signal not in signal_ids():
             issues.append(f"{cid} unknown signal {spec.signal}")
             continue
-        sig = signals[spec.signal]
-        allowed = set(sig["body"])
+        else:
+            allowed = set(signals[spec.signal]["body"])
         for token in spec.body:
             if token not in bodies:
                 issues.append(f"{cid} unknown body {token}")
             elif token not in allowed:
-                issues.append(f"{cid} body {token} not valid for {spec.signal}")
+                issues.append(f"{cid} body {token} not valid for {source}")
         if not spec.body:
             issues.append(f"{cid} empty body")
         if spec.threshold.op == "between" and spec.threshold.hi is None:
@@ -107,8 +137,11 @@ def accept_curriculum(cur: Curriculum | None = None) -> list[str]:
                 issues.append(f"{cid} unknown drill {did}")
         if not spec.drills:
             issues.append(f"{cid} has no drills")
-        if cid in proxy_cps and not signals[spec.signal].get("proxy"):
-            issues.append(f"{cid} expert proxy but signal {spec.signal} is not")
+        if cid in proxy_cps and not (
+            signals.get(spec.signal or "", {}).get("proxy")
+            or metrics.get(spec.metric or "", {}).get("proxy")
+        ):
+            issues.append(f"{cid} expert proxy but {source} is not")
         if cid == "cp_sk_hockey" and spec.signal != "knee_flex_amp":
             issues.append("hockey stop must use knee_flex_amp proxy")
         if cid == "cp_cv_oneski" and spec.signal != "inward_lean":

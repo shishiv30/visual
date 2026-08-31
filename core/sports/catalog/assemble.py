@@ -1,4 +1,4 @@
-"""Compile runtime curriculum.v2.json from catalog + expert knowledge."""
+"""Compile the runtime curriculum JSON from catalog + expert knowledge."""
 
 from __future__ import annotations
 
@@ -12,18 +12,40 @@ from core.sports.catalog.venues import (
     terrains,
     venues,
 )
-from core.sports.knowledge import load_expert
+from core.sports.knowledge import expert_view, load_kb
 from core.sports.translator import loc as L
+
+SCHEMA_VERSION = "3.0.0"
+
+
+def _kb_refs(kb: dict, kb_stage: str, *, stage_content: bool) -> dict:
+    """Point a level at its slice of the imported knowledge pack (§9)."""
+    stage = kb["stages"].get(kb_stage) or {}
+    payload = stage.get("en") or {}
+    return {
+        "tutorial": kb_stage,
+        "drills": (
+            [row["id"] for row in payload.get("drills") or []] if stage_content else []
+        ),
+        "faults": (
+            [row["id"] for row in payload.get("faults") or []] if stage_content else []
+        ),
+        "venue": "mod-terrain-and-venues",
+        "equipment": "mod-equipment",
+    }
 
 
 def assemble() -> dict:
-    expert = load_expert()
+    expert = expert_view(SCHEMA_VERSION)
+    kb = load_kb()
+    kb_level_map = kb.get("level_map") or {}
     drill_rows = drills()
     for item in drill_rows:
         item["venue_ids"] = DRILL_VENUES.get(item["id"], ["venue_green_groomer"])
     level_rows = levels()
     catalog = set(expert["catalog_no_score"])
     heuristic = set(expert["heuristic_levels"])
+    scene = expert["scene_levels"]
     for lv in level_rows:
         lid = lv["id"]
         lv["next_levels"] = list(expert["tree_next"][lid])
@@ -32,9 +54,13 @@ def assemble() -> dict:
         lv["in_scope"] = lid not in catalog
         lv["heuristic_not_fis_carve"] = lid in heuristic
         lv["venue_ids"] = list(TERRAIN_VENUES[lv["terrain"]])
+        lv["requires_scene"] = list(scene.get(lid, lv["requires_scene"]))
+        lv["kb_refs"] = _kb_refs(
+            kb, lv["kb_stage"], stage_content=lid in kb_level_map
+        )
     scored = [lv["id"] for lv in level_rows if lv["in_scope"]]
     return {
-        "schema_version": "2.1.0",
+        "schema_version": SCHEMA_VERSION,
         "disclaimer": L(
             "Coach heuristics, not FIS judging or medical advice. 2D pose can misread. Pain or prior injury: see a coach or clinician."
         ),

@@ -19,6 +19,11 @@ DRILL_VENUES = {
     "drill_carve_short": ["venue_red_piste"],
     "drill_mogul_absorb": ["venue_mogul_field"],
     "drill_mogul_line": ["venue_mogul_field", "venue_black_steep"],
+    "drill_sideslip": ["venue_green_groomer", "venue_blue_groomer"],
+    "drill_flex_extend": ["venue_blue_groomer"],
+    "drill_firm_edge": ["venue_blue_groomer", "venue_red_piste"],
+    "drill_steep_pivot": ["venue_black_steep"],
+    "drill_powder_bounce": ["venue_offpiste"],
 }
 
 TERRAIN_VENUES = {
@@ -28,6 +33,8 @@ TERRAIN_VENUES = {
     "black": ["venue_black_steep", "venue_mogul_field"],
     "park": ["venue_park"],
     "mogul": ["venue_mogul_field"],
+    "offpiste": ["venue_offpiste"],
+    "any": ["venue_green_groomer", "venue_blue_groomer", "venue_red_piste"],
 }
 
 
@@ -39,6 +46,16 @@ def terrains() -> dict:
         "black": {"id": "black", "name": L("Black run"), "desc": L("Suggested black run; slope is not measured.")},
         "park": {"id": "park", "name": L("Park"), "desc": L("Suggested park terrain; this app does not score air.")},
         "mogul": {"id": "mogul", "name": L("Mogul"), "desc": L("Suggested mogul field; bump shape is not measured.")},
+        "offpiste": {
+            "id": "offpiste",
+            "name": L("Off-piste (inside the resort boundary)"),
+            "desc": L("Suggested off-piste inside the resort boundary; snow depth is not measured."),
+        },
+        "any": {
+            "id": "any",
+            "name": L("Any terrain"),
+            "desc": L("No terrain suggestion at this stage; use the runs you already ski well."),
+        },
     }
 
 
@@ -86,6 +103,13 @@ def venues() -> dict:
             "desc": L("Display only: boxes, rails, and jumps with a coach; the app does not score them."),
             "tips": L("Only try boxes, rails, or jumps with a coach, a helmet, and a supervised park."),
         },
+        "venue_offpiste": {
+            "id": "venue_offpiste",
+            "terrain": "offpiste",
+            "name": L("Off-piste (inside the resort boundary)"),
+            "desc": L("Soft, ungroomed snow just off a marked run; stay inside the resort boundary."),
+            "tips": L("Never ski off-piste alone; avoid avalanche terrain and sidecountry, and keep a partner in sight."),
+        },
         "venue_dryland": {
             "id": "venue_dryland",
             "terrain": "green",
@@ -100,6 +124,7 @@ def categories() -> dict:
     return {
         "alpine_piste": L("Groomed-run recreational alpine"),
         "alpine_moguls": L("Mogul skiing"),
+        "alpine_offpiste": L("Off-piste and soft snow"),
         "park": L("Park / jumps"),
         "alpine_race": L("Race gates"),
         "alpine_switch": L("Switch alpine"),

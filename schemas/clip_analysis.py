@@ -23,8 +23,42 @@ class AnalyzedFrame(BaseModel):
 
 
 class ClipAnalysis(BaseModel):
+    """Sampled pose frames for one clip, plus the scene and athlete context.
+
+    `scene` and `athlete` are plain JSON blocks rather than typed models on
+    purpose: `schemas` is a leaf package, and importing `core.sports.scene` /
+    `core.sports.profile` here would close an import cycle through
+    `core.sports.__init__` → `assess` → this module. Build the typed views with
+    `SceneContext.from_dict(analysis.scene)` and
+    `AthleteContext.from_dict(analysis.athlete)`.
+
+    Both default to None so analysis.json files written before v3 still load.
+    """
+
     schema_version: Literal["0.1.0"] = "0.1.0"
     clip_id: str
     fps: float
     frame_count: int
     frames: list[AnalyzedFrame]
+    scene: dict | None = None
+    athlete: dict | None = None
+
+    @property
+    def fps_effective(self) -> float | None:
+        """True sample rate of `frames`, or None when it was never recorded.
+
+        `fps` is the source rate; `frames` is sampled with a stride, so every
+        frequency derived from `fps` is inflated by that stride (the ~2x bug at
+        `core/sports/signals.py:266`). None means unknown — callers must decide,
+        not silently fall back to `fps`.
+        """
+        if not isinstance(self.scene, dict):
+            return None
+        raw = self.scene.get("fps_effective")
+        if isinstance(raw, bool) or raw is None:
+            return None
+        try:
+            value = float(raw)
+        except (TypeError, ValueError):
+            return None
+        return value if value > 0.0 else None

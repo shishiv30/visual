@@ -16,9 +16,21 @@ from PySide6.QtCore import (
 from PySide6.QtGui import QColor, QFont, QPainter, QPaintEvent, QPainterPath, QPen, QPolygonF
 from PySide6.QtWidgets import QSizePolicy, QWidget
 
-from clients.windows.ui.theme import DEEP_PURPLE, LIGHT_PURPLE, WATERMELON
+from clients.windows.ui.theme import (
+    CAPTION_GRAY,
+    CHART_AXIS,
+    CHART_GRID,
+    CHART_TRACK,
+    DEEP_PURPLE,
+    LIGHT_PURPLE,
+    PAPER,
+    TURN_CLEAN,
+    TURN_FAULTY,
+    UNKNOWN_GRAY,
+    WATERMELON,
+)
 from core.i18n import t
-from schemas.stage_report import FrameScorePoint, KeypointResult
+from schemas.stage_report import FrameScorePoint, KeypointResult, TurnRecord
 
 
 def _score_frac(score: float | None) -> float:
@@ -40,8 +52,10 @@ class ScorePieChart(QWidget):
         self._anim.setDuration(650)
         self._anim.setEasingCurve(QEasingCurve.Type.OutCubic)
         self.setMinimumSize(96, 134)
-        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
-        self.setFixedHeight(134)
+        # The caption is a 9pt metric name that wraps to two or three lines;
+        # a fixed 134px leaves ~40px for it and clips the tail.
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+        self.setMinimumHeight(134)
 
     def get_reveal(self) -> float:
         return self._reveal
@@ -79,7 +93,7 @@ class ScorePieChart(QWidget):
         cy = ring_h / 2.0 + 6.0
         outer = min(w - 16.0, ring_h - 8.0)
         rect = QRectF(cx - outer / 2.0, cy - outer / 2.0, outer, outer)
-        track = QPen(QColor("#2a3544"))
+        track = QPen(CHART_TRACK)
         track.setWidth(8)
         painter.setPen(track)
         painter.setBrush(Qt.BrushStyle.NoBrush)
@@ -91,7 +105,7 @@ class ScorePieChart(QWidget):
             accent.setCapStyle(Qt.PenCapStyle.RoundCap)
             painter.setPen(accent)
             painter.drawArc(rect, 90 * 16, -span)
-            painter.setPen(QColor("#f5f5f5"))
+            painter.setPen(PAPER)
             font = QFont(self.font())
             font.setPointSize(14)
             font.setBold(True)
@@ -102,7 +116,7 @@ class ScorePieChart(QWidget):
                 f"{self._score:.0f}",
             )
         else:
-            painter.setPen(QColor("#9e9e9e"))
+            painter.setPen(UNKNOWN_GRAY)
             font = QFont(self.font())
             font.setPointSize(12)
             painter.setFont(font)
@@ -114,7 +128,7 @@ class ScorePieChart(QWidget):
         caption_font = QFont(self.font())
         caption_font.setPointSize(9)
         painter.setFont(caption_font)
-        painter.setPen(QColor("#b0bec5"))
+        painter.setPen(CAPTION_GRAY)
         painter.drawText(
             QRectF(4, ring_h + 16, w - 8, self.height() - ring_h - 16),
             int(Qt.AlignmentFlag.AlignHCenter | Qt.TextFlag.TextWordWrap),
@@ -161,7 +175,7 @@ class RadarChart(QWidget):
         cy = self.height() / 2.0 + 6.0
         radius = min(self.width(), self.height()) / 2.0 - 36.0
         for ring in (0.25, 0.5, 0.75, 1.0):
-            pen = QPen(QColor("#424242"))
+            pen = QPen(CHART_GRID)
             pen.setWidth(1)
             painter.setPen(pen)
             painter.setBrush(Qt.BrushStyle.NoBrush)
@@ -172,7 +186,7 @@ class RadarChart(QWidget):
             x = cx + radius * math.cos(angle)
             y = cy + radius * math.sin(angle)
             axes.append((angle, x, y))
-            painter.setPen(QColor("#3d3d3d"))
+            painter.setPen(CHART_AXIS)
             painter.drawLine(QPointF(cx, cy), QPointF(x, y))
         if not self._items:
             return
@@ -189,7 +203,7 @@ class RadarChart(QWidget):
             lx = cx + (radius + 22.0) * math.cos(angle)
             ly = cy + (radius + 22.0) * math.sin(angle)
             label = (item.name or item.id)[:8]
-            painter.setPen(QColor("#b0bec5"))
+            painter.setPen(CAPTION_GRAY)
             painter.drawText(
                 QRectF(lx - 40, ly - 8, 80, 16),
                 int(Qt.AlignmentFlag.AlignCenter),
@@ -202,6 +216,137 @@ class RadarChart(QWidget):
         pen.setWidth(2)
         painter.setPen(pen)
         painter.drawPolygon(poly)
+
+
+class TurnStripChart(QWidget):
+    """One cell per segmented turn, laid out along the clip (design doc §7.4).
+
+    A cell is placed at the turn's own position in the clip, so gaps read as
+    traverses. Colour is the fault flag, not the score: a turn either carried a
+    fault flag or it did not. Clicking a cell seeks to that turn's start.
+    """
+
+    seekRequested = Signal(int)
+
+    ROW_TOP = 18.0
+    ROW_H = 40.0
+
+    def __init__(self, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self._turns: list[TurnRecord] = []
+        self._reveal = 0.0
+        self._anim = QPropertyAnimation(self, b"reveal")
+        self._anim.setDuration(700)
+        self._anim.setEasingCurve(QEasingCurve.Type.OutCubic)
+        self.setMinimumSize(220, 88)
+        self.setFixedHeight(88)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
+
+    def get_reveal(self) -> float:
+        return self._reveal
+
+    def set_reveal(self, value: float) -> None:
+        self._reveal = max(0.0, min(1.0, float(value)))
+        self.update()
+
+    reveal = Property(float, get_reveal, set_reveal)
+
+    def set_turns(self, turns: list[TurnRecord]) -> None:
+        self._turns = list(turns)
+        self._anim.stop()
+        self.set_reveal(0.0)
+        if self._turns:
+            self._anim.setStartValue(0.0)
+            self._anim.setEndValue(1.0)
+            self._anim.start()
+        self.update()
+
+    def _span(self) -> tuple[float, float]:
+        if not self._turns:
+            return 0.0, 1.0
+        t0 = min(turn.t_start_ms for turn in self._turns)
+        t1 = max(turn.t_end_ms for turn in self._turns)
+        return t0, max(t1 - t0, 1.0)
+
+    def _geom(self) -> tuple[float, float]:
+        return 4.0, max(1.0, self.width() - 8.0)
+
+    def _cells(self) -> list[tuple[QRectF, TurnRecord]]:
+        if not self._turns:
+            return []
+        x0, width = self._geom()
+        t0, span = self._span()
+        cells: list[tuple[QRectF, TurnRecord]] = []
+        for turn in self._turns:
+            left = x0 + width * ((turn.t_start_ms - t0) / span)
+            right = x0 + width * ((turn.t_end_ms - t0) / span)
+            cells.append(
+                (
+                    QRectF(left, self.ROW_TOP, max(3.0, right - left - 2.0), self.ROW_H),
+                    turn,
+                )
+            )
+        return cells
+
+    def paintEvent(self, event: QPaintEvent) -> None:
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        font = QFont(self.font())
+        font.setPointSize(8)
+        painter.setFont(font)
+        cells = self._cells()
+        if not cells:
+            painter.setPen(UNKNOWN_GRAY)
+            painter.drawText(
+                QRectF(0, 0, self.width(), self.height()),
+                int(Qt.AlignmentFlag.AlignCenter),
+                t("—"),
+            )
+            return
+        x0, width = self._geom()
+        painter.setPen(CHART_TRACK)
+        painter.drawLine(
+            QPointF(x0, self.ROW_TOP + self.ROW_H + 6.0),
+            QPointF(x0 + width, self.ROW_TOP + self.ROW_H + 6.0),
+        )
+        shown = max(1, int(round(len(cells) * self._reveal))) if self._reveal else 0
+        for i, (rect, turn) in enumerate(cells):
+            if i >= shown:
+                break
+            faulty = bool(turn.flags)
+            color = QColor(TURN_FAULTY if faulty else TURN_CLEAN)
+            fill = QColor(color)
+            fill.setAlpha(150 if faulty else 110)
+            painter.setBrush(fill)
+            pen = QPen(color)
+            pen.setWidth(1)
+            painter.setPen(pen)
+            painter.drawRoundedRect(rect, 3.0, 3.0)
+            side = (turn.side or "")[:1].upper()
+            if side and rect.width() >= 12.0:
+                painter.setPen(PAPER)
+                painter.drawText(rect, int(Qt.AlignmentFlag.AlignCenter), side)
+        painter.setPen(UNKNOWN_GRAY)
+        painter.drawText(
+            QRectF(x0, 0, width, 14.0),
+            int(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter),
+            t("{n} turns", n=len(cells)),
+        )
+        faulty_total = sum(1 for _, turn in cells if turn.flags)
+        painter.drawText(
+            QRectF(x0, 0, width, 14.0),
+            int(Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter),
+            t("{n} flagged", n=faulty_total),
+        )
+
+    def mousePressEvent(self, event) -> None:
+        pos = event.position()
+        for rect, turn in self._cells():
+            hit = QRectF(rect.x(), 0.0, max(rect.width(), 6.0), float(self.height()))
+            if hit.contains(pos):
+                self.seekRequested.emit(int(turn.t_start_ms))
+                return
 
 
 class ScoreTimelineChart(QWidget):
@@ -246,17 +391,17 @@ class ScoreTimelineChart(QWidget):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         x0, y0, x1, y1 = self._geom()
-        painter.setPen(QColor("#424242"))
+        painter.setPen(CHART_GRID)
         painter.drawLine(QPointF(x0, y1), QPointF(x1, y1))
         painter.drawLine(QPointF(x0, y0), QPointF(x0, y1))
-        painter.setPen(QColor("#9e9e9e"))
+        painter.setPen(UNKNOWN_GRAY)
         font = QFont(self.font())
         font.setPointSize(8)
         painter.setFont(font)
         painter.drawText(QRectF(2, y0, 32, 12), int(Qt.AlignmentFlag.AlignLeft), "100")
         painter.drawText(QRectF(2, y1 - 12, 32, 12), int(Qt.AlignmentFlag.AlignLeft), "0")
         if len(self._points) < 2:
-            painter.setPen(QColor("#9e9e9e"))
+            painter.setPen(UNKNOWN_GRAY)
             painter.drawText(
                 QRectF(x0, y0, x1 - x0, y1 - y0),
                 int(Qt.AlignmentFlag.AlignCenter),

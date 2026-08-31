@@ -8,9 +8,19 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, model_validator
 
-CURRICULUM_PATH = (
-    Path(__file__).resolve().parents[2] / "content" / "ski" / "curriculum.v2.json"
-)
+from core.sports.knowledge import metric_ids
+
+CONTENT_DIR = Path(__file__).resolve().parents[2] / "content" / "ski"
+CURRICULUM_V2_PATH = CONTENT_DIR / "curriculum.v2.json"
+CURRICULUM_V3_PATH = CONTENT_DIR / "curriculum.v3.json"
+
+# v3 is the runtime bundle: `assess.assess_clip` classifies against the v3
+# stage model (tier / core_metrics / gate_metrics / prerequisites) and the v2
+# bundle is kept only for reading stored reports and for comparison in tests.
+CURRICULUM_PATH = CURRICULUM_V3_PATH
+
+#: Scene facts a `scene`-tier level may require (design doc §2.2).
+SCENE_FACTS = ("snow_surface", "slope_band", "terrain_type")
 
 
 class Localized(BaseModel):
@@ -33,15 +43,47 @@ class Drill(BaseModel):
 
 
 class CheckpointSpec(BaseModel):
+    """A gate. v2 rows carry ``signal``, v3 rows carry ``metric`` (§3.4)."""
+
     id: str
     name: Localized
     desc: Localized
     body: list[str]
     required: bool = True
-    signal: str
+    signal: str | None = None
+    metric: str | None = None
     threshold: Threshold
     heuristic_not_fis_carve: bool = False
     drills: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def one_measurement_source(self) -> CheckpointSpec:
+        if bool(self.signal) == bool(self.metric):
+            raise ValueError(f"{self.id} needs exactly one of signal / metric")
+        return self
+
+
+class Prerequisites(BaseModel):
+    levels: list[str] = Field(default_factory=list)
+    checkpoints: list[str] = Field(default_factory=list)
+
+
+class ProfileNote(BaseModel):
+    """One adaptation overlay's status for a level (§2.3)."""
+
+    id: str
+    status: Literal["applies", "not_applicable"]
+    note: Localized | None = None
+
+
+class KbRefs(BaseModel):
+    """Slices of the imported knowledge pack this level renders from (§9)."""
+
+    tutorial: str | None = None
+    drills: list[str] = Field(default_factory=list)
+    faults: list[str] = Field(default_factory=list)
+    venue: str | None = None
+    equipment: str | None = None
 
 
 class LevelSpec(BaseModel):
@@ -56,6 +98,16 @@ class LevelSpec(BaseModel):
     session_drills: list[str] = Field(default_factory=list)
     terrain: str = "green"
     venue_ids: list[str] = Field(default_factory=list)
+    # v3 (§1.3). Defaulted so the shipped 2.1.0 bundle still validates; a 3.x
+    # bundle is checked for completeness by `Curriculum.v3_stage_model`.
+    kb_stage: str = ""
+    tier: Literal["full", "scene", "catalog"] | None = None
+    requires_scene: list[str] = Field(default_factory=list)
+    core_metrics: list[str] = Field(default_factory=list)
+    gate_metrics: list[str] = Field(default_factory=list)
+    prerequisites: Prerequisites = Field(default_factory=Prerequisites)
+    profile_notes: list[ProfileNote] = Field(default_factory=list)
+    kb_refs: KbRefs = Field(default_factory=KbRefs)
 
 
 class TerrainSpec(BaseModel):
@@ -73,7 +125,7 @@ class VenueSpec(BaseModel):
 
 
 class Curriculum(BaseModel):
-    schema_version: Literal["2.1.0"]
+    schema_version: Literal["2.1.0", "3.0.0"]
     disclaimer: Localized
     pass_score: float = 75.0
     checkpoint_pass: float = 60.0
@@ -125,6 +177,43 @@ class Curriculum(BaseModel):
             for vid in spec.venue_ids:
                 if vid not in self.venues:
                     raise ValueError(f"{spec.id} unknown venue {vid}")
+        return self
+
+    @model_validator(mode="after")
+    def v3_stage_model(self) -> Curriculum:
+        """Structural rules the v3 stage model adds (design doc §1.3, §4)."""
+        if self.schema_version != "3.0.0":
+            return self
+        known_metrics = metric_ids()
+        for spec in self.levels.values():
+            if not spec.kb_stage:
+                raise ValueError(f"{spec.id} missing kb_stage")
+            if spec.tier is None:
+                raise ValueError(f"{spec.id} missing tier")
+            for mid in (*spec.core_metrics, *spec.gate_metrics):
+                if mid not in known_metrics:
+                    raise ValueError(f"{spec.id} unknown metric {mid}")
+            if not set(spec.gate_metrics) <= set(spec.core_metrics):
+                raise ValueError(f"{spec.id} gate_metrics not a subset of core_metrics")
+            if spec.tier == "catalog" and (spec.core_metrics or spec.gate_metrics):
+                raise ValueError(f"catalog {spec.id} must carry no metrics")
+            if spec.tier == "scene" and not spec.requires_scene:
+                raise ValueError(f"scene {spec.id} must declare requires_scene")
+            if spec.tier != "scene" and spec.requires_scene:
+                raise ValueError(f"{spec.id} requires_scene only valid for scene tier")
+            for token in spec.requires_scene:
+                # "snow_surface" or "snow_surface:hardpack|ice" (§1.3, §4)
+                if token.split(":", 1)[0] not in SCENE_FACTS:
+                    raise ValueError(f"{spec.id} unknown scene fact {token}")
+            for lid in spec.prerequisites.levels:
+                if lid not in self.levels:
+                    raise ValueError(f"{spec.id} unknown prerequisite level {lid}")
+            for cid in spec.prerequisites.checkpoints:
+                if cid not in self.checkpoints:
+                    raise ValueError(f"{spec.id} unknown prerequisite checkpoint {cid}")
+        for spec in self.checkpoints.values():
+            if spec.metric and spec.metric not in known_metrics:
+                raise ValueError(f"{spec.id} unknown metric {spec.metric}")
         return self
 
 

@@ -42,6 +42,7 @@ from clients.windows.store.library import (
     ClipKind,
     ClipMeta,
     empty_frame_feedback,
+    list_reports_for_athlete,
     load_analysis,
     load_frame_feedback,
     load_meta,
@@ -51,6 +52,7 @@ from clients.windows.store.library import (
     toggle_frame_skeleton_ok,
     toggle_frame_stage_vote,
 )
+from core.sports.history import StageHistory
 from clients.windows.ui.qtutil import (
     bgr_to_pixmap,
     make_floating_back,
@@ -68,13 +70,20 @@ from schemas.clip_analysis import ClipAnalysis
 CHROME_ICON = QColor("#F5F5F5")
 
 SPEEDS = (0.5, 0.75, 1.0, 1.25, 1.5, 2.0)
+#: ``(target_id, display key, url template)``. The display key is the English
+#: brand name registered in the locale catalog — the ids are internal only and
+#: must never reach ``t()`` (snake_case locale keys are forbidden).
 SHARE_TARGETS = (
-    ("share_youtube", "https://www.youtube.com/upload"),
-    ("share_tiktok", "https://www.tiktok.com/upload"),
-    ("share_x", "https://twitter.com/intent/tweet?text={text}"),
-    ("share_facebook", "https://www.facebook.com/sharer/sharer.php"),
-    ("share_weibo", "https://service.weibo.com/share/share.php?title={text}"),
-    ("share_bilibili", "https://member.bilibili.com/platform/upload/video/frame"),
+    ("share_youtube", "YouTube", "https://www.youtube.com/upload"),
+    ("share_tiktok", "TikTok", "https://www.tiktok.com/upload"),
+    ("share_x", "X", "https://twitter.com/intent/tweet?text={text}"),
+    ("share_facebook", "Facebook", "https://www.facebook.com/sharer/sharer.php"),
+    ("share_weibo", "Weibo", "https://service.weibo.com/share/share.php?title={text}"),
+    (
+        "share_bilibili",
+        "Bilibili",
+        "https://member.bilibili.com/platform/upload/video/frame",
+    ),
 )
 
 
@@ -122,6 +131,7 @@ class VideoView(QWidget):
 
 class PlayerPage(QWidget):
     back_requested = Signal()
+    nodeClicked = Signal(str, str)  # (level_id, clip_id_best)
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -229,6 +239,8 @@ class PlayerPage(QWidget):
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding
         )
         self._report.seekRequested.connect(self._on_report_seek)
+        self._report.seekAndPlayRequested.connect(self._on_report_seek_and_play)
+        self._report.nodeClicked.connect(self.nodeClicked)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(PAGE_INSET, PAGE_INSET, PAGE_INSET, PAGE_INSET)
@@ -336,8 +348,14 @@ class PlayerPage(QWidget):
         """Rebuild stage report strings for the active UI language."""
         if self._meta is None:
             return
+        athlete_key = self._meta.athlete_key
+        self._report.set_athlete_key(athlete_key)
         if self._analysis is not None:
-            report = assess_clip(self._analysis)
+            prior_reports = list_reports_for_athlete(
+                athlete_key, exclude_clip_id=self._meta.clip_id
+            )
+            history = StageHistory.from_reports(prior_reports)
+            report = assess_clip(self._analysis, history=history)
             save_stage_report(report)
             self._report_model = report
         else:
@@ -397,6 +415,12 @@ class PlayerPage(QWidget):
             self._sync_play_button()
         frame_index = int(round(t_ms / 1000.0 * self._fps))
         self._seek(frame_index)
+
+    def _on_report_seek_and_play(self, t_ms: int) -> None:
+        frame_index = int(round(t_ms / 1000.0 * self._fps))
+        self._seek(frame_index)
+        if not self._playing:
+            self._toggle()
 
     def _on_timeline_playhead(self, t_ms: int) -> None:
         frame_index = int(round(t_ms / 1000.0 * self._fps))
@@ -551,8 +575,8 @@ class PlayerPage(QWidget):
 
     def _on_share(self) -> None:
         menu = QMenu(self)
-        for key, _url in SHARE_TARGETS:
-            menu.addAction(t(key), lambda k=key: self._share_to(k))
+        for key, label_key, _url in SHARE_TARGETS:
+            menu.addAction(t(label_key), lambda k=key: self._share_to(k))
         menu.exec(self._share_btn.mapToGlobal(self._share_btn.rect().bottomLeft()))
 
     def _share_to(self, key: str) -> None:
@@ -563,7 +587,7 @@ class PlayerPage(QWidget):
         QGuiApplication.clipboard().setText(str(path))
         text = quote(t("Visual Pose — Windows"))
         url = ""
-        for item_key, template in SHARE_TARGETS:
+        for item_key, _label_key, template in SHARE_TARGETS:
             if item_key == key:
                 url = template.format(text=text)
                 break

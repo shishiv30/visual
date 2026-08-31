@@ -1,4 +1,4 @@
-"""Persisted UI prefs under %LOCALAPPDATA%/visual/ui.json."""
+"""Persisted UI prefs under the per-platform store root (see paths.py)."""
 
 from __future__ import annotations
 
@@ -6,16 +6,20 @@ import json
 import os
 from pathlib import Path
 
+from clients.windows.store.paths import app_data_root
 from core.i18n import detect_system_language, normalize_lang
+
+#: Key written and read today.
+LANG_KEY = "language"
+#: Key written by builds up to 2026-08; still read so a saved setting survives.
+LEGACY_LANG_KEY = "Language"
 
 
 def prefs_path() -> Path:
     override = os.environ.get("VISUAL_PREFS")
     if override:
         return Path(override)
-    local = os.environ.get("LOCALAPPDATA")
-    root = Path(local) / "visual" if local else Path.home() / "AppData" / "Local" / "visual"
-    return root / "ui.json"
+    return app_data_root() / "ui.json"
 
 
 def load_language() -> str:
@@ -23,9 +27,10 @@ def load_language() -> str:
     if path.is_file():
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
-            raw = data.get("Language")
-            if raw:
-                return normalize_lang(str(raw))
+            if isinstance(data, dict):
+                raw = data.get(LANG_KEY) or data.get(LEGACY_LANG_KEY)
+                if raw:
+                    return normalize_lang(str(raw))
         except (OSError, ValueError, json.JSONDecodeError):
             pass
     return detect_system_language()
@@ -34,5 +39,5 @@ def load_language() -> str:
 def save_language(code: str) -> None:
     path = prefs_path()
     path.parent.mkdir(parents=True, exist_ok=True)
-    payload = {"language": normalize_lang(code)}
+    payload = {LANG_KEY: normalize_lang(code)}
     path.write_text(json.dumps(payload, indent=2), encoding="utf-8")

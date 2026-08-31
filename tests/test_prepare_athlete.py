@@ -77,3 +77,61 @@ def test_prepare_start_requires_athlete_and_emits_profile(
     assert isinstance(athlete, AthleteProfile)
     assert athlete.key == "Ada-70-175-165"
     del app
+
+
+def _image_clip(clip_id: str) -> ClipMeta:
+    meta = ClipMeta(
+        clip_id=clip_id,
+        created_at="2026-08-25T21:45:00-05:00",
+        display_name="clip",
+        kind=ClipKind.IMAGE,
+        status=ClipStatus.PENDING,
+        duration_ms=0,
+        seeds=[SeedMark(t_ms=0.0, box=(0.1, 0.1, 0.5, 0.8))],
+    )
+    save_meta(meta)
+    import cv2
+    import numpy as np
+
+    path = media_path(meta)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    cv2.imwrite(str(path), np.zeros((64, 64, 3), dtype=np.uint8))
+    return meta
+
+
+def test_prepare_scene_picker_is_optional_and_emitted(
+    library_and_athletes: Path,
+) -> None:
+    set_language("en")
+    app = QApplication.instance() or QApplication([])
+    meta = _image_clip("c-scene")
+    page = PreparePage()
+    seen: list[tuple] = []
+    page.analysis_requested.connect(lambda *args: seen.append(args))
+    page.open_clip(meta.clip_id)
+    page._name.setText("Ada")
+
+    # Default is "not sure": the report must still run.
+    page._start()
+    assert seen[-1][5] == {
+        "snow_surface": None,
+        "slope_band": None,
+        "terrain_type": None,
+        "view": None,
+        "camera_motion": None,
+        "fps_effective": None,
+    }
+
+    page._snow.setCurrentIndex(page._snow.findData("ice"))
+    page._slope.setCurrentIndex(page._slope.findData("double-black"))
+    page._start()
+    assert seen[-1][5]["snow_surface"] == "ice"
+    assert seen[-1][5]["slope_band"] == "double-black"
+
+    # A stored scene pre-fills the picker; an unknown one falls back to not sure.
+    meta.scene = {"snow_surface": "powder", "slope_band": "sandpaper"}
+    save_meta(meta)
+    page.open_clip(meta.clip_id)
+    assert page._snow.currentData() == "powder"
+    assert page._slope.currentData() == ""
+    del app

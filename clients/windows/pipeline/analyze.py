@@ -15,12 +15,15 @@ from clients.windows.pipeline.clip_range import (
 from core.pose_track import fill_low_score_poses, stabilize_pose_sequence
 from core.person_roi import blend_hist, build_hist, denorm_box, search
 from core.sports.assess import assess_clip
+from core.sports.profile import AthleteContext
+from core.sports.scene import SceneContext
 from schemas.clip_analysis import AnalyzedFrame, BlazeJoint, ClipAnalysis
 from schemas.core_inference import SourceKind
 from clients.windows.store.library import (
     ClipKind,
     ClipMeta,
     ClipStatus,
+    list_reports_for_athlete,
     load_meta,
     media_path,
     meta_path,
@@ -55,8 +58,33 @@ class AnalysisWorker(QObject):
             if not meta_path(self.clip_id).is_file():
                 self.failed.emit(self.clip_id, "clip deleted")
                 return
+            athlete = AthleteContext.from_profile_snapshot(
+                meta.athlete, clip_date=meta.created_at
+            )
+            # We keep one frame in every FRAME_STRIDE, so the sample rate of
+            # analysis.frames is source_fps / FRAME_STRIDE — not analysis.fps.
+            # core/sports/signals.py:266 still divides by the source fps, which
+            # inflates every frequency by exactly FRAME_STRIDE (the ~2x bug in
+            # design §10); the new metrics layer must read fps_effective here
+            # instead of recomputing it from fps.
+            scene = SceneContext.from_dict(
+                meta.scene, fps_effective=_effective_fps(analysis.fps)
+            )
+            analysis.athlete = athlete.to_dict()
+            analysis.scene = scene.to_dict()
             save_analysis(analysis)
-            save_stage_report(assess_clip(analysis))
+            # This athlete's earlier reports: the §8 tree needs them for
+            # completed / locked, and the §5 prior needs them to stop a passed
+            # rung swallowing the next one. Excluding this clip keeps a
+            # re-analysis from reading its own previous verdict as history.
+            history = list_reports_for_athlete(
+                meta.athlete_key, exclude_clip_id=self.clip_id
+            )
+            save_stage_report(
+                assess_clip(
+                    analysis, athlete=athlete, scene=scene, history=history
+                )
+            )
             meta.status = ClipStatus.DONE
             meta.error = None
             save_meta(meta)
@@ -158,6 +186,17 @@ class AnalysisWorker(QObject):
             frame_count=len(frames),
             frames=frames,
         )
+
+
+def _effective_fps(source_fps: float) -> float | None:
+    """Sample rate of the frames we kept: source fps ÷ FRAME_STRIDE.
+
+    None for stills, where `fps` is 0 and no rate exists.
+    """
+    fps = float(source_fps or 0.0)
+    if fps <= 0.0:
+        return None
+    return fps / float(FRAME_STRIDE)
 
 
 def _blaze_joints(engine: MediaPipeEngine) -> list[BlazeJoint] | None:

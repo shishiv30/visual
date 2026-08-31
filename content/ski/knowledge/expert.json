@@ -3,15 +3,32 @@
   "pass_score": 75.0,
   "checkpoint_pass": 60.0,
   "tree_next": {
-    "pizza_glide": ["pizza"],
-    "pizza": ["wedge_christie"],
-    "wedge_christie": ["parallel"],
-    "parallel": ["skid_short", "carve_long"],
-    "skid_short": ["mogul_absorb"],
-    "carve_long": ["carve_medium"],
-    "carve_medium": ["carve_short"],
+    "pizza_glide": [
+      "pizza"
+    ],
+    "pizza": [
+      "wedge_christie"
+    ],
+    "wedge_christie": [
+      "parallel"
+    ],
+    "parallel": [
+      "skid_short",
+      "carve_long"
+    ],
+    "skid_short": [
+      "mogul_absorb"
+    ],
+    "carve_long": [
+      "carve_medium"
+    ],
+    "carve_medium": [
+      "carve_short"
+    ],
     "carve_short": [],
-    "mogul_absorb": ["mogul_fallline"],
+    "mogul_absorb": [
+      "mogul_fallline"
+    ],
     "mogul_fallline": [],
     "ollie": [],
     "park": [],
@@ -51,19 +68,226 @@
     "switch": "alpine_switch"
   },
   "required_on_level": {
-    "skid_short": ["cp_sk_hockey"],
-    "carve_long": ["cp_cv_oneski"],
-    "carve_medium": ["cp_cv_oneski"],
-    "carve_short": ["cp_cv_oneski"]
+    "skid_short": [
+      "cp_sk_hockey"
+    ],
+    "carve_long": [
+      "cp_cv_oneski"
+    ],
+    "carve_medium": [
+      "cp_cv_oneski"
+    ],
+    "carve_short": [
+      "cp_cv_oneski"
+    ]
   },
-  "heuristic_levels": ["carve_long", "carve_medium", "carve_short"],
-  "catalog_no_score": ["ollie", "park", "gates", "switch"],
-  "no_air_categories": ["park"],
+  "heuristic_levels": [
+    "carve_long",
+    "carve_medium",
+    "carve_short"
+  ],
+  "catalog_no_score": [
+    "ollie",
+    "park",
+    "gates",
+    "switch"
+  ],
+  "no_air_categories": [
+    "park"
+  ],
   "proxy_checkpoints": {
     "cp_sk_hockey": "hockey_stop",
     "cp_cv_oneski": "outside_leg",
     "cp_pz_hip_ir": "hip_internal_rotation",
     "cp_pz_gaze": "downhill_gaze",
     "cp_mg_fall": "fall_line_path"
+  },
+  "v3": {
+    "tree_next": {
+      "first_slide": [
+        "pizza_glide"
+      ],
+      "pizza_glide": [
+        "pizza"
+      ],
+      "pizza": [
+        "sideslip",
+        "mogul_wedge"
+      ],
+      "sideslip": [
+        "wedge_christie"
+      ],
+      "wedge_christie": [
+        "parallel"
+      ],
+      "parallel": [
+        "dynamic_parallel"
+      ],
+      "dynamic_parallel": [
+        "skid_short",
+        "carve_long",
+        "firm_snow"
+      ],
+      "firm_snow": [
+        "skid_short",
+        "carve_long"
+      ],
+      "skid_short": [
+        "mogul_wedge",
+        "steeps"
+      ],
+      "carve_long": [
+        "carve_medium"
+      ],
+      "carve_medium": [
+        "carve_short"
+      ],
+      "carve_short": [],
+      "steeps": [
+        "powder"
+      ],
+      "mogul_absorb": [
+        "mogul_fallline"
+      ],
+      "mogul_fallline": [
+        "powder"
+      ],
+      "powder": [
+        "trees"
+      ],
+      "trees": [
+        "specialization"
+      ],
+      "specialization": [],
+      "ollie": [],
+      "park": [],
+      "gates": [],
+      "switch": [],
+      "mogul_wedge": [
+        "mogul_absorb"
+      ]
+    },
+    "level_terrain": {
+      "first_slide": "green",
+      "pizza_glide": "green",
+      "pizza": "green",
+      "sideslip": "green",
+      "wedge_christie": "green",
+      "parallel": "blue",
+      "dynamic_parallel": "blue",
+      "firm_snow": "blue",
+      "skid_short": "blue",
+      "carve_long": "blue",
+      "carve_medium": "red",
+      "carve_short": "red",
+      "steeps": "black",
+      "mogul_absorb": "mogul",
+      "mogul_fallline": "black",
+      "powder": "offpiste",
+      "trees": "offpiste",
+      "specialization": "any",
+      "ollie": "park",
+      "park": "park",
+      "gates": "red",
+      "switch": "blue",
+      "mogul_wedge": "mogul"
+    },
+    "level_category": {
+      "first_slide": "alpine_piste",
+      "pizza_glide": "alpine_piste",
+      "pizza": "alpine_piste",
+      "sideslip": "alpine_piste",
+      "wedge_christie": "alpine_piste",
+      "parallel": "alpine_piste",
+      "dynamic_parallel": "alpine_piste",
+      "firm_snow": "alpine_piste",
+      "skid_short": "alpine_piste",
+      "carve_long": "alpine_piste",
+      "carve_medium": "alpine_piste",
+      "carve_short": "alpine_piste",
+      "steeps": "alpine_piste",
+      "mogul_absorb": "alpine_moguls",
+      "mogul_fallline": "alpine_moguls",
+      "powder": "alpine_offpiste",
+      "trees": "alpine_offpiste",
+      "specialization": "alpine_piste",
+      "ollie": "park",
+      "park": "park",
+      "gates": "alpine_race",
+      "switch": "alpine_switch",
+      "mogul_wedge": "alpine_moguls"
+    },
+    "required_on_level": {
+      "sideslip": [
+        "cp_ss_edge",
+        "cp_ss_quiet"
+      ],
+      "dynamic_parallel": [
+        "cp_dp_pressure",
+        "cp_dp_pole",
+        "cp_dp_rhythm"
+      ],
+      "firm_snow": [
+        "cp_fs_edgechange",
+        "cp_fs_braking"
+      ],
+      "skid_short": [
+        "cp_sk_hockey"
+      ],
+      "carve_long": [
+        "cp_cv_oneski"
+      ],
+      "carve_medium": [
+        "cp_cv_oneski"
+      ],
+      "carve_short": [
+        "cp_cv_oneski"
+      ],
+      "steeps": [
+        "cp_st_separation",
+        "cp_st_braking"
+      ],
+      "powder": [
+        "cp_pw_travel",
+        "cp_pw_shape"
+      ]
+    },
+    "heuristic_levels": [
+      "carve_long",
+      "carve_medium",
+      "carve_short"
+    ],
+    "catalog_no_score": [
+      "first_slide",
+      "trees",
+      "specialization",
+      "ollie",
+      "park",
+      "gates",
+      "switch"
+    ],
+    "no_air_categories": [
+      "park"
+    ],
+    "scene_levels": {
+      "firm_snow": [
+        "snow_surface:hardpack|ice"
+      ],
+      "steeps": [
+        "slope_band:black|double-black"
+      ],
+      "powder": [
+        "snow_surface:soft|powder"
+      ],
+      "mogul_wedge": [
+        "terrain_type:mogul"
+      ],
+      "mogul_absorb": [
+        "terrain_type:mogul"
+      ],
+      "mogul_fallline": [
+        "terrain_type:mogul"
+      ]
+    }
   }
 }

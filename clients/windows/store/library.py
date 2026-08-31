@@ -1,4 +1,4 @@
-"""Local clip library under %LOCALAPPDATA%/visual/library."""
+"""Local clip library under the per-platform store root (see paths.py)."""
 
 from __future__ import annotations
 
@@ -13,8 +13,9 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, ValidationError
 
+from clients.windows.store.paths import app_data_root
 from schemas.clip_analysis import ClipAnalysis
-from schemas.stage_report import StageReport
+from schemas.stage_report import SCHEMA_VERSION, StageReport
 
 
 class ClipKind(str, Enum):
@@ -50,6 +51,9 @@ class ClipMeta(BaseModel):
     play_end_ms: int | None = None
     athlete_key: str | None = None
     athlete: dict | None = None
+    # Scene facts the clip cannot supply, picked in Prepare (design §2.2).
+    # Optional: a missing scene must never block the report.
+    scene: dict | None = None
 
 
 class FrameFeedbackEntry(BaseModel):
@@ -67,14 +71,23 @@ class FrameFeedbackFile(BaseModel):
     frames: dict[str, FrameFeedbackEntry] = Field(default_factory=dict)
 
 
+class ReportCorrection(BaseModel):
+    """User correction for a misclassified stage report."""
+
+    schema_version: Literal["1.0.0"] = "1.0.0"
+    clip_id: str
+    original_stage_id: str
+    corrected_stage_id: str
+    corrected_stage_name: str = ""
+    note: str = ""
+    created_at: str = ""
+
+
 def library_root() -> Path:
     override = os.environ.get("VISUAL_LIBRARY")
     if override:
         return Path(override)
-    local = os.environ.get("LOCALAPPDATA")
-    if local:
-        return Path(local) / "visual" / "library"
-    return Path.home() / "AppData" / "Local" / "visual" / "library"
+    return app_data_root() / "library"
 
 
 def display_name_now(now: datetime | None = None) -> str:
@@ -111,6 +124,10 @@ def stage_report_path(clip_id: str) -> Path:
 
 def frame_feedback_path(clip_id: str) -> Path:
     return clip_dir(clip_id) / "frame_feedback.json"
+
+
+def report_correction_path(clip_id: str) -> Path:
+    return clip_dir(clip_id) / "report_correction.json"
 
 
 def save_meta(meta: ClipMeta) -> None:
@@ -152,10 +169,43 @@ def load_stage_report(clip_id: str) -> StageReport | None:
         return None
     if not isinstance(data, dict):
         return None
+    return _migrate_stage_report(data)
+
+
+#: Blocks added by schema 3.0.0. A stored 2.1.0 report has none of them, so the
+#: migration fills each with the empty value its field declares — never a
+#: fabricated one. `None` means "this report was written before the block
+#: existed", which is exactly what a client needs to know to hide the chapter
+#: (design §10).
+_V3_DEFAULTS: dict[str, object] = {
+    "kb_stage": "",
+    "tier": "full",
+    "classification": None,
+    "metrics": [],
+    "turns": None,
+    "tree": [],
+    "knowledge_ref": None,
+    "knowledge_focus": None,
+    "scene": None,
+    "profile_summary": None,
+    "filming": [],
+}
+
+
+def _migrate_stage_report(data: dict) -> StageReport | None:
+    """Bring any stored report up to 3.0.0, or return None if it will not parse.
+
+    ``schema_version`` is force-rewritten, as it was for 2.1.0: the schema is
+    additive, so a 1.0.0 or 2.1.0 payload is a valid 3.0.0 payload once the new
+    blocks are defaulted. Nothing here invents a stage, a metric or a tree.
+    """
     version = str(data.get("schema_version") or "")
-    if version != "2.1.0":
-        data = {**data, "schema_version": "2.1.0"}
+    if version != SCHEMA_VERSION:
+        data = {**data, "schema_version": SCHEMA_VERSION}
     data.setdefault("keypoints", [])
+    for key, empty in _V3_DEFAULTS.items():
+        if data.get(key) is None:
+            data[key] = empty if not isinstance(empty, list) else list(empty)
     try:
         return StageReport.model_validate(data)
     except ValidationError:
@@ -270,6 +320,46 @@ def list_clips() -> list[ClipMeta]:
             continue
     items.sort(key=lambda m: m.created_at, reverse=True)
     return items
+
+
+def list_reports_for_athlete(
+    athlete_key: str | None, exclude_clip_id: str | None = None
+) -> list[StageReport]:
+    """Every stored report for one athlete, newest first (design §8).
+
+    The skill tree's ``completed`` / ``locked`` states and the classifier's
+    adjacency prior both need this athlete's earlier reports; the store already
+    snapshots ``athlete_key`` onto ``ClipMeta``. ``exclude_clip_id`` drops the
+    clip being assessed, so a re-analysis never treats its own previous verdict
+    as history. An empty or missing key returns nothing rather than every
+    report in the library: an unidentified clip has no history.
+    """
+    if not athlete_key:
+        return []
+    out: list[StageReport] = []
+    for meta in list_clips():
+        if meta.athlete_key != athlete_key or meta.clip_id == exclude_clip_id:
+            continue
+        report = load_stage_report(meta.clip_id)
+        if report is not None:
+            out.append(report)
+    return out
+
+
+def save_report_correction(correction: ReportCorrection) -> None:
+    path = report_correction_path(correction.clip_id)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(correction.model_dump_json(indent=2), encoding="utf-8")
+
+
+def load_report_correction(clip_id: str) -> ReportCorrection | None:
+    path = report_correction_path(clip_id)
+    if not path.is_file():
+        return None
+    try:
+        return ReportCorrection.model_validate_json(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
 
 
 def created_at_iso() -> str:

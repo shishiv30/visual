@@ -1,0 +1,256 @@
+{
+  "stance_width": {
+    "group": "stance_balance",
+    "unit": "leg_lengths",
+    "forms": ["A", "T"],
+    "body": ["ankle", "hip", "knee"],
+    "scored": true
+  },
+  "stance_width_var": {
+    "group": "stance_balance",
+    "unit": "leg_lengths",
+    "forms": ["A"],
+    "body": ["ankle", "hip"],
+    "scored": true
+  },
+  "wedge_angle": {
+    "group": "stance_balance",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["ankle"],
+    "scored": true
+  },
+  "shin_angle_fore_aft": {
+    "group": "stance_balance",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["ankle", "knee"],
+    "scored": true
+  },
+  "hip_over_foot": {
+    "group": "stance_balance",
+    "unit": "leg_lengths",
+    "forms": ["A", "T", "C"],
+    "body": ["hip", "com", "ankle"],
+    "scored": true
+  },
+  "com_vertical_travel": {
+    "group": "stance_balance",
+    "unit": "leg_lengths",
+    "forms": ["A", "T"],
+    "body": ["hip", "com"],
+    "scored": true
+  },
+  "edge_angle_proxy": {
+    "group": "edging_steering",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["ankle", "knee"],
+    "scored": true,
+    "proxy": true,
+    "proxy_note": "shank vs slope normal from 2D pose, not a measured edge angle"
+  },
+  "inclination": {
+    "group": "edging_steering",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["chest", "hip", "com", "ankle"],
+    "scored": true
+  },
+  "angulation": {
+    "group": "edging_steering",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["chest", "hip", "com"],
+    "scored": true
+  },
+  "banking_index": {
+    "group": "edging_steering",
+    "unit": "ratio",
+    "forms": ["A", "T"],
+    "body": ["chest", "hip", "com"],
+    "scored": true
+  },
+  "separation_angle": {
+    "group": "edging_steering",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["chest", "hip"],
+    "scored": true
+  },
+  "upper_body_quiet": {
+    "group": "edging_steering",
+    "unit": "deg",
+    "forms": ["A"],
+    "body": ["chest", "hip"],
+    "scored": true
+  },
+  "knee_valgus": {
+    "group": "edging_steering",
+    "unit": "shank_lengths",
+    "forms": ["A", "T"],
+    "body": ["knee", "ankle"],
+    "scored": true
+  },
+  "turn_rate": {
+    "group": "rhythm_shape",
+    "unit": "hz",
+    "forms": ["A"],
+    "body": ["hip", "com"],
+    "scored": true
+  },
+  "turn_duration_var": {
+    "group": "rhythm_shape",
+    "unit": "ratio",
+    "forms": ["A"],
+    "body": ["hip", "com"],
+    "scored": true
+  },
+  "turn_amplitude": {
+    "group": "rhythm_shape",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["hip", "com", "ankle"],
+    "scored": true
+  },
+  "turn_shape_index": {
+    "group": "rhythm_shape",
+    "unit": "ratio",
+    "forms": ["A", "T"],
+    "body": ["hip", "com"],
+    "scored": true
+  },
+  "edge_change_duration": {
+    "group": "rhythm_shape",
+    "unit": "s",
+    "forms": ["A", "T"],
+    "body": ["ankle", "knee", "hip"],
+    "scored": true
+  },
+  "flexion_range": {
+    "group": "rhythm_shape",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["knee", "hip", "ankle"],
+    "scored": true
+  },
+  "flexion_rate": {
+    "group": "rhythm_shape",
+    "unit": "hz",
+    "forms": ["A"],
+    "body": ["knee"],
+    "scored": true
+  },
+  "pressure_peak_phase": {
+    "group": "rhythm_shape",
+    "unit": "ratio",
+    "forms": ["A", "T"],
+    "body": ["knee", "hip", "com"],
+    "scored": true
+  },
+  "stem_count": {
+    "group": "turn_faults",
+    "unit": "turns",
+    "forms": ["C"],
+    "body": ["ankle", "hip"],
+    "scored": true
+  },
+  "backseat_count": {
+    "group": "turn_faults",
+    "unit": "turns",
+    "forms": ["C"],
+    "body": ["hip", "com", "ankle"],
+    "scored": true
+  },
+  "rotation_count": {
+    "group": "turn_faults",
+    "unit": "turns",
+    "forms": ["C"],
+    "body": ["chest", "hip"],
+    "scored": true
+  },
+  "braking_count": {
+    "group": "turn_faults",
+    "unit": "turns",
+    "forms": ["C"],
+    "body": ["hip", "com"],
+    "scored": true
+  },
+  "asymmetry_index": {
+    "group": "turn_faults",
+    "unit": "ratio",
+    "forms": ["A"],
+    "body": ["ankle", "knee", "hip", "chest"],
+    "scored": true
+  },
+  "hands_in_view": {
+    "group": "pole_hands",
+    "unit": "fraction",
+    "forms": ["A"],
+    "body": ["hands", "chest", "hip"],
+    "scored": true
+  },
+  "pole_touch_rate": {
+    "group": "pole_hands",
+    "unit": "ratio",
+    "forms": ["A"],
+    "body": ["hands"],
+    "scored": true
+  },
+  "pole_touch_timing": {
+    "group": "pole_hands",
+    "unit": "s",
+    "forms": ["A", "T"],
+    "body": ["hands", "hip"],
+    "scored": true
+  },
+  "view_azimuth_deg": {
+    "group": "quality_scene",
+    "unit": "deg",
+    "forms": ["A"],
+    "body": ["hip", "chest", "ankle"],
+    "scored": false
+  },
+  "view_class": {
+    "group": "quality_scene",
+    "unit": "class",
+    "forms": ["A"],
+    "body": ["hip", "chest", "ankle"],
+    "scored": false
+  },
+  "landmark_quality": {
+    "group": "quality_scene",
+    "unit": "fraction",
+    "forms": ["A"],
+    "body": [],
+    "scored": false
+  },
+  "usable_frame_ratio": {
+    "group": "quality_scene",
+    "unit": "fraction",
+    "forms": ["A"],
+    "body": [],
+    "scored": false
+  },
+  "camera_motion": {
+    "group": "quality_scene",
+    "unit": "class",
+    "forms": ["A"],
+    "body": [],
+    "scored": false
+  },
+  "fps_effective": {
+    "group": "quality_scene",
+    "unit": "hz",
+    "forms": ["A"],
+    "body": [],
+    "scored": false
+  },
+  "turn_count": {
+    "group": "quality_scene",
+    "unit": "turns",
+    "forms": ["A"],
+    "body": ["hip", "com"],
+    "scored": false
+  }
+}

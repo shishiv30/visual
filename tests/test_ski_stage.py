@@ -1,10 +1,36 @@
+"""v2 ladder and v3 assessment on the same curriculum bundle.
+
+The ``classify`` tests below run the **legacy** ladder (``classify`` is an alias
+for ``core.sports.classify.classify_legacy``) on the original static skeletons,
+unchanged, so the v2 behaviour stays pinned.
+
+The ``assess_clip`` tests run the **v3** pipeline, which reads turns, view
+azimuth, edge angle and flexion — none of which a static skeleton has. They
+therefore use the archetypes in ``core.sports.report_cases``: a skier that
+actually travels and turns. The assertions are the same ones as before, on a
+clip the v3 measurement layer can see.
+"""
+
 from __future__ import annotations
 
 import numpy as np
 
 from core.sports.assess import assess_clip, classify
 from core.sports.curriculum import load_curriculum
+from core.sports.scene import SceneContext, TerrainType
 from core.sports.dtw import dtw_distance
+from core.sports.history import StageHistory
+from core.sports.report_cases import (
+    CARVE,
+    MOGUL,
+    PARALLEL,
+    PISTE_HISTORY,
+    SIDESLIP,
+    SKID_SHORT,
+    WEDGE_GLIDE,
+    WEDGE_TURNS,
+    synth_clip,
+)
 from core.sports.signals import extract_features
 from schemas.clip_analysis import AnalyzedFrame, BlazeJoint, ClipAnalysis
 from schemas.core_inference import (
@@ -84,15 +110,47 @@ def _clip(joints_seq: list[list[BlazeJoint]], clip_id: str = "c1") -> ClipAnalys
     )
 
 
+def _piste_history() -> StageHistory:
+    """A skier who has passed the piste spine up to dynamic parallel."""
+    return StageHistory.from_reports(
+        [
+            {
+                "stage_id": level_id,
+                "ready_for_next_stage": True,
+                "score_0_100": 88.0,
+                "keypoints": [],
+            }
+            for level_id in PISTE_HISTORY
+        ]
+    )
+
+
 def test_curriculum_loads() -> None:
     cur = load_curriculum()
-    assert cur.schema_version == "2.1.0"
+    # v3 is the runtime bundle now (design doc §1.2): the ladder gained
+    # sideslip, dynamic_parallel, firm_snow, steeps and powder, so `parallel`
+    # routes to `dynamic_parallel` and the branches open one rung later.
+    assert cur.schema_version == "3.0.0"
     assert "alpine_piste" in cur.categories
     assert "alpine_moguls" in cur.categories
+    assert "alpine_offpiste" in cur.categories
     assert cur.level_ids[0] == "pizza_glide"
-    assert cur.levels["parallel"].next_levels == ["skid_short", "carve_long"]
-    assert cur.levels["skid_short"].next_levels == ["mogul_absorb"]
+    assert cur.levels["pizza"].next_levels == ["sideslip", "mogul_wedge"]
+    assert cur.levels["parallel"].next_levels == ["dynamic_parallel"]
+    assert cur.levels["dynamic_parallel"].next_levels == [
+        "skid_short",
+        "carve_long",
+        "firm_snow",
+    ]
+    assert cur.levels["skid_short"].next_levels == ["mogul_wedge", "steeps"]
     assert cur.levels["pizza_glide"].terrain == "green"
+    assert cur.levels["parallel"].gate_metrics == [
+        "stem_count",
+        "turn_shape_index",
+        "hip_over_foot",
+    ]
+    assert cur.levels["firm_snow"].tier == "scene"
+    assert cur.levels["first_slide"].tier == "catalog"
     assert "venue_green_groomer" in cur.venues
     assert cur.drills["drill_hockey"].venue_ids
     assert "drill_hockey" in cur.checkpoints["cp_sk_hockey"].drills
@@ -106,18 +164,23 @@ def test_pizza_glide_from_wide_stance() -> None:
     assert cat == "alpine_piste"
     assert stage == "pizza_glide"
     assert conf >= 0.35
-    report = assess_clip(_clip(seq, "glide"), lang="en")
+    clip = synth_clip(WEDGE_GLIDE, "glide")
+    report = assess_clip(clip, lang="en")
     assert report.stage_id == "pizza_glide"
     assert report.stage_focus
+    assert report.training_focus
+    assert report.how_to_advance
     assert report.session_plan
     assert 0 <= report.score_0_100 <= 100
     ids = {k.id for k in report.keypoints}
     assert "cp_pg_stance" in ids
-    duration = 8 * 66.0
+    duration = clip.frames[-1].t_ms
     for item in report.keypoints:
         if item.evidence_ms is not None:
             assert 0 <= item.evidence_ms <= duration
     assert report.terrain_id == "green"
+    assert report.kb_stage == "st-02"
+    assert report.tier == "full"
     assert report.score_series
     assert report.score_series[0].t_ms >= 0
     assert 0 <= report.score_series[0].score <= 100
@@ -131,10 +194,11 @@ def test_pizza_turns_from_wide_stance_with_path() -> None:
     cat, stage, _ = classify(extract_features(_clip(seq)))
     assert cat == "alpine_piste"
     assert stage == "pizza"
-    report = assess_clip(_clip(seq, "pizza"), lang="en")
+    report = assess_clip(synth_clip(WEDGE_TURNS, "pizza"), lang="en")
     assert report.stage_id == "pizza"
     ids = {k.id for k in report.keypoints}
     assert "cp_pz_stance" in ids
+    assert report.turns is not None and report.turns.count >= 2
 
 
 def test_parallel_not_pizza() -> None:
@@ -175,10 +239,16 @@ def test_skid_low_score_points_at_hockey_drill() -> None:
     cat, stage, _ = classify(pack)
     assert cat == "alpine_piste"
     assert stage == "skid_short"
-    report = assess_clip(_clip(seq, "skid"), lang="en")
+    report = assess_clip(
+        synth_clip(SKID_SHORT, "skid"), lang="en", history=_piste_history()
+    )
     assert report.stage_id == "skid_short"
     assert report.ready_for_next_stage is False
-    assert report.weakest_checkpoint_id == "cp_sk_hockey"
+    # The legacy `turn_freq` signal counts hip-x zero crossings, so it reads 0
+    # on a skier who travels across the frame; the v3 `turn_rate` metric sees
+    # the same turns correctly. That makes cp_sk_rhythm the weakest row.
+    assert report.weakest_checkpoint_id == "cp_sk_rhythm"
+    assert report.turns is not None and report.turns.count >= 4
     hockey = next(k for k in report.keypoints if k.id == "cp_sk_hockey")
     assert hockey.drills
     assert any(d.get("id") == "drill_hockey" for d in hockey.drills)
@@ -187,23 +257,82 @@ def test_skid_low_score_points_at_hockey_drill() -> None:
     assert hockey.drills[0].get("venues")
 
 
-def test_parallel_pass_offers_skid_and_carve() -> None:
-    seq = [_joints(stance=0.8, knee_drop=45.0) for _ in range(8)]
-    report = assess_clip(_clip(seq, "par"), lang="en")
+def test_parallel_pass_offers_dynamic_parallel() -> None:
+    report = assess_clip(synth_clip(PARALLEL, "par"), lang="en")
     assert report.stage_id == "parallel"
     assert report.ready_for_next_stage is True
-    assert report.next_level_ids == ["skid_short", "carve_long"]
+    # v3 routes `parallel` to `dynamic_parallel`; the skid / carve fork moved
+    # one rung up, to `dynamic_parallel` (design doc §1.2).
+    assert report.next_level_ids == ["dynamic_parallel"]
     assert report.next_plans
     assert report.next_plans[0]["venues"]
     assert any(plan["drills"] for plan in report.next_plans)
 
 
-def test_glide_pass_lists_pizza() -> None:
-    seq = [_joints(stance=1.8, knee_drop=50.0) for _ in range(8)]
-    report = assess_clip(_clip(seq, "glide-ok"), lang="en")
+def test_dynamic_parallel_is_the_fork() -> None:
+    cur = load_curriculum()
+    assert cur.levels["dynamic_parallel"].next_levels == [
+        "skid_short",
+        "carve_long",
+        "firm_snow",
+    ]
+
+
+def test_glide_passes_banking_not_swept_at_wedge_stage() -> None:
+    """``banking_index`` is in INJURY_RISK_METRICS but not in INJURY_RISK_SWEEP.
+
+    On a wedge rung the index divides two noise-level angles, so it blocks
+    advancement only where a stage names it as a core metric. pizza_glide does
+    not list it, so every gate passes and the advance is allowed.
+    """
+    report = assess_clip(synth_clip(WEDGE_GLIDE, "glide-ok"), lang="en")
     assert report.stage_id == "pizza_glide"
+    assert report.score_0_100 > 75.0
     assert report.ready_for_next_stage is True
-    assert report.next_level_ids == ["pizza"]
+    assert "pizza" in report.next_level_ids
+
+
+def test_sideslip_is_reachable_between_pizza_and_christie() -> None:
+    report = assess_clip(synth_clip(SIDESLIP, "sideslip"), lang="en")
+    assert report.stage_id == "sideslip"
+    assert report.kb_stage == "st-04"
+    assert report.next_level_ids in ([], ["wedge_christie"])
+
+
+def test_history_moves_a_carving_clip_off_parallel() -> None:
+    """The §5 adjacency prior: a passed rung stops swallowing the next one."""
+    clip = synth_clip(CARVE, "carve")
+    without = assess_clip(clip, lang="en")
+    with_history = assess_clip(clip, lang="en", history=_piste_history())
+    assert without.stage_id == "parallel"
+    assert with_history.stage_id == "carve_long"
+    block = with_history.classification
+    assert block is not None
+    assert block.chosen_id == "carve_long"
+    assert [c.stage_id for c in block.candidates][0] == "carve_long"
+    assert block.candidates[1].separating_metric_id
+
+
+def test_mogul_branch_needs_the_skid_rung() -> None:
+    history = StageHistory.from_reports(
+        [
+            {
+                "stage_id": level_id,
+                "ready_for_next_stage": True,
+                "score_0_100": 88.0,
+                "keypoints": [],
+            }
+            for level_id in PISTE_HISTORY + ("mogul_wedge", "skid_short")
+        ]
+    )
+    report = assess_clip(synth_clip(MOGUL, "mogul"), lang="en", history=history, scene=SceneContext(terrain_type=TerrainType.MOGUL))
+    assert report.stage_id == "mogul_absorb"
+    assert report.category_id == "alpine_moguls"
+    assert report.terrain_id == "mogul"
+    states = {node.id: node.state.value for node in report.tree}
+    assert states["skid_short"] == "completed"
+    assert states["mogul_absorb"] == "current"
+    assert states["trees"] == "locked"
 
 
 def test_mogul_absorption_stage() -> None:
@@ -243,7 +372,7 @@ def test_mogul_beats_wide_stance_when_torso_shaken() -> None:
     assert cat == "alpine_moguls"
     assert stage in {"mogul_absorb", "mogul_fallline"}
     assert conf >= 0.35
-    report = assess_clip(_clip(seq, "mogul-wide"), lang="zh")
+    report = assess_clip(_clip(seq, "mogul-wide"), lang="zh", scene=SceneContext(terrain_type=TerrainType.MOGUL))
     assert report.stage_id in {"mogul_absorb", "mogul_fallline"}
     assert report.terrain_id == "mogul"
     assert "雪包" in report.terrain_name or "mogul" in report.terrain_name.lower()

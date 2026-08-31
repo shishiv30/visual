@@ -1,4 +1,9 @@
-"""Write content/ski/curriculum.v2.json. Run from repo root."""
+"""Write content/ski/curriculum.v3.json. Run from repo root.
+
+``curriculum.v2.json`` is deliberately left alone: it is still the bundle
+`core.sports.curriculum.CURRICULUM_PATH` loads, so the migration can land
+without breaking the shipped classifier.
+"""
 
 from __future__ import annotations
 
@@ -10,19 +15,18 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from core.sports.catalog import assemble
-from core.sports.curriculum import Curriculum, load_curriculum
+from core.sports.curriculum import CURRICULUM_V3_PATH, Curriculum
 from core.sports.ski_expert import accept_curriculum
 
-OUT = ROOT / "content" / "ski" / "curriculum.v2.json"
+OUT = CURRICULUM_V3_PATH
 
 
 def main() -> None:
     data = assemble()
-    Curriculum.model_validate(data)
+    bundle = Curriculum.model_validate(data)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    load_curriculum.cache_clear()
-    issues = accept_curriculum()
+    issues = accept_curriculum(bundle)
     if issues:
         raise SystemExit("ski expert rejected:\n" + "\n".join(issues))
     print(f"wrote {OUT}")

@@ -68,6 +68,7 @@ class MainWindow(QMainWindow):
         self._capture.clip_ready.connect(self._on_clip_ready)
         self._capture.import_busy.connect(self._on_import_busy)
         self._player.back_requested.connect(self._open_list)
+        self._player.nodeClicked.connect(lambda _lid, cid: self._open_player(cid) if cid else None)
         self._prepare.back_requested.connect(self._open_list)
         self._prepare.analysis_requested.connect(self._on_prepare_done)
         self.retranslate()
@@ -140,7 +141,13 @@ class MainWindow(QMainWindow):
         self._stack.setCurrentWidget(self._prepare)
 
     def _on_prepare_done(
-        self, clip_id: str, seeds: list, in_ms: int, out_ms: object, athlete: object
+        self,
+        clip_id: str,
+        seeds: list,
+        in_ms: int,
+        out_ms: object,
+        athlete: object,
+        scene: object = None,
     ) -> None:
         meta = load_meta(clip_id)
         meta.seeds = list(seeds)
@@ -151,6 +158,8 @@ class MainWindow(QMainWindow):
             snapshot = athlete.model_dump()
             meta.athlete_key = str(snapshot.get("key") or "") or None
             meta.athlete = snapshot
+        if isinstance(scene, dict):
+            meta.scene = scene
         meta.status = ClipStatus.PROCESSING
         meta.error = None
         save_meta(meta)
