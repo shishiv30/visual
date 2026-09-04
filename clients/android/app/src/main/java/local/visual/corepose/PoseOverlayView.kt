@@ -13,7 +13,7 @@ class PoseOverlayView @JvmOverloads constructor(
 ) : View(context, attrs) {
     private val bonePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = 0xFFFFA500.toInt()
-        strokeWidth = 6f
+        strokeWidth = 2f
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
     }
@@ -68,7 +68,7 @@ class PoseOverlayView @JvmOverloads constructor(
                 canvas.drawLine(seg.x1, seg.y1, seg.x2, seg.y2, bonePaint)
             }
             for (joint in OverlayMath.visibleJoints(pose, srcW, srcH, vw, vh, letterbox)) {
-                canvas.drawCircle(joint.x, joint.y, 8f, jointPaint)
+                canvas.drawCircle(joint.x, joint.y, 2f, jointPaint)
             }
         }
     }

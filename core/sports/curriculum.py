@@ -86,6 +86,21 @@ class KbRefs(BaseModel):
     equipment: str | None = None
 
 
+class ExclusionRule(BaseModel):
+    """Reject candidate levels when all ``when`` metric conditions hold."""
+
+    when: dict[str, float]
+    reject_levels: list[str]
+    reason: str
+
+    @model_validator(mode="after")
+    def when_keys_are_metric_ops(self) -> ExclusionRule:
+        for key in self.when:
+            if not any(key.endswith(suffix) for suffix in ("_lte", "_gte")):
+                raise ValueError(f"exclusion rule when key needs _lte/_gte suffix: {key}")
+        return self
+
+
 class LevelSpec(BaseModel):
     id: str
     category_id: str
@@ -138,6 +153,15 @@ class Curriculum(BaseModel):
     drills: dict[str, Drill]
     checkpoints: dict[str, CheckpointSpec]
     levels: dict[str, LevelSpec]
+    exclusion_rules: list[ExclusionRule] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def exclusion_rules_resolve(self) -> Curriculum:
+        for rule in self.exclusion_rules:
+            for level_id in rule.reject_levels:
+                if level_id not in self.levels:
+                    raise ValueError(f"exclusion rule unknown level {level_id}")
+        return self
 
     @model_validator(mode="after")
     def ids_match_keys(self) -> Curriculum:

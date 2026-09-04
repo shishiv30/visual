@@ -16,10 +16,29 @@ class BlazeJoint(BaseModel):
     confidence: float
 
 
+class SkiBoardOverlay(BaseModel):
+    """One ski axis stored at analyze time (image pixels)."""
+
+    tip: list[float]
+    tail: list[float]
+    confidence: float = 0.0
+
+
+class SkiFrameOverlay(BaseModel):
+    """Precomputed ski overlay for one analyzed frame."""
+
+    left: SkiBoardOverlay | None = None
+    right: SkiBoardOverlay | None = None
+    wedge_deg: float | None = None
+    detect_ok: bool = False
+    source: Literal["segment", "pose"] | None = None
+
+
 class AnalyzedFrame(BaseModel):
     t_ms: float
     result: CoreInferenceResult
     blaze33: list[BlazeJoint] | None = None
+    ski: SkiFrameOverlay | None = None
 
 
 class ClipAnalysis(BaseModel):

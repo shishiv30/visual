@@ -120,6 +120,8 @@ REASON_TOO_PROFILE = "view_too_profile"
 REASON_TOO_FRONTAL = "view_too_frontal"
 REASON_NO_TURNS = "no_turns_segmented"
 REASON_NO_SCALE = "body_scale_unavailable"
+REASON_SKI_DETECT_UNAVAILABLE = "ski_detect_unavailable"
+REASON_CAMERA_FOLLOW_UNRELIABLE = "camera_follow_unreliable"
 REASON_NO_SAMPLES = "no_usable_samples"
 REASON_NON_FINITE = "non_finite_value"
 #: Prefix of the reason that names the joints a metric needed and this clip
@@ -357,6 +359,26 @@ REGISTRY: tuple[MetricSpec, ...] = (
         "none",
         _req("lateral", _ANKLES + _FEET),
         "Angle between the two ankle-to-foot_index vectors (wedge / stem).",
+        group="stance",
+    ),
+    MetricSpec(
+        "ski_wedge_angle",
+        "deg",
+        ("A", "T"),
+        "high",
+        "none",
+        _req("lateral", _ANKLES + _FEET),
+        "Board tip-to-tail wedge when ski detection succeeds; else unknown.",
+        group="stance",
+    ),
+    MetricSpec(
+        "ski_parallelism",
+        "ratio",
+        ("A",),
+        "high",
+        "none",
+        _req("lateral", _ANKLES + _FEET),
+        "1 - normalized ski wedge (1 = parallel boards).",
         group="stance",
     ),
     MetricSpec(
@@ -1102,6 +1124,71 @@ def _zero_cross_rate(series: np.ndarray, fps_effective: float) -> float | None:
     return 0.5 * crosses / span_s
 
 
+def _angle_between_vec_arrays(
+    v_left: np.ndarray,
+    v_right: np.ndarray,
+) -> np.ndarray:
+    """Unsigned angle in degrees between paired 2D vectors (n, 2)."""
+    nl = _norm(v_left)
+    nr = _norm(v_right)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        cos_theta = (
+            v_left[:, 0] * v_right[:, 0] + v_left[:, 1] * v_right[:, 1]
+        ) / (nl * nr)
+    cos_theta = np.where((nl < 1e-6) | (nr < 1e-6), np.nan, cos_theta)
+    return np.degrees(np.arccos(np.clip(cos_theta, -1.0, 1.0)))
+
+
+def _wedge_foot_weight(azimuth_deg: float | None) -> float:
+    """Down-weight foot-index wedge as the view moves toward profile (P1a interim)."""
+    if azimuth_deg is None:
+        return 0.34
+    az = float(azimuth_deg)
+    if az >= SAGITTAL_MAX_AZIMUTH_DEG:
+        return 0.0
+    if az <= LATERAL_MIN_AZIMUTH_DEG:
+        return 0.40
+    span = SAGITTAL_MAX_AZIMUTH_DEG - LATERAL_MIN_AZIMUTH_DEG
+    t = (az - LATERAL_MIN_AZIMUTH_DEG) / span
+    return float(0.40 * (1.0 - t))
+
+
+def _composite_wedge_angle(
+    foot_wedge: np.ndarray,
+    shin_wedge: np.ndarray,
+    thigh_wedge: np.ndarray,
+    *,
+    azimuth_deg: float | None,
+) -> np.ndarray:
+    """Weighted median proxy until ``ski_wedge_angle`` replaces foot-index (P1a)."""
+    if not np.any(np.isfinite(foot_wedge)):
+        return np.full(foot_wedge.shape, np.nan, dtype=np.float64)
+    w_foot = _wedge_foot_weight(azimuth_deg)
+    w_remain = 1.0 - w_foot
+    w_shin = w_remain * 0.55
+    w_thigh = w_remain * 0.45
+    stack = np.stack([foot_wedge, shin_wedge, thigh_wedge], axis=0)
+    weights = np.array([w_foot, w_shin, w_thigh], dtype=np.float64)
+    weights = weights / max(float(weights.sum()), 1e-6)
+    out = np.full(foot_wedge.shape, np.nan, dtype=np.float64)
+    for i in range(foot_wedge.shape[0]):
+        vals = stack[:, i]
+        wts = weights.copy()
+        mask = np.isfinite(vals)
+        if not np.any(mask):
+            continue
+        vals = vals[mask]
+        wts = wts[mask]
+        wts = wts / wts.sum()
+        order = np.argsort(vals)
+        vals = vals[order]
+        wts = wts[order]
+        cum = np.cumsum(wts)
+        idx = int(np.searchsorted(cum, 0.5))
+        out[i] = vals[min(idx, len(vals) - 1)]
+    return out
+
+
 # ---------------------------------------------------------------------------
 # per-frame series
 # ---------------------------------------------------------------------------
@@ -1119,6 +1206,7 @@ class FrameSeries:
     forward_source: str
     stance_width: np.ndarray
     wedge_deg: np.ndarray
+    wedge_foot_deg: np.ndarray
     shin_deg: dict[str, np.ndarray]
     hip_over_foot: dict[str, np.ndarray]
     valgus: dict[str, np.ndarray]
@@ -1285,9 +1373,9 @@ def build_series(
     Formulas, with the assumption for each invented one stated inline:
 
     * ``stance_width`` - horizontal ankle separation over leg length (§3.2).
-    * ``wedge_angle`` - unsigned angle between the two ankle-to-foot_index
-      vectors. Uncorrected for perspective; reliability carries the view
-      penalty.
+    * ``wedge_angle`` - composite of foot-index, shin and thigh wedge proxies
+      (P1a interim). Foot weight falls toward zero in profile view; replaced
+      by ``ski_wedge_angle`` when board detection is available.
     * ``shin_angle_fore_aft`` - signed angle of ankle-to-knee from image
       vertical, multiplied by the travel-direction sign so positive means the
       knee is ahead of the foot.
@@ -1337,13 +1425,19 @@ def build_series(
 
     foot_l = arrays.point(L_FOOT) - arrays.point(L_ANKLE)
     foot_r = arrays.point(R_FOOT) - arrays.point(R_ANKLE)
-    nl, nr = _norm(foot_l), _norm(foot_r)
-    with np.errstate(invalid="ignore", divide="ignore"):
-        cos_wedge = (
-            foot_l[:, 0] * foot_r[:, 0] + foot_l[:, 1] * foot_r[:, 1]
-        ) / (nl * nr)
-    cos_wedge = np.where((nl < 1e-6) | (nr < 1e-6), np.nan, cos_wedge)
-    wedge = np.degrees(np.arccos(np.clip(cos_wedge, -1.0, 1.0)))
+    wedge_foot = _angle_between_vec_arrays(foot_l, foot_r)
+    shin_l = arrays.point(L_KNEE) - arrays.point(L_ANKLE)
+    shin_r = arrays.point(R_KNEE) - arrays.point(R_ANKLE)
+    wedge_shin = _angle_between_vec_arrays(shin_l, shin_r)
+    thigh_l = arrays.point(L_HIP) - arrays.point(L_KNEE)
+    thigh_r = arrays.point(R_HIP) - arrays.point(R_KNEE)
+    wedge_thigh = _angle_between_vec_arrays(thigh_l, thigh_r)
+    wedge = _composite_wedge_angle(
+        wedge_foot,
+        wedge_shin,
+        wedge_thigh,
+        azimuth_deg=view.azimuth_deg,
+    )
 
     sin_az = (
         float(np.sin(np.radians(max(view.azimuth_deg, LATERAL_MIN_AZIMUTH_DEG))))
@@ -1458,6 +1552,7 @@ def build_series(
         forward_source=forward_source,
         stance_width=np.asarray(stance, dtype=np.float64),
         wedge_deg=wedge,
+        wedge_foot_deg=wedge_foot,
         shin_deg=shin,
         hip_over_foot=hof,
         valgus=valgus,
@@ -1480,6 +1575,12 @@ def build_series(
 # ---------------------------------------------------------------------------
 
 
+#: Turn-frequency metrics that follow-cam invalidates unless compensated (§2.2).
+_CAMERA_FOLLOW_SENSITIVE = frozenset(
+    {"turn_rate", "turn_amplitude", "turn_shape_index", "turn_duration_var"}
+)
+
+
 class _Builder:
     """Assembles :class:`MetricValue` objects with consistent gating."""
 
@@ -1491,6 +1592,8 @@ class _Builder:
         turns: list[Turn],
         forward_source: str,
         missing_landmarks: frozenset[int] = frozenset(),
+        camera_motion: str = "static",
+        steering_compensated: bool = False,
     ) -> None:
         self.view = view
         self.athlete = athlete
@@ -1499,6 +1602,18 @@ class _Builder:
         self.forward_source = forward_source
         #: Indices with no finite coordinate anywhere in the clip.
         self.missing_landmarks = missing_landmarks
+        self.camera_motion = camera_motion
+        self.steering_compensated = steering_compensated
+
+    def camera_follow_blocks(self, spec: MetricSpec) -> MetricValue | None:
+        if (
+            not self.turns
+            or self.camera_motion != "follow"
+            or self.steering_compensated
+            or spec.id not in _CAMERA_FOLLOW_SENSITIVE
+        ):
+            return None
+        return self.unknown(spec, REASON_CAMERA_FOLLOW_UNRELIABLE)
 
     # -- reliability ----------------------------------------------------
     def reliability(self, spec: MetricSpec, samples: int) -> float:
@@ -1740,6 +1855,7 @@ def _stance_and_balance(
         aggregate=_iqr,
     )
     _add_frame_metric(out, builder, BY_ID["wedge_angle"], series.wedge_deg, t_ms, turns)
+    _ski_board_metrics(out, builder)
 
     spec = BY_ID["shin_angle_fore_aft"]
     for side in SIDES:
@@ -1811,6 +1927,24 @@ def _stance_and_balance(
             per_turn=per_turn,
             evidence_ms=turns[0].t_start_ms if turns else None,
         )
+
+
+def _ski_board_metrics(
+    out: dict[str, MetricValue],
+    builder: _Builder,
+) -> None:
+    wedge_spec = BY_ID["ski_wedge_angle"]
+    parallel_spec = BY_ID["ski_parallelism"]
+    wedge_blocked = builder.blocked(wedge_spec)
+    if wedge_blocked is not None:
+        out[wedge_spec.id] = wedge_blocked
+        parallel_blocked = builder.blocked(parallel_spec)
+        out[parallel_spec.id] = parallel_blocked or wedge_blocked
+        return
+    out[wedge_spec.id] = builder.unknown(wedge_spec, REASON_SKI_DETECT_UNAVAILABLE)
+    out[parallel_spec.id] = builder.unknown(
+        parallel_spec, REASON_SKI_DETECT_UNAVAILABLE
+    )
 
 
 def _travel_ratio(values: np.ndarray, scale: BodyScale) -> float | None:
@@ -1935,7 +2069,7 @@ def _rhythm(
     t_ms = series.t_ms
 
     spec = BY_ID["turn_rate"]
-    blocked = builder.blocked(spec)
+    blocked = builder.camera_follow_blocks(spec) or builder.blocked(spec)
     if blocked is not None:
         out[spec.id] = blocked
     else:
@@ -1951,7 +2085,7 @@ def _rhythm(
             )
 
     spec = BY_ID["turn_duration_var"]
-    blocked = builder.blocked(spec)
+    blocked = builder.camera_follow_blocks(spec) or builder.blocked(spec)
     if blocked is not None:
         out[spec.id] = blocked
     else:
@@ -1966,7 +2100,7 @@ def _rhythm(
             )
 
     spec = BY_ID["turn_amplitude"]
-    blocked = builder.blocked(spec)
+    blocked = builder.camera_follow_blocks(spec) or builder.blocked(spec)
     if blocked is not None:
         out[spec.id] = blocked
     else:
@@ -1981,7 +2115,7 @@ def _rhythm(
 
     shape = _turn_shape_index(signal, turns)
     spec = BY_ID["turn_shape_index"]
-    blocked = builder.blocked(spec)
+    blocked = builder.camera_follow_blocks(spec) or builder.blocked(spec)
     if blocked is not None:
         out[spec.id] = blocked
     else:
@@ -2218,7 +2352,7 @@ def _fault_counts(
             spec,
             turns,
             lambda turn: _median(
-                _window_values(series.wedge_deg, t_ms, turn.transition)
+                _window_values(series.wedge_foot_deg, t_ms, turn.transition)
             ),
             lambda value: value > STEM_WEDGE_DEG,
         )
@@ -2740,6 +2874,8 @@ def compute_metrics(
         turns=turns,
         forward_source=series.forward_source,
         missing_landmarks=_missing_landmarks(arrays),
+        camera_motion=camera_motion,
+        steering_compensated=signal.tangent_source == "compensated",
     )
     out: dict[str, MetricValue] = {}
     if scale.ok:

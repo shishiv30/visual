@@ -22,22 +22,28 @@ def prefs_path() -> Path:
     return app_data_root() / "ui.json"
 
 
-def load_language() -> str:
-    path = prefs_path()
+def _load_prefs_dict(path: Path) -> dict:
     if path.is_file():
         try:
             data = json.loads(path.read_text(encoding="utf-8"))
             if isinstance(data, dict):
-                raw = data.get(LANG_KEY) or data.get(LEGACY_LANG_KEY)
-                if raw:
-                    return normalize_lang(str(raw))
+                return data
         except (OSError, ValueError, json.JSONDecodeError):
             pass
+    return {}
+
+
+def load_language() -> str:
+    data = _load_prefs_dict(prefs_path())
+    raw = data.get(LANG_KEY) or data.get(LEGACY_LANG_KEY)
+    if raw:
+        return normalize_lang(str(raw))
     return detect_system_language()
 
 
 def save_language(code: str) -> None:
     path = prefs_path()
     path.parent.mkdir(parents=True, exist_ok=True)
-    payload = {LANG_KEY: normalize_lang(code)}
-    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    data = _load_prefs_dict(path)
+    data[LANG_KEY] = normalize_lang(code)
+    path.write_text(json.dumps(data, indent=2), encoding="utf-8")

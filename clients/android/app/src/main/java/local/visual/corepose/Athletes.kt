@@ -31,6 +31,29 @@ data class AthleteProfile(
     val skiCm: Float,
     val updatedAt: String = "",
 ) {
+    /** Curriculum age-band id, or null when birthday is missing/unparseable. */
+    val ageBand: String?
+        get() {
+            val years = ageYears() ?: return null
+            return when {
+                years < 7 -> "age-3-6"
+                years < 13 -> "age-7-12"
+                years < 18 -> "age-13-17"
+                else -> "age-18-plus"
+            }
+        }
+
+    fun ageYears(): Double? {
+        if (birthday.length < 4) return null
+        return try {
+            val year = birthday.take(4).toInt()
+            val nowYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR)
+            (nowYear - year).toDouble().takeIf { it in 1.0..100.0 }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
     fun toJson(): JSONObject {
         return JSONObject()
             .put("key", key)

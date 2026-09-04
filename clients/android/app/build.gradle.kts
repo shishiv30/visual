@@ -76,20 +76,35 @@ val copyLocaleCatalog by tasks.registering(Copy::class) {
     into(generatedAssets)
 }
 
-val curriculumSrc = repoRoot.resolve("content/ski/curriculum.v2.json")
+val curriculumSrc = repoRoot.resolve("content/ski/curriculum.v3.json")
 val copyCurriculum by tasks.registering(Copy::class) {
     doFirst {
         if (!curriculumSrc.isFile) {
             throw GradleException("Missing $curriculumSrc")
         }
+        // Drop legacy v2 asset so the APK only ships the shared desktop curriculum.
+        generatedAssets.get().asFile.resolve("curriculum.v2.json").delete()
     }
     from(curriculumSrc)
     into(generatedAssets)
 }
 
+val knowledgeSrc = repoRoot.resolve("content/ski/knowledge")
+val copyKnowledge by tasks.registering(Copy::class) {
+    doFirst {
+        if (!knowledgeSrc.isDirectory) {
+            throw GradleException("Missing $knowledgeSrc")
+        }
+    }
+    from(knowledgeSrc) {
+        include("*.json")
+    }
+    into(generatedAssets.map { it.dir("knowledge") })
+}
+
 afterEvaluate {
     tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
-        dependsOn(copyPoseModel, copyLocaleCatalog, copyCurriculum)
+        dependsOn(copyPoseModel, copyLocaleCatalog, copyCurriculum, copyKnowledge)
     }
 }
 

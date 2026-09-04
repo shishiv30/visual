@@ -1,0 +1,163 @@
+{
+  "status": "ok",
+  "generated_at": "2026-08-31T20:58:12.487076+00:00",
+  "clip_id": "b97c92dd-3720-457b-94ef-df8d2b46c96a",
+  "model_path": "D:\\AI\\visual\\models\\ski\\segment.onnx",
+  "frames_evaluated": 30,
+  "ok_count": 1,
+  "ok_fraction": 0.0333,
+  "previous_ok_fraction": null,
+  "improved_vs_previous": null,
+  "frames": [
+    {
+      "frame": "frame_000000.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000069.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000138.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000206.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000275.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000344.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000413.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000482.png",
+      "detect_ok": false,
+      "confidence": 0.25
+    },
+    {
+      "frame": "frame_000551.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000619.png",
+      "detect_ok": false,
+      "confidence": 0.25
+    },
+    {
+      "frame": "frame_000688.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000757.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000826.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000895.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_000964.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001032.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001101.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001170.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001239.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001308.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001377.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001445.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001514.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001583.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001652.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001721.png",
+      "detect_ok": true,
+      "confidence": 0.9087
+    },
+    {
+      "frame": "frame_001790.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001858.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001927.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    },
+    {
+      "frame": "frame_001996.png",
+      "detect_ok": false,
+      "confidence": 0.0
+    }
+  ]
+}

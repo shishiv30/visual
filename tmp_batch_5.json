@@ -1,0 +1,402 @@
+[
+  {
+    "en": "Stay parallel or inclination becomes banking.",
+    "zh": "站距保持平行，否则倾会变成内倒。"
+  },
+  {
+    "en": "Steep/hard suggestion for fall-line moguls only; still not measured.",
+    "zh": "仅在雪包落差线课使用的陡/难建议，仍非实测。"
+  },
+  {
+    "en": "Steeper groomed red run; for medium and short carve heuristics.",
+    "zh": "更陡的平整红道；适合中小弯刻滑经验课。"
+  },
+  {
+    "en": "Steeps",
+    "zh": "陡坡"
+  },
+  {
+    "en": "Stem",
+    "zh": "外八字"
+  },
+  {
+    "en": "Stemmed transitions",
+    "zh": "换刃时出现外八字"
+  },
+  {
+    "en": "Stop",
+    "zh": "停止"
+  },
+  {
+    "en": "Straight-run a soft slope and bounce six times, then link the bounces into turns.",
+    "zh": "在松软坡面上直滑并起伏六次，再把起伏连成转弯。"
+  },
+  {
+    "en": "Strong",
+    "zh": "优秀"
+  },
+  {
+    "en": "Suggested black run; slope is not measured.",
+    "zh": "建议黑道；坡度未经实测。"
+  },
+  {
+    "en": "Suggested blue run; slope is not measured.",
+    "zh": "建议蓝道；坡度未经实测。"
+  },
+  {
+    "en": "Suggested green run; slope is not measured.",
+    "zh": "建议绿道；坡度未经实测。"
+  },
+  {
+    "en": "Suggested mogul field; bump shape is not measured.",
+    "zh": "雪包场地建议，非包型实测。"
+  },
+  {
+    "en": "Suggested off-piste inside the resort boundary; snow depth is not measured.",
+    "zh": "建议雪场界内的野雪区域；雪深不做测量。"
+  },
+  {
+    "en": "Suggested park terrain; this app does not score air.",
+    "zh": "公园建议场地，本 App 不评空中。"
+  },
+  {
+    "en": "Suggested red run; slope is not measured.",
+    "zh": "建议红道；坡度未经实测。"
+  },
+  {
+    "en": "Suggested trail rating",
+    "zh": "建议雪道级别"
+  },
+  {
+    "en": "Suggested: {snow} / {terrain}",
+    "zh": "建议：{snow} / {terrain}"
+  },
+  {
+    "en": "Summary",
+    "zh": "总结"
+  },
+  {
+    "en": "Switch alpine",
+    "zh": "倒滑双板"
+  },
+  {
+    "en": "Symptom",
+    "zh": "表现"
+  },
+  {
+    "en": "Tactic",
+    "zh": "策略"
+  },
+  {
+    "en": "Tech: skeleton criteria (from knowledge base)",
+    "zh": "技术专家：骨骼判定（知识库）"
+  },
+  {
+    "en": "Ten linked parallel turns on a blue run, counting one-two through every turn.",
+    "zh": "在中级道上做十个连贯的平行式转弯，每个转弯数“一—二”。"
+  },
+  {
+    "en": "Ten short turns on a blue run; quiet shoulders, hands low.",
+    "zh": "蓝道平整处 10 个短弯一组，肩静手低。"
+  },
+  {
+    "en": "Terrain",
+    "zh": "地形"
+  },
+  {
+    "en": "Terrain and venue",
+    "zh": "地形与场地"
+  },
+  {
+    "en": "Terrain needed",
+    "zh": "所需地形"
+  },
+  {
+    "en": "Terrain, slope and snow are optional — set Terrain to Mogul run for mogul detection.",
+    "zh": "地形、坡度与雪况为可选项——需检测雪包滑行时请将地形设为「雪包道」。"
+  },
+  {
+    "en": "Terrain park",
+    "zh": "技巧公园"
+  },
+  {
+    "en": "Groomed piste",
+    "zh": "压雪道"
+  },
+  {
+    "en": "Mogul run",
+    "zh": "雪包道"
+  },
+  {
+    "en": "Test it",
+    "zh": "自测方法"
+  },
+  {
+    "en": "The allowance is {n}",
+    "zh": "允许上限为 {n} 个"
+  },
+  {
+    "en": "The camera follows the skier, so turn rhythm is measured from the body rather than the track.",
+    "zh": "镜头跟着滑者移动，转弯节奏只能从身体判断，不能从轨迹判断。"
+  },
+  {
+    "en": "The camera pans during the clip; a fixed camera measures rhythm more reliably.",
+    "zh": "拍摄过程中镜头有摇动；固定机位测节奏更可靠。"
+  },
+  {
+    "en": "The clip is too short to judge rhythm. Film a whole run of at least eight turns.",
+    "zh": "本段太短，无法判断节奏。请拍完整一趟、至少八个转弯。"
+  },
+  {
+    "en": "The question to answer",
+    "zh": "要回答的问题"
+  },
+  {
+    "en": "The shoulders keep facing down the pitch while the legs turn underneath.",
+    "zh": "双腿在身体下方转弯，肩线始终朝向坡下。"
+  },
+  {
+    "en": "The shoulders stay square to the fall line while the skis slip.",
+    "zh": "雪板侧滑时，肩线始终正对落差线。"
+  },
+  {
+    "en": "The skeleton is weak in this clip: get closer, keep the skier unoccluded, and avoid flat light.",
+    "zh": "本段骨骼质量差：请靠近一些拍，避免遮挡和平光。"
+  },
+  {
+    "en": "The skeleton was too small or incomplete to measure.",
+    "zh": "骨骼太小或不完整，无法测量。"
+  },
+  {
+    "en": "The {joints} could not be tracked in this clip.",
+    "zh": "本段视频中无法追踪到{joints}。"
+  },
+  {
+    "en": "This clip is still processing. Play it when it is done.",
+    "zh": "该条目仍在处理中，完成后才可播放。"
+  },
+  {
+    "en": "Three-quarter view",
+    "zh": "四分之三视角"
+  },
+  {
+    "en": "Throwing the shoulders wrecks inclination.",
+    "zh": "甩肩会破坏内倾。"
+  },
+  {
+    "en": "TikTok",
+    "zh": "TikTok"
+  },
+  {
+    "en": "Tip the body into the turn (hips inside the arc). Heuristic only — not a measured edge angle or FIS score.",
+    "zh": "向弯心倾斜身体（髋在弧内）。仅为经验估分——非实测刃角或 FIS 得分。"
+  },
+  {
+    "en": "Tips close, tails open, stance wider than the hips.",
+    "zh": "板头近、板尾开，站距宽于髋。"
+  },
+  {
+    "en": "Torso downhill",
+    "zh": "上身对山下"
+  },
+  {
+    "en": "Torso faces downhill",
+    "zh": "上身朝向山下"
+  },
+  {
+    "en": "Train {name}.",
+    "zh": "重点训练{name}。"
+  },
+  {
+    "en": "Train {name}: the standard is {standard}.",
+    "zh": "重点训练{name}：标准是{standard}。"
+  },
+  {
+    "en": "Training emphasis",
+    "zh": "训练重点"
+  },
+  {
+    "en": "Training venue",
+    "zh": "训练场地"
+  },
+  {
+    "en": "Trim video (max 2 minutes)",
+    "zh": "剪切视频（最长 2 分钟）"
+  },
+  {
+    "en": "Trough fall-line rhythm",
+    "zh": "沟底落差线节奏"
+  },
+  {
+    "en": "Turn amplitude",
+    "zh": "转弯幅度"
+  },
+  {
+    "en": "Turn durations stay close to each other; no long traverse between turns.",
+    "zh": "每个转弯的用时接近一致；转弯之间不夹长横切。"
+  },
+  {
+    "en": "Turn faults",
+    "zh": "转弯问题"
+  },
+  {
+    "en": "Turn instead of side-slipping the pitch",
+    "zh": "用转弯而不是横滑下坡"
+  },
+  {
+    "en": "Turn rate",
+    "zh": "转弯频率"
+  },
+  {
+    "en": "Turn shape",
+    "zh": "转弯弧形"
+  },
+  {
+    "en": "Turn-by-turn",
+    "zh": "逐弯分析"
+  },
+  {
+    "en": "Turns detected",
+    "zh": "检测到的转弯"
+  },
+  {
+    "en": "Turns led by the shoulders",
+    "zh": "用肩带转"
+  },
+  {
+    "en": "Two-footed powder bounce",
+    "zh": "粉雪双脚起伏"
+  },
+  {
+    "en": "Two-footed, rounder turns in soft snow; flex and extend to make the skis surface.",
+    "zh": "在松软雪中双脚均匀受力、转弯更圆；靠蹲伸让雪板浮起来。"
+  },
+  {
+    "en": "Unknown",
+    "zh": "未知"
+  },
+  {
+    "en": "Undo label point",
+    "zh": "撤销标注点"
+  },
+  {
+    "en": "Unlike",
+    "zh": "Unlike"
+  },
+  {
+    "en": "Unscored when the head is not visible in 2D pose.",
+    "zh": "2D 头关键点不可靠则不计分。"
+  },
+  {
+    "en": "Unspecified",
+    "zh": "未指定"
+  },
+  {
+    "en": "Unstable camera, occlusion, or out-of-scope terrain: no stage claim.",
+    "zh": "镜头不稳、遮挡或非本课程种类时不判定阶段。"
+  },
+  {
+    "en": "Unsupported file type.",
+    "zh": "不支持的文件类型。"
+  },
+  {
+    "en": "Up-and-down movement",
+    "zh": "上下起伏"
+  },
+  {
+    "en": "Uploading and loading…",
+    "zh": "正在导入视频…"
+  },
+  {
+    "en": "Upper body down the fall line",
+    "zh": "上身朝向落差线"
+  },
+  {
+    "en": "Upper-body rotation",
+    "zh": "上身旋转"
+  },
+  {
+    "en": "Upper-lower separation",
+    "zh": "上下分离"
+  },
+  {
+    "en": "Usable frames",
+    "zh": "可用帧"
+  },
+  {
+    "en": "View",
+    "zh": "拍摄视角"
+  },
+  {
+    "en": "View angle {deg:.0f}°",
+    "zh": "视角 {deg:.0f}°"
+  },
+  {
+    "en": "Visual Pose",
+    "zh": "Visual Pose"
+  },
+  {
+    "en": "Visual Pose — Windows",
+    "zh": "Visual Pose — Windows"
+  },
+  {
+    "en": "Warning",
+    "zh": "警告"
+  },
+  {
+    "en": "Weakest checkpoint",
+    "zh": "最弱要点"
+  },
+  {
+    "en": "Wedge angle",
+    "zh": "犁式角度"
+  },
+  {
+    "en": "Wedge christie",
+    "zh": "半犁式滑雪"
+  },
+  {
+    "en": "Wedge glide",
+    "zh": "犁式直滑"
+  },
+  {
+    "en": "Wedge stance",
+    "zh": "犁式站距"
+  },
+  {
+    "en": "Wedge through the turn",
+    "zh": "弯中保持犁"
+  },
+  {
+    "en": "Wedge to start, close the inside ski to finish.",
+    "zh": "入弯犁、出弯收内侧板。"
+  },
+  {
+    "en": "Wedge to start, gradually match at the finish; do not snap shut.",
+    "zh": "入弯犁、出弯逐渐并板，禁止突然并死。"
+  },
+  {
+    "en": "Wedge turns",
+    "zh": "犁式转弯"
+  },
+  {
+    "en": "Wedge-glide on a green run, then open the tails and edge to a stop.",
+    "zh": "绿道犁式直滑，匀速后再推开板尾立刃停下。"
+  },
+  {
+    "en": "Weibo",
+    "zh": "微博"
+  },
+  {
+    "en": "Weight",
+    "zh": "体重"
+  },
+  {
+    "en": "What the clip itself could tell us",
+    "zh": "这段视频本身能告诉我们什么"
+  },
+  {
+    "en": "Why",
+    "zh": "原因"
+  }
+]

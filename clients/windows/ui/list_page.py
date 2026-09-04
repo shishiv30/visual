@@ -283,6 +283,25 @@ class ListPage(QWidget):
         status_row.setContentsMargins(0, 0, 0, 0)
         status_row.addWidget(spinner)
         status_row.addWidget(st)
+        if (
+            has_report
+            and report is not None
+            and report.classification is not None
+            and report.classification.ambiguous
+            and report.classification.candidates
+        ):
+            cands = sorted(
+                report.classification.candidates,
+                key=lambda c: float(c.score),
+                reverse=True,
+            )[:2]
+            names = [c.stage_name or c.stage_id for c in cands]
+            stage_chip = QLabel(f"{t('Possible stage')}: {' · '.join(names)}")
+            stage_chip.setObjectName("statusChip")
+            stage_chip.setProperty("kind", "info")
+            stage_chip.style().unpolish(stage_chip)
+            stage_chip.style().polish(stage_chip)
+            status_row.addWidget(stage_chip)
         status_row.addStretch()
         col.addLayout(status_row)
         header = QHBoxLayout()

@@ -24,11 +24,40 @@ data class CheckpointSpec(
     val id: String,
     val name: LocText,
     val desc: LocText,
+    val body: List<String> = emptyList(),
     val required: Boolean,
-    val signal: String,
+    /** v2 / many v3 rows: whole-clip signal name. */
+    val signal: String? = null,
+    /** v3 metric-backed gates. */
+    val metric: String? = null,
     val threshold: Threshold,
     val heuristicNotFisCarve: Boolean,
     val drills: List<String>,
+)
+
+data class Prerequisites(
+    val levels: List<String> = emptyList(),
+    val checkpoints: List<String> = emptyList(),
+)
+
+data class ProfileNote(
+    val id: String,
+    val status: String,
+    val note: LocText? = null,
+)
+
+data class KbRefs(
+    val tutorial: String? = null,
+    val drills: List<String> = emptyList(),
+    val faults: List<String> = emptyList(),
+    val venue: String? = null,
+    val equipment: String? = null,
+)
+
+data class ExclusionRule(
+    val whenMetrics: Map<String, Double>,
+    val rejectLevels: List<String>,
+    val reason: String,
 )
 
 data class LevelSpec(
@@ -43,6 +72,14 @@ data class LevelSpec(
     val sessionDrills: List<String>,
     val terrain: String,
     val venueIds: List<String>,
+    val kbStage: String = "",
+    val tier: String? = null,
+    val requiresScene: List<String> = emptyList(),
+    val coreMetrics: List<String> = emptyList(),
+    val gateMetrics: List<String> = emptyList(),
+    val prerequisites: Prerequisites = Prerequisites(),
+    val profileNotes: List<ProfileNote> = emptyList(),
+    val kbRefs: KbRefs = KbRefs(),
 )
 
 data class TerrainSpec(
@@ -71,11 +108,21 @@ data class Curriculum(
     val drills: Map<String, DrillSpec>,
     val checkpoints: Map<String, CheckpointSpec>,
     val levels: Map<String, LevelSpec>,
+    val levelIds: List<String> = emptyList(),
+    val catalogLevelIds: List<String> = emptyList(),
+    val exclusionRules: List<ExclusionRule> = emptyList(),
 )
 
 object CurriculumLoader {
+    const val ASSET_NAME = "curriculum.v3.json"
+    const val REQUIRED_SCHEMA = "3.0.0"
+
     fun load(json: String): Curriculum {
         val root = JSONObject(json)
+        val schema = root.getString("schema_version")
+        if (schema != REQUIRED_SCHEMA) {
+            throw IllegalArgumentException("Expected curriculum schema $REQUIRED_SCHEMA, got $schema")
+        }
         val categories = HashMap<String, LocText>()
         val catObj = root.getJSONObject("categories")
         val catKeys = catObj.keys()
@@ -130,12 +177,16 @@ object CurriculumLoader {
             val key = cpKeys.next()
             val item = cpObj.getJSONObject(key)
             val thr = item.getJSONObject("threshold")
+            val signal = if (item.isNull("signal")) null else item.optString("signal").ifBlank { null }
+            val metric = if (item.isNull("metric")) null else item.optString("metric").ifBlank { null }
             checkpoints[key] = CheckpointSpec(
                 id = item.optString("id", key),
                 name = loc(item.getJSONObject("name")),
                 desc = loc(item.getJSONObject("desc")),
+                body = strList(item.optJSONArray("body")),
                 required = item.optBoolean("required", true),
-                signal = item.getString("signal"),
+                signal = signal,
+                metric = metric,
                 threshold = Threshold(
                     op = thr.getString("op"),
                     value = thr.getDouble("value"),
@@ -151,6 +202,22 @@ object CurriculumLoader {
         while (lvKeys.hasNext()) {
             val key = lvKeys.next()
             val item = lvObj.getJSONObject(key)
+            val prereqObj = item.optJSONObject("prerequisites")
+            val kbObj = item.optJSONObject("kb_refs")
+            val notesArr = item.optJSONArray("profile_notes")
+            val notes = ArrayList<ProfileNote>()
+            if (notesArr != null) {
+                for (i in 0 until notesArr.length()) {
+                    val n = notesArr.optJSONObject(i) ?: continue
+                    notes.add(
+                        ProfileNote(
+                            id = n.optString("id"),
+                            status = n.optString("status"),
+                            note = n.optJSONObject("note")?.let { loc(it) },
+                        ),
+                    )
+                }
+            }
             levels[key] = LevelSpec(
                 id = item.optString("id", key),
                 categoryId = item.getString("category_id"),
@@ -163,10 +230,48 @@ object CurriculumLoader {
                 sessionDrills = strList(item.optJSONArray("session_drills")),
                 terrain = item.optString("terrain", "green"),
                 venueIds = strList(item.optJSONArray("venue_ids")),
+                kbStage = item.optString("kb_stage"),
+                tier = item.optString("tier").ifBlank { null },
+                requiresScene = strList(item.optJSONArray("requires_scene")),
+                coreMetrics = strList(item.optJSONArray("core_metrics")),
+                gateMetrics = strList(item.optJSONArray("gate_metrics")),
+                prerequisites = Prerequisites(
+                    levels = strList(prereqObj?.optJSONArray("levels")),
+                    checkpoints = strList(prereqObj?.optJSONArray("checkpoints")),
+                ),
+                profileNotes = notes,
+                kbRefs = KbRefs(
+                    tutorial = kbObj?.optString("tutorial")?.ifBlank { null },
+                    drills = strList(kbObj?.optJSONArray("drills")),
+                    faults = strList(kbObj?.optJSONArray("faults")),
+                    venue = kbObj?.optString("venue")?.ifBlank { null },
+                    equipment = kbObj?.optString("equipment")?.ifBlank { null },
+                ),
             )
         }
+        val exclusion = ArrayList<ExclusionRule>()
+        val exArr = root.optJSONArray("exclusion_rules")
+        if (exArr != null) {
+            for (i in 0 until exArr.length()) {
+                val item = exArr.optJSONObject(i) ?: continue
+                val whenObj = item.optJSONObject("when") ?: continue
+                val whenMap = HashMap<String, Double>()
+                val wk = whenObj.keys()
+                while (wk.hasNext()) {
+                    val k = wk.next()
+                    whenMap[k] = whenObj.getDouble(k)
+                }
+                exclusion.add(
+                    ExclusionRule(
+                        whenMetrics = whenMap,
+                        rejectLevels = strList(item.optJSONArray("reject_levels")),
+                        reason = item.optString("reason"),
+                    ),
+                )
+            }
+        }
         return Curriculum(
-            schemaVersion = root.getString("schema_version"),
+            schemaVersion = schema,
             disclaimer = loc(root.getJSONObject("disclaimer")),
             passScore = root.optDouble("pass_score", 75.0),
             checkpointPass = root.optDouble("checkpoint_pass", 60.0),
@@ -177,13 +282,16 @@ object CurriculumLoader {
             drills = drills,
             checkpoints = checkpoints,
             levels = levels,
+            levelIds = strList(root.optJSONArray("level_ids")),
+            catalogLevelIds = strList(root.optJSONArray("catalog_level_ids")),
+            exclusionRules = exclusion,
         )
     }
 
     fun loadFile(file: File): Curriculum = load(file.readText(Charsets.UTF_8))
 
     fun loadFromAssets(context: Context): Curriculum {
-        return context.assets.open("curriculum.v2.json").bufferedReader().use { load(it.readText()) }
+        return context.assets.open(ASSET_NAME).bufferedReader().use { load(it.readText()) }
     }
 
     fun locText(item: LocText, lang: String): String {

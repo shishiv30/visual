@@ -19,6 +19,8 @@ SCORED_METRICS = {
     "stance_width",
     "stance_width_var",
     "wedge_angle",
+    "ski_wedge_angle",
+    "ski_parallelism",
     "shin_angle_fore_aft",
     "hip_over_foot",
     "com_vertical_travel",
@@ -235,11 +237,12 @@ STAGE_METRICS: dict[str, tuple[list[str], list[str]]] = {
             "turn_rate",
             "turn_amplitude",
             "stance_width",
+            "wedge_angle",
             "separation_angle",
             "turn_shape_index",
             "asymmetry_index",
         ],
-        ["turn_rate", "turn_shape_index", "asymmetry_index"],
+        ["stance_width", "wedge_angle", "turn_rate", "turn_shape_index", "asymmetry_index"],
     ),
     "sideslip": (
         [
@@ -363,6 +366,16 @@ def test_v3_bundle_loads_and_expert_accepts() -> None:
     bundle = _bundle()
     assert bundle.schema_version == "3.0.0"
     assert accept_curriculum(bundle) == []
+
+
+def test_exclusion_rules_are_declared() -> None:
+    bundle = _bundle()
+    assert len(bundle.exclusion_rules) >= 1
+    rule = bundle.exclusion_rules[0]
+    assert rule.reason == "parallel_stance_detected"
+    assert "pizza" in rule.reject_levels
+    assert "stance_width_lte" in rule.when
+    assert "wedge_angle_lte" in rule.when
 
 
 def test_metric_catalog_matches_design_doc() -> None:

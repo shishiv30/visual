@@ -1,0 +1,1327 @@
+{
+  "status": "ok",
+  "wseseg_dir": "data\\ski\\wseseg",
+  "classes": [
+    "flickr_ski_misc",
+    "yt_sports"
+  ],
+  "generated_at": "2026-08-31T19:51:37.664956+00:00",
+  "masks_evaluated": 200,
+  "masks_ok": 169,
+  "wedge_deg": {
+    "mean": 21.78,
+    "median": 12.12,
+    "stdev": 23.45,
+    "min": 0.07,
+    "max": 89.69
+  },
+  "samples": [
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00002.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00004.png",
+      "ok": true,
+      "wedge_deg": 24.27,
+      "parallelism": 0.191,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00008.png",
+      "ok": true,
+      "wedge_deg": 0.08,
+      "parallelism": 0.997,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00009.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00018.png",
+      "ok": true,
+      "wedge_deg": 10.15,
+      "parallelism": 0.662,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00019.png",
+      "ok": true,
+      "wedge_deg": 27.37,
+      "parallelism": 0.088,
+      "confidence": 0.248
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00028.png",
+      "ok": true,
+      "wedge_deg": 5.52,
+      "parallelism": 0.816,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00029.png",
+      "ok": true,
+      "wedge_deg": 31.73,
+      "parallelism": 0.0,
+      "confidence": 0.877
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00031.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00033.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00034.png",
+      "ok": true,
+      "wedge_deg": 20.26,
+      "parallelism": 0.325,
+      "confidence": 0.239
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00041.png",
+      "ok": true,
+      "wedge_deg": 5.93,
+      "parallelism": 0.802,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00044.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00045.png",
+      "ok": true,
+      "wedge_deg": 35.33,
+      "parallelism": 0.0,
+      "confidence": 0.586
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00051.png",
+      "ok": true,
+      "wedge_deg": 16.08,
+      "parallelism": 0.464,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00053.png",
+      "ok": true,
+      "wedge_deg": 12.81,
+      "parallelism": 0.573,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00054.png",
+      "ok": true,
+      "wedge_deg": 3.61,
+      "parallelism": 0.88,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00060.png",
+      "ok": true,
+      "wedge_deg": 20.54,
+      "parallelism": 0.315,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00069.png",
+      "ok": true,
+      "wedge_deg": 5.59,
+      "parallelism": 0.814,
+      "confidence": 0.081
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00079.png",
+      "ok": true,
+      "wedge_deg": 40.58,
+      "parallelism": 0.0,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00080.png",
+      "ok": true,
+      "wedge_deg": 21.88,
+      "parallelism": 0.271,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00081.png",
+      "ok": true,
+      "wedge_deg": 12.38,
+      "parallelism": 0.587,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00084.png",
+      "ok": true,
+      "wedge_deg": 3.68,
+      "parallelism": 0.877,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00088.png",
+      "ok": true,
+      "wedge_deg": 0.97,
+      "parallelism": 0.968,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00107.png",
+      "ok": true,
+      "wedge_deg": 19.51,
+      "parallelism": 0.35,
+      "confidence": 0.342
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00110.png",
+      "ok": true,
+      "wedge_deg": 1.79,
+      "parallelism": 0.94,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00114.png",
+      "ok": true,
+      "wedge_deg": 30.16,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00115.png",
+      "ok": true,
+      "wedge_deg": 35.59,
+      "parallelism": 0.0,
+      "confidence": 0.411
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00120.png",
+      "ok": true,
+      "wedge_deg": 4.01,
+      "parallelism": 0.866,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00125.png",
+      "ok": true,
+      "wedge_deg": 20.85,
+      "parallelism": 0.305,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00126.png",
+      "ok": true,
+      "wedge_deg": 23.29,
+      "parallelism": 0.224,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00134.png",
+      "ok": true,
+      "wedge_deg": 16.23,
+      "parallelism": 0.459,
+      "confidence": 0.7
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00137.png",
+      "ok": true,
+      "wedge_deg": 60.38,
+      "parallelism": 0.0,
+      "confidence": 0.316
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00140.png",
+      "ok": true,
+      "wedge_deg": 13.38,
+      "parallelism": 0.554,
+      "confidence": 0.562
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00155.png",
+      "ok": true,
+      "wedge_deg": 19.09,
+      "parallelism": 0.364,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00156.png",
+      "ok": true,
+      "wedge_deg": 17.04,
+      "parallelism": 0.432,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00161.png",
+      "ok": true,
+      "wedge_deg": 1.06,
+      "parallelism": 0.965,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00162.png",
+      "ok": true,
+      "wedge_deg": 14.9,
+      "parallelism": 0.503,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00163.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00164.png",
+      "ok": true,
+      "wedge_deg": 12.13,
+      "parallelism": 0.596,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00170.png",
+      "ok": true,
+      "wedge_deg": 40.75,
+      "parallelism": 0.0,
+      "confidence": 0.373
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00175.png",
+      "ok": true,
+      "wedge_deg": 62.62,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00179.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00184.png",
+      "ok": true,
+      "wedge_deg": 30.73,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00187.png",
+      "ok": true,
+      "wedge_deg": 3.16,
+      "parallelism": 0.895,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00191.png",
+      "ok": true,
+      "wedge_deg": 19.91,
+      "parallelism": 0.336,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00198.png",
+      "ok": true,
+      "wedge_deg": 4.57,
+      "parallelism": 0.848,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00201.png",
+      "ok": true,
+      "wedge_deg": 59.44,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00206.png",
+      "ok": true,
+      "wedge_deg": 11.67,
+      "parallelism": 0.611,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00220.png",
+      "ok": true,
+      "wedge_deg": 5.88,
+      "parallelism": 0.804,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00229.png",
+      "ok": true,
+      "wedge_deg": 1.24,
+      "parallelism": 0.959,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00230.png",
+      "ok": true,
+      "wedge_deg": 21.79,
+      "parallelism": 0.274,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00234.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00235.png",
+      "ok": true,
+      "wedge_deg": 7.84,
+      "parallelism": 0.739,
+      "confidence": 0.041
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00242.png",
+      "ok": true,
+      "wedge_deg": 67.89,
+      "parallelism": 0.0,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00243.png",
+      "ok": true,
+      "wedge_deg": 9.71,
+      "parallelism": 0.676,
+      "confidence": 0.854
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00252.png",
+      "ok": true,
+      "wedge_deg": 4.37,
+      "parallelism": 0.854,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00262.png",
+      "ok": true,
+      "wedge_deg": 18.44,
+      "parallelism": 0.385,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00264.png",
+      "ok": true,
+      "wedge_deg": 3.66,
+      "parallelism": 0.878,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00265.png",
+      "ok": true,
+      "wedge_deg": 42.55,
+      "parallelism": 0.0,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00273.png",
+      "ok": true,
+      "wedge_deg": 87.42,
+      "parallelism": 0.0,
+      "confidence": 0.231
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00280.png",
+      "ok": true,
+      "wedge_deg": 85.34,
+      "parallelism": 0.0,
+      "confidence": 0.656
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00296.png",
+      "ok": true,
+      "wedge_deg": 76.06,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00297.png",
+      "ok": true,
+      "wedge_deg": 3.51,
+      "parallelism": 0.883,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00305.png",
+      "ok": true,
+      "wedge_deg": 30.72,
+      "parallelism": 0.0,
+      "confidence": 0.377
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00310.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00317.png",
+      "ok": true,
+      "wedge_deg": 25.59,
+      "parallelism": 0.147,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00318.png",
+      "ok": true,
+      "wedge_deg": 20.71,
+      "parallelism": 0.31,
+      "confidence": 0.877
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00321.png",
+      "ok": true,
+      "wedge_deg": 42.66,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00324.png",
+      "ok": true,
+      "wedge_deg": 40.15,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00327.png",
+      "ok": true,
+      "wedge_deg": 71.76,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00332.png",
+      "ok": true,
+      "wedge_deg": 14.72,
+      "parallelism": 0.509,
+      "confidence": 0.27
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00335.png",
+      "ok": true,
+      "wedge_deg": 2.17,
+      "parallelism": 0.928,
+      "confidence": 0.911
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00340.png",
+      "ok": true,
+      "wedge_deg": 71.33,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00342.png",
+      "ok": true,
+      "wedge_deg": 10.79,
+      "parallelism": 0.64,
+      "confidence": 0.632
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00354.png",
+      "ok": true,
+      "wedge_deg": 16.02,
+      "parallelism": 0.466,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00355.png",
+      "ok": true,
+      "wedge_deg": 41.43,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00360.png",
+      "ok": true,
+      "wedge_deg": 0.07,
+      "parallelism": 0.998,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00361.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00362.png",
+      "ok": true,
+      "wedge_deg": 0.33,
+      "parallelism": 0.989,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00365.png",
+      "ok": true,
+      "wedge_deg": 13.43,
+      "parallelism": 0.552,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00372.png",
+      "ok": true,
+      "wedge_deg": 55.21,
+      "parallelism": 0.0,
+      "confidence": 0.796
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00382.png",
+      "ok": true,
+      "wedge_deg": 4.4,
+      "parallelism": 0.853,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00386.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00390.png",
+      "ok": true,
+      "wedge_deg": 28.46,
+      "parallelism": 0.051,
+      "confidence": 0.055
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00393.png",
+      "ok": true,
+      "wedge_deg": 5.43,
+      "parallelism": 0.819,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00395.png",
+      "ok": true,
+      "wedge_deg": 32.81,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00398.png",
+      "ok": true,
+      "wedge_deg": 7.09,
+      "parallelism": 0.764,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00405.png",
+      "ok": true,
+      "wedge_deg": 16.66,
+      "parallelism": 0.445,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00414.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00415.png",
+      "ok": true,
+      "wedge_deg": 15.58,
+      "parallelism": 0.481,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00416.png",
+      "ok": true,
+      "wedge_deg": 0.17,
+      "parallelism": 0.994,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00427.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00428.png",
+      "ok": true,
+      "wedge_deg": 5.93,
+      "parallelism": 0.802,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00431.png",
+      "ok": true,
+      "wedge_deg": 14.91,
+      "parallelism": 0.503,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00432.png",
+      "ok": true,
+      "wedge_deg": 15.03,
+      "parallelism": 0.499,
+      "confidence": 0.066
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00433.png",
+      "ok": true,
+      "wedge_deg": 9.07,
+      "parallelism": 0.698,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00437.png",
+      "ok": true,
+      "wedge_deg": 8.34,
+      "parallelism": 0.722,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00440.png",
+      "ok": true,
+      "wedge_deg": 85.92,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00441.png",
+      "ok": true,
+      "wedge_deg": 86.13,
+      "parallelism": 0.0,
+      "confidence": 0.185
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00443.png",
+      "ok": true,
+      "wedge_deg": 7.59,
+      "parallelism": 0.747,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00448.png",
+      "ok": true,
+      "wedge_deg": 5.01,
+      "parallelism": 0.833,
+      "confidence": 0.321
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00449.png",
+      "ok": true,
+      "wedge_deg": 4.95,
+      "parallelism": 0.835,
+      "confidence": 0.267
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00459.png",
+      "ok": true,
+      "wedge_deg": 5.25,
+      "parallelism": 0.825,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00470.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00480.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00489.png",
+      "ok": true,
+      "wedge_deg": 8.63,
+      "parallelism": 0.712,
+      "confidence": 0.303
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00492.png",
+      "ok": true,
+      "wedge_deg": 7.35,
+      "parallelism": 0.755,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00494.png",
+      "ok": true,
+      "wedge_deg": 11.76,
+      "parallelism": 0.608,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00496.png",
+      "ok": true,
+      "wedge_deg": 7.59,
+      "parallelism": 0.747,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00499.png",
+      "ok": true,
+      "wedge_deg": 7.76,
+      "parallelism": 0.741,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00501.png",
+      "ok": true,
+      "wedge_deg": 4.76,
+      "parallelism": 0.841,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00502.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00508.png",
+      "ok": true,
+      "wedge_deg": 13.78,
+      "parallelism": 0.541,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00512.png",
+      "ok": true,
+      "wedge_deg": 5.47,
+      "parallelism": 0.818,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00516.png",
+      "ok": true,
+      "wedge_deg": 1.97,
+      "parallelism": 0.934,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00526.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00532.png",
+      "ok": true,
+      "wedge_deg": 54.29,
+      "parallelism": 0.0,
+      "confidence": 0.164
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00557.png",
+      "ok": true,
+      "wedge_deg": 3.69,
+      "parallelism": 0.877,
+      "confidence": 0.454
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00559.png",
+      "ok": true,
+      "wedge_deg": 54.36,
+      "parallelism": 0.0,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00561.png",
+      "ok": true,
+      "wedge_deg": 63.16,
+      "parallelism": 0.0,
+      "confidence": 0.041
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00563.png",
+      "ok": true,
+      "wedge_deg": 7.16,
+      "parallelism": 0.761,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00564.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00572.png",
+      "ok": true,
+      "wedge_deg": 7.41,
+      "parallelism": 0.753,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00573.png",
+      "ok": true,
+      "wedge_deg": 1.65,
+      "parallelism": 0.945,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00575.png",
+      "ok": true,
+      "wedge_deg": 10.4,
+      "parallelism": 0.653,
+      "confidence": 0.276
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00577.png",
+      "ok": true,
+      "wedge_deg": 60.66,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00585.png",
+      "ok": true,
+      "wedge_deg": 0.22,
+      "parallelism": 0.993,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00587.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00595.png",
+      "ok": true,
+      "wedge_deg": 18.16,
+      "parallelism": 0.395,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00602.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00603.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00605.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00617.png",
+      "ok": true,
+      "wedge_deg": 1.4,
+      "parallelism": 0.953,
+      "confidence": 0.756
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00621.png",
+      "ok": true,
+      "wedge_deg": 20.28,
+      "parallelism": 0.324,
+      "confidence": 0.294
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00623.png",
+      "ok": true,
+      "wedge_deg": 17.97,
+      "parallelism": 0.401,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00624.png",
+      "ok": true,
+      "wedge_deg": 21.57,
+      "parallelism": 0.281,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00626.png",
+      "ok": true,
+      "wedge_deg": 11.17,
+      "parallelism": 0.628,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00629.png",
+      "ok": true,
+      "wedge_deg": 7.52,
+      "parallelism": 0.749,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00631.png",
+      "ok": true,
+      "wedge_deg": 89.57,
+      "parallelism": 0.0,
+      "confidence": 0.243
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00632.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00650.png",
+      "ok": true,
+      "wedge_deg": 12.6,
+      "parallelism": 0.58,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00651.png",
+      "ok": true,
+      "wedge_deg": 11.03,
+      "parallelism": 0.632,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00661.png",
+      "ok": true,
+      "wedge_deg": 25.78,
+      "parallelism": 0.141,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00662.png",
+      "ok": true,
+      "wedge_deg": 1.84,
+      "parallelism": 0.939,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00663.png",
+      "ok": true,
+      "wedge_deg": 3.23,
+      "parallelism": 0.892,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00664.png",
+      "ok": true,
+      "wedge_deg": 7.0,
+      "parallelism": 0.767,
+      "confidence": 0.872
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00668.png",
+      "ok": true,
+      "wedge_deg": 9.46,
+      "parallelism": 0.685,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00670.png",
+      "ok": true,
+      "wedge_deg": 6.47,
+      "parallelism": 0.784,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00680.png",
+      "ok": true,
+      "wedge_deg": 3.54,
+      "parallelism": 0.882,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00683.png",
+      "ok": true,
+      "wedge_deg": 49.53,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00695.png",
+      "ok": true,
+      "wedge_deg": 4.93,
+      "parallelism": 0.836,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00700.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00702.png",
+      "ok": true,
+      "wedge_deg": 13.61,
+      "parallelism": 0.546,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00703.png",
+      "ok": true,
+      "wedge_deg": 65.72,
+      "parallelism": 0.0,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00706.png",
+      "ok": true,
+      "wedge_deg": 1.75,
+      "parallelism": 0.942,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00718.png",
+      "ok": true,
+      "wedge_deg": 39.37,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00719.png",
+      "ok": true,
+      "wedge_deg": 22.83,
+      "parallelism": 0.239,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00720.png",
+      "ok": true,
+      "wedge_deg": 1.68,
+      "parallelism": 0.944,
+      "confidence": 0.374
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00726.png",
+      "ok": true,
+      "wedge_deg": 3.8,
+      "parallelism": 0.873,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00728.png",
+      "ok": true,
+      "wedge_deg": 19.36,
+      "parallelism": 0.355,
+      "confidence": 0.449
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00741.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00747.png",
+      "ok": true,
+      "wedge_deg": 7.63,
+      "parallelism": 0.746,
+      "confidence": 0.251
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00751.png",
+      "ok": true,
+      "wedge_deg": 4.87,
+      "parallelism": 0.838,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00761.png",
+      "ok": true,
+      "wedge_deg": 87.24,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00766.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00772.png",
+      "ok": true,
+      "wedge_deg": 4.61,
+      "parallelism": 0.846,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00779.png",
+      "ok": true,
+      "wedge_deg": 9.86,
+      "parallelism": 0.671,
+      "confidence": 0.373
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00789.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00793.png",
+      "ok": true,
+      "wedge_deg": 7.72,
+      "parallelism": 0.743,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00799.png",
+      "ok": true,
+      "wedge_deg": 11.38,
+      "parallelism": 0.621,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00802.png",
+      "ok": true,
+      "wedge_deg": 55.27,
+      "parallelism": 0.0,
+      "confidence": 0.793
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00805.png",
+      "ok": true,
+      "wedge_deg": 9.4,
+      "parallelism": 0.687,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00806.png",
+      "ok": true,
+      "wedge_deg": 89.69,
+      "parallelism": 0.0,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00809.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00810.png",
+      "ok": true,
+      "wedge_deg": 6.93,
+      "parallelism": 0.769,
+      "confidence": 0.615
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00811.png",
+      "ok": true,
+      "wedge_deg": 46.56,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00812.png",
+      "ok": true,
+      "wedge_deg": 7.84,
+      "parallelism": 0.739,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00822.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00832.png",
+      "ok": true,
+      "wedge_deg": 12.12,
+      "parallelism": 0.596,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00837.png",
+      "ok": true,
+      "wedge_deg": 9.0,
+      "parallelism": 0.7,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00846.png",
+      "ok": true,
+      "wedge_deg": 6.68,
+      "parallelism": 0.777,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00847.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00848.png",
+      "ok": true,
+      "wedge_deg": 1.03,
+      "parallelism": 0.966,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00860.png",
+      "ok": true,
+      "wedge_deg": 5.9,
+      "parallelism": 0.803,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00865.png",
+      "ok": true,
+      "wedge_deg": 2.58,
+      "parallelism": 0.914,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00866.png",
+      "ok": false
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00869.png",
+      "ok": true,
+      "wedge_deg": 58.35,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00893.png",
+      "ok": true,
+      "wedge_deg": 42.6,
+      "parallelism": 0.0,
+      "confidence": 0.098
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00894.png",
+      "ok": true,
+      "wedge_deg": 5.56,
+      "parallelism": 0.815,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00895.png",
+      "ok": true,
+      "wedge_deg": 71.68,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00897.png",
+      "ok": true,
+      "wedge_deg": 2.64,
+      "parallelism": 0.912,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00900.png",
+      "ok": true,
+      "wedge_deg": 6.06,
+      "parallelism": 0.798,
+      "confidence": 0.25
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00913.png",
+      "ok": true,
+      "wedge_deg": 58.37,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00930.png",
+      "ok": true,
+      "wedge_deg": 0.39,
+      "parallelism": 0.987,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00943.png",
+      "ok": true,
+      "wedge_deg": 30.24,
+      "parallelism": 0.0,
+      "confidence": 0.072
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00948.png",
+      "ok": true,
+      "wedge_deg": 51.64,
+      "parallelism": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00951.png",
+      "ok": true,
+      "wedge_deg": 1.61,
+      "parallelism": 0.946,
+      "confidence": 1.0
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00955.png",
+      "ok": true,
+      "wedge_deg": 3.29,
+      "parallelism": 0.89,
+      "confidence": 0.563
+    },
+    {
+      "file": "WSESeg_masks_only_public\\flickr_ski_misc\\mask_00956.png",
+      "ok": true,
+      "wedge_deg": 66.38,
+      "parallelism": 0.0,
+      "confidence": 0.265
+    }
+  ]
+}

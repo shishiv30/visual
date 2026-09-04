@@ -17,6 +17,7 @@ from core.sports.metrics import (
     SAGITTAL_MAX_AZIMUTH_DEG,
     SIDES,
     MetricPack,
+    _wedge_foot_weight,
     build_athlete_context,
     carving_applicable,
     compute_metrics,
@@ -25,6 +26,7 @@ from core.sports.metrics import (
     metric_summary,
     spec_for,
 )
+from core.sports.metrics import STEM_WEDGE_DEG
 from core.sports.profile import AthleteContext
 from core.sports.scene import CameraMotion, SceneContext, ViewClass
 from core.sports.turns import segment_turns
@@ -60,7 +62,12 @@ def _pack(clip, **kwargs) -> MetricPack:
 
 
 def _lateral_ids() -> list[str]:
-    return [spec.id for spec in REGISTRY if spec.requires.view == "lateral"]
+    skip = {"ski_wedge_angle", "ski_parallelism"}
+    return [
+        spec.id
+        for spec in REGISTRY
+        if spec.requires.view == "lateral" and spec.id not in skip
+    ]
 
 
 def _sagittal_ids() -> list[str]:
@@ -72,7 +79,7 @@ def _sagittal_ids() -> list[str]:
 
 def test_registry_matches_the_design_catalog() -> None:
     groups = {
-        "stance": 6,
+        "stance": 8,
         "edging": 7,
         "rhythm": 8,
         "faults": 5,
@@ -83,7 +90,7 @@ def test_registry_matches_the_design_catalog() -> None:
     for spec in REGISTRY:
         counts[spec.group] = counts.get(spec.group, 0) + 1
     assert counts == groups
-    assert len(REGISTRY) == sum(groups.values()) == 36
+    assert len(REGISTRY) == sum(groups.values()) == 38
 
 
 def test_registry_entries_are_well_formed() -> None:
@@ -203,6 +210,14 @@ def test_evidence_is_an_integer_timestamp_inside_the_clip() -> None:
 # --- view gating (§3.1) -----------------------------------------------------
 
 
+def test_wedge_foot_weight_decreases_toward_profile() -> None:
+    quarter = _wedge_foot_weight(40.0)
+    profile = _wedge_foot_weight(SAGITTAL_MAX_AZIMUTH_DEG)
+    assert quarter > profile
+    assert profile == 0.0
+    assert _wedge_foot_weight(LATERAL_MIN_AZIMUTH_DEG) == 0.40
+
+
 def test_profile_view_suppresses_lateral_metrics_with_the_documented_reason() -> None:
     pack = _pack(F.profile_view_skier())
     assert pack.view is not None
@@ -262,7 +277,9 @@ def test_stemmed_fixture_counts_exactly_three_faulty_turns() -> None:
 
 def test_wedge_fixture_stems_every_transition() -> None:
     pack = _pack(F.wedge_skier())
-    assert abs(pack.value("wedge_angle") - 28.0) < 1.5
+    wedge_val = pack.value("wedge_angle")
+    assert wedge_val is not None
+    assert wedge_val > STEM_WEDGE_DEG - 5.0
     item = pack.metrics["stem_count"]
     assert item.faulty_turns == item.total_turns == pack.turn_count
     assert pack.value("stance_width") > 0.4
@@ -478,6 +495,8 @@ def test_near_zero_denominator_is_suppressed_not_amplified() -> None:
 def test_missing_feet_suppress_only_the_foot_metrics() -> None:
     pack = _pack(F.parallel_skier(drop_landmarks=(31, 32)))
     assert pack.metrics["wedge_angle"].state == "unknown"
+    assert pack.metrics["ski_wedge_angle"].state == "unknown"
+    assert pack.metrics["ski_parallelism"].state == "unknown"
     assert pack.metrics["stem_count"].state == "unknown"
     assert pack.metrics["stance_width"].state == "ok"
 

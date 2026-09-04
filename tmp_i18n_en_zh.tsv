@@ -1,0 +1,667 @@
+0	 cm	 cm
+1	 kg	 kg
+2	--	--
+3	3×30s; no collapsed backseat.	3 组 × 30 秒，不许塌腰后坐。
+4	3×8 squats; Bulgarian split squat 3×6 each side.	双腿深蹲 3×8；保加利亚分腿蹲每侧 3×6。
+5	A light pole touch at each edge change, hands kept in front.	每次换刃轻点一次雪杖，双手保持在身前。
+6	A metric that could not be measured says so — it is never shown as a zero.	无法测得的指标会如实标注，绝不以 0 分呈现。
+7	A wide stance is mechanically correct at this age; stance width is not penalized.	这个年龄段站距偏宽是符合力学的，站距不作扣分。
+8	About hip-width; wider usually means you're still in a wedge.	站距约髋宽；过宽说明犁式没收干净。
+9	Allow camera	允许相机
+10	Also in this module	本模块还包含
+11	Analyze the clip first to open the report.	请先完成分析后再查看报告。
+12	Analyzing pose…	正在分析姿态…
+13	Angulation	折角
+14	Any terrain	任意地形
+15	Athlete info required	需要运动员信息
+16	Athletic stance on land	陆上运动站姿
+17	Available	可挑战
+18	Avoid	避开
+19	Avoid sharp bumps, jumps, and a too-narrow line.	避开尖包、跳台和过窄的线。
+20	Back	返回
+21	Back seat	后坐
+22	Back-seat finishes	出弯后坐
+23	Bad skeleton	骨骼差
+24	Balance	平衡性
+25	Balance on the outside ski before carving.	刻滑前先能把重量放在外侧板上。
+26	Banking share	内倒占比
+27	Best conditions	最佳雪况
+28	Best match	最匹配
+29	Best score {score:.0f}	历史最佳 {score:.0f} 分
+30	Bilibili	哔哩哔哩
+31	Birthday	生日
+32	Black	黑道
+33	Black run	黑道
+34	Black steep	黑色陡坡
+35	Blocker	阻断项
+36	Blue	蓝道
+37	Blue run	蓝道
+38	Boot flex band: {low}-{high}	靴硬度范围：{low}-{high}
+39	Bounce both skis together in soft snow to feel the snow push back.	在松软雪中两只板一起上下起伏，感受雪面的回弹。
+40	Braking at the finish	弯尾刹车
+41	Braking turns	刹车式转弯
+42	Branch	分支
+43	Bump cadence	雪包节奏
+44	Camera	拍摄
+45	Camera angle	拍摄角度
+46	Camera device	摄像头
+47	Camera motion	镜头运动
+48	Camera motion could not be judged from this clip.	本段无法判断镜头运动。
+49	Camera permission required	需要相机权限
+50	Camera preview	摄像头预览
+51	Camera unavailable	无法使用相机
+52	Camera view	拍摄视角
+53	Cancel	取消
+54	Carve parallel	平行板刻滑
+55	Carve points are heuristics, not FIS carving scores.	刻滑要点为经验估分，不是 FIS 刻滑得分。
+56	Carving needs body mass to bend the ski; not applicable below age 13.	刻滑需要一定体重才能把雪板压弯；13 岁以下不适用。
+57	Category	种类
+58	Center of mass not backseat	重心不后坐
+59	Check the rental skis still have edges before the first run.	上道前先检查租用雪板的钢边是否还在。
+60	Checkpoint radar (scores)	分项雷达（分数）
+61	Checkpoints	分项
+62	Choose video or image	选择视频或图片
+63	Christie stance	半犁站距
+64	Clear up-and-down movement in every turn; a static stance sinks the tips.	每个转弯都有明显的上下起伏；站姿僵直会让板头下沉。
+65	Click the filmstrip to seek; green diamonds are saved boxes (click to jump). Drag the blue start/end edges to trim. Shift+wheel zooms. Draw a person box — it saves for this frame; draw again on the same frame to replace.	点击胶片跳转；绿色菱形是已记录的框（点击可跳到该帧）。拖蓝色开始/结束边裁剪。Shift+滚轮缩放。在人物上拖框，松手记录到当前帧；同一帧再框选会覆盖该帧。
+66	Click left ski tail	点击左板尾
+67	Click left ski tip	点击左板头
+68	Click right ski tail	点击右板尾
+69	Click right ski tip	点击右板头
+70	Clip could not be scored	该视频无法评分
+71	Clip {lo:.1f}s → {hi:.1f}s ({dur:.1f}s, max {max:.0f}s)	片段 {lo:.1f}s → {hi:.1f}s（{dur:.1f}s，最长 {max:.0f}s）
+72	Close the inside ski	出弯收内侧板
+73	Coach (from knowledge base)	滑雪教练说明（知识库）
+74	Coach heuristics, not FIS judging or medical advice. 2D pose can misread. Pain or prior injury: see a coach or clinician.	滑雪教练经验估分，非 FIS 裁判分，非医疗建议。2D 骨骼会误判。疼痛或旧伤请线下教练/医师。
+75	Coach report (heuristics)	教练报告（经验估分）
+76	Common misconception	常见误区
+77	Completed	已完成
+78	Conditions to avoid	应避开的雪况
+79	Confidence	置信度
+80	Confidence {pct:.0f}% · separation {sep:.2f}	置信度 {pct:.0f}% · 区分度 {sep:.2f}
+81	Control	控制力
+82	Control speed with turn shape, not by scraping the tails across the fall line.	用转弯弧形控速，而不是把板尾横过落差线搓雪。
+83	Coordination	协调性
+84	Copy frame locator	复制当前帧定位
+85	Corduroy	压雪纹
+86	Core metrics	核心指标
+87	Could not open the camera.	无法打开摄像头。
+88	Could not read video.	无法读取视频。
+89	Cross from edge to edge quickly; a ski left flat slides away on hardpack.	两侧立刃之间快速过渡；在硬雪上雪板一放平就会滑走。
+90	Crud	杂乱雪
+91	Crud, trees and complex terrain	烂雪、树林与复杂地形
+92	Cue	口令
+93	Current stage	当前级别
+94	Deepest flexion in the middle of the arc, not at the finish — no park-and-ride.	最深的蹲屈出现在弧线中段，而不是收弯处——不要立刃后干等。
+95	Delete	删除
+96	Delete this clip and its local files? This cannot be undone.	删除该条目及本地文件？此操作不可恢复。
+97	Diagnostic	参考项
+98	Display only: 2D pose does not score air or ski tips. Train with a coach.	仅目录展示：2D 骨骼不评空中与板尖。请线下教练。
+99	Display only: boxes, rails, and jumps are not scored.	仅目录展示：箱、杆、跳台不自动打分。
+100	Display only: boxes, rails, and jumps with a coach; the app does not score them.	仅目录展示：箱、杆、跳台需教练指导；本 App 不评分。
+101	Display only: this app does not time gates.	仅目录展示：本 App 不做旗门计时。
+102	Display only: v2 video does not classify switch.	仅目录展示：v2 视频不自动判定倒滑。
+103	Distances are normalized to this skier's leg length.	距离按本人腿长归一化。
+104	Do not spin the shoulders with the skis.	肩不要跟着板狂转。
+105	Don't land or absorb with locked, straight legs.	不要用锁死的直腿落地或缓冲。
+106	Done	完成
+107	Dose	训练量
+108	Double black	双黑道
+109	Double black run	双黑道
+110	Download	下载
+111	Draw a person box before confirming.	请拖出一个人物框后再确定。
+112	Drills	训练
+113	Dryland / flat	陆地平坦场地
+114	Dynamic parallel: rhythm and poles	动态平行式：节奏与用杖
+115	Early edge on firm snow	硬雪提早立刃
+116	Easy slope, parallel or wedge: tap the downhill pole each turn.	缓坡平行或犁式，每弯轻点山下杖。
+117	Edge angle (proxy)	刃角（估算）
+118	Edge changes faster than long-radius.	换刃快于大弯。
+119	Edge release and re-set	放平立刃再立起
+120	Edge-change time	换刃用时
+121	Edging and steering	立刃与导向
+122	Effective frame rate	有效帧率
+123	Effective {fps:.1f} fps	有效帧率 {fps:.1f} fps
+124	Eight each side; if speed builds, reset to a traverse before stopping.	每侧 8 次；速度一起来先回到斜滑再刹。
+125	Eight medium turns on the same pitch; cadence between long and short.	同一坡面 8 个中弯，频率高于大弯、低于小弯。
+126	Eight straight lines over round, shallow bumps.	选圆而浅的包沿沟直滑 8 次。
+127	Eight turns on green or blue; match the inside ski only in the last third of the turn.	绿/蓝道做 8 个弯，只在出弯后三分之一并内侧板。
+128	Elastic knees and ankles; not locked.	膝踝有弹性，不锁直。
+129	Enter name, height, weight, and ski length, or pick a saved profile.	请填写姓名、身高、体重和雪板长度，或选择已存档案。
+130	Equipment	装备
+131	Equipment guidance is a starting range from height and weight, not a boot fitting.	装备建议是依据身高体重给出的起始范围，不能替代专业量脚定制。
+132	Even turn rhythm	转弯节奏均匀
+133	Export failed	导出失败
+134	Extend into the new turn and flex through the arc; count the rhythm out loud.	换刃时伸展，走弧线时蹲屈；出声数节奏。
+135	Facebook	Facebook
+136	Falling-leaf sideslip	落叶飘侧滑
+137	Fast edge change, quieter shoulders. End of the groomed carve branch.	快换刃，肩更静。平整道刻滑枝终点。
+138	Faster edge changes without losing parallel inclination.	快换刃但平行与内倾不能丢。
+139	Faults and fixes	常见错误与纠正
+140	Female	女
+141	Few high-quality sets; do not train fatigue into poor form.	组数少、质量高，避免以疲劳换变形。
+142	Fewer traverses, linked absorption; still no air scoring.	少横切，连续吸收，仍不开空中评分。
+143	Filmed almost face-on: fore/aft balance cannot be measured. Film from a quarter angle, behind and to one side.	画面几乎正对：前后平衡无法测量。请从斜后方约 45° 拍摄。
+144	Filmed almost side-on: stance, edging and lean cannot be measured. Film from a quarter angle, behind and to one side.	画面几乎正侧：站距、立刃和内倾都无法测量。请从斜后方约 45° 拍摄。
+145	Filmed too face-on to measure this.	拍摄角度过于正面，该项无法测量。
+146	Filmed too side-on to measure this.	拍摄角度过于正侧，该项无法测量。
+147	Filming and disclaimer	拍摄与免责声明
+148	Filming and scoring	拍摄与评分
+149	Filming checklist for the next clip	下次拍摄清单
+150	Filming quality	拍摄质量
+151	Firm snow and ice	硬雪与冰面
+152	First slide and equipment	第一次滑行与装备
+153	Fix cue	纠正口令
+154	Flatten both skis to slip sideways, then edge again to stop — neither a locked edge nor a free slide.	把两只板放平向侧下方滑，再立刃停住——既不是锁死立刃，也不是失控下滑。
+155	Flex and extend to surface the skis	靠蹲伸让雪板浮起
+156	Flex for rhythm	膝屈伸给节奏
+157	Flex into the turn	入弯降重心
+158	Flex-and-extend rhythm	蹲伸节奏练习
+159	Follow	跟拍
+160	Follow camera	跟拍机位
+161	Follow-cam; one alpine skier in frame.	跟拍手机，画面尽量只框一名双板滑者。
+162	For your profile	针对你的情况
+163	Format	格式
+164	Four posture scores are coach heuristics (0–100), not lab biomechanics; they are not true speed, meter turn radius, or peak ski pressure.	姿态四维为教练经验估分评分（0–100），非实验室生物力学测量；不含真实滑行速度、转弯半径米制或板底峰值压力。
+165	Frame locator JSON copied	已复制帧定位 JSON
+166	From a gentle traverse, pivot both skis across the hill and set the edges to a stop.	从缓坡斜滑降开始，双板同时横切并立刃停下。
+167	From a traverse, pressure the outside ski through a small C, then switch sides.	斜滑降开始，外侧加压划小 C，再换另一侧。
+168	From the skid branch: absorb and stay on snow; do not jump.	从搓雪枝进入：先吸收贴雪，不要跳。
+169	Front view	正面视角
+170	Frontal	正面
+171	Gate	关键项
+172	Gate metrics decide advancement; the rest are diagnostic.	关键项决定能否升级，其余为参考项。
+173	Gates passed	已通过关键项
+174	Gender	性别
+175	Gentle-slope wedge brake	缓坡犁式制动
+176	Glide straight in a wedge and stop on purpose.	用犁式板形直线下山并主动停下。
+177	Goal	目标
+178	Grant camera access to run pose tracking.	请允许相机权限以进行姿态跟踪。
+179	Green	绿道
+180	Green run	绿道
+181	Groomed-run recreational alpine	平整雪道大众滑行
+182	Hands in view	双手在身前
+183	Hands low	手低
+184	Hard rule	硬性规则
+185	Hardpack	硬雪
+186	Height	身高
+187	Heuristic inclination and parallel stance, not FIS. Learn one-ski first.	经验估分内倾与平行，非 FIS。最好先掌握单脚滑。
+188	Heuristic score (0-100, not FIS)	经验评分（0-100，非 FIS）
+189	Heuristic: steer with the legs — rotate the femurs so the ski tips turn while the torso stays quiet.	经验提示：用腿转向——髋内旋带动板头转向，上身保持安静。
+190	Higher cadence without losing inclination.	频率升高仍保持内倾。
+191	Hip internal-rotation steering	髋内旋导向
+192	Hips or ankles are missing in much of the clip.	本段大部分画面缺少髋或踝关键点。
+193	Hips over the feet	髋在脚上方
+194	Hips over the feet; pressure into the ski.	髋在脚上方，压力送到板刃。
+195	Hockey stop	冰球刹
+196	Hockey-stop capacity	冰球刹能力
+197	Hold a clean edge on hardpack: edge early, change edges quickly, no braking scrape.	在硬雪或冰面上保持干净的立刃：提早立刃、换刃迅速、不靠搓雪刹车。
+198	How to advance	如何进入下一阶段
+199	How to film	拍摄说明
+200	Ice	冰面
+201	Ideal terrain	理想地形
+202	If not advancing, train toward	若未进阶，按下述目标训练
+203	Import	导入
+204	Import failed	导入失败
+205	Import…	导入…
+206	In	入点
+207	In {lo:.1f}s → out {hi:.1f}s (logical, original file unchanged)	入点 {lo:.1f}s → 出点 {hi:.1f}s（逻辑裁剪，不改原文件）
+208	Inclination	内倾
+209	Inclination into the turn	向弯心内倾
+210	Indoors or flat ground for stance and single-leg strength.	室内或平地，练站姿和单腿力量。
+211	Injury risk	受伤风险
+212	JPEG (*.jpg)	JPEG (*.jpg)
+213	Keep pole tips low and hands in front of the body, about waist to mid-torso, to time left–right turns.	杖尖放低，手在身前约腰至胸中，给左右转弯节拍。
+214	Keep the arc round with both skis working; do not throw the skis sideways.	保持弧形圆顺、两只板一起工作；不要把雪板横甩出去。
+215	Keep the camera steady — shaky or wild motion prevents a reliable stage assessment.	保持镜头稳定——剧烈晃动会导致阶段无法可靠判定。
+216	Key points	动作要点
+217	Knee absorption travel	缓冲幅度
+218	Knee flex cadence matches the bumps.	膝屈伸节奏与雪包合拍。
+219	Knee flex range	膝屈伸幅度
+220	Knee flex rate	膝屈伸频率
+221	Knee tracking	膝走向
+222	Knees track	膝不内扣
+223	Knees track over the toes; don't let the knees collapse inward.	膝沿脚尖方向；不要让膝盖向内塌。
+224	Landmark quality	关节点质量
+225	Landmark quality {pct:.0f}%	关节点质量 {pct:.0f}%
+226	Language	语言
+227	Large knee travel; stay on snow rather than jumping.	膝屈振幅大，贴雪而不是跳。
+228	Left	左
+229	Left {left} · right {right}	左 {left} · 右 {right}
+230	Leading candidate	领先候选
+231	Left-right asymmetry	左右不对称
+232	Left-right turns, not a straight schuss.	有左右转向，不是一条直线冲坡。
+233	Legs and hips steer; do not use the shoulders as a steering wheel.	用腿和髋改变板向，肩不要当方向盘。
+234	Legs move; the torso stays quieter.	腿动、上身相对安静。
+235	Let the legs do the work.	让腿做功。
+236	Label skis	标注雪板
+237	Optional: use Label skis on key frames before Start analysis.	可选：在「开始分析」前，用「标注雪板」在关键帧上标左右板头板尾。
+238	Like	Like
+239	Likely cause	可能原因
+240	Link bumps near the fall line with less traversing.	少横切，沿落差线连贯过包。
+241	Linked absorption near the fall line. No air score.	少横切的连续吸收。不评空中。
+242	Linked parallel turns with an even rhythm, a flex-and-extend move, and a pole touch at every edge change.	连贯的平行式转弯：节奏均匀、蹲伸配合，每次换刃点一次雪杖。
+243	Linked short skids on parallel skis; mixed edge and skid is acceptable.	平行板快速左右转换控速，允许刃搓混合。
+244	Linked turns	连续转向
+245	Locked	未解锁
+246	Locked because	未解锁原因
+247	Long-radius carve	大弯刻滑
+248	Look downhill	视线看山下
+249	Looks like	看起来像
+250	Low hands and pole rhythm	手低点杖节奏
+251	MM/dd/yyyy	yyyy/MM/dd
+252	MP4 (*.mp4)	MP4 (*.mp4)
+253	Male	男
+254	Mark in	入点
+255	Mark out	出点
+256	Match {fit:.0f}% · gates {gate:.0f}% · prior {prior:.0f}%	吻合度 {fit:.0f}% · 关键项 {gate:.0f}% · 先验 {prior:.0f}%
+257	Matched skis and separation. After passing, choose short skids or long-radius carve.	双板平行，上下分离。过关后可选搓雪或刻滑大弯。
+258	Mean stance between a full wedge and parallel.	平均站距介于大犁与平行之间。
+259	Mean turn {sec:.2f}s	平均每弯 {sec:.2f} 秒
+260	Measured	实测
+261	Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)	Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)
+262	Medium-radius carve	中弯刻滑
+263	Medium-radius edge change	中弯换刃
+264	Medium-turn cadence	中弯频率
+265	Missing	缺少
+266	Missing model {path}. Run: python scripts/download_pose_landmarker.py	缺少模型 {path}。请先运行：python scripts/download_pose_landmarker.py
+267	Moderate groomed blue run; for parallel, skids, and long-radius carve.	中等平整蓝道；适合平行、搓雪与大弯刻滑。
+268	Mogul	雪包
+269	Mogul absorption	雪包滑行（吸收）
+270	Mogul fall-line	雪包落差线
+271	Mogul field	雪包区
+272	Mogul skiing	雪包滑行
+273	Moguls	雪包
+274	Most turns finish with a shaped arc; a slip to recover is fine, a slipped descent is not.	多数转弯要走出弧形；偶尔侧滑找回节奏可以，一路横滑下坡不行。
+275	Name	姓名
+276	Needs a scene fact	需补充场地信息
+277	Needs a scene fact before it can be detected.	需要补充场地信息才能自动识别。
+278	Needs the {name} checkpoint	需先通过“{name}”要点
+279	Needs work	需改进
+280	Needs {name} first	需先过{name}
+281	Never ski off-piste alone; avoid avalanche terrain and sidecountry, and keep a partner in sight.	不要独自滑野雪；避开雪崩地形与界外区域，始终与同伴保持在视线内。
+282	New profile	新建档案
+283	Next stage	下一阶段
+284	Next stage: {names}	下一阶段：{names}
+285	Next steps	下一步
+286	No box	未框选
+287	No braking scrape	不靠搓雪刹车
+288	No camera found. On the emulator, use a virtual scene or webcam.	未找到相机。模拟器请启用虚拟场景或电脑摄像头。
+289	No linked turns were detected in this clip.	本段没有检测到连续转弯。
+290	No linked turns were detected, so turn-by-turn checkpoints are not scored. Film several linked turns.	未检测到连续转弯，逐弯要点不评分。请拍几个连续转弯。
+291	No pose	未检测到姿态
+292	No preview	无预览
+293	No stage report yet. Analyze a clip offline first.	暂无阶段报告。请先离线分析视频。
+294	No terrain suggestion at this stage; use the runs you already ski well.	本阶段不指定地形；在你已经滑得好的雪道上练。
+295	No turns were segmented in this clip.	这段视频没有切分出完整的转弯。
+296	Non-slip floor; a handhold nearby helps.	防滑地面，旁边有扶手更好。
+297	Not applicable	不适用
+298	Not applicable at this age.	该年龄段不适用。
+299	Not judged from a clip	视频无法判定
+300	Not measured	未测得
+301	Not measured in this clip.	本段未测到。
+302	Not passed — train the lowest-scoring checkpoint.	尚未过关：按得分最低的要点训练。
+303	Not rated	未评级
+304	Not set	未填写
+305	Not sure	不确定
+306	Not yet	未达标
+307	Note	提示
+308	Nothing could be measured for this stage in this clip; re-film before training to a number.	本段测不出该阶段的任何指标；请先重拍，再按数据训练。
+309	OK	确定
+310	Off-piste	野雪
+311	Off-piste (inside the resort boundary)	野雪（雪场界内）
+312	Off-piste and soft snow	野雪与松软雪
+313	Ollie	豚跳
+314	On a green run, stand across the hill, flatten both skis to slip, then edge to stop; ten repeats each way.	在初级道上横向站好，放平两只板开始侧滑，再立刃停住；每侧十次。
+315	On a short steep section, pivot-slip eight times; link short turns only once the upper body stays quiet.	在一小段陡坡上做八次转板侧滑；只有上身保持安静后再连成小回转。
+316	On land: athletic stance, rotate the femurs to turn the toes, keep the shoulders still.	陆上模拟：微屈站，左右髋内旋带动脚尖，肩不动。
+317	One cell per turn along the clip. Flagged turns are highlighted; click a turn to jump to it.	按时间顺序每个方块代表一个弯，标记出的是有问题的弯；点击方块可跳转到该弯。
+318	One-ski / outside-leg drill	单脚滑 / 外侧腿
+319	Only try boxes, rails, or jumps with a coach, a helmet, and a supervised park.	只在有教练、戴头盔且受监管的公园尝试箱、杆或跳台。
+320	Only {count} turns were detected; film at least 8 linked turns for a rhythm score.	只检测到 {count} 个转弯；要评节奏请拍至少 8 个连续转弯。
+321	Open the report on the player page to jump to this frame.	请在播放页打开报告以跳到该帧。
+322	Open the tails and edge to a stop; do not sit down.	推开板尾并立刃急停；不要一屁股坐下。
+323	Open then close	入弯犁出弯收
+324	Ordered for your weakest metric first: {metric}	已按你最弱的指标优先排序：{metric}
+325	Other	其他
+326	Out	出点
+327	Out point must be after in point.	出点必须晚于入点。
+328	Outside-ski center of mass	换外侧重心
+329	Packed	压实雪
+330	Packed powder	压实粉雪
+331	Panning	摇镜
+332	Panning camera	摇摄机位
+333	Parallel skiing	平行式滑雪
+334	Parallel stance	平行板距
+335	Parallel-ski emergency stop; required braking skill before short skidded turns.	平行板急停；进入搓雪小弯前的必过刹车技能。
+336	Park	公园
+337	Park / jumps	公园/跳台
+338	Park skiing	公园滑行
+339	Pass	通过
+340	Passed this level. Choose a next level on the skill tree.	已过关，可选下一阶段（技能树分叉）。
+341	Pause	暂停
+342	Pending	待定
+343	Pick a branch, film your own skiing, and run your own practice cycle.	选定一个方向，拍摄自己的滑行，建立自己的训练循环。
+344	Pick the gentlest pitch; avoid ice and crowded runouts.	选最缓的坡，避开冰面和拥挤出口。
+345	Piste	雪道
+346	Pivot both skis under a quiet upper body, slip a short distance, then pivot back.	在安静的上身下方把两只板转过来，短距离侧滑后再转回去。
+347	Pivot-slip on a steep pitch	陡坡原地转板侧滑
+348	Play	播放
+349	Pole touch every turn	每个转弯点一次雪杖
+350	Pole touch per turn	每弯点杖
+351	Pole touch timing	点杖时机
+352	Poles and hands	雪杖与手位
+353	Poses: {count}	姿态：{count}
+354	Possible stage	可能级别
+355	Possible stage — confidence is below the gate, so both candidates are shown.	可能级别——置信度低于门槛，因此同时列出两个候选级别。
+356	Powder	粉雪
+357	Powder and soft snow	粉雪与松软雪
+358	Practice inclination on blue before moving to red; drop to an easier pitch when form fades.	先在蓝道练内倾再上红道；动作变形时降到更缓的坡。
+359	Prefer fewer people and softer snow; shallower turns on ice.	人少、雪软一点更好；冰面减小弯深。
+360	Pressure peak in the turn	压力峰值位置
+361	Pressure peaks in the shaping phase	压力峰值出现在转弯中段
+362	Problem frame	问题帧
+363	Processing	处理中
+364	Profile	正侧面
+365	Profile view	侧面视角
+366	Progression rung — not judged from a clip.	进阶阶梯中的一环，视频无法判定。
+367	Purpose	目的
+368	Put the gear on, walk on the flat, glide a few metres, and get up after a fall.	穿好装备，在平地上行走，滑出几米，摔倒后能自己站起来。
+369	Quarter	斜侧面
+370	Quick edge change on firm snow	硬雪上迅速换刃
+371	Quick left-right; no long traverse.	快速左右转换，不要长横切。
+372	Quiet shoulders	肩静
+373	Quiet upper body	上身静
+374	Quiet, easy green run — master the wedge stop first.	安静缓坡绿道——先掌握犁式制动。
+375	Race	竞速
+376	Race gates	竞技旗门
+377	Re-film	请重拍
+378	Re-film this stage so its checkpoints can be measured.	请重拍本阶段，以便测量各项要点。
+379	Reach the standard on {name} to advance.	{name}达到标准即可进阶。
+380	Reach the standard on {name}, then move to {next}.	{name}达到标准后，再进入{next}。
+381	Read the terrain and pick a line in crud, cut-up snow and gladed trees. Inside the resort boundary only.	在烂雪、被翻过的雪面和林间稀疏树区里读地形、选线路。仅限雪场界内。
+382	Reanalyze	重新分析
+383	Reason	原因
+384	Record	录制
+385	Record at least one person box.	请至少记录一帧人物框。
+386	Record box	记录此帧
+387	Recorded boxes	已记录的框
+388	Red (steep groomed) run	红道（较陡平整道）
+389	Release both edges to slip sideways, then re-set them to stop; the torso keeps facing downhill.	同时放平两只板的立刃，向侧下方侧滑，再立刃停住；上身始终朝向山下。
+390	Reliability {pct:.0f}%	可信度 {pct:.0f}%
+391	Report	分析报告
+392	Research notes (from knowledge base)	调研说明（知识库）
+393	Retry	重试
+394	Rhythm and turn shape	节奏与弧形
+395	Rhythm evenness	节奏均匀度
+396	Rhythm variation {cv:.0f}%	节奏波动 {cv:.0f}%
+397	Right	右
+398	Round bumps, an open line, visible troughs; do not force a black run.	包圆、线空、能看到沟；不要为了黑道硬上。
+399	Round long-radius turns	大弯走圆
+400	Round turns in soft snow	松软雪中转弯要圆
+401	Round, progressive long turns with parallel skis and inclination — coach heuristic, not a race carve score.	平行板内倾做圆顺大弯——教练经验估分，非竞速刻滑得分。
+402	Round, shallow bumps; absorb in a straight line first.	圆而浅的包，先直滑吸收。
+403	Runner-up	次匹配
+404	Safety	安全
+405	Saved profile	已存档案
+406	Scorable from the clip	可从视频评分
+407	Scoring rules (from knowledge base)	评分口径（知识库）
+408	Select the person	选择运动员
+409	Separated by	区分依据
+410	Session plan for this stage	本阶段课时安排
+411	Set aside because	排除原因
+412	Set the edge above the fall line so the ski grips before it points down the hill.	在过落差线之前就立好刃，让雪板先咬住雪面再指向坡下。
+413	Sets of 8–12 bumps; stop when form fades.	八到十二个包一组，累了就停。
+414	Setup	准备
+415	Sex is used only for fit guidance and the injury note; it never changes a score.	性别只用于装备贴合建议和受伤提示，绝不影响评分。
+416	Shallow C-turns while the wedge still brakes; load the outside ski.	在仍能刹车的前提下划浅 C，外侧板承重。
+417	Shallow C-turns; hip internal rotation steers; the wedge stays.	浅弧 C 弯，髋内旋导向，弯中保持犁。
+418	Shallow wedge C-turns	犁式浅弧 C 弯
+419	Share	分享
+420	Show skis	显示雪板
+421	Shin angle	小腿前倾角
+422	Short skidded turns	搓雪小弯滑雪
+423	Short skidded-turn rhythm	搓雪小弯节奏
+424	Short turns on a steep pitch: the upper body faces down the fall line and turn shape controls the speed.	陡坡上的小回转：上身朝向落差线，用转弯弧形控速。
+425	Short-carve cadence	小弯频率
+426	Short-radius carve	小弯刻滑
+427	Short-radius carve cadence	短半径刻滑节奏
+428	Short-radius skids for speed control; hockey stop required. Then moguls.	短半径搓雪控速；必须掌握冰球刹。过关可进雪包。
+429	Short-turn cadence	短弯节奏
+430	Shorten the legs at the crest, lengthen in the trough; stay on snow, do not jump.	包顶缩短腿、沟底伸长；腿贴雪，不要跳。
+431	Shorten the radius only after long-radius inclination works.	在大弯能倾之后缩短半径。
+432	Show you can stop on command with parallel skis (both directions).	展示能用平行板按指令急停（左右两侧）。
+433	Side or rear-quarter, whole run, little occlusion.	从侧面或斜后方拍完整段，少遮挡、光线足够。
+434	Sideslip and edge release	侧滑与放平雪板
+435	Single-leg strength for the christie close and carve outside ski.	练单腿力量，为半犁收板与刻滑外侧承重做准备。
+436	Single-mogul absorption	单包吸收
+437	Six large C-turns on a moderate pitch; longer outside leg.	中等坡画 6 个大 C，外侧腿更长。
+438	Six long turns on firm blue groomers; shorten the radius only while the track stays clean.	在硬实的中级压雪道上做六个大弧转弯；只有刻痕干净时才缩小半径。
+439	Six traverses per side; put the ski down if you wobble.	每侧 6 次斜滑降；失稳就放回双脚，不要硬撑。
+440	Skeleton quality	骨骼质量
+441	Ski length	雪板长度
+442	Ski length band: {low}-{high} cm	板长范围：{low}-{high} 厘米
+443	Ski label saved	雪板标注已保存
+444	Skill tree	进阶路线
+445	Slightly lower in the turn; elastic knees.	入弯略降重心，膝有弹性。
+446	Slip down and across, forward then back, with the torso facing downhill.	雪板横置向侧下方滑行，先向前再向后，上身始终朝向山下。
+447	Slope	坡度
+448	Slope band	坡度等级
+449	Slush	湿雪
+450	Snow and slope are optional — leave them at not sure and the report still runs.	雪面和坡度可以不填：保持“不确定”也能生成报告。
+451	Snow surface	雪面
+452	Soft	软雪
+453	Soft ankles, knees, and hips; center of mass over mid-foot.	踝膝髋微屈，重心在脚心，不后坐。
+454	Soft knees and ankles	膝踝微屈
+455	Soft snow	松软雪
+456	Soft, ungroomed snow just off a marked run; stay inside the resort boundary.	紧邻雪道的未压雪松软雪面；不要越出雪场界。
+457	Some checkpoints for this stage could not be measured in this clip.	本段中该阶段的部分要点无法测量。
+458	Specialization and self-coaching	专项化与自我教练
+459	Speed	速度
+460	Stop labeling skis	结束雪板标注
+461	Squats and split squats	深蹲与分腿蹲
+462	Stability	稳定性
+463	Stability over time (time × frame score)	发挥稳定度（时间 × 当前帧分数）
+464	Stable follow-cam, one skier, side or rear-quarter.	画面稳、一人、侧或斜后，才能判定阶段。
+465	Stage	阶段
+466	Stage cannot be judged when the shot is unstable, occluded, or out of curriculum scope.	镜头不稳、遮挡或非本课程种类时不判定阶段。
+467	Stage focus	本阶段动作重点
+468	Stage tutorial	本级教程
+469	Stance and balance	站姿与平衡
+470	Stance width	站距
+471	Stance width change	站距开合
+472	Stance width varies; not a locked wedge the whole turn.	站距有开合，不是全程死犁。
+473	Standard	达标标准
+474	Standard: a clean, narrow track on hardpack with no scraped-out tail.	标准：硬雪上留下细窄干净的刻痕，板尾不搓花。
+475	Standard: a clear edge change, not an upright scrape.	标准：换刃点清楚，不直立横刮。
+476	Standard: both skis surface together; no single-ski dive.	标准：两只板同时浮出雪面，不出现单板下沉。
+477	Standard: glide on the outside ski; the inside ski taps the snow without taking weight.	标准：缓坡外侧板滑一段，内侧板轻点雪不承重。
+478	Standard: hip over ankle in profile; knees unlocked.	标准：侧面看髋在踝上方，膝不锁死。
+479	Standard: hips incline into the turn, shoulders quiet, stance parallel.	标准：髋向弯心倾，肩不甩；站距保持平行。
+480	Standard: hips stay near the fall line; the knees still do the work.	标准：髋大致沿落差线，少横切；仍由膝屈伸做功。
+481	Standard: knees track over the toes; pelvis level.	标准：膝沿脚尖，骨盆不左右倾倒。
+482	Standard: left-right symmetry, even quieter shoulders.	标准：左右对称，肩更静。
+483	Standard: linked S-track, no dart to the edge; the wedge stays through the turn.	标准：连续 S 迹，不冲道边；弯中犁式不消失。
+484	Standard: no long traverse between turns; knees flex and extend.	标准：弯与弯之间没有长横切；膝有屈伸。
+485	Standard: on replay, the wrists stay below the shoulders.	标准：回放里手腕不高于肩。
+486	Standard: quiet torso, large knee travel, no straight-leg slam.	标准：上身相对静，膝屈振幅大，落地不砸直腿。
+487	Standard: stance narrows in the last third of the turn, still stable.	标准：出弯后半段站距变小，但不失稳。
+488	Standard: stop on a mark both ways; skis parallel, not in a wedge.	标准：左右都能停在预定点，板平行、不犁开。
+489	Standard: ten stops, tips close, torso facing downhill.	标准：十次停下板头始终相对、上身对山下。
+490	Standard: the same count on every turn, with the deepest flexion in the middle of the arc.	标准：每个转弯数同样的拍子，最深的蹲屈落在弧线中段。
+491	Standard: the shoulders keep facing down the pitch through every pivot.	标准：每次转板时肩线始终朝向坡下。
+492	Standard: the skis start to turn while the shoulders still face downhill.	标准：板开始转时肩仍大体对山下。
+493	Standard: the skis stay across the hill and the torso does not turn with them.	标准：雪板始终横向对坡，上身不跟着转。
+494	Start analysis	开始分析
+495	Static	固定机位
+496	Static camera	固定机位
+497	Stay centered so you can move onto the new outside ski.	不后坐，才能把重量交给新的外侧板。
+498	Stay in a wedge through the turn; load the outside ski.	转弯中仍保持犁式，外侧承重。
+499	Stay near the fall line	少横切
+500	Stay parallel or inclination becomes banking.	站距保持平行，否则倾会变成内倒。
+501	Steep/hard suggestion for fall-line moguls only; still not measured.	仅在雪包落差线课使用的陡/难建议，仍非实测。
+502	Steeper groomed red run; for medium and short carve heuristics.	更陡的平整红道；适合中小弯刻滑经验课。
+503	Steeps	陡坡
+504	Stem	外八字
+505	Stemmed transitions	换刃时出现外八字
+506	Stop	停止
+507	Straight-run a soft slope and bounce six times, then link the bounces into turns.	在松软坡面上直滑并起伏六次，再把起伏连成转弯。
+508	Strong	优秀
+509	Suggested black run; slope is not measured.	建议黑道；坡度未经实测。
+510	Suggested blue run; slope is not measured.	建议蓝道；坡度未经实测。
+511	Suggested green run; slope is not measured.	建议绿道；坡度未经实测。
+512	Suggested mogul field; bump shape is not measured.	雪包场地建议，非包型实测。
+513	Suggested off-piste inside the resort boundary; snow depth is not measured.	建议雪场界内的野雪区域；雪深不做测量。
+514	Suggested park terrain; this app does not score air.	公园建议场地，本 App 不评空中。
+515	Suggested red run; slope is not measured.	建议红道；坡度未经实测。
+516	Suggested trail rating	建议雪道级别
+517	Suggested: {snow} / {terrain}	建议：{snow} / {terrain}
+518	Summary	总结
+519	Switch alpine	倒滑双板
+520	Symptom	表现
+521	Tactic	策略
+522	Tech: skeleton criteria (from knowledge base)	技术专家：骨骼判定（知识库）
+523	Ten linked parallel turns on a blue run, counting one-two through every turn.	在中级道上做十个连贯的平行式转弯，每个转弯数“一—二”。
+524	Ten short turns on a blue run; quiet shoulders, hands low.	蓝道平整处 10 个短弯一组，肩静手低。
+525	Terrain	地形
+526	Terrain and venue	地形与场地
+527	Terrain needed	所需地形
+528	Terrain, slope and snow are optional — set Terrain to Mogul run for mogul detection.	地形、坡度与雪况为可选项——需检测雪包滑行时请将地形设为「雪包道」。
+529	Terrain park	技巧公园
+530	Groomed piste	压雪道
+531	Mogul run	雪包道
+532	Test it	自测方法
+533	The allowance is {n}	允许上限为 {n} 个
+534	The camera follows the skier, so turn rhythm is measured from the body rather than the track.	镜头跟着滑者移动，转弯节奏只能从身体判断，不能从轨迹判断。
+535	The camera pans during the clip; a fixed camera measures rhythm more reliably.	拍摄过程中镜头有摇动；固定机位测节奏更可靠。
+536	The clip is too short to judge rhythm. Film a whole run of at least eight turns.	本段太短，无法判断节奏。请拍完整一趟、至少八个转弯。
+537	The question to answer	要回答的问题
+538	The shoulders keep facing down the pitch while the legs turn underneath.	双腿在身体下方转弯，肩线始终朝向坡下。
+539	The shoulders stay square to the fall line while the skis slip.	雪板侧滑时，肩线始终正对落差线。
+540	The skeleton is weak in this clip: get closer, keep the skier unoccluded, and avoid flat light.	本段骨骼质量差：请靠近一些拍，避免遮挡和平光。
+541	The skeleton was too small or incomplete to measure.	骨骼太小或不完整，无法测量。
+542	The {joints} could not be tracked in this clip.	本段视频中无法追踪到{joints}。
+543	This clip is still processing. Play it when it is done.	该条目仍在处理中，完成后才可播放。
+544	Three-quarter view	四分之三视角
+545	Throwing the shoulders wrecks inclination.	甩肩会破坏内倾。
+546	TikTok	TikTok
+547	Tip the body into the turn (hips inside the arc). Heuristic only — not a measured edge angle or FIS score.	向弯心倾斜身体（髋在弧内）。仅为经验估分——非实测刃角或 FIS 得分。
+548	Tips close, tails open, stance wider than the hips.	板头近、板尾开，站距宽于髋。
+549	Torso downhill	上身对山下
+550	Torso faces downhill	上身朝向山下
+551	Train {name}.	重点训练{name}。
+552	Train {name}: the standard is {standard}.	重点训练{name}：标准是{standard}。
+553	Training emphasis	训练重点
+554	Training venue	训练场地
+555	Trim video (max 2 minutes)	剪切视频（最长 2 分钟）
+556	Trough fall-line rhythm	沟底落差线节奏
+557	Turn amplitude	转弯幅度
+558	Turn durations stay close to each other; no long traverse between turns.	每个转弯的用时接近一致；转弯之间不夹长横切。
+559	Turn faults	转弯问题
+560	Turn instead of side-slipping the pitch	用转弯而不是横滑下坡
+561	Turn rate	转弯频率
+562	Turn shape	转弯弧形
+563	Turn-by-turn	逐弯分析
+564	Turns detected	检测到的转弯
+565	Turns led by the shoulders	用肩带转
+566	Two-footed powder bounce	粉雪双脚起伏
+567	Two-footed, rounder turns in soft snow; flex and extend to make the skis surface.	在松软雪中双脚均匀受力、转弯更圆；靠蹲伸让雪板浮起来。
+568	Unknown	未知
+569	Undo label point	撤销标注点
+570	Unlike	Unlike
+571	Unscored when the head is not visible in 2D pose.	2D 头关键点不可靠则不计分。
+572	Unspecified	未指定
+573	Unstable camera, occlusion, or out-of-scope terrain: no stage claim.	镜头不稳、遮挡或非本课程种类时不判定阶段。
+574	Unsupported file type.	不支持的文件类型。
+575	Up-and-down movement	上下起伏
+576	Uploading and loading…	正在导入视频…
+577	Upper body down the fall line	上身朝向落差线
+578	Upper-body rotation	上身旋转
+579	Upper-lower separation	上下分离
+580	Usable frames	可用帧
+581	View	拍摄视角
+582	View angle {deg:.0f}°	视角 {deg:.0f}°
+583	Visual Pose	Visual Pose
+584	Visual Pose — Windows	Visual Pose — Windows
+585	Warning	警告
+586	Weakest checkpoint	最弱要点
+587	Wedge angle	犁式角度
+588	Wedge christie	半犁式滑雪
+589	Wedge glide	犁式直滑
+590	Wedge stance	犁式站距
+591	Wedge through the turn	弯中保持犁
+592	Wedge to start, close the inside ski to finish.	入弯犁、出弯收内侧板。
+593	Wedge to start, gradually match at the finish; do not snap shut.	入弯犁、出弯逐渐并板，禁止突然并死。
+594	Wedge turns	犁式转弯
+595	Wedge-glide on a green run, then open the tails and edge to a stop.	绿道犁式直滑，匀速后再推开板尾立刃停下。
+596	Weibo	微博
+597	Weight	体重
+598	What the clip itself could tell us	这段视频本身能告诉我们什么
+599	Why	原因
+600	Why it matters	为什么重要
+601	Why this stage	为何判定为该级别
+602	Wrists below the shoulders.	手腕低于肩。
+603	X	X
+604	You have it when	达成标志
+605	YouTube	YouTube
+606	Your skis at {own} cm sit inside that band.	你现用的 {own} 厘米雪板在该范围内。
+607	Your skis at {own} cm sit outside that band.	你现用的 {own} 厘米雪板不在该范围内。
+608	at least {value}	不低于 {value}
+609	at most {n} of {total}	{total} 个中最多 {n} 个
+610	at most {value}	不超过 {value}
+611	carve	刻滑
+612	each side	左右各做
+613	hockey stop	冰球刹
+614	left ankle	左脚踝
+615	left foot	左脚
+616	left heel	左脚跟
+617	left hip	左髋
+618	left knee	左膝
+619	left shoulder	左肩
+620	left wrist	左手腕
+621	mogul	雪包
+622	ollie	豚跳
+623	one-ski	单脚滑
+624	parallel	平行
+625	park	公园
+626	race gates	旗门
+627	right ankle	右脚踝
+628	right foot	右脚
+629	right heel	右脚跟
+630	right hip	右髋
+631	right knee	右膝
+632	right shoulder	右肩
+633	right wrist	右手腕
+634	skid	搓雪
+635	switch	倒滑
+636	wedge	犁式
+637	wedge christie	半犁
+638	{fault} in {n} of {total} transitions	{total} 次换刃中有 {n} 次出现{fault}
+639	{head} and {tail}	{head}和{tail}
+640	{lo} to {hi}	{lo} 到 {hi}
+641	{n} flagged	{n} 个有问题
+642	{n} min	{n} 分钟
+643	{n} more rows in the full module	完整模块中还有 {n} 行
+644	{n} of {total} turns	{total} 个转弯中有 {n} 个
+645	{n} of {total} turns carried this fault	{total} 个弯中有 {n} 个出现该问题
+646	{n} reps	{n} 次
+647	{n} runs	{n} 趟
+648	{n} sessions	{n} 次训练
+649	{n} sets	{n} 组
+650	{n} turns	{n} 个弯
+651	{n} turns · {left} left / {right} right	{n} 个弯 · 左 {left} / 右 {right}
+652	{sec:.1f}s	{sec:.1f}秒
+653	{sec:.1f}s  σ {std:.0f}	{sec:.1f}秒  σ {std:.0f}
+654	{status} (failed, retry)	{status}（失败，可重试）
+655	—	—
+656	Predicted passed	预判已通过
+657	Predicted passed based on {current} result	根据{current}表现预判为已通过
+658	Correct result	纠正检测结果
+659	Select the actual stage:	选择实际阶段：
+660	Detected stage: {name}	检测阶段：{name}
+661	Note (optional):	备注（可选）：
+662	e.g. This is a mogul skiing clip, not a basic glide	例如：这是蘑菇滑雪视频，不是基本滑行
+663	Your correction is saved locally and helps improve the detection algorithm.	您的纠正已保存到本地，将用于改善检测算法。
+664	Wedge mogul run	犁式雪包滑行
+665	Navigate mogul terrain with wedge or semi-parallel; absorb bumps and stay rhythmic. Early entry into mogul skiing after wedge turns.	以犁式或半犁在雪包地形中保持节奏，吸收冲击。从犁式转弯直接进入雪包训练的早期入口。
+666	From wedge mogul or skid branch: absorb actively, stay on snow, do not jump.	从犁式雪包或搓雪枝进入：主动吸收贴雪，保持节奏，不要跳。

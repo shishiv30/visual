@@ -17,7 +17,11 @@ from core.person_roi import blend_hist, build_hist, denorm_box, search
 from core.sports.assess import assess_clip
 from core.sports.profile import AthleteContext
 from core.sports.scene import SceneContext
-from schemas.clip_analysis import AnalyzedFrame, BlazeJoint, ClipAnalysis
+from schemas.clip_analysis import (
+    AnalyzedFrame,
+    BlazeJoint,
+    ClipAnalysis,
+)
 from schemas.core_inference import SourceKind
 from clients.windows.store.library import (
     ClipKind,
@@ -111,17 +115,19 @@ class AnalysisWorker(QObject):
             timestamp_ms=0.0,
             roi_hint=_seed_pixels(meta, bgr),
         )
+        blaze = _blaze_joints(engine)
+        frames = [
+            AnalyzedFrame(
+                t_ms=0.0,
+                result=result,
+                blaze33=blaze,
+            )
+        ]
         return ClipAnalysis(
             clip_id=meta.clip_id,
             fps=0.0,
             frame_count=1,
-            frames=[
-                AnalyzedFrame(
-                    t_ms=0.0,
-                    result=result,
-                    blaze33=_blaze_joints(engine),
-                )
-            ],
+            frames=frames,
         )
 
     def _video(self, engine: MediaPipeEngine, meta: ClipMeta, path) -> ClipAnalysis:
@@ -169,11 +175,12 @@ class AnalysisWorker(QObject):
                         hist = build_hist(bgr, det_box)
                     else:
                         hist = blend_hist(hist, build_hist(bgr, det_box))
+                blaze = _blaze_joints(engine)
                 frames.append(
                     AnalyzedFrame(
                         t_ms=t_ms,
                         result=result,
-                        blaze33=_blaze_joints(engine),
+                        blaze33=blaze,
                     )
                 )
             index += 1

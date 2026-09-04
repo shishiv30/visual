@@ -1,0 +1,551 @@
+{
+  "Your skis at {own} cm sit inside that band.": {
+    "fr": "Vos skis à {own} cm se situent dans cette plage.",
+    "de": "Ihre Ski mit {own} cm liegen innerhalb dieses Bandes.",
+    "es": "Tus esquís de {own} cm están dentro de esa franja.",
+    "it": "I tuoi sci da {own} cm rientrano in quella fascia.",
+    "ja": "{own} cmのスキーはその推奨帯の内側です。",
+    "ko": "{own} cm 스키는 해당 구간 안에 있습니다.",
+    "pt": "Os seus skis de {own} cm situam-se dentro dessa faixa."
+  },
+  "Your skis at {own} cm sit outside that band.": {
+    "fr": "Vos skis à {own} cm se situent hors de cette plage.",
+    "de": "Ihre Ski mit {own} cm liegen außerhalb dieses Bandes.",
+    "es": "Tus esquís de {own} cm están fuera de esa franja.",
+    "it": "I tuoi sci da {own} cm escono da quella fascia.",
+    "ja": "{own} cmのスキーはその推奨帯の外側です。",
+    "ko": "{own} cm 스키는 해당 구간 밖에 있습니다.",
+    "pt": "Os seus skis de {own} cm situam-se fora dessa faixa."
+  },
+  "at least {value}": {
+    "fr": "au moins {value}",
+    "de": "mindestens {value}",
+    "es": "al menos {value}",
+    "it": "almeno {value}",
+    "ja": "最低 {value}",
+    "ko": "최소 {value}",
+    "pt": "pelo menos {value}"
+  },
+  "at most {n} of {total}": {
+    "fr": "au plus {n} sur {total}",
+    "de": "höchstens {n} von {total}",
+    "es": "como máximo {n} de {total}",
+    "it": "al massimo {n} su {total}",
+    "ja": "{total}中最大{n}",
+    "ko": "{total}개 중 최대 {n}",
+    "pt": "no máximo {n} de {total}"
+  },
+  "at most {value}": {
+    "fr": "au plus {value}",
+    "de": "höchstens {value}",
+    "es": "como máximo {value}",
+    "it": "al massimo {value}",
+    "ja": "最大 {value}",
+    "ko": "최대 {value}",
+    "pt": "no máximo {value}"
+  },
+  "carve": {
+    "fr": "carve",
+    "de": "Carve",
+    "es": "carve",
+    "it": "carve",
+    "ja": "カービング",
+    "ko": "카빙",
+    "pt": "carve"
+  },
+  "each side": {
+    "fr": "de chaque côté",
+    "de": "je Seite",
+    "es": "cada lado",
+    "it": "ogni lato",
+    "ja": "左右各",
+    "ko": "각 쪽",
+    "pt": "cada lado"
+  },
+  "hockey stop": {
+    "fr": "arrêt hockey",
+    "de": "Hockey-Stopp",
+    "es": "frenada hockey",
+    "it": "hockey stop",
+    "ja": "ホッケーストップ",
+    "ko": "하키스톱",
+    "pt": "travagem hockey"
+  },
+  "left ankle": {
+    "fr": "cheville gauche",
+    "de": "linkes Sprunggelenk",
+    "es": "tobillo izquierdo",
+    "it": "caviglia sinistra",
+    "ja": "左足首",
+    "ko": "왼쪽 발목",
+    "pt": "tornozelo esquerdo"
+  },
+  "left foot": {
+    "fr": "pied gauche",
+    "de": "linker Fuß",
+    "es": "pie izquierdo",
+    "it": "piede sinistro",
+    "ja": "左足",
+    "ko": "왼쪽 발",
+    "pt": "pé esquerdo"
+  },
+  "left heel": {
+    "fr": "talon gauche",
+    "de": "linke Ferse",
+    "es": "talón izquierdo",
+    "it": "tallone sinistro",
+    "ja": "左かかと",
+    "ko": "왼쪽 뒤꿈치",
+    "pt": "calcanhar esquerdo"
+  },
+  "left hip": {
+    "fr": "hanche gauche",
+    "de": "linke Hüfte",
+    "es": "cadera izquierda",
+    "it": "anca sinistra",
+    "ja": "左股関節",
+    "ko": "왼쪽 고관절",
+    "pt": "anca esquerda"
+  },
+  "left knee": {
+    "fr": "genou gauche",
+    "de": "linkes Knie",
+    "es": "rodilla izquierda",
+    "it": "ginocchio sinistro",
+    "ja": "左膝",
+    "ko": "왼쪽 무릎",
+    "pt": "joelho esquerdo"
+  },
+  "left shoulder": {
+    "fr": "épaule gauche",
+    "de": "linke Schulter",
+    "es": "hombro izquierdo",
+    "it": "spalla sinistra",
+    "ja": "左肩",
+    "ko": "왼쪽 어깨",
+    "pt": "ombro esquerdo"
+  },
+  "left wrist": {
+    "fr": "poignet gauche",
+    "de": "linkes Handgelenk",
+    "es": "muñeca izquierda",
+    "it": "polso sinistro",
+    "ja": "左手首",
+    "ko": "왼쪽 손목",
+    "pt": "pulso esquerdo"
+  },
+  "mogul": {
+    "fr": "bosses",
+    "de": "Buckel",
+    "es": "baches",
+    "it": "gobbe",
+    "ja": "モーグル",
+    "ko": "모굴",
+    "pt": "moguls"
+  },
+  "ollie": {
+    "fr": "ollie",
+    "de": "Ollie",
+    "es": "ollie",
+    "it": "ollie",
+    "ja": "オリー",
+    "ko": "올리",
+    "pt": "ollie"
+  },
+  "one-ski": {
+    "fr": "un ski",
+    "de": "Ein-Ski",
+    "es": "un esquí",
+    "it": "mono-sci",
+    "ja": "ワンスキー",
+    "ko": "원스키",
+    "pt": "um ski"
+  },
+  "parallel": {
+    "fr": "parallèle",
+    "de": "Parallel",
+    "es": "paralelo",
+    "it": "parallelo",
+    "ja": "パラレル",
+    "ko": "패러렐",
+    "pt": "paralelo"
+  },
+  "park": {
+    "fr": "park",
+    "de": "Park",
+    "es": "park",
+    "it": "park",
+    "ja": "パーク",
+    "ko": "파크",
+    "pt": "park"
+  },
+  "race gates": {
+    "fr": "portes",
+    "de": "Renntore",
+    "es": "puertas",
+    "it": "porte da gara",
+    "ja": "レースゲート",
+    "ko": "레이스 게이트",
+    "pt": "portões"
+  },
+  "right ankle": {
+    "fr": "cheville droite",
+    "de": "rechtes Sprunggelenk",
+    "es": "tobillo derecho",
+    "it": "caviglia destra",
+    "ja": "右足首",
+    "ko": "오른쪽 발목",
+    "pt": "tornozelo direito"
+  },
+  "right foot": {
+    "fr": "pied droit",
+    "de": "rechter Fuß",
+    "es": "pie derecho",
+    "it": "piede destro",
+    "ja": "右足",
+    "ko": "오른쪽 발",
+    "pt": "pé direito"
+  },
+  "right heel": {
+    "fr": "talon droit",
+    "de": "rechte Ferse",
+    "es": "talón derecho",
+    "it": "tallone destro",
+    "ja": "右かかと",
+    "ko": "오른쪽 뒤꿈치",
+    "pt": "calcanhar direito"
+  },
+  "right hip": {
+    "fr": "hanche droite",
+    "de": "rechte Hüfte",
+    "es": "cadera derecha",
+    "it": "anca destra",
+    "ja": "右股関節",
+    "ko": "오른쪽 고관절",
+    "pt": "anca direita"
+  },
+  "right knee": {
+    "fr": "genou droit",
+    "de": "rechtes Knie",
+    "es": "rodilla derecha",
+    "it": "ginocchio destro",
+    "ja": "右膝",
+    "ko": "오른쪽 무릎",
+    "pt": "joelho direito"
+  },
+  "right shoulder": {
+    "fr": "épaule droite",
+    "de": "rechte Schulter",
+    "es": "hombro derecho",
+    "it": "spalla destra",
+    "ja": "右肩",
+    "ko": "오른쪽 어깨",
+    "pt": "ombro direito"
+  },
+  "right wrist": {
+    "fr": "poignet droit",
+    "de": "rechtes Handgelenk",
+    "es": "muñeca derecha",
+    "it": "polso destro",
+    "ja": "右手首",
+    "ko": "오른쪽 손목",
+    "pt": "pulso direito"
+  },
+  "skid": {
+    "fr": "dérapage",
+    "de": "Drift",
+    "es": "derrape",
+    "it": "derapata",
+    "ja": "スキッド",
+    "ko": "스키드",
+    "pt": "derrapagem"
+  },
+  "switch": {
+    "fr": "switch",
+    "de": "Switch",
+    "es": "switch",
+    "it": "switch",
+    "ja": "スイッチ",
+    "ko": "스위치",
+    "pt": "switch"
+  },
+  "wedge": {
+    "fr": "chasse-neige",
+    "de": "Pflug",
+    "es": "cuña",
+    "it": "spazzaneve",
+    "ja": "プルーク",
+    "ko": "플루크",
+    "pt": "cunha"
+  },
+  "wedge christie": {
+    "fr": "christiana",
+    "de": "Christie",
+    "es": "cuña christie",
+    "it": "christie",
+    "ja": "ウェッジクリスティー",
+    "ko": "웨지 크리스티",
+    "pt": "cunha christie"
+  },
+  "{fault} in {n} of {total} transitions": {
+    "fr": "{fault} dans {n} transitions sur {total}",
+    "de": "{fault} in {n} von {total} Übergängen",
+    "es": "{fault} en {n} de {total} transiciones",
+    "it": "{fault} in {n} di {total} transizioni",
+    "ja": "{total}回の遷移中{n}回で{fault}",
+    "ko": "{total}회 전환 중 {n}회에서 {fault}",
+    "pt": "{fault} em {n} de {total} transições"
+  },
+  "{head} and {tail}": {
+    "fr": "{head} et {tail}",
+    "de": "{head} und {tail}",
+    "es": "{head} y {tail}",
+    "it": "{head} e {tail}",
+    "ja": "{head}と{tail}",
+    "ko": "{head} 및 {tail}",
+    "pt": "{head} e {tail}"
+  },
+  "{lo} to {hi}": {
+    "fr": "{lo} à {hi}",
+    "de": "{lo} bis {hi}",
+    "es": "{lo} a {hi}",
+    "it": "{lo} a {hi}",
+    "ja": "{lo}〜{hi}",
+    "ko": "{lo}~{hi}",
+    "pt": "{lo} a {hi}"
+  },
+  "{n} flagged": {
+    "fr": "{n} signalé(s)",
+    "de": "{n} markiert",
+    "es": "{n} marcados",
+    "it": "{n} segnalati",
+    "ja": "{n}件フラグ",
+    "ko": "{n}건 표시",
+    "pt": "{n} assinalados"
+  },
+  "{n} min": {
+    "fr": "{n} min",
+    "de": "{n} Min.",
+    "es": "{n} min",
+    "it": "{n} min",
+    "ja": "{n}分",
+    "ko": "{n}분",
+    "pt": "{n} min"
+  },
+  "{n} more rows in the full module": {
+    "fr": "{n} lignes de plus dans le module complet",
+    "de": "{n} weitere Zeilen im vollständigen Modul",
+    "es": "{n} filas más en el módulo completo",
+    "it": "{n} altre righe nel modulo completo",
+    "ja": "完全モジュールにあと{n}行",
+    "ko": "전체 모듈에 {n}행 더 있음",
+    "pt": "mais {n} linhas no módulo completo"
+  },
+  "{n} of {total} turns": {
+    "fr": "{n} virages sur {total}",
+    "de": "{n} von {total} Schwüngen",
+    "es": "{n} de {total} curvas",
+    "it": "{n} di {total} curve",
+    "ja": "{total}ターン中{n}",
+    "ko": "{total}회 턴 중 {n}회",
+    "pt": "{n} de {total} curvas"
+  },
+  "{n} of {total} turns carried this fault": {
+    "fr": "{n} virages sur {total} présentaient ce défaut",
+    "de": "{n} von {total} Schwüngen trugen diesen Fehler",
+    "es": "{n} de {total} curvas llevaron este fallo",
+    "it": "{n} di {total} curve presentavano questo difetto",
+    "ja": "{total}ターン中{n}回でこの欠点",
+    "ko": "{total}회 턴 중 {n}회에서 이 결함",
+    "pt": "{n} de {total} curvas apresentaram este defeito"
+  },
+  "{n} reps": {
+    "fr": "{n} répétitions",
+    "de": "{n} Wiederholungen",
+    "es": "{n} reps",
+    "it": "{n} ripetizioni",
+    "ja": "{n}回",
+    "ko": "{n}회",
+    "pt": "{n} reps"
+  },
+  "{n} runs": {
+    "fr": "{n} descentes",
+    "de": "{n} Abfahrten",
+    "es": "{n} bajadas",
+    "it": "{n} discese",
+    "ja": "{n}本",
+    "ko": "{n}런",
+    "pt": "{n} descidas"
+  },
+  "{n} sessions": {
+    "fr": "{n} séances",
+    "de": "{n} Einheiten",
+    "es": "{n} sesiones",
+    "it": "{n} sessioni",
+    "ja": "{n}セッション",
+    "ko": "{n}세션",
+    "pt": "{n} sessões"
+  },
+  "{n} sets": {
+    "fr": "{n} séries",
+    "de": "{n} Sätze",
+    "es": "{n} series",
+    "it": "{n} serie",
+    "ja": "{n}セット",
+    "ko": "{n}세트",
+    "pt": "{n} séries"
+  },
+  "{n} turns": {
+    "fr": "{n} virages",
+    "de": "{n} Schwünge",
+    "es": "{n} curvas",
+    "it": "{n} curve",
+    "ja": "{n}ターン",
+    "ko": "{n}회 턴",
+    "pt": "{n} curvas"
+  },
+  "{n} turns · {left} left / {right} right": {
+    "fr": "{n} virages · {left} gauche / {right} droite",
+    "de": "{n} Schwünge · {left} links / {right} rechts",
+    "es": "{n} curvas · {left} izq. / {right} der.",
+    "it": "{n} curve · {left} sx / {right} dx",
+    "ja": "{n}ターン · 左 {left} / 右 {right}",
+    "ko": "{n}회 턴 · 좌 {left} / 우 {right}",
+    "pt": "{n} curvas · {left} esq. / {right} dir."
+  },
+  "{sec:.1f}s": {
+    "fr": "{sec:.1f}s",
+    "de": "{sec:.1f}s",
+    "es": "{sec:.1f}s",
+    "it": "{sec:.1f}s",
+    "ja": "{sec:.1f}秒",
+    "ko": "{sec:.1f}초",
+    "pt": "{sec:.1f}s"
+  },
+  "{sec:.1f}s  σ {std:.0f}": {
+    "fr": "{sec:.1f}s  σ {std:.0f}",
+    "de": "{sec:.1f}s  σ {std:.0f}",
+    "es": "{sec:.1f}s  σ {std:.0f}",
+    "it": "{sec:.1f}s  σ {std:.0f}",
+    "ja": "{sec:.1f}秒  σ {std:.0f}",
+    "ko": "{sec:.1f}초  σ {std:.0f}",
+    "pt": "{sec:.1f}s  σ {std:.0f}"
+  },
+  "{status} (failed, retry)": {
+    "fr": "{status} (échec, nouvel essai)",
+    "de": "{status} (fehlgeschlagen, erneut)",
+    "es": "{status} (fallido, reintentar)",
+    "it": "{status} (fallito, riprova)",
+    "ja": "{status}（失敗、再試行）",
+    "ko": "{status} (실패, 재시도)",
+    "pt": "{status} (falhou, tentar de novo)"
+  },
+  "—": {
+    "fr": "—",
+    "de": "—",
+    "es": "—",
+    "it": "—",
+    "ja": "—",
+    "ko": "—",
+    "pt": "—"
+  },
+  "Predicted passed": {
+    "fr": "Réussite prédite",
+    "de": "Voraussichtlich bestanden",
+    "es": "Aprobado previsto",
+    "it": "Superamento previsto",
+    "ja": "合格予測",
+    "ko": "통과 예측",
+    "pt": "Aprovado previsto"
+  },
+  "Predicted passed based on {current} result": {
+    "fr": "Réussite prédite d’après le résultat {current}",
+    "de": "Voraussichtlich bestanden anhand des {current}-Ergebnisses",
+    "es": "Aprobado previsto según el resultado {current}",
+    "it": "Superamento previsto in base al risultato {current}",
+    "ja": "{current}の結果に基づく合格予測",
+    "ko": "{current} 결과 기반 통과 예측",
+    "pt": "Aprovado previsto com base no resultado {current}"
+  },
+  "Correct result": {
+    "fr": "Corriger le résultat",
+    "de": "Ergebnis korrigieren",
+    "es": "Corregir el resultado",
+    "it": "Correggi il risultato",
+    "ja": "結果を修正",
+    "ko": "결과 수정",
+    "pt": "Corrigir o resultado"
+  },
+  "Select the actual stage:": {
+    "fr": "Sélectionnez le niveau réel :",
+    "de": "Tatsächliche Stufe wählen:",
+    "es": "Selecciona la etapa real:",
+    "it": "Seleziona il livello reale:",
+    "ja": "実際の段階を選択：",
+    "ko": "실제 단계를 선택하세요:",
+    "pt": "Selecione o nível real:"
+  },
+  "Detected stage: {name}": {
+    "fr": "Niveau détecté : {name}",
+    "de": "Erkannte Stufe: {name}",
+    "es": "Etapa detectada: {name}",
+    "it": "Livello rilevato: {name}",
+    "ja": "検出段階：{name}",
+    "ko": "감지된 단계: {name}",
+    "pt": "Nível detetado: {name}"
+  },
+  "Note (optional):": {
+    "fr": "Note (facultatif) :",
+    "de": "Hinweis (optional):",
+    "es": "Nota (opcional):",
+    "it": "Nota (facoltativa):",
+    "ja": "メモ（任意）：",
+    "ko": "메모(선택):",
+    "pt": "Nota (opcional):"
+  },
+  "e.g. This is a mogul skiing clip, not a basic glide": {
+    "fr": "ex. Ceci est un clip de ski de bosses, pas une glisse basique",
+    "de": "z. B. Das ist ein Buckel-Clip, kein einfaches Gleiten",
+    "es": "p. ej. Este es un clip de esquí de baches, no un desliz básico",
+    "it": "es. Questa è una clip di ski gobbe, non una scivolata base",
+    "ja": "例：これはモーグル滑走のクリップで、基本の直進滑走ではありません",
+    "ko": "예: 기본 활주가 아니라 모굴 스키 클립입니다",
+    "pt": "ex. Este é um clipe de ski de moguls, não um deslize básico"
+  },
+  "Your correction is saved locally and helps improve the detection algorithm.": {
+    "fr": "Votre correction est enregistrée localement et aide à améliorer l’algorithme de détection.",
+    "de": "Ihre Korrektur wird lokal gespeichert und hilft, den Erkennungsalgorithmus zu verbessern.",
+    "es": "Tu corrección se guarda en local y ayuda a mejorar el algoritmo de detección.",
+    "it": "La correzione è salvata in locale e aiuta a migliorare l’algoritmo di rilevamento.",
+    "ja": "修正は端末に保存され、検出アルゴリズムの改善に役立ちます。",
+    "ko": "수정 내용은 기기에 저장되며 감지 알고리즘 개선에 도움이 됩니다.",
+    "pt": "A sua correção é guardada localmente e ajuda a melhorar o algoritmo de deteção."
+  },
+  "Wedge mogul run": {
+    "fr": "Descente bosses en chasse-neige",
+    "de": "Buckelpiste im Pflug",
+    "es": "Bajada de baches en cuña",
+    "it": "Discesa gobbe a spazzaneve",
+    "ja": "プルーク・モーグル滑走",
+    "ko": "플루크 모굴 활주",
+    "pt": "Descida de moguls em cunha"
+  },
+  "Navigate mogul terrain with wedge or semi-parallel; absorb bumps and stay rhythmic. Early entry into mogul skiing after wedge turns.": {
+    "fr": "Naviguez le terrain de bosses en chasse-neige ou semi-parallèle ; absorbez les bosses et gardez le rythme. Entrée précoce en ski de bosses après les virages en chasse-neige.",
+    "de": "Buckelgelände im Pflug oder Halbparallel befahren; Stöße absorbieren und Rhythmus halten. Früher Einstieg ins Buckelfahren nach Pflugschwüngen.",
+    "es": "Navega terreno de baches en cuña o semiparalelo; absorbe los baches y mantén el ritmo. Entrada temprana al esquí de baches tras curvas en cuña.",
+    "it": "Affronta le gobbe a spazzaneve o semi-parallelo; assorbi i dossi e resta ritmico. Ingresso precoce nello ski gobbe dopo le curve a spazzaneve.",
+    "ja": "プルークまたはセミパラレルでモーグルをこなし、バンプを吸収してリズムを保つ。プルークターン後のモーグル入門。",
+    "ko": "플루크 또는 세미패러렐로 모굴 지형을 통과하며 범프를 흡수하고 리듬을 유지. 플루크 턴 이후 모굴 입문.",
+    "pt": "Navegue terreno de moguls em cunha ou semi-paralelo; absorva os bumps e mantenha o ritmo. Entrada precoce no ski de moguls após curvas em cunha."
+  },
+  "From wedge mogul or skid branch: absorb actively, stay on snow, do not jump.": {
+    "fr": "Depuis la branche bosses en chasse-neige ou dérapage : absorbez activement, restez sur la neige, ne sautez pas.",
+    "de": "Vom Pflug-Buckel- oder Drift-Zweig: aktiv absorbieren, auf dem Schnee bleiben, nicht springen.",
+    "es": "Desde la rama de baches en cuña o derrape: absorbe activamente, quédate en la nieve, no saltes.",
+    "it": "Dal ramo gobbe a spazzaneve o derapata: assorbi attivamente, resta sulla neve, non saltare.",
+    "ja": "プルーク・モーグルまたはスキッド枝から：積極的に吸収し雪面に残る。ジャンプしない。",
+    "ko": "플루크 모굴 또는 스키드 가지에서: 적극 흡수하고 눈 위에 머무르며 점프하지 마세요.",
+    "pt": "A partir do ramo de moguls em cunha ou derrapagem: absorva ativamente, fique na neve, não salte."
+  }
+}

@@ -446,6 +446,29 @@ def test_v3_report_renders_all_twelve_chapters() -> None:
     del app
 
 
+def test_ambiguous_summary_shows_possible_stage() -> None:
+    set_language("en")
+    app = QApplication.instance() or QApplication([])
+    panel = StageReportPanel()
+    report = _v3_report().model_copy(
+        update={
+            "confidence": 0.25,
+            "classification": _v3_report().classification.model_copy(
+                update={"ambiguous": True, "confidence": 0.25}
+            ),
+        }
+    )
+    panel.set_report(report)
+    summary = _panel_text(panel.chapter("summary"))
+    assert "Possible stage" in summary
+    assert "Parallel skiing" in summary
+    assert "Wedge christie" in summary
+    pies = panel.chapter("summary").findChildren(ScorePieChart)
+    captions = [pie._caption for pie in pies]
+    assert "Leading candidate" in captions
+    del app
+
+
 def test_legacy_report_degrades_without_v3_blocks() -> None:
     set_language("en")
     app = QApplication.instance() or QApplication([])

@@ -51,11 +51,15 @@ def format_frame_hud(
     return hud
 
 
-def overlay_frame(bgr, analysis: ClipAnalysis | None, t_ms: float):
-    result = nearest_result(analysis, t_ms)
-    if result is None:
+def overlay_frame(
+    bgr,
+    analysis: ClipAnalysis | None,
+    t_ms: float,
+):
+    frame, _index = nearest_frame(analysis, t_ms)
+    if frame is None:
         return bgr
-    return draw_poses(bgr, result)
+    return draw_poses(bgr, frame.result)
 
 
 def export_overlay(
@@ -113,13 +117,9 @@ def export_overlay(
             "libx264",
             "-pix_fmt",
             "yuv420p",
-            "-an",
             str(dest),
         ]
-        proc = subprocess.run(cmd, capture_output=True, text=True, check=False)
+        subprocess.run(cmd, check=True, capture_output=True)
         tmp.unlink(missing_ok=True)
-        if proc.returncode != 0 or not dest.is_file():
-            raise RuntimeError(proc.stderr[-2000:] if proc.stderr else "ffmpeg failed")
         return
-    dest.write_bytes(tmp.read_bytes())
-    tmp.unlink(missing_ok=True)
+    tmp.replace(dest.with_suffix(".avi") if dest.suffix.lower() != ".avi" else dest)

@@ -171,6 +171,92 @@ def bgr_to_pixmap(bgr: np.ndarray, max_width: int | None = None) -> QPixmap:
     return pix
 
 
+def scaled_display_size(width: int, height: int, max_width: int | None) -> tuple[int, int]:
+    """Match ``bgr_to_pixmap`` width/height after optional downscale."""
+    if max_width is None or width <= max_width:
+        return width, height
+    scaled_w = max_width
+    scaled_h = max(1, int(round(height * max_width / width)))
+    return scaled_w, scaled_h
+
+
+def fit_image_display(
+    image_width: int,
+    image_height: int,
+    widget_width: int,
+    widget_height: int,
+) -> tuple[float, float, float, float, float, int, int]:
+    """Return scale, x_offset, y_offset, display_w, display_h, image_w, image_h."""
+    if image_width <= 0 or image_height <= 0 or widget_width <= 0 or widget_height <= 0:
+        return (
+            1.0,
+            0.0,
+            0.0,
+            float(max(widget_width, 0)),
+            float(max(widget_height, 0)),
+            image_width,
+            image_height,
+        )
+    scale = min(widget_width / image_width, widget_height / image_height)
+    display_w = image_width * scale
+    display_h = image_height * scale
+    x_offset = (widget_width - display_w) / 2.0
+    y_offset = (widget_height - display_h) / 2.0
+    return scale, x_offset, y_offset, display_w, display_h, image_width, image_height
+
+
+def widget_point_to_image(
+    x: float,
+    y: float,
+    *,
+    scale: float,
+    x_offset: float,
+    y_offset: float,
+    display_width: float,
+    display_height: float,
+    image_width: int,
+    image_height: int,
+) -> tuple[float, float] | None:
+    """Map a widget click to full image pixels; None when outside the video area."""
+    if scale <= 0:
+        return None
+    local_x = x - x_offset
+    local_y = y - y_offset
+    if local_x < 0 or local_y < 0 or local_x > display_width or local_y > display_height:
+        return None
+    image_x = local_x / scale
+    image_y = local_y / scale
+    if image_x < 0 or image_y < 0 or image_x > image_width or image_y > image_height:
+        return None
+    return round(image_x, 1), round(image_y, 1)
+
+
+def image_point_to_widget(
+    x: float,
+    y: float,
+    *,
+    scale: float,
+    x_offset: float,
+    y_offset: float,
+) -> tuple[float, float]:
+    return x * scale + x_offset, y * scale + y_offset
+
+
+def canvas_point_to_image(
+    x: float,
+    y: float,
+    *,
+    image_width: int,
+    image_height: int,
+    display_width: int,
+    display_height: int,
+) -> tuple[float, float]:
+    """Map a click on a preview canvas back to full-resolution image pixels."""
+    sx = image_width / max(1, display_width)
+    sy = image_height / max(1, display_height)
+    return round(x * sx, 1), round(y * sy, 1)
+
+
 def format_duration_ms(duration_ms: int, *, image: bool = False) -> str:
     if image or duration_ms <= 0:
         return t("--")

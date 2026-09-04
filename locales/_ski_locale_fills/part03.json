@@ -1,0 +1,713 @@
+{
+  "Looks like": {
+    "fr": "Ressemble à",
+    "de": "Sieht aus wie",
+    "es": "Se parece a",
+    "it": "Sembra",
+    "ja": "似ている",
+    "ko": "비슷함",
+    "pt": "Parece"
+  },
+  "Low hands and pole rhythm": {
+    "fr": "Mains basses et rythme de bâton",
+    "de": "Tiefe Hände und Stockrhythmus",
+    "es": "Manos bajas y ritmo de bastón",
+    "it": "Mani basse e ritmo di bastoncino",
+    "ja": "低い手とポールリズム",
+    "ko": "낮은 손과 폴 리듬",
+    "pt": "Mãos baixas e ritmo de bastão"
+  },
+  "MM/dd/yyyy": {
+    "fr": "jj/MM/aaaa",
+    "de": "TT.MM.JJJJ",
+    "es": "dd/MM/aaaa",
+    "it": "gg/MM/aaaa",
+    "ja": "yyyy/MM/dd",
+    "ko": "yyyy.MM.dd",
+    "pt": "dd/MM/aaaa"
+  },
+  "MP4 (*.mp4)": {
+    "fr": "MP4 (*.mp4)",
+    "de": "MP4 (*.mp4)",
+    "es": "MP4 (*.mp4)",
+    "it": "MP4 (*.mp4)",
+    "ja": "MP4 (*.mp4)",
+    "ko": "MP4 (*.mp4)",
+    "pt": "MP4 (*.mp4)"
+  },
+  "Male": {
+    "fr": "Homme",
+    "de": "Männlich",
+    "es": "Hombre",
+    "it": "Uomo",
+    "ja": "男性",
+    "ko": "남성",
+    "pt": "Masculino"
+  },
+  "Mark in": {
+    "fr": "Marquer entrée",
+    "de": "In markieren",
+    "es": "Marcar entrada",
+    "it": "Segna in",
+    "ja": "インを指定",
+    "ko": "인 지정",
+    "pt": "Marcar entrada"
+  },
+  "Mark out": {
+    "fr": "Marquer sortie",
+    "de": "Out markieren",
+    "es": "Marcar salida",
+    "it": "Segna out",
+    "ja": "アウトを指定",
+    "ko": "아웃 지정",
+    "pt": "Marcar saída"
+  },
+  "Match {fit:.0f}% · gates {gate:.0f}% · prior {prior:.0f}%": {
+    "fr": "Correspondance {fit:.0f}% · critères {gate:.0f}% · prior {prior:.0f}%",
+    "de": "Treffer {fit:.0f}% · Gates {gate:.0f}% · Prior {prior:.0f}%",
+    "es": "Coincidencia {fit:.0f}% · criterios {gate:.0f}% · prior {prior:.0f}%",
+    "it": "Corrispondenza {fit:.0f}% · gate {gate:.0f}% · prior {prior:.0f}%",
+    "ja": "一致度 {fit:.0f}% · ゲート {gate:.0f}% · 事前 {prior:.0f}%",
+    "ko": "일치도 {fit:.0f}% · 게이트 {gate:.0f}% · 사전 {prior:.0f}%",
+    "pt": "Correspondência {fit:.0f}% · critérios {gate:.0f}% · prior {prior:.0f}%"
+  },
+  "Matched skis and separation. After passing, choose short skids or long-radius carve.": {
+    "fr": "Skis parallèles et séparation. Après validation, choisissez courts dérapages ou carving grand rayon.",
+    "de": "Parallele Ski und Abstand. Nach Bestehen: kurze Drifts oder Carving langer Radius.",
+    "es": "Esquís paralelos y separación. Tras aprobar, elige derrapes cortos o carving de radio largo.",
+    "it": "Sci paralleli e separazione. Dopo il passaggio, scegli derapate corte o carving a raggio lungo.",
+    "ja": "スキー平行と上下の分離。合格後はショートスキッドかロングカービングへ。",
+    "ko": "스키 평행과 분리. 통과 후 숏 스키드 또는 롱 카빙 선택.",
+    "pt": "Skis paralelos e separação. Após passar, escolha derrapagens curtas ou carving de raio longo."
+  },
+  "Mean stance between a full wedge and parallel.": {
+    "fr": "Écartement moyen entre chasse-neige plein et parallèle.",
+    "de": "Mittlere Standbreite zwischen vollem Pflug und Parallel.",
+    "es": "Base media entre cuña completa y paralelo.",
+    "it": "Base media tra spazzaneve pieno e parallelo.",
+    "ja": "フルプルークとパラレルの中間スタンス。",
+    "ko": "풀 플루크와 패러렐 사이 평균 스탠스.",
+    "pt": "Base média entre cunha completa e paralelo."
+  },
+  "Mean turn {sec:.2f}s": {
+    "fr": "Virage moyen {sec:.2f}s",
+    "de": "Mittlerer Schwung {sec:.2f}s",
+    "es": "Curva media {sec:.2f}s",
+    "it": "Curva media {sec:.2f}s",
+    "ja": "平均ターン {sec:.2f}s",
+    "ko": "평균 턴 {sec:.2f}s",
+    "pt": "Curva média {sec:.2f}s"
+  },
+  "Measured": {
+    "fr": "Mesuré",
+    "de": "Gemessen",
+    "es": "Medido",
+    "it": "Misurato",
+    "ja": "実測",
+    "ko": "실측",
+    "pt": "Medido"
+  },
+  "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)": {
+    "fr": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)",
+    "de": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)",
+    "es": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)",
+    "it": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)",
+    "ja": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)",
+    "ko": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)",
+    "pt": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)"
+  },
+  "Medium-radius carve": {
+    "fr": "Carving rayon moyen",
+    "de": "Carving mittlerer Radius",
+    "es": "Carving de radio medio",
+    "it": "Carving a raggio medio",
+    "ja": "ミドルターン・カービング",
+    "ko": "미들턴 카빙",
+    "pt": "Carving de raio médio"
+  },
+  "Medium-radius edge change": {
+    "fr": "Changement de carre rayon moyen",
+    "de": "Kantenwechsel mittlerer Radius",
+    "es": "Cambio de canto de radio medio",
+    "it": "Cambio di lama a raggio medio",
+    "ja": "ミドルのエッジチェンジ",
+    "ko": "미들 엣지 체인지",
+    "pt": "Mudança de canto de raio médio"
+  },
+  "Medium-turn cadence": {
+    "fr": "Cadence de virage moyen",
+    "de": "Mittelschwung-Kadenz",
+    "es": "Cadencia de curva media",
+    "it": "Cadenza di curva media",
+    "ja": "ミドルターンのリズム",
+    "ko": "미들턴 케이던스",
+    "pt": "Cadência de curva média"
+  },
+  "Missing": {
+    "fr": "Manquant",
+    "de": "Fehlt",
+    "es": "Falta",
+    "it": "Mancante",
+    "ja": "欠落",
+    "ko": "누락",
+    "pt": "Em falta"
+  },
+  "Missing model {path}. Run: python scripts/download_pose_landmarker.py": {
+    "fr": "Modèle manquant {path}. Lancez : python scripts/download_pose_landmarker.py",
+    "de": "Modell fehlt {path}. Ausführen: python scripts/download_pose_landmarker.py",
+    "es": "Falta el modelo {path}. Ejecuta: python scripts/download_pose_landmarker.py",
+    "it": "Modello mancante {path}. Esegui: python scripts/download_pose_landmarker.py",
+    "ja": "モデル欠落 {path}。実行: python scripts/download_pose_landmarker.py",
+    "ko": "모델 누락 {path}. 실행: python scripts/download_pose_landmarker.py",
+    "pt": "Modelo em falta {path}. Execute: python scripts/download_pose_landmarker.py"
+  },
+  "Moderate groomed blue run; for parallel, skids, and long-radius carve.": {
+    "fr": "Piste bleue damée modérée ; pour parallèle, dérapages et carving grand rayon.",
+    "de": "Mässige präparierte blaue Piste; für Parallel, Drift und Carving langer Radius.",
+    "es": "Pista azul pisada moderada; para paralelo, derrapes y carving de radio largo.",
+    "it": "Pista blu battuta moderata; per parallelo, derapate e carving a raggio lungo.",
+    "ja": "中程度の整備青斜面。パラレル・スキッド・ロングカービング向け。",
+    "ko": "중간 정비 블루; 패러렐·스키드·롱 카빙용.",
+    "pt": "Pista azul preparada moderada; para paralelo, derrapagens e carving de raio longo."
+  },
+  "Mogul": {
+    "fr": "Bosse",
+    "de": "Buckel",
+    "es": "Bache",
+    "it": "Gobba",
+    "ja": "モーグル",
+    "ko": "모글",
+    "pt": "Mogul"
+  },
+  "Mogul absorption": {
+    "fr": "Absorption bosses",
+    "de": "Buckel-Absorption",
+    "es": "Absorción en baches",
+    "it": "Assorbimento gobbe",
+    "ja": "モーグル吸収",
+    "ko": "모글 흡수",
+    "pt": "Absorção em moguls"
+  },
+  "Mogul fall-line": {
+    "fr": "Ligne de pente bosses",
+    "de": "Buckel-Falllinie",
+    "es": "Línea de máxima pendiente en baches",
+    "it": "Linea di massima pendenza sulle gobbe",
+    "ja": "モーグル・フォールライン",
+    "ko": "모글 폴라인",
+    "pt": "Linha de máxima pendente em moguls"
+  },
+  "Mogul field": {
+    "fr": "Champ de bosses",
+    "de": "Buckelfeld",
+    "es": "Campo de baches",
+    "it": "Campo di gobbe",
+    "ja": "モーグル畑",
+    "ko": "모글 필드",
+    "pt": "Campo de moguls"
+  },
+  "Mogul skiing": {
+    "fr": "Ski de bosses",
+    "de": "Buckelfahren",
+    "es": "Esquí en baches",
+    "it": "Sci sulle gobbe",
+    "ja": "モーグル滑走",
+    "ko": "모글 스키",
+    "pt": "Ski de moguls"
+  },
+  "Moguls": {
+    "fr": "Bosses",
+    "de": "Buckel",
+    "es": "Baches",
+    "it": "Gobbe",
+    "ja": "モーグル",
+    "ko": "모글",
+    "pt": "Moguls"
+  },
+  "Most turns finish with a shaped arc; a slip to recover is fine, a slipped descent is not.": {
+    "fr": "La plupart des virages finissent en arc formé ; un dérapage pour récupérer va, une descente en dérapage non.",
+    "de": "Die meisten Schwünge enden mit geformtem Bogen; kurzer Drift zum Retten ok, Drift-Abfahrt nicht.",
+    "es": "La mayoría de curvas terminan en arco; un derrape para recuperar vale, un descenso derrapado no.",
+    "it": "La maggior parte delle curve finisce con arco sagomato; una derapata per recuperare va bene, una discesa derapata no.",
+    "ja": "大半のターンは弧で終える。立て直しの側滑は可、ずっと横滑は不可。",
+    "ko": "대부분 턴은 아크로 마무리. 회복용 스키드는 OK, 계속 스키드 하강은 안 됨.",
+    "pt": "A maioria das curvas termina em arco; uma derrapagem para recuperar serve, uma descida derrapada não."
+  },
+  "Name": {
+    "fr": "Nom",
+    "de": "Name",
+    "es": "Nombre",
+    "it": "Nome",
+    "ja": "氏名",
+    "ko": "이름",
+    "pt": "Nome"
+  },
+  "Needs a scene fact": {
+    "fr": "Nécessite un fait de scène",
+    "de": "Braucht eine Geländeangabe",
+    "es": "Necesita un dato de escena",
+    "it": "Serve un fatto di scena",
+    "ja": "シーン情報が必要",
+    "ko": "장면 정보 필요",
+    "pt": "Precisa de um facto de cena"
+  },
+  "Needs a scene fact before it can be detected.": {
+    "fr": "Nécessite un fait de scène avant détection.",
+    "de": "Braucht eine Geländeangabe vor der Erkennung.",
+    "es": "Necesita un dato de escena antes de detectarse.",
+    "it": "Serve un fatto di scena prima del rilevamento.",
+    "ja": "検出前にシーン情報が必要です。",
+    "ko": "감지 전에 장면 정보가 필요합니다.",
+    "pt": "Precisa de um facto de cena antes de ser detetado."
+  },
+  "Needs the {name} checkpoint": {
+    "fr": "Nécessite le point de contrôle {name}",
+    "de": "Braucht den Checkpoint {name}",
+    "es": "Necesita el checkpoint {name}",
+    "it": "Serve il checkpoint {name}",
+    "ja": "チェックポイント「{name}」が必要",
+    "ko": "체크포인트 \"{name}\" 필요",
+    "pt": "Precisa do checkpoint {name}"
+  },
+  "Needs work": {
+    "fr": "À améliorer",
+    "de": "Verbesserungsbedarf",
+    "es": "Hay que mejorar",
+    "it": "Da migliorare",
+    "ja": "要改善",
+    "ko": "개선 필요",
+    "pt": "Precisa de trabalho"
+  },
+  "Needs {name} first": {
+    "fr": "Nécessite d’abord {name}",
+    "de": "Braucht zuerst {name}",
+    "es": "Necesita primero {name}",
+    "it": "Serve prima {name}",
+    "ja": "先に{name}が必要",
+    "ko": "먼저 {name} 필요",
+    "pt": "Precisa primeiro de {name}"
+  },
+  "Never ski off-piste alone; avoid avalanche terrain and sidecountry, and keep a partner in sight.": {
+    "fr": "Ne skiez jamais hors-piste seul ; évitez le terrain avalancheux et le sidecountry, gardez un partenaire en vue.",
+    "de": "Nie allein Offpiste; Lawinengelände und Sidecountry meiden, Partner in Sicht halten.",
+    "es": "Nunca esquíes fuera de pista solo; evita terreno de alud y sidecountry, mantén a un compañero a la vista.",
+    "it": "Non sciare mai fuori pista da solo; evita terreno valanghivo e sidecountry, tieni un partner in vista.",
+    "ja": "オフピステは単独禁止。雪崩地形・サイドカントリーを避け、仲間を視界に。",
+    "ko": "오프피스테는 혼자 금지. 눈사태 지형·사이드컨트리 피하고 파트너를 시야에.",
+    "pt": "Nunca esquie fora de pista sozinho; evite terreno de avalanche e sidecountry, mantenha um parceiro à vista."
+  },
+  "New profile": {
+    "fr": "Nouveau profil",
+    "de": "Neues Profil",
+    "es": "Nuevo perfil",
+    "it": "Nuovo profilo",
+    "ja": "新規プロフィール",
+    "ko": "새 프로필",
+    "pt": "Novo perfil"
+  },
+  "Next stage": {
+    "fr": "Niveau suivant",
+    "de": "Nächste Stufe",
+    "es": "Siguiente nivel",
+    "it": "Livello successivo",
+    "ja": "次の段階",
+    "ko": "다음 단계",
+    "pt": "Próximo nível"
+  },
+  "Next stage: {names}": {
+    "fr": "Niveau suivant : {names}",
+    "de": "Nächste Stufe: {names}",
+    "es": "Siguiente nivel: {names}",
+    "it": "Livello successivo: {names}",
+    "ja": "次の段階：{names}",
+    "ko": "다음 단계: {names}",
+    "pt": "Próximo nível: {names}"
+  },
+  "Next steps": {
+    "fr": "Prochaines étapes",
+    "de": "Nächste Schritte",
+    "es": "Próximos pasos",
+    "it": "Prossimi passi",
+    "ja": "次のステップ",
+    "ko": "다음 단계",
+    "pt": "Próximos passos"
+  },
+  "No box": {
+    "fr": "Pas de cadre",
+    "de": "Kein Rahmen",
+    "es": "Sin caja",
+    "it": "Nessun box",
+    "ja": "枠なし",
+    "ko": "박스 없음",
+    "pt": "Sem caixa"
+  },
+  "No braking scrape": {
+    "fr": "Pas de freinage en dérapage",
+    "de": "Kein Brems-Schaben",
+    "es": "Sin raspado de frenado",
+    "it": "Niente raschiata frenante",
+    "ja": "搓雪ブレーキなし",
+    "ko": "제동 스키드 없음",
+    "pt": "Sem raspagem de travagem"
+  },
+  "No camera found. On the emulator, use a virtual scene or webcam.": {
+    "fr": "Aucune caméra. Sur émulateur, utilisez une scène virtuelle ou une webcam.",
+    "de": "Keine Kamera. Am Emulator virtuelle Szene oder Webcam nutzen.",
+    "es": "No se encontró cámara. En el emulador usa escena virtual o webcam.",
+    "it": "Nessuna fotocamera. Sull’emulatore usa scena virtuale o webcam.",
+    "ja": "カメラなし。エミュレータでは仮想シーンかウェブカメラを。",
+    "ko": "카메라 없음. 에뮬레이터에서는 가상 장면 또는 웹캠을.",
+    "pt": "Nenhuma câmara. No emulador use cena virtual ou webcam."
+  },
+  "No linked turns were detected in this clip.": {
+    "fr": "Aucun virage enchaîné détecté dans ce clip.",
+    "de": "Keine verketteten Schwünge in diesem Clip.",
+    "es": "No se detectaron curvas enlazadas en este clip.",
+    "it": "Nessuna curva concatenata in questa clip.",
+    "ja": "このクリップに連続ターンは検出されませんでした。",
+    "ko": "이 클립에서 연결 턴이 감지되지 않았습니다.",
+    "pt": "Não foram detetadas curvas encadeadas neste clipe."
+  },
+  "No linked turns were detected, so turn-by-turn checkpoints are not scored. Film several linked turns.": {
+    "fr": "Aucun virage enchaîné : les points par virage ne sont pas notés. Filmez plusieurs virages enchaînés.",
+    "de": "Keine verketteten Schwünge: Turn-Checkpoints unbewertet. Mehrere verkettete Schwünge filmen.",
+    "es": "Sin curvas enlazadas: los checkpoints por curva no se puntúan. Filma varias curvas enlazadas.",
+    "it": "Senza curve concatenate: i checkpoint per curva non sono valutati. Riprendi più curve concatenate.",
+    "ja": "連続ターンなしのため逐ターン採点なし。連続ターンを複数撮ってください。",
+    "ko": "연결 턴이 없어 턴별 채점 없음. 연결 턴을 여러 개 촬영하세요.",
+    "pt": "Sem curvas encadeadas: checkpoints por curva não pontuados. Filme várias curvas encadeadas."
+  },
+  "No pose": {
+    "fr": "Pas de pose",
+    "de": "Keine Pose",
+    "es": "Sin pose",
+    "it": "Nessuna posa",
+    "ja": "姿勢なし",
+    "ko": "자세 없음",
+    "pt": "Sem postura"
+  },
+  "No preview": {
+    "fr": "Pas d’aperçu",
+    "de": "Keine Vorschau",
+    "es": "Sin vista previa",
+    "it": "Nessuna anteprima",
+    "ja": "プレビューなし",
+    "ko": "미리보기 없음",
+    "pt": "Sem pré-visualização"
+  },
+  "No stage report yet. Analyze a clip offline first.": {
+    "fr": "Pas encore de rapport. Analysez d’abord un clip hors ligne.",
+    "de": "Noch kein Stufenbericht. Zuerst Clip offline analysieren.",
+    "es": "Aún no hay informe. Analiza primero un clip sin conexión.",
+    "it": "Ancora nessun report. Analizza prima una clip offline.",
+    "ja": "段階レポートはまだありません。先にオフライン分析を。",
+    "ko": "아직 단계 리포트 없음. 먼저 오프라인 분석을.",
+    "pt": "Ainda sem relatório. Analise primeiro um clipe offline."
+  },
+  "No terrain suggestion at this stage; use the runs you already ski well.": {
+    "fr": "Pas de suggestion de terrain à ce niveau ; utilisez les pistes que vous maîtrisez.",
+    "de": "Kein Geländevorschlag auf dieser Stufe; fahre Pisten, die du schon gut kannst.",
+    "es": "Sin sugerencia de terreno; usa las pistas que ya esquías bien.",
+    "it": "Nessun suggerimento di terreno; usa le piste che già padroneggi.",
+    "ja": "この段階では地形指定なし。得意なコースで練習を。",
+    "ko": "이 단계에는 지형 제안 없음. 이미 잘 타는 슬로프에서.",
+    "pt": "Sem sugestão de terreno; use as pistas que já domina."
+  },
+  "No turns were segmented in this clip.": {
+    "fr": "Aucun virage segmenté dans ce clip.",
+    "de": "Keine Schwünge in diesem Clip segmentiert.",
+    "es": "No se segmentaron curvas en este clip.",
+    "it": "Nessuna curva segmentata in questa clip.",
+    "ja": "このクリップではターンが切り出せませんでした。",
+    "ko": "이 클립에서 턴이 분할되지 않았습니다.",
+    "pt": "Não foram segmentadas curvas neste clipe."
+  },
+  "Non-slip floor; a handhold nearby helps.": {
+    "fr": "Sol antidérapant ; une prise à portée aide.",
+    "de": "Rutschfester Boden; Griff in der Nähe hilft.",
+    "es": "Suelo antideslizante; un agarre cerca ayuda.",
+    "it": "Pavimento antiscivolo; un appoggio vicino aiuta.",
+    "ja": "滑りにくい床。近くに手すりがあると安心。",
+    "ko": "미끄럼 방지 바닥. 근처에 손잡이가 있으면 좋습니다.",
+    "pt": "Chão antiderrapante; um apoio perto ajuda."
+  },
+  "Not applicable": {
+    "fr": "Non applicable",
+    "de": "Nicht anwendbar",
+    "es": "No aplicable",
+    "it": "Non applicabile",
+    "ja": "対象外",
+    "ko": "해당 없음",
+    "pt": "Não aplicável"
+  },
+  "Not applicable at this age.": {
+    "fr": "Non applicable à cet âge.",
+    "de": "In diesem Alter nicht anwendbar.",
+    "es": "No aplicable a esta edad.",
+    "it": "Non applicabile a questa età.",
+    "ja": "この年齢では対象外。",
+    "ko": "이 나이에는 해당 없음.",
+    "pt": "Não aplicável nesta idade."
+  },
+  "Not judged from a clip": {
+    "fr": "Non jugeable depuis un clip",
+    "de": "Aus einem Clip nicht beurteilbar",
+    "es": "No se juzga desde un clip",
+    "it": "Non giudicabile da una clip",
+    "ja": "クリップから判定不可",
+    "ko": "클립으로 판정 불가",
+    "pt": "Não julgável a partir de um clipe"
+  },
+  "Not measured": {
+    "fr": "Non mesuré",
+    "de": "Nicht gemessen",
+    "es": "No medido",
+    "it": "Non misurato",
+    "ja": "未測定",
+    "ko": "미측정",
+    "pt": "Não medido"
+  },
+  "Not measured in this clip.": {
+    "fr": "Non mesuré dans ce clip.",
+    "de": "In diesem Clip nicht gemessen.",
+    "es": "No medido en este clip.",
+    "it": "Non misurato in questa clip.",
+    "ja": "このクリップでは未測定。",
+    "ko": "이 클립에서는 미측정.",
+    "pt": "Não medido neste clipe."
+  },
+  "Not passed — train the lowest-scoring checkpoint.": {
+    "fr": "Non réussi — entraînez le point le plus faible.",
+    "de": "Nicht bestanden — niedrigsten Checkpoint trainieren.",
+    "es": "No aprobado — entrena el checkpoint más bajo.",
+    "it": "Non superato — allena il checkpoint più basso.",
+    "ja": "未合格——得点最低のチェックポイントを訓練。",
+    "ko": "미통과 — 최저점 체크포인트를 훈련하세요.",
+    "pt": "Não aprovado — treine o checkpoint com pior nota."
+  },
+  "Not rated": {
+    "fr": "Non noté",
+    "de": "Nicht bewertet",
+    "es": "Sin calificar",
+    "it": "Non valutato",
+    "ja": "未評価",
+    "ko": "미평가",
+    "pt": "Não classificado"
+  },
+  "Not set": {
+    "fr": "Non renseigné",
+    "de": "Nicht gesetzt",
+    "es": "No definido",
+    "it": "Non impostato",
+    "ja": "未設定",
+    "ko": "미설정",
+    "pt": "Não definido"
+  },
+  "Not sure": {
+    "fr": "Pas sûr",
+    "de": "Unsicher",
+    "es": "No seguro",
+    "it": "Non sicuro",
+    "ja": "不明",
+    "ko": "잘 모르겠음",
+    "pt": "Não tenho a certeza"
+  },
+  "Not yet": {
+    "fr": "Pas encore",
+    "de": "Noch nicht",
+    "es": "Todavía no",
+    "it": "Non ancora",
+    "ja": "まだ",
+    "ko": "아직",
+    "pt": "Ainda não"
+  },
+  "Note": {
+    "fr": "Note",
+    "de": "Hinweis",
+    "es": "Nota",
+    "it": "Nota",
+    "ja": "メモ",
+    "ko": "메모",
+    "pt": "Nota"
+  },
+  "Nothing could be measured for this stage in this clip; re-film before training to a number.": {
+    "fr": "Rien n’a pu être mesuré pour ce niveau ; refilmez avant de viser un chiffre.",
+    "de": "Für diese Stufe nichts messbar; neu filmen, bevor du auf eine Zahl trainierst.",
+    "es": "Nada medible para este nivel; vuelve a filmar antes de entrenar a un número.",
+    "it": "Nulla misurabile per questo livello; riprendi prima di allenarti su un numero.",
+    "ja": "この段階の指標は測れませんでした。数値練習の前に撮り直してください。",
+    "ko": "이 단계 지표를 측정할 수 없습니다. 숫자 훈련 전에 다시 촬영하세요.",
+    "pt": "Nada mensurável para este nível; volte a filmar antes de treinar para um número."
+  },
+  "OK": {
+    "fr": "OK",
+    "de": "OK",
+    "es": "OK",
+    "it": "OK",
+    "ja": "OK",
+    "ko": "확인",
+    "pt": "OK"
+  },
+  "Off-piste": {
+    "fr": "Hors-piste",
+    "de": "Offpiste",
+    "es": "Fuera de pista",
+    "it": "Fuori pista",
+    "ja": "オフピステ",
+    "ko": "오프피스테",
+    "pt": "Fora de pista"
+  },
+  "Off-piste (inside the resort boundary)": {
+    "fr": "Hors-piste (dans les limites de la station)",
+    "de": "Offpiste (innerhalb der Gebietsgrenze)",
+    "es": "Fuera de pista (dentro del dominio)",
+    "it": "Fuori pista (dentro del comprensorio)",
+    "ja": "オフピステ（ゲレンデ境界内）",
+    "ko": "오프피스테（리조트 경계 내）",
+    "pt": "Fora de pista (dentro do domínio)"
+  },
+  "Off-piste and soft snow": {
+    "fr": "Hors-piste et neige souple",
+    "de": "Offpiste und weicher Schnee",
+    "es": "Fuera de pista y nieve blanda",
+    "it": "Fuori pista e neve morbida",
+    "ja": "オフピステと柔らかい雪",
+    "ko": "오프피스테와 부드러운 눈",
+    "pt": "Fora de pista e neve macia"
+  },
+  "Ollie": {
+    "fr": "Ollie",
+    "de": "Ollie",
+    "es": "Ollie",
+    "it": "Ollie",
+    "ja": "オリ―",
+    "ko": "올리",
+    "pt": "Ollie"
+  },
+  "Play": {
+    "fr": "Lecture",
+    "de": "Wiedergabe",
+    "es": "Reproducir",
+    "it": "Play",
+    "ja": "再生",
+    "ko": "재생",
+    "pt": "Reproduzir"
+  },
+  "Pause": {
+    "fr": "Pause",
+    "de": "Pause",
+    "es": "Pausa",
+    "it": "Pausa",
+    "ja": "一時停止",
+    "ko": "일시정지",
+    "pt": "Pausa"
+  },
+  "Piste": {
+    "fr": "Piste",
+    "de": "Piste",
+    "es": "Pista",
+    "it": "Pista",
+    "ja": "ゲレンデ",
+    "ko": "슬로프",
+    "pt": "Pista"
+  },
+  "Park": {
+    "fr": "Park",
+    "de": "Park",
+    "es": "Park",
+    "it": "Park",
+    "ja": "パーク",
+    "ko": "파크",
+    "pt": "Park"
+  },
+  "Pending": {
+    "fr": "En attente",
+    "de": "Ausstehend",
+    "es": "Pendiente",
+    "it": "In attesa",
+    "ja": "保留",
+    "ko": "대기",
+    "pt": "Pendente"
+  },
+  "Pass": {
+    "fr": "Réussi",
+    "de": "Bestanden",
+    "es": "Aprobado",
+    "it": "Superato",
+    "ja": "合格",
+    "ko": "통과",
+    "pt": "Aprovado"
+  },
+  "Parallel skiing": {
+    "fr": "Ski parallèle",
+    "de": "Parallelfahren",
+    "es": "Esquí paralelo",
+    "it": "Sci parallelo",
+    "ja": "パラレル滑走",
+    "ko": "패러렐 스키",
+    "pt": "Ski paralelo"
+  },
+  "Parallel stance": {
+    "fr": "Écartement parallèle",
+    "de": "Parallel-Standbreite",
+    "es": "Base paralela",
+    "it": "Base parallela",
+    "ja": "パラレルスタンス",
+    "ko": "패러렐 스탠스",
+    "pt": "Base paralela"
+  },
+  "Packed": {
+    "fr": "Tassée",
+    "de": "Festgefahren",
+    "es": "Pisada",
+    "it": "Compatta",
+    "ja": "圧雪",
+    "ko": "다져진 눈",
+    "pt": "Compactada"
+  },
+  "Packed powder": {
+    "fr": "Poudreuse tassée",
+    "de": "Festgefahrener Pulver",
+    "es": "Polvo pisado",
+    "it": "Polvere compatta",
+    "ja": "圧実パウダー",
+    "ko": "다진 파우더",
+    "pt": "Powder compactada"
+  },
+  "Panning": {
+    "fr": "Panoramique",
+    "de": "Schwenken",
+    "es": "Paneo",
+    "it": "Panoramica",
+    "ja": "パン",
+    "ko": "패닝",
+    "pt": "Panorâmica"
+  },
+  "Panning camera": {
+    "fr": "Caméra en panoramique",
+    "de": "Schwenkende Kamera",
+    "es": "Cámara en paneo",
+    "it": "Camera in panoramica",
+    "ja": "パンカメラ",
+    "ko": "패닝 카메라",
+    "pt": "Câmara em panorâmica"
+  },
+  "Other": {
+    "fr": "Autre",
+    "de": "Divers",
+    "es": "Otro",
+    "it": "Altro",
+    "ja": "その他",
+    "ko": "기타",
+    "pt": "Outro"
+  },
+  "Out": {
+    "fr": "Sortie",
+    "de": "Out",
+    "es": "Salida",
+    "it": "Out",
+    "ja": "アウト",
+    "ko": "아웃",
+    "pt": "Saída"
+  }
+}

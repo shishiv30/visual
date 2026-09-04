@@ -286,20 +286,29 @@ def app_stylesheet() -> str:
     QLabel#statusChip[kind="pending"] { background: transparent; color: #9e9e9e; }
     QLabel#statusChip[kind="processing"] { background: transparent; color: #ce93d8; }
     QLabel#statusChip[kind="done"] { background: transparent; color: #ce93d8; }
+    QWidget#playerFooter {
+        background: #121212;
+    }
+    QSplitter#playerSplit::handle {
+        background: #2a2a2a;
+        height: 2px;
+    }
     QWidget#playerChrome {
-        background: transparent;
+        background: #121212;
+        border-top: 1px solid #2a2a2a;
         border-radius: 0;
     }
     QWidget#playerChrome QPushButton, QWidget#playerChrome QComboBox, QWidget#playerChrome QLabel {
         color: #f5f5f5;
-        background: transparent;
-        border: none;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid #3a3a3a;
+        border-radius: 6px;
     }
-    QWidget#playerChrome QPushButton:hover { background: rgba(255, 255, 255, 0.12); }
+    QWidget#playerChrome QPushButton:hover { background: rgba(255, 255, 255, 0.14); }
     QWidget#playerChrome QPushButton#frameLocator {
         color: #f5f5f5;
-        background: transparent;
-        border: 1px solid #f5f5f5;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid #3a3a3a;
         border-radius: 12px;
         padding: 2px 10px;
         min-height: 24px;

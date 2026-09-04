@@ -1,0 +1,134 @@
+[
+  {
+    "en": "skid",
+    "zh": "搓雪"
+  },
+  {
+    "en": "switch",
+    "zh": "倒滑"
+  },
+  {
+    "en": "wedge",
+    "zh": "犁式"
+  },
+  {
+    "en": "wedge christie",
+    "zh": "半犁"
+  },
+  {
+    "en": "{fault} in {n} of {total} transitions",
+    "zh": "{total} 次换刃中有 {n} 次出现{fault}"
+  },
+  {
+    "en": "{head} and {tail}",
+    "zh": "{head}和{tail}"
+  },
+  {
+    "en": "{lo} to {hi}",
+    "zh": "{lo} 到 {hi}"
+  },
+  {
+    "en": "{n} flagged",
+    "zh": "{n} 个有问题"
+  },
+  {
+    "en": "{n} min",
+    "zh": "{n} 分钟"
+  },
+  {
+    "en": "{n} more rows in the full module",
+    "zh": "完整模块中还有 {n} 行"
+  },
+  {
+    "en": "{n} of {total} turns",
+    "zh": "{total} 个转弯中有 {n} 个"
+  },
+  {
+    "en": "{n} of {total} turns carried this fault",
+    "zh": "{total} 个弯中有 {n} 个出现该问题"
+  },
+  {
+    "en": "{n} reps",
+    "zh": "{n} 次"
+  },
+  {
+    "en": "{n} runs",
+    "zh": "{n} 趟"
+  },
+  {
+    "en": "{n} sessions",
+    "zh": "{n} 次训练"
+  },
+  {
+    "en": "{n} sets",
+    "zh": "{n} 组"
+  },
+  {
+    "en": "{n} turns",
+    "zh": "{n} 个弯"
+  },
+  {
+    "en": "{n} turns · {left} left / {right} right",
+    "zh": "{n} 个弯 · 左 {left} / 右 {right}"
+  },
+  {
+    "en": "{sec:.1f}s",
+    "zh": "{sec:.1f}秒"
+  },
+  {
+    "en": "{sec:.1f}s  σ {std:.0f}",
+    "zh": "{sec:.1f}秒  σ {std:.0f}"
+  },
+  {
+    "en": "{status} (failed, retry)",
+    "zh": "{status}（失败，可重试）"
+  },
+  {
+    "en": "—",
+    "zh": "—"
+  },
+  {
+    "en": "Predicted passed",
+    "zh": "预判已通过"
+  },
+  {
+    "en": "Predicted passed based on {current} result",
+    "zh": "根据{current}表现预判为已通过"
+  },
+  {
+    "en": "Correct result",
+    "zh": "纠正检测结果"
+  },
+  {
+    "en": "Select the actual stage:",
+    "zh": "选择实际阶段："
+  },
+  {
+    "en": "Detected stage: {name}",
+    "zh": "检测阶段：{name}"
+  },
+  {
+    "en": "Note (optional):",
+    "zh": "备注（可选）："
+  },
+  {
+    "en": "e.g. This is a mogul skiing clip, not a basic glide",
+    "zh": "例如：这是蘑菇滑雪视频，不是基本滑行"
+  },
+  {
+    "en": "Your correction is saved locally and helps improve the detection algorithm.",
+    "zh": "您的纠正已保存到本地，将用于改善检测算法。"
+  },
+  {
+    "en": "Wedge mogul run",
+    "zh": "犁式雪包滑行"
+  },
+  {
+    "en": "Navigate mogul terrain with wedge or semi-parallel; absorb bumps and stay rhythmic. Early entry into mogul skiing after wedge turns.",
+    "zh": "以犁式或半犁在雪包地形中保持节奏，吸收冲击。从犁式转弯直接进入雪包训练的早期入口。"
+  },
+  {
+    "en": "From wedge mogul or skid branch: absorb actively, stay on snow, do not jump.",
+    "zh": "从犁式雪包或搓雪枝进入：主动吸收贴雪，保持节奏，不要跳。"
+  }
+]

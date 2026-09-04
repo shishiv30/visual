@@ -1554,11 +1554,11 @@
     },
     {
      "stage_id": "pizza",
-     "score": 0.583,
-     "fit": 0.743,
-     "gate_ratio": 0.333,
+     "score": 0.684,
+     "fit": 0.78,
+     "gate_ratio": 0.6,
      "prior": 0.5,
-     "separating_metric_id": "stance_width",
+     "separating_metric_id": "wedge_angle",
      "rejected_reason": ""
     },
     {

@@ -1,4 +1,4 @@
-"""Playback with COCO-17 overlay and floating chrome."""
+"""Playback with COCO-17 overlay; controls sit below the video (not over it)."""
 
 from __future__ import annotations
 
@@ -8,19 +8,18 @@ from typing import Literal, Never
 from urllib.parse import quote
 
 import cv2
-from PySide6.QtCore import QEvent, Qt, QTimer, QUrl, Signal
+from PySide6.QtCore import QSize, Qt, QTimer, QUrl, Signal
 from PySide6.QtGui import QColor, QDesktopServices, QGuiApplication, QPainter, QPixmap, QResizeEvent
 from PySide6.QtWidgets import (
     QComboBox,
     QFileDialog,
-    QGridLayout,
     QHBoxLayout,
     QLabel,
     QMenu,
     QMessageBox,
     QPushButton,
     QSizePolicy,
-    QToolTip,
+    QSplitter,
     QVBoxLayout,
     QWidget,
 )
@@ -62,12 +61,17 @@ from clients.windows.ui.qtutil import (
 )
 from clients.windows.ui.report_panel import StageReportPanel
 from clients.windows.ui.theme import LIGHT_PURPLE, PAGE_INSET, SPACE_CHAPTER, UNKNOWN_GRAY, WATERMELON
-from clients.windows.ui.timeline_strip import TimelineStrip
+from clients.windows.ui.timeline_strip import FILM_H, RULER_H, TimelineStrip
 from core.i18n import t
 from core.sports.assess import assess_clip
 from schemas.clip_analysis import ClipAnalysis
 
 CHROME_ICON = QColor("#F5F5F5")
+CHROME_BAR_H = 48
+TIMELINE_BAR_H = RULER_H + FILM_H + 14
+PLAYER_FOOTER_H = CHROME_BAR_H + TIMELINE_BAR_H
+CHROME_ICON_SIZE = QSize(22, 22)
+CHROME_BTN_SIZE = QSize(36, 36)
 
 SPEEDS = (0.5, 0.75, 1.0, 1.25, 1.5, 2.0)
 #: ``(target_id, display key, url template)``. The display key is the English
@@ -86,13 +90,13 @@ SHARE_TARGETS = (
     ),
 )
 
-
 class VideoView(QWidget):
     clicked = Signal()
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self._source: QPixmap | None = None
+        self._draw_transform: tuple[float, float, float] | None = None
         self.setMinimumSize(240, 135)
         self.setSizePolicy(
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding
@@ -103,6 +107,24 @@ class VideoView(QWidget):
         self._source = pixmap
         self.update()
 
+    def widget_to_image(self, wx: float, wy: float) -> tuple[float, float] | None:
+        if self._source is None or self._source.isNull():
+            return None
+        target_h = self.height()
+        if target_h <= 0:
+            return None
+        scaled = self._source.scaledToHeight(
+            target_h,
+            Qt.TransformationMode.SmoothTransformation,
+        )
+        x_offset = (self.width() - scaled.width()) / 2.0
+        if wx < x_offset or wx >= x_offset + scaled.width():
+            return None
+        if wy < 0 or wy >= scaled.height():
+            return None
+        scale = scaled.height() / max(1, self._source.height())
+        return (float((wx - x_offset) / scale), float(wy / scale))
+
     def resizeEvent(self, event) -> None:
         super().resizeEvent(event)
         self.update()
@@ -111,15 +133,19 @@ class VideoView(QWidget):
         painter = QPainter(self)
         painter.fillRect(self.rect(), QColor("#000000"))
         if self._source is None or self._source.isNull():
+            self._draw_transform = None
             return
         target_h = self.height()
         if target_h <= 0:
+            self._draw_transform = None
             return
         scaled = self._source.scaledToHeight(
             target_h,
             Qt.TransformationMode.SmoothTransformation,
         )
         x = (self.width() - scaled.width()) // 2
+        scale = scaled.height() / max(1, self._source.height())
+        self._draw_transform = (scale, float(x), 0.0)
         painter.setClipRect(self.rect())
         painter.drawPixmap(x, 0, scaled)
 
@@ -153,9 +179,6 @@ class PlayerPage(QWidget):
         self._hud_pose_i: int | None = None
         self._timer = QTimer(self)
         self._timer.timeout.connect(self._tick)
-        self._hide_timer = QTimer(self)
-        self._hide_timer.setSingleShot(True)
-        self._hide_timer.timeout.connect(self._hide_chrome)
 
         self._view = VideoView()
         self._view.clicked.connect(self._on_view_click)
@@ -202,10 +225,14 @@ class PlayerPage(QWidget):
         self._chrome = QWidget()
         self._chrome.setObjectName("playerChrome")
         self._chrome.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-        self._chrome.setAutoFillBackground(False)
-        self._chrome.installEventFilter(self)
+        self._chrome.setFixedHeight(CHROME_BAR_H)
+        self._chrome.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Fixed,
+        )
         bar = QHBoxLayout(self._chrome)
-        bar.setContentsMargins(8, 8, 8, 8)
+        bar.setContentsMargins(4, 4, 4, 4)
+        bar.setSpacing(4)
         bar.addWidget(self._play_btn)
         bar.addWidget(self._locator_btn)
         bar.addStretch(1)
@@ -216,23 +243,45 @@ class PlayerPage(QWidget):
         bar.addWidget(self._download_btn)
         bar.addWidget(self._share_btn)
 
-        stage = QWidget()
-        stage.setStyleSheet("background:#000;")
-        grid = QGridLayout(stage)
-        grid.setContentsMargins(0, 0, 0, 0)
-        grid.addWidget(self._view, 0, 0)
-        grid.addWidget(self._chrome, 0, 0, alignment=Qt.AlignmentFlag.AlignBottom)
+        video_stage = QWidget()
+        video_stage.setStyleSheet("background:#000;")
+        video_layout = QVBoxLayout(video_stage)
+        video_layout.setContentsMargins(0, 0, 0, 0)
+        video_layout.setSpacing(0)
+        video_layout.addWidget(self._view, stretch=1)
 
         self._timeline = TimelineStrip()
         self._timeline.set_trim_enabled(False)
+        self._timeline.setFixedHeight(TIMELINE_BAR_H)
+        self._timeline.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Fixed,
+        )
         self._timeline.playheadChanged.connect(self._on_timeline_playhead)
+
+        self._player_footer = QWidget()
+        self._player_footer.setObjectName("playerFooter")
+        footer_layout = QVBoxLayout(self._player_footer)
+        footer_layout.setContentsMargins(0, 0, 0, 0)
+        footer_layout.setSpacing(0)
+        footer_layout.addWidget(self._chrome)
+        footer_layout.addWidget(self._timeline)
+        self._player_footer.setFixedHeight(PLAYER_FOOTER_H)
+
+        self._player_split = QSplitter(Qt.Orientation.Vertical)
+        self._player_split.setObjectName("playerSplit")
+        self._player_split.setChildrenCollapsible(False)
+        self._player_split.addWidget(video_stage)
+        self._player_split.addWidget(self._player_footer)
+        self._player_split.setStretchFactor(0, 1)
+        self._player_split.setStretchFactor(1, 0)
+        self._player_split.setSizes([480, PLAYER_FOOTER_H])
 
         player_block = QWidget()
         player_layout = QVBoxLayout(player_block)
         player_layout.setContentsMargins(0, 0, 0, 0)
         player_layout.setSpacing(0)
-        player_layout.addWidget(stage, stretch=1)
-        player_layout.addWidget(self._timeline)
+        player_layout.addWidget(self._player_split)
 
         self._report = StageReportPanel()
         self._report.setSizePolicy(
@@ -245,8 +294,8 @@ class PlayerPage(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(PAGE_INSET, PAGE_INSET, PAGE_INSET, PAGE_INSET)
         layout.setSpacing(SPACE_CHAPTER)
-        layout.addWidget(player_block, stretch=1)
-        layout.addWidget(self._report, stretch=2)
+        layout.addWidget(player_block, stretch=2)
+        layout.addWidget(self._report, stretch=1)
         self._back_btn = make_floating_back(self)
         self._back_btn.clicked.connect(self._on_back)
         self.retranslate()
@@ -255,13 +304,14 @@ class PlayerPage(QWidget):
         super().resizeEvent(event)
         place_floating_back(self._back_btn, self)
 
-    def eventFilter(self, watched, event) -> bool:
-        if watched is self._chrome and event.type() in (
-            QEvent.Type.MouseButtonPress,
-            QEvent.Type.MouseMove,
-        ):
-            self._on_chrome_activity()
-        return super().eventFilter(watched, event)
+    def _style_chrome_tool(self, button: QPushButton, *, wide: bool = False) -> None:
+        button.setFixedHeight(CHROME_BTN_SIZE.height())
+        if wide:
+            button.setMinimumWidth(72)
+            button.setMaximumWidth(120)
+        else:
+            button.setFixedWidth(CHROME_BTN_SIZE.width())
+        button.setIconSize(CHROME_ICON_SIZE)
 
     def retranslate(self) -> None:
         self._sync_play_button()
@@ -269,21 +319,28 @@ class PlayerPage(QWidget):
         self._download_btn.setText("")
         self._download_btn.setToolTip(t("Download"))
         set_button_icon(self._download_btn, "download", CHROME_ICON, restyle=False)
+        self._style_chrome_tool(self._download_btn)
         self._share_btn.setText("")
         self._share_btn.setToolTip(t("Share"))
         set_button_icon(self._share_btn, "share", CHROME_ICON, restyle=False)
+        self._style_chrome_tool(self._share_btn)
         self._locator_btn.setToolTip(t("Copy frame locator"))
         set_button_icon(self._locator_btn, "tag", CHROME_ICON, restyle=False)
+        self._style_chrome_tool(self._locator_btn, wide=True)
         self._like_btn.setText("")
         self._like_btn.setToolTip(t("Like"))
         set_button_icon(self._like_btn, "thumb_up", LIGHT_PURPLE, restyle=False)
+        self._style_chrome_tool(self._like_btn)
         self._unlike_btn.setText("")
         self._unlike_btn.setToolTip(t("Unlike"))
         set_button_icon(self._unlike_btn, "thumb_down", WATERMELON, restyle=False)
+        self._style_chrome_tool(self._unlike_btn)
         self._skeleton_btn.setText("")
         self._skeleton_btn.setToolTip(t("Bad skeleton"))
         set_button_icon(self._skeleton_btn, "reanalyze", UNKNOWN_GRAY, restyle=False)
+        self._style_chrome_tool(self._skeleton_btn)
         self._speed_box.setToolTip(t("Speed"))
+        self._speed_box.setMinimumWidth(72)
         self._report.retranslate()
 
     def _set_playback_controls_visible(self, visible: bool) -> None:
@@ -299,6 +356,7 @@ class PlayerPage(QWidget):
         else:
             set_button_icon(self._play_btn, "play", CHROME_ICON, restyle=False)
             self._play_btn.setToolTip(t("Play"))
+        self._style_chrome_tool(self._play_btn)
 
     def open_clip(self, clip_id: str) -> None:
         self._release()
@@ -319,7 +377,6 @@ class PlayerPage(QWidget):
             self._lo_frame = 0
             self._hi_frame = 0
             self._set_playback_controls_visible(False)
-            self._show_chrome(auto_hide=False)
             return
         self._set_playback_controls_visible(True)
         self._cap = cv2.VideoCapture(str(path))
@@ -342,7 +399,6 @@ class PlayerPage(QWidget):
         self._seek(self._lo_frame)
         self._timer.start(self._interval_ms())
         self._sync_play_button()
-        self._show_chrome(auto_hide=True)
 
     def reproject_report(self) -> None:
         """Rebuild stage report strings for the active UI language."""
@@ -370,22 +426,7 @@ class PlayerPage(QWidget):
         self.back_requested.emit()
 
     def _on_view_click(self) -> None:
-        self._show_chrome(auto_hide=self._playing)
-
-    def _on_chrome_activity(self) -> None:
-        if self._playing:
-            self._hide_timer.start(3000)
-
-    def _show_chrome(self, *, auto_hide: bool) -> None:
-        self._chrome.show()
-        if auto_hide and self._playing:
-            self._hide_timer.start(3000)
-        else:
-            self._hide_timer.stop()
-
-    def _hide_chrome(self) -> None:
-        if self._playing and not self._ended:
-            self._chrome.hide()
+        pass
 
     def _toggle(self) -> None:
         if self._meta is None or self._meta.kind == ClipKind.IMAGE:
@@ -396,15 +437,12 @@ class PlayerPage(QWidget):
         self._playing = not self._playing
         if self._playing:
             self._timer.start(self._interval_ms())
-            self._show_chrome(auto_hide=True)
         else:
             self._timer.stop()
-            self._show_chrome(auto_hide=False)
         self._sync_play_button()
 
     def _on_speed(self, _index: int) -> None:
         self._speed = float(self._speed_box.currentData() or 1.0)
-        self._on_chrome_activity()
         if self._playing:
             self._timer.start(self._interval_ms())
 
@@ -435,8 +473,8 @@ class PlayerPage(QWidget):
         ok, bgr = self._cap.read()
         if ok and bgr is not None:
             t_ms = float(self._cap.get(cv2.CAP_PROP_POS_MSEC))
-            self._show(bgr, t_ms, video_frame=frame_index)
-        self._on_chrome_activity()
+            displayed = max(0, int(self._cap.get(cv2.CAP_PROP_POS_FRAMES)) - 1)
+            self._show(bgr, t_ms, video_frame=displayed)
 
     def _tick(self) -> None:
         if self._cap is None or not self._playing:
@@ -447,7 +485,6 @@ class PlayerPage(QWidget):
             self._ended = True
             self._timer.stop()
             self._sync_play_button()
-            self._show_chrome(auto_hide=False)
             return
         t_ms = float(self._cap.get(cv2.CAP_PROP_POS_MSEC))
         displayed = max(0, int(self._cap.get(cv2.CAP_PROP_POS_FRAMES)) - 1)
@@ -456,7 +493,6 @@ class PlayerPage(QWidget):
             self._ended = True
             self._timer.stop()
             self._sync_play_button()
-            self._show_chrome(auto_hide=False)
             return
         self._show(bgr, t_ms, video_frame=displayed)
 
@@ -626,7 +662,6 @@ class PlayerPage(QWidget):
 
     def _release(self) -> None:
         self._timer.stop()
-        self._hide_timer.stop()
         self._playing = False
         self._ended = False
         if self._cap is not None:
@@ -634,7 +669,6 @@ class PlayerPage(QWidget):
             self._cap = None
         self._timeline.clear()
         self._sync_play_button()
-        self._chrome.show()
 
     def _refresh_report(self) -> None:
         self._report.set_report(self._report_model)

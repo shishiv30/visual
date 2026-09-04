@@ -29,7 +29,14 @@ from clients.windows.store.athletes import (
     list_athletes,
     upsert_athlete,
 )
-from clients.windows.store.library import ClipKind, ClipMeta, SeedMark, load_meta, media_path
+from clients.windows.store.library import (
+    ClipKind,
+    ClipMeta,
+    SeedMark,
+    load_analysis,
+    load_meta,
+    media_path,
+)
 from clients.windows.ui.qtutil import (
     bgr_to_pixmap,
     format_duration_ms,
@@ -42,6 +49,7 @@ from clients.windows.ui.seed_dialog import SeedCanvas
 from clients.windows.ui.theme import BLUE, PAGE_INSET, SPACE_PANEL, SPACE_TEXT
 from clients.windows.ui.timeline_strip import TimelineStrip
 from core.i18n import t
+from core.sports.metrics import compute_metrics
 from core.sports.scene import (
     SceneContext,
     SlopeBand,
@@ -51,6 +59,7 @@ from core.sports.scene import (
     parse_snow_surface,
     parse_terrain_type,
 )
+from core.sports.scene_infer import infer_scene_hints
 
 CONTROL_HEIGHT = 44
 DEFAULT_BIRTHDAY = QDate(1990, 1, 1)
@@ -115,7 +124,7 @@ class PreparePage(QWidget):
         self._hint = QLabel()
         self._hint.setWordWrap(True)
         blank = np.zeros((180, 320, 3), dtype=np.uint8)
-        self._canvas = SeedCanvas(bgr_to_pixmap(blank, max_width=720))
+        self._canvas = SeedCanvas(bgr_to_pixmap(blank))
         self._canvas.boxCommitted.connect(self._on_box_committed)
 
         self._time = QLabel()
@@ -212,14 +221,14 @@ class PreparePage(QWidget):
 
         bar = QHBoxLayout()
         bar.setSpacing(SPACE_TEXT)
-        bar.addWidget(self._start_btn)
         bar.addStretch(1)
+        bar.addWidget(self._start_btn)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(PAGE_INSET, PAGE_INSET, PAGE_INSET, PAGE_INSET)
         layout.setSpacing(SPACE_PANEL)
         layout.addWidget(self._hint)
-        layout.addWidget(self._canvas, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self._canvas, stretch=1)
         layout.addWidget(self._time)
         layout.addWidget(self._timeline)
         layout.addWidget(self._form_box)
@@ -237,7 +246,11 @@ class PreparePage(QWidget):
         place_floating_back(self._back_btn, self)
 
     def retranslate(self) -> None:
-        self._hint.setText(t("Click the filmstrip to seek; green diamonds are saved boxes (click to jump). Drag the blue start/end edges to trim. Shift+wheel zooms. Draw a person box — it saves for this frame; draw again on the same frame to replace."))
+        self._hint.setText(
+            t(
+                "Click the filmstrip to seek; green diamonds are saved boxes (click to jump). Drag the blue start/end edges to trim. Shift+wheel zooms. Draw a person box — it saves for this frame; draw again on the same frame to replace."
+            )
+        )
         self._start_btn.setText(t("Start analysis"))
         set_button_icon(self._start_btn, "ok", BLUE)
         style_floating_back(self._back_btn, tooltip=t("Back"))
@@ -308,6 +321,7 @@ class PreparePage(QWidget):
         elif self._meta.athlete:
             self._fill_from_dict(self._meta.athlete)
         self._fill_scene(self._meta.scene)
+        self._show_scene_hints(clip_id)
         if self._meta.kind == ClipKind.IMAGE:
             self._seeds = {0: loaded[0]} if loaded else {}
             bgr = cv2.imread(str(path))
@@ -364,7 +378,7 @@ class PreparePage(QWidget):
     def _show_bgr(self, bgr, t_ms: float, frame_index: int) -> None:
         self._t_ms = t_ms
         self._frame_index = frame_index
-        pix = bgr_to_pixmap(bgr, max_width=720)
+        pix = bgr_to_pixmap(bgr)
         self._canvas.set_frame(pix)
         mark = self._seeds.get(frame_index) or self._seed_near(t_ms)
         self._canvas.set_box_norm(None if mark is None else mark.box)
@@ -467,6 +481,28 @@ class PreparePage(QWidget):
         ):
             idx = combo.findData(NOT_SURE if value is None else value.value)
             combo.setCurrentIndex(max(0, idx))
+
+    def _show_scene_hints(self, clip_id: str) -> None:
+        base = t(
+            "Terrain, slope and snow are optional — set Terrain to Mogul run for mogul detection."
+        )
+        try:
+            analysis = load_analysis(clip_id)
+        except FileNotFoundError:
+            self._scene_hint.setText(base)
+            return
+        pack = compute_metrics(analysis, frame_stride=2)
+        hints = infer_scene_hints(pack)
+        if hints.confidence < 0.5 or not hints.snow_surface:
+            self._scene_hint.setText(base)
+            return
+        snow_key = hints.snow_surface.replace("_", " ").title()
+        terrain_key = (hints.terrain_type or "piste").replace("_", " ").title()
+        self._scene_hint.setText(
+            t("Suggested: {snow} / {terrain}", snow=snow_key, terrain=terrain_key)
+            + " — "
+            + base
+        )
 
     def _scene_payload(self) -> dict:
         """Scene block for ClipMeta. Not-sure picks stay None, never a guess."""

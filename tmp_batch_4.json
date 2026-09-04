@@ -1,0 +1,402 @@
+[
+  {
+    "en": "Round turns in soft snow",
+    "zh": "松软雪中转弯要圆"
+  },
+  {
+    "en": "Round, progressive long turns with parallel skis and inclination — coach heuristic, not a race carve score.",
+    "zh": "平行板内倾做圆顺大弯——教练经验估分，非竞速刻滑得分。"
+  },
+  {
+    "en": "Round, shallow bumps; absorb in a straight line first.",
+    "zh": "圆而浅的包，先直滑吸收。"
+  },
+  {
+    "en": "Runner-up",
+    "zh": "次匹配"
+  },
+  {
+    "en": "Safety",
+    "zh": "安全"
+  },
+  {
+    "en": "Saved profile",
+    "zh": "已存档案"
+  },
+  {
+    "en": "Scorable from the clip",
+    "zh": "可从视频评分"
+  },
+  {
+    "en": "Scoring rules (from knowledge base)",
+    "zh": "评分口径（知识库）"
+  },
+  {
+    "en": "Select the person",
+    "zh": "选择运动员"
+  },
+  {
+    "en": "Separated by",
+    "zh": "区分依据"
+  },
+  {
+    "en": "Session plan for this stage",
+    "zh": "本阶段课时安排"
+  },
+  {
+    "en": "Set aside because",
+    "zh": "排除原因"
+  },
+  {
+    "en": "Set the edge above the fall line so the ski grips before it points down the hill.",
+    "zh": "在过落差线之前就立好刃，让雪板先咬住雪面再指向坡下。"
+  },
+  {
+    "en": "Sets of 8–12 bumps; stop when form fades.",
+    "zh": "八到十二个包一组，累了就停。"
+  },
+  {
+    "en": "Setup",
+    "zh": "准备"
+  },
+  {
+    "en": "Sex is used only for fit guidance and the injury note; it never changes a score.",
+    "zh": "性别只用于装备贴合建议和受伤提示，绝不影响评分。"
+  },
+  {
+    "en": "Shallow C-turns while the wedge still brakes; load the outside ski.",
+    "zh": "在仍能刹车的前提下划浅 C，外侧板承重。"
+  },
+  {
+    "en": "Shallow C-turns; hip internal rotation steers; the wedge stays.",
+    "zh": "浅弧 C 弯，髋内旋导向，弯中保持犁。"
+  },
+  {
+    "en": "Shallow wedge C-turns",
+    "zh": "犁式浅弧 C 弯"
+  },
+  {
+    "en": "Share",
+    "zh": "分享"
+  },
+  {
+    "en": "Show skis",
+    "zh": "显示雪板"
+  },
+  {
+    "en": "Shin angle",
+    "zh": "小腿前倾角"
+  },
+  {
+    "en": "Short skidded turns",
+    "zh": "搓雪小弯滑雪"
+  },
+  {
+    "en": "Short skidded-turn rhythm",
+    "zh": "搓雪小弯节奏"
+  },
+  {
+    "en": "Short turns on a steep pitch: the upper body faces down the fall line and turn shape controls the speed.",
+    "zh": "陡坡上的小回转：上身朝向落差线，用转弯弧形控速。"
+  },
+  {
+    "en": "Short-carve cadence",
+    "zh": "小弯频率"
+  },
+  {
+    "en": "Short-radius carve",
+    "zh": "小弯刻滑"
+  },
+  {
+    "en": "Short-radius carve cadence",
+    "zh": "短半径刻滑节奏"
+  },
+  {
+    "en": "Short-radius skids for speed control; hockey stop required. Then moguls.",
+    "zh": "短半径搓雪控速；必须掌握冰球刹。过关可进雪包。"
+  },
+  {
+    "en": "Short-turn cadence",
+    "zh": "短弯节奏"
+  },
+  {
+    "en": "Shorten the legs at the crest, lengthen in the trough; stay on snow, do not jump.",
+    "zh": "包顶缩短腿、沟底伸长；腿贴雪，不要跳。"
+  },
+  {
+    "en": "Shorten the radius only after long-radius inclination works.",
+    "zh": "在大弯能倾之后缩短半径。"
+  },
+  {
+    "en": "Show you can stop on command with parallel skis (both directions).",
+    "zh": "展示能用平行板按指令急停（左右两侧）。"
+  },
+  {
+    "en": "Side or rear-quarter, whole run, little occlusion.",
+    "zh": "从侧面或斜后方拍完整段，少遮挡、光线足够。"
+  },
+  {
+    "en": "Sideslip and edge release",
+    "zh": "侧滑与放平雪板"
+  },
+  {
+    "en": "Single-leg strength for the christie close and carve outside ski.",
+    "zh": "练单腿力量，为半犁收板与刻滑外侧承重做准备。"
+  },
+  {
+    "en": "Single-mogul absorption",
+    "zh": "单包吸收"
+  },
+  {
+    "en": "Six large C-turns on a moderate pitch; longer outside leg.",
+    "zh": "中等坡画 6 个大 C，外侧腿更长。"
+  },
+  {
+    "en": "Six long turns on firm blue groomers; shorten the radius only while the track stays clean.",
+    "zh": "在硬实的中级压雪道上做六个大弧转弯；只有刻痕干净时才缩小半径。"
+  },
+  {
+    "en": "Six traverses per side; put the ski down if you wobble.",
+    "zh": "每侧 6 次斜滑降；失稳就放回双脚，不要硬撑。"
+  },
+  {
+    "en": "Skeleton quality",
+    "zh": "骨骼质量"
+  },
+  {
+    "en": "Ski length",
+    "zh": "雪板长度"
+  },
+  {
+    "en": "Ski length band: {low}-{high} cm",
+    "zh": "板长范围：{low}-{high} 厘米"
+  },
+  {
+    "en": "Ski label saved",
+    "zh": "雪板标注已保存"
+  },
+  {
+    "en": "Skill tree",
+    "zh": "进阶路线"
+  },
+  {
+    "en": "Slightly lower in the turn; elastic knees.",
+    "zh": "入弯略降重心，膝有弹性。"
+  },
+  {
+    "en": "Slip down and across, forward then back, with the torso facing downhill.",
+    "zh": "雪板横置向侧下方滑行，先向前再向后，上身始终朝向山下。"
+  },
+  {
+    "en": "Slope",
+    "zh": "坡度"
+  },
+  {
+    "en": "Slope band",
+    "zh": "坡度等级"
+  },
+  {
+    "en": "Slush",
+    "zh": "湿雪"
+  },
+  {
+    "en": "Snow and slope are optional — leave them at not sure and the report still runs.",
+    "zh": "雪面和坡度可以不填：保持“不确定”也能生成报告。"
+  },
+  {
+    "en": "Snow surface",
+    "zh": "雪面"
+  },
+  {
+    "en": "Soft",
+    "zh": "软雪"
+  },
+  {
+    "en": "Soft ankles, knees, and hips; center of mass over mid-foot.",
+    "zh": "踝膝髋微屈，重心在脚心，不后坐。"
+  },
+  {
+    "en": "Soft knees and ankles",
+    "zh": "膝踝微屈"
+  },
+  {
+    "en": "Soft snow",
+    "zh": "松软雪"
+  },
+  {
+    "en": "Soft, ungroomed snow just off a marked run; stay inside the resort boundary.",
+    "zh": "紧邻雪道的未压雪松软雪面；不要越出雪场界。"
+  },
+  {
+    "en": "Some checkpoints for this stage could not be measured in this clip.",
+    "zh": "本段中该阶段的部分要点无法测量。"
+  },
+  {
+    "en": "Specialization and self-coaching",
+    "zh": "专项化与自我教练"
+  },
+  {
+    "en": "Speed",
+    "zh": "速度"
+  },
+  {
+    "en": "Stop labeling skis",
+    "zh": "结束雪板标注"
+  },
+  {
+    "en": "Squats and split squats",
+    "zh": "深蹲与分腿蹲"
+  },
+  {
+    "en": "Stability",
+    "zh": "稳定性"
+  },
+  {
+    "en": "Stability over time (time × frame score)",
+    "zh": "发挥稳定度（时间 × 当前帧分数）"
+  },
+  {
+    "en": "Stable follow-cam, one skier, side or rear-quarter.",
+    "zh": "画面稳、一人、侧或斜后，才能判定阶段。"
+  },
+  {
+    "en": "Stage",
+    "zh": "阶段"
+  },
+  {
+    "en": "Stage cannot be judged when the shot is unstable, occluded, or out of curriculum scope.",
+    "zh": "镜头不稳、遮挡或非本课程种类时不判定阶段。"
+  },
+  {
+    "en": "Stage focus",
+    "zh": "本阶段动作重点"
+  },
+  {
+    "en": "Stage tutorial",
+    "zh": "本级教程"
+  },
+  {
+    "en": "Stance and balance",
+    "zh": "站姿与平衡"
+  },
+  {
+    "en": "Stance width",
+    "zh": "站距"
+  },
+  {
+    "en": "Stance width change",
+    "zh": "站距开合"
+  },
+  {
+    "en": "Stance width varies; not a locked wedge the whole turn.",
+    "zh": "站距有开合，不是全程死犁。"
+  },
+  {
+    "en": "Standard",
+    "zh": "达标标准"
+  },
+  {
+    "en": "Standard: a clean, narrow track on hardpack with no scraped-out tail.",
+    "zh": "标准：硬雪上留下细窄干净的刻痕，板尾不搓花。"
+  },
+  {
+    "en": "Standard: a clear edge change, not an upright scrape.",
+    "zh": "标准：换刃点清楚，不直立横刮。"
+  },
+  {
+    "en": "Standard: both skis surface together; no single-ski dive.",
+    "zh": "标准：两只板同时浮出雪面，不出现单板下沉。"
+  },
+  {
+    "en": "Standard: glide on the outside ski; the inside ski taps the snow without taking weight.",
+    "zh": "标准：缓坡外侧板滑一段，内侧板轻点雪不承重。"
+  },
+  {
+    "en": "Standard: hip over ankle in profile; knees unlocked.",
+    "zh": "标准：侧面看髋在踝上方，膝不锁死。"
+  },
+  {
+    "en": "Standard: hips incline into the turn, shoulders quiet, stance parallel.",
+    "zh": "标准：髋向弯心倾，肩不甩；站距保持平行。"
+  },
+  {
+    "en": "Standard: hips stay near the fall line; the knees still do the work.",
+    "zh": "标准：髋大致沿落差线，少横切；仍由膝屈伸做功。"
+  },
+  {
+    "en": "Standard: knees track over the toes; pelvis level.",
+    "zh": "标准：膝沿脚尖，骨盆不左右倾倒。"
+  },
+  {
+    "en": "Standard: left-right symmetry, even quieter shoulders.",
+    "zh": "标准：左右对称，肩更静。"
+  },
+  {
+    "en": "Standard: linked S-track, no dart to the edge; the wedge stays through the turn.",
+    "zh": "标准：连续 S 迹，不冲道边；弯中犁式不消失。"
+  },
+  {
+    "en": "Standard: no long traverse between turns; knees flex and extend.",
+    "zh": "标准：弯与弯之间没有长横切；膝有屈伸。"
+  },
+  {
+    "en": "Standard: on replay, the wrists stay below the shoulders.",
+    "zh": "标准：回放里手腕不高于肩。"
+  },
+  {
+    "en": "Standard: quiet torso, large knee travel, no straight-leg slam.",
+    "zh": "标准：上身相对静，膝屈振幅大，落地不砸直腿。"
+  },
+  {
+    "en": "Standard: stance narrows in the last third of the turn, still stable.",
+    "zh": "标准：出弯后半段站距变小，但不失稳。"
+  },
+  {
+    "en": "Standard: stop on a mark both ways; skis parallel, not in a wedge.",
+    "zh": "标准：左右都能停在预定点，板平行、不犁开。"
+  },
+  {
+    "en": "Standard: ten stops, tips close, torso facing downhill.",
+    "zh": "标准：十次停下板头始终相对、上身对山下。"
+  },
+  {
+    "en": "Standard: the same count on every turn, with the deepest flexion in the middle of the arc.",
+    "zh": "标准：每个转弯数同样的拍子，最深的蹲屈落在弧线中段。"
+  },
+  {
+    "en": "Standard: the shoulders keep facing down the pitch through every pivot.",
+    "zh": "标准：每次转板时肩线始终朝向坡下。"
+  },
+  {
+    "en": "Standard: the skis start to turn while the shoulders still face downhill.",
+    "zh": "标准：板开始转时肩仍大体对山下。"
+  },
+  {
+    "en": "Standard: the skis stay across the hill and the torso does not turn with them.",
+    "zh": "标准：雪板始终横向对坡，上身不跟着转。"
+  },
+  {
+    "en": "Start analysis",
+    "zh": "开始分析"
+  },
+  {
+    "en": "Static",
+    "zh": "固定机位"
+  },
+  {
+    "en": "Static camera",
+    "zh": "固定机位"
+  },
+  {
+    "en": "Stay centered so you can move onto the new outside ski.",
+    "zh": "不后坐，才能把重量交给新的外侧板。"
+  },
+  {
+    "en": "Stay in a wedge through the turn; load the outside ski.",
+    "zh": "转弯中仍保持犁式，外侧承重。"
+  },
+  {
+    "en": "Stay near the fall line",
+    "zh": "少横切"
+  }
+]

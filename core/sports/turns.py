@@ -92,6 +92,12 @@ TANGENT_WINDOW_S = 1.0
 
 MIN_TURN_S = 0.35
 MIN_AMPLITUDE_DEG = 8.0
+#: Steering angle above this is almost always follow-cam / path-tangent noise,
+#: not real edge steering. Clipping keeps turn_rate honest and stops wedge
+#: stages from winning on saturated ``turn_amplitude`` membership.
+MAX_STEERING_DEG = 50.0
+#: Amplitude is p90(|theta|) inside the arc, not the spike max.
+AMPLITUDE_PERCENTILE = 90.0
 HYSTERESIS_FRAC = 0.15
 HYSTERESIS_MIN_DEG = 2.0
 TRANSITION_FRAC = 0.15
@@ -340,6 +346,8 @@ def steering_signal(
     frames: list[AnalyzedFrame],
     fps_effective: float,
     arrays: LandmarkArrays | None = None,
+    *,
+    compensated_hip_mid: np.ndarray | None = None,
 ) -> SteeringSignal:
     """Signed, 2 Hz low-passed, bias-removed steering angle in degrees.
 
@@ -362,6 +370,7 @@ def steering_signal(
     if n < MIN_SIGNAL_SAMPLES:
         return empty
     hip_mid = arrays.mid(L_HIP, R_HIP)
+    path_mid = compensated_hip_mid if compensated_hip_mid is not None else hip_mid
     ankle_mid = arrays.mid(L_ANKLE, R_ANKLE)
     axis = ankle_mid - hip_mid
     valid = np.isfinite(axis[:, 0]) & np.isfinite(axis[:, 1])
@@ -369,7 +378,9 @@ def steering_signal(
     empty.usable_fraction = usable
     if usable < MIN_USABLE_FRACTION or np.count_nonzero(valid) < MIN_SIGNAL_SAMPLES:
         return empty
-    tangent, source = _path_tangent(hip_mid, arrays.t_ms, fps)
+    tangent, source = _path_tangent(path_mid, arrays.t_ms, fps)
+    if compensated_hip_mid is not None:
+        source = "compensated"
     # Signed so that positive theta means the ankles sit on the +x side of the
     # tangent (see the module docstring); with a tangent of image-down (0, 1)
     # this reduces to atan2(dx, dy).
@@ -383,6 +394,7 @@ def steering_signal(
     taps = lowpass_taps(fps)
     smooth = boxcar(filled, taps, passes=LOWPASS_PASSES)
     smooth = smooth - float(np.median(smooth))
+    smooth = np.clip(smooth, -MAX_STEERING_DEG, MAX_STEERING_DEG)
     if not np.all(np.isfinite(smooth)):
         return empty
     scale = float(np.percentile(np.abs(smooth), 90))
@@ -489,7 +501,7 @@ def segment_turns_from_signal(signal: SteeringSignal) -> list[Turn]:
         if not np.any(inside):
             continue
         arc = theta[inside]
-        amplitude = float(np.max(np.abs(arc)))
+        amplitude = float(np.percentile(np.abs(arc), AMPLITUDE_PERCENTILE))
         if not np.isfinite(amplitude) or amplitude < MIN_AMPLITUDE_DEG:
             continue
         mean_theta = float(np.mean(arc))

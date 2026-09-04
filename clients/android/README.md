@@ -10,7 +10,7 @@ The debug APK ships **arm64-v8a** (S26) and **x86_64** (Windows emulator). Nativ
 2. Camera or Import copies media into the local library as **Pending**. Nothing is analyzed yet.
 3. Tap a pending card → **Prepare**: seek, draw a person box, Mark in / Mark out, enter athlete name, **Start analysis**.
 4. List shows **Processing** with a spinner; opaque overlay **Analyzing pose…**
-5. Analysis writes BlazePose 33 joints plus `stage_report.json`. Tap **Done** or **Report** → **Player**: letterboxed video, COCO-17 overlay, green bbox, filmstrip (in/out display-only), chrome, and a five-chapter stage report that scrolls under the video.
+5. Analysis writes BlazePose 33 joints plus `stage_report.json` (schema **3.0.0**). Tap **Done** or **Report** → **Player**: letterboxed video, COCO-17 overlay, green bbox, filmstrip (in/out display-only), chrome, and a twelve-chapter stage report (empty chapters hidden) that scrolls under the video.
 6. **Reanalyze** clears analysis and the report, then opens Prepare again.
 
 Clips live under the app files dir: `library/{clip_id}/clip.mp4`, `thumb.jpg`, `meta.json`, `analysis.json`, `stage_report.json`.
@@ -18,6 +18,8 @@ Clips live under the app files dir: `library/{clip_id}/clip.mp4`, `thumb.jpg`, `
 Download saves a stamped still (skeleton + green box) through the system save dialog. This build does not mux an overlay MP4. Share stamps the still, opens the Android share sheet, then the same public upload URLs as desktop (YouTube, TikTok, X, Facebook, Weibo, Bilibili).
 
 Display copy comes from `locales/strings.json` (English key → `zh` and other langs).
+
+Shared content with desktop (copied into APK assets at build): `content/ski/curriculum.v3.json`, `content/ski/knowledge/*.json`, `locales/strings.json`, `models/pose_landmarker_full.task`. Feature gap matrix: [`docs/clients/desktop-android-parity-v3.md`](../../docs/clients/desktop-android-parity-v3.md).
 
 ## Prerequisites (Windows PC)
 
@@ -86,6 +88,6 @@ If `adb` is unavailable: copy the APK over USB storage, enable **Install unknown
 
 ## Android Studio
 
-Open the `clients/android` folder. Gradle copies `models/pose_landmarker_full.task` and `locales/strings.json` into assets. Build/run on a device with a camera.
+Open the `clients/android` folder. Gradle copies `models/pose_landmarker_full.task`, `locales/strings.json`, `curriculum.v3.json`, and `knowledge/*.json` into assets. Build/run on a device with a camera.
 
 The C sources are compiled via `app/src/main/cpp/CMakeLists.txt` pointing at `native/core_map/core_map.c`.

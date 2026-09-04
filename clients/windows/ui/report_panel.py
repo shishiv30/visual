@@ -480,10 +480,27 @@ class StageReportPanel(QWidget):
         title_row = QHBoxLayout(title_row_widget)
         title_row.setContentsMargins(0, 0, 0, 0)
         title_row.setSpacing(8)
+        classification = report.classification
+        ambiguous = (
+            classification is not None
+            and classification.ambiguous
+            and classification.candidates
+        )
+        if ambiguous:
+            candidates = sorted(
+                classification.candidates,
+                key=lambda c: float(c.score),
+                reverse=True,
+            )[:2]
+            names = [c.stage_name or c.stage_id for c in candidates]
+            stage_title = f"{t('Possible stage')}: {' · '.join(names)}"
+        else:
+            stage_title = report.stage_name
+
         title_row.addWidget(
             IconTextRow(
                 [("trophy", level_medal_color(report.stage_id))],
-                report.stage_name,
+                stage_title,
                 object_name="reportMeta",
             ),
             stretch=1,
@@ -531,9 +548,14 @@ class StageReportPanel(QWidget):
 
         conf_score = report.confidence * 100.0
         confidence = ScorePieChart()
+        conf_caption = (
+            t("Leading candidate")
+            if ambiguous
+            else t("Confidence")
+        )
         confidence.set_score(
             conf_score,
-            t("Confidence"),
+            conf_caption,
             ring_color=score_purple(conf_score),
         )
         grid.add(_score_card(confidence), per_row=2)

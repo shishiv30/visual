@@ -2670,19 +2670,19 @@
      "rejected_reason": ""
     },
     {
-     "stage_id": "pizza",
-     "score": 0.76,
-     "fit": 0.781,
-     "gate_ratio": 1.0,
-     "prior": 0.2,
-     "separating_metric_id": "stance_width",
-     "rejected_reason": ""
-    },
-    {
      "stage_id": "carve_medium",
      "score": 0.758,
      "fit": 0.833,
      "gate_ratio": 0.75,
+     "prior": 0.5,
+     "separating_metric_id": "edge_angle_proxy",
+     "rejected_reason": ""
+    },
+    {
+     "stage_id": "carve_short",
+     "score": 0.691,
+     "fit": 0.684,
+     "gate_ratio": 0.8,
      "prior": 0.5,
      "separating_metric_id": "edge_angle_proxy",
      "rejected_reason": ""

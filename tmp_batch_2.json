@@ -1,0 +1,402 @@
+[
+  {
+    "en": "Ice",
+    "zh": "冰面"
+  },
+  {
+    "en": "Ideal terrain",
+    "zh": "理想地形"
+  },
+  {
+    "en": "If not advancing, train toward",
+    "zh": "若未进阶，按下述目标训练"
+  },
+  {
+    "en": "Import",
+    "zh": "导入"
+  },
+  {
+    "en": "Import failed",
+    "zh": "导入失败"
+  },
+  {
+    "en": "Import…",
+    "zh": "导入…"
+  },
+  {
+    "en": "In",
+    "zh": "入点"
+  },
+  {
+    "en": "In {lo:.1f}s → out {hi:.1f}s (logical, original file unchanged)",
+    "zh": "入点 {lo:.1f}s → 出点 {hi:.1f}s（逻辑裁剪，不改原文件）"
+  },
+  {
+    "en": "Inclination",
+    "zh": "内倾"
+  },
+  {
+    "en": "Inclination into the turn",
+    "zh": "向弯心内倾"
+  },
+  {
+    "en": "Indoors or flat ground for stance and single-leg strength.",
+    "zh": "室内或平地，练站姿和单腿力量。"
+  },
+  {
+    "en": "Injury risk",
+    "zh": "受伤风险"
+  },
+  {
+    "en": "JPEG (*.jpg)",
+    "zh": "JPEG (*.jpg)"
+  },
+  {
+    "en": "Keep pole tips low and hands in front of the body, about waist to mid-torso, to time left–right turns.",
+    "zh": "杖尖放低，手在身前约腰至胸中，给左右转弯节拍。"
+  },
+  {
+    "en": "Keep the arc round with both skis working; do not throw the skis sideways.",
+    "zh": "保持弧形圆顺、两只板一起工作；不要把雪板横甩出去。"
+  },
+  {
+    "en": "Keep the camera steady — shaky or wild motion prevents a reliable stage assessment.",
+    "zh": "保持镜头稳定——剧烈晃动会导致阶段无法可靠判定。"
+  },
+  {
+    "en": "Key points",
+    "zh": "动作要点"
+  },
+  {
+    "en": "Knee absorption travel",
+    "zh": "缓冲幅度"
+  },
+  {
+    "en": "Knee flex cadence matches the bumps.",
+    "zh": "膝屈伸节奏与雪包合拍。"
+  },
+  {
+    "en": "Knee flex range",
+    "zh": "膝屈伸幅度"
+  },
+  {
+    "en": "Knee flex rate",
+    "zh": "膝屈伸频率"
+  },
+  {
+    "en": "Knee tracking",
+    "zh": "膝走向"
+  },
+  {
+    "en": "Knees track",
+    "zh": "膝不内扣"
+  },
+  {
+    "en": "Knees track over the toes; don't let the knees collapse inward.",
+    "zh": "膝沿脚尖方向；不要让膝盖向内塌。"
+  },
+  {
+    "en": "Landmark quality",
+    "zh": "关节点质量"
+  },
+  {
+    "en": "Landmark quality {pct:.0f}%",
+    "zh": "关节点质量 {pct:.0f}%"
+  },
+  {
+    "en": "Language",
+    "zh": "语言"
+  },
+  {
+    "en": "Large knee travel; stay on snow rather than jumping.",
+    "zh": "膝屈振幅大，贴雪而不是跳。"
+  },
+  {
+    "en": "Left",
+    "zh": "左"
+  },
+  {
+    "en": "Left {left} · right {right}",
+    "zh": "左 {left} · 右 {right}"
+  },
+  {
+    "en": "Leading candidate",
+    "zh": "领先候选"
+  },
+  {
+    "en": "Left-right asymmetry",
+    "zh": "左右不对称"
+  },
+  {
+    "en": "Left-right turns, not a straight schuss.",
+    "zh": "有左右转向，不是一条直线冲坡。"
+  },
+  {
+    "en": "Legs and hips steer; do not use the shoulders as a steering wheel.",
+    "zh": "用腿和髋改变板向，肩不要当方向盘。"
+  },
+  {
+    "en": "Legs move; the torso stays quieter.",
+    "zh": "腿动、上身相对安静。"
+  },
+  {
+    "en": "Let the legs do the work.",
+    "zh": "让腿做功。"
+  },
+  {
+    "en": "Label skis",
+    "zh": "标注雪板"
+  },
+  {
+    "en": "Optional: use Label skis on key frames before Start analysis.",
+    "zh": "可选：在「开始分析」前，用「标注雪板」在关键帧上标左右板头板尾。"
+  },
+  {
+    "en": "Like",
+    "zh": "Like"
+  },
+  {
+    "en": "Likely cause",
+    "zh": "可能原因"
+  },
+  {
+    "en": "Link bumps near the fall line with less traversing.",
+    "zh": "少横切，沿落差线连贯过包。"
+  },
+  {
+    "en": "Linked absorption near the fall line. No air score.",
+    "zh": "少横切的连续吸收。不评空中。"
+  },
+  {
+    "en": "Linked parallel turns with an even rhythm, a flex-and-extend move, and a pole touch at every edge change.",
+    "zh": "连贯的平行式转弯：节奏均匀、蹲伸配合，每次换刃点一次雪杖。"
+  },
+  {
+    "en": "Linked short skids on parallel skis; mixed edge and skid is acceptable.",
+    "zh": "平行板快速左右转换控速，允许刃搓混合。"
+  },
+  {
+    "en": "Linked turns",
+    "zh": "连续转向"
+  },
+  {
+    "en": "Locked",
+    "zh": "未解锁"
+  },
+  {
+    "en": "Locked because",
+    "zh": "未解锁原因"
+  },
+  {
+    "en": "Long-radius carve",
+    "zh": "大弯刻滑"
+  },
+  {
+    "en": "Look downhill",
+    "zh": "视线看山下"
+  },
+  {
+    "en": "Looks like",
+    "zh": "看起来像"
+  },
+  {
+    "en": "Low hands and pole rhythm",
+    "zh": "手低点杖节奏"
+  },
+  {
+    "en": "MM/dd/yyyy",
+    "zh": "yyyy/MM/dd"
+  },
+  {
+    "en": "MP4 (*.mp4)",
+    "zh": "MP4 (*.mp4)"
+  },
+  {
+    "en": "Male",
+    "zh": "男"
+  },
+  {
+    "en": "Mark in",
+    "zh": "入点"
+  },
+  {
+    "en": "Mark out",
+    "zh": "出点"
+  },
+  {
+    "en": "Match {fit:.0f}% · gates {gate:.0f}% · prior {prior:.0f}%",
+    "zh": "吻合度 {fit:.0f}% · 关键项 {gate:.0f}% · 先验 {prior:.0f}%"
+  },
+  {
+    "en": "Matched skis and separation. After passing, choose short skids or long-radius carve.",
+    "zh": "双板平行，上下分离。过关后可选搓雪或刻滑大弯。"
+  },
+  {
+    "en": "Mean stance between a full wedge and parallel.",
+    "zh": "平均站距介于大犁与平行之间。"
+  },
+  {
+    "en": "Mean turn {sec:.2f}s",
+    "zh": "平均每弯 {sec:.2f} 秒"
+  },
+  {
+    "en": "Measured",
+    "zh": "实测"
+  },
+  {
+    "en": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)",
+    "zh": "Media (*.mp4 *.mov *.avi *.mkv *.webm *.jpg *.jpeg *.png *.webp *.bmp)"
+  },
+  {
+    "en": "Medium-radius carve",
+    "zh": "中弯刻滑"
+  },
+  {
+    "en": "Medium-radius edge change",
+    "zh": "中弯换刃"
+  },
+  {
+    "en": "Medium-turn cadence",
+    "zh": "中弯频率"
+  },
+  {
+    "en": "Missing",
+    "zh": "缺少"
+  },
+  {
+    "en": "Missing model {path}. Run: python scripts/download_pose_landmarker.py",
+    "zh": "缺少模型 {path}。请先运行：python scripts/download_pose_landmarker.py"
+  },
+  {
+    "en": "Moderate groomed blue run; for parallel, skids, and long-radius carve.",
+    "zh": "中等平整蓝道；适合平行、搓雪与大弯刻滑。"
+  },
+  {
+    "en": "Mogul",
+    "zh": "雪包"
+  },
+  {
+    "en": "Mogul absorption",
+    "zh": "雪包滑行（吸收）"
+  },
+  {
+    "en": "Mogul fall-line",
+    "zh": "雪包落差线"
+  },
+  {
+    "en": "Mogul field",
+    "zh": "雪包区"
+  },
+  {
+    "en": "Mogul skiing",
+    "zh": "雪包滑行"
+  },
+  {
+    "en": "Moguls",
+    "zh": "雪包"
+  },
+  {
+    "en": "Most turns finish with a shaped arc; a slip to recover is fine, a slipped descent is not.",
+    "zh": "多数转弯要走出弧形；偶尔侧滑找回节奏可以，一路横滑下坡不行。"
+  },
+  {
+    "en": "Name",
+    "zh": "姓名"
+  },
+  {
+    "en": "Needs a scene fact",
+    "zh": "需补充场地信息"
+  },
+  {
+    "en": "Needs a scene fact before it can be detected.",
+    "zh": "需要补充场地信息才能自动识别。"
+  },
+  {
+    "en": "Needs the {name} checkpoint",
+    "zh": "需先通过“{name}”要点"
+  },
+  {
+    "en": "Needs work",
+    "zh": "需改进"
+  },
+  {
+    "en": "Needs {name} first",
+    "zh": "需先过{name}"
+  },
+  {
+    "en": "Never ski off-piste alone; avoid avalanche terrain and sidecountry, and keep a partner in sight.",
+    "zh": "不要独自滑野雪；避开雪崩地形与界外区域，始终与同伴保持在视线内。"
+  },
+  {
+    "en": "New profile",
+    "zh": "新建档案"
+  },
+  {
+    "en": "Next stage",
+    "zh": "下一阶段"
+  },
+  {
+    "en": "Next stage: {names}",
+    "zh": "下一阶段：{names}"
+  },
+  {
+    "en": "Next steps",
+    "zh": "下一步"
+  },
+  {
+    "en": "No box",
+    "zh": "未框选"
+  },
+  {
+    "en": "No braking scrape",
+    "zh": "不靠搓雪刹车"
+  },
+  {
+    "en": "No camera found. On the emulator, use a virtual scene or webcam.",
+    "zh": "未找到相机。模拟器请启用虚拟场景或电脑摄像头。"
+  },
+  {
+    "en": "No linked turns were detected in this clip.",
+    "zh": "本段没有检测到连续转弯。"
+  },
+  {
+    "en": "No linked turns were detected, so turn-by-turn checkpoints are not scored. Film several linked turns.",
+    "zh": "未检测到连续转弯，逐弯要点不评分。请拍几个连续转弯。"
+  },
+  {
+    "en": "No pose",
+    "zh": "未检测到姿态"
+  },
+  {
+    "en": "No preview",
+    "zh": "无预览"
+  },
+  {
+    "en": "No stage report yet. Analyze a clip offline first.",
+    "zh": "暂无阶段报告。请先离线分析视频。"
+  },
+  {
+    "en": "No terrain suggestion at this stage; use the runs you already ski well.",
+    "zh": "本阶段不指定地形；在你已经滑得好的雪道上练。"
+  },
+  {
+    "en": "No turns were segmented in this clip.",
+    "zh": "这段视频没有切分出完整的转弯。"
+  },
+  {
+    "en": "Non-slip floor; a handhold nearby helps.",
+    "zh": "防滑地面，旁边有扶手更好。"
+  },
+  {
+    "en": "Not applicable",
+    "zh": "不适用"
+  },
+  {
+    "en": "Not applicable at this age.",
+    "zh": "该年龄段不适用。"
+  },
+  {
+    "en": "Not judged from a clip",
+    "zh": "视频无法判定"
+  }
+]

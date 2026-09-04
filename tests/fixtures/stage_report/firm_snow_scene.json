@@ -2682,12 +2682,12 @@
      "rejected_reason": ""
     },
     {
-     "stage_id": "pizza",
-     "score": 0.742,
-     "fit": 0.781,
-     "gate_ratio": 1.0,
-     "prior": 0.08,
-     "separating_metric_id": "stance_width",
+     "stage_id": "carve_medium",
+     "score": 0.74,
+     "fit": 0.833,
+     "gate_ratio": 0.75,
+     "prior": 0.38,
+     "separating_metric_id": "edge_angle_proxy",
      "rejected_reason": ""
     }
    ]

@@ -2254,38 +2254,38 @@
   ]
  },
  "expected": {
-  "stage_id": "pizza",
+  "stage_id": "parallel",
   "category_id": "alpine_piste",
-  "kb_stage": "st-03",
+  "kb_stage": "st-06",
   "tier": "full",
-  "terrain_id": "green",
-  "score_0_100": 80.7,
-  "confidence": 0.318,
+  "terrain_id": "blue",
+  "score_0_100": 85.1,
+  "confidence": 0.259,
   "ready_for_next_stage": false,
-  "weakest_checkpoint_id": "cp_pz_stance",
+  "weakest_checkpoint_id": "cp_par_stance",
   "next_level_ids": [],
   "classification": {
    "method": "scored_candidates",
-   "chosen_id": "pizza",
+   "chosen_id": "parallel",
    "ambiguous": true,
    "unusable_reason": "",
-   "separation": 0.076,
+   "separation": 0.069,
    "quality_factor": 0.8,
    "candidates": [
-    {
-     "stage_id": "pizza",
-     "score": 0.783,
-     "fit": 0.742,
-     "gate_ratio": 1.0,
-     "prior": 0.5,
-     "separating_metric_id": "",
-     "rejected_reason": ""
-    },
     {
      "stage_id": "parallel",
      "score": 0.707,
      "fit": 0.786,
      "gate_ratio": 0.667,
+     "prior": 0.5,
+     "separating_metric_id": "",
+     "rejected_reason": ""
+    },
+    {
+     "stage_id": "pizza",
+     "score": 0.638,
+     "fit": 0.697,
+     "gate_ratio": 0.6,
      "prior": 0.5,
      "separating_metric_id": "turn_shape_index",
      "rejected_reason": ""
@@ -2294,45 +2294,11 @@
   },
   "metrics": [
    {
-    "id": "turn_rate",
-    "state": "ok",
-    "rubric": "strong",
-    "is_gate": true,
-    "form": "A",
-    "value": 0.588,
-    "score": 100.0,
-    "reliability": 0.25,
-    "faulty_turns": null,
-    "total_turns": null,
-    "standard": "at least 0.15 Hz",
-    "reason": "",
-    "side": "",
-    "left_value": null,
-    "right_value": null
-   },
-   {
-    "id": "turn_amplitude",
-    "state": "ok",
-    "rubric": "pass",
-    "is_gate": false,
-    "form": "A",
-    "value": 18.798,
-    "score": 82.0,
-    "reliability": 0.23,
-    "faulty_turns": null,
-    "total_turns": null,
-    "standard": "at least 10°",
-    "reason": "",
-    "side": "",
-    "left_value": null,
-    "right_value": null
-   },
-   {
-    "id": "stance_width",
+    "id": "stem_count",
     "state": "unknown",
     "rubric": "not_rated",
-    "is_gate": false,
-    "form": "A",
+    "is_gate": true,
+    "form": "C",
     "value": null,
     "score": null,
     "reliability": 0.0,
@@ -2345,7 +2311,7 @@
     "right_value": null
    },
    {
-    "id": "separation_angle",
+    "id": "stance_width",
     "state": "unknown",
     "rubric": "not_rated",
     "is_gate": false,
@@ -2372,7 +2338,75 @@
     "reliability": 0.23,
     "faulty_turns": null,
     "total_turns": null,
-    "standard": "at least 0.32",
+    "standard": "at least 0.38",
+    "reason": "",
+    "side": "",
+    "left_value": null,
+    "right_value": null
+   },
+   {
+    "id": "hip_over_foot",
+    "state": "ok",
+    "rubric": "strong",
+    "is_gate": true,
+    "form": "A",
+    "value": 0.035,
+    "score": 99.9,
+    "reliability": 0.9,
+    "faulty_turns": 0,
+    "total_turns": 2,
+    "standard": "-0.05 to 0.12",
+    "reason": "",
+    "side": "",
+    "left_value": 0.143,
+    "right_value": -0.074
+   },
+   {
+    "id": "banking_index",
+    "state": "unknown",
+    "rubric": "not_rated",
+    "is_gate": false,
+    "form": "A",
+    "value": null,
+    "score": null,
+    "reliability": 0.0,
+    "faulty_turns": null,
+    "total_turns": null,
+    "standard": "",
+    "reason": "Filmed too side-on to measure this.",
+    "side": "",
+    "left_value": null,
+    "right_value": null
+   },
+   {
+    "id": "hands_in_view",
+    "state": "ok",
+    "rubric": "strong",
+    "is_gate": false,
+    "form": "A",
+    "value": 1.0,
+    "score": 100.0,
+    "reliability": 0.9,
+    "faulty_turns": null,
+    "total_turns": null,
+    "standard": "at least 0.55",
+    "reason": "",
+    "side": "",
+    "left_value": null,
+    "right_value": null
+   },
+   {
+    "id": "backseat_count",
+    "state": "ok",
+    "rubric": "strong",
+    "is_gate": false,
+    "form": "C",
+    "value": 0.0,
+    "score": 100.0,
+    "reliability": 0.23,
+    "faulty_turns": 0,
+    "total_turns": 2,
+    "standard": "at most 2 of 2",
     "reason": "",
     "side": "",
     "left_value": null,
@@ -2382,16 +2416,16 @@
     "id": "asymmetry_index",
     "state": "ok",
     "rubric": "pass",
-    "is_gate": true,
+    "is_gate": false,
     "form": "A",
     "value": 0.525,
-    "score": 89.3,
+    "score": 82.0,
     "reliability": 0.75,
     "faulty_turns": null,
     "total_turns": null,
-    "standard": "at most 1",
+    "standard": "at most 0.8",
     "reason": "",
-    "side": "",
+    "side": "right",
     "left_value": null,
     "right_value": null
    }
@@ -2412,7 +2446,7 @@
   },
   "tree": {
    "pizza_glide": "inferred",
-   "parallel": "locked",
+   "parallel": "current",
    "dynamic_parallel": "locked",
    "carve_long": "locked",
    "skid_short": "locked",
@@ -2439,26 +2473,26 @@
   ],
   "knowledge": {
    "fault_ids": [
-    "ft-03-05",
-    "ft-03-01",
-    "ft-03-02",
-    "ft-03-03",
-    "ft-03-04",
-    "ft-03-06"
+    "ft-06-03",
+    "ft-06-01",
+    "ft-06-02",
+    "ft-06-04",
+    "ft-06-05",
+    "ft-06-06"
    ],
    "drill_ids": [
-    "dr-03-06",
-    "dr-03-02",
-    "dr-03-03",
-    "dr-03-07",
-    "dr-03-01",
-    "dr-03-04",
-    "dr-03-05"
+    "dr-06-01",
+    "dr-06-06",
+    "dr-06-03",
+    "dr-06-02",
+    "dr-06-04",
+    "dr-06-05",
+    "dr-06-07"
    ],
    "skill_ids": [
-    "sk-03-06"
+    "sk-06-01"
    ],
-   "weakest_metric_id": "asymmetry_index"
+   "weakest_metric_id": "hip_over_foot"
   },
   "scene": {
    "snow_surface": "",
@@ -2480,7 +2514,8 @@
   },
   "filming": [
    "view_too_profile",
-   "too_few_turns"
+   "too_few_turns",
+   "gates_not_measured"
   ]
  }
 }

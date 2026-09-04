@@ -7,6 +7,32 @@
   "pass_score": 75.0,
   "checkpoint_pass": 60.0,
   "sys_drill": "drill_film",
+  "exclusion_rules": [
+    {
+      "when": {
+        "stance_width_lte": 0.37,
+        "wedge_angle_lte": 10
+      },
+      "reject_levels": [
+        "pizza_glide",
+        "pizza",
+        "wedge_christie"
+      ],
+      "reason": "parallel_stance_detected"
+    },
+    {
+      "when": {
+        "ski_detect_ok_gte": 0.55,
+        "ski_parallelism_gte": 0.8
+      },
+      "reject_levels": [
+        "pizza_glide",
+        "pizza",
+        "wedge_christie"
+      ],
+      "reason": "parallel_stance_detected"
+    }
+  ],
   "categories": {
     "alpine_piste": {
       "zh": "平整雪道大众滑行",
@@ -2098,11 +2124,14 @@
         "turn_rate",
         "turn_amplitude",
         "stance_width",
+        "wedge_angle",
         "separation_angle",
         "turn_shape_index",
         "asymmetry_index"
       ],
       "gate_metrics": [
+        "stance_width",
+        "wedge_angle",
         "turn_rate",
         "turn_shape_index",
         "asymmetry_index"

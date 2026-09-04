@@ -116,6 +116,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var unitSki: TextView
     private lateinit var spinnerProfile: Spinner
     private lateinit var spinnerGender: Spinner
+    private lateinit var labelTerrain: TextView
+    private lateinit var labelSlope: TextView
+    private lateinit var labelSnow: TextView
+    private lateinit var spinnerTerrain: Spinner
+    private lateinit var spinnerSlope: Spinner
+    private lateinit var spinnerSnow: Spinner
     private lateinit var inputName: EditText
     private lateinit var inputBirthday: TextView
     private lateinit var inputHeight: EditText
@@ -334,6 +340,12 @@ class MainActivity : AppCompatActivity() {
         unitSki = findViewById(R.id.unit_ski)
         spinnerProfile = findViewById(R.id.spinner_profile)
         spinnerGender = findViewById(R.id.spinner_gender)
+        labelTerrain = findViewById(R.id.label_terrain)
+        labelSlope = findViewById(R.id.label_slope)
+        labelSnow = findViewById(R.id.label_snow)
+        spinnerTerrain = findViewById(R.id.spinner_terrain)
+        spinnerSlope = findViewById(R.id.spinner_slope)
+        spinnerSnow = findViewById(R.id.spinner_snow)
         inputName = findViewById(R.id.input_name)
         inputBirthday = findViewById(R.id.input_birthday)
         inputHeight = findViewById(R.id.input_height)
@@ -400,6 +412,8 @@ class MainActivity : AppCompatActivity() {
         playerTimeline.onPlayhead = { tMs -> seekPlayer(tMs.toLong(), pause = false) }
         playerTimeline.setTrimEnabled(false)
         playerReport.onSeek = { tMs -> seekPlayer(tMs.toLong(), pause = true) }
+        playerReport.onCorrectResult = { showCorrectionDialog() }
+        playerReport.knowledgePack = knowledgePack()
         prepareCanvas.boxCommitted = {
             val box = prepareCanvas.boxNorm()
             if (box != null) {
@@ -474,7 +488,11 @@ class MainActivity : AppCompatActivity() {
         unitHeight.text = I18n.t(" cm")
         unitWeight.text = I18n.t(" kg")
         unitSki.text = I18n.t(" cm")
+        labelTerrain.text = I18n.t("Terrain")
+        labelSlope.text = I18n.t("Slope")
+        labelSnow.text = I18n.t("Snow surface")
         rebuildGenderSpinner()
+        rebuildSceneSpinners(readScene())
         reloadProfiles(currentProfileKey())
         refreshBirthdayLabel()
         btnPlay.setIconOnly(if (playing) I18n.t("Pause") else I18n.t("Play"))
@@ -512,6 +530,20 @@ class MainActivity : AppCompatActivity() {
             var statusText = I18n.t(Library.statusKey(meta.status))
             if (meta.error != null) {
                 statusText = I18n.t("{status} (failed, retry)", mapOf("status" to statusText))
+            }
+            if (meta.status == ClipStatus.DONE) {
+                val report = StageReportJson.load(library.stageReportFile(meta.clipId))
+                val ambiguous = report?.classification?.ambiguous == true
+                if (ambiguous) {
+                    val names = report?.classification?.candidates
+                        ?.take(2)
+                        ?.map { it.stageName.ifBlank { it.stageId } }
+                        ?.filter { it.isNotBlank() }
+                        .orEmpty()
+                    if (names.isNotEmpty()) {
+                        statusText = "${I18n.t("Possible stage")}: ${names.joinToString(" · ")}"
+                    }
+                }
             }
             status.text = statusText
             status.setTextColor(
@@ -794,6 +826,7 @@ class MainActivity : AppCompatActivity() {
             }
             meta.athlete != null -> fillFromProfile(meta.athlete)
         }
+        rebuildSceneSpinners(meta.scene)
         val media = library.mediaFile(meta)
         if (meta.kind == ClipKind.IMAGE) {
             prepareTimeline.visibility = View.GONE
@@ -885,6 +918,7 @@ class MainActivity : AppCompatActivity() {
             playEndMs = prepareOutMs,
             athleteKey = athlete.key,
             athlete = athlete,
+            scene = readScene(),
             status = ClipStatus.PROCESSING,
             error = null,
         )
@@ -926,7 +960,7 @@ class MainActivity : AppCompatActivity() {
                                 meta.seeds,
                                 meta.seedBox,
                                 fps,
-                            ) { _, _ -> }
+                            ) { done, total -> updateAnalyzeProgress(done, total) }
                         } finally {
                             retriever.release()
                         }
@@ -934,6 +968,7 @@ class MainActivity : AppCompatActivity() {
                 } finally {
                     markers.close()
                 }
+                runOnUiThread { showLoading("analyze", 100) }
                 AnalysisJson.save(library.analysisFile(clipId), clipId, frames)
                 val fps = if (meta.fps > 1.0) meta.fps else 15.0
                 writeStageReport(clipId, frames, fps)
@@ -1223,14 +1258,43 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun writeStageReport(clipId: String, frames: List<PoseFrame>, fps: Double) {
+        val meta = library.loadMeta(clipId)
+        val history = athleteHistory(meta.athleteKey)
         val report = Assess.assessClip(
             clipId,
             AnalysisJson.toAssessFrames(frames),
             fps,
             curriculum(),
             I18n.language(),
+            scene = meta.scene,
+            knowledge = knowledgePack(),
+            history = history,
+            athleteAgeBand = meta.athlete?.ageBand,
         )
         StageReportJson.save(library.stageReportFile(clipId), report)
+    }
+
+    private fun athleteHistory(athleteKey: String?): StageHistory {
+        if (athleteKey.isNullOrBlank()) {
+            return StageHistory()
+        }
+        val reports = ArrayList<StageReport>()
+        for (meta in library.listClips()) {
+            if (meta.athleteKey != athleteKey || meta.status != ClipStatus.DONE) {
+                continue
+            }
+            StageReportJson.load(library.stageReportFile(meta.clipId))?.let { reports.add(it) }
+        }
+        return StageHistory.fromReports(reports, curriculum().passScore)
+    }
+
+    private var knowledgeCache: KnowledgePack? = null
+
+    private fun knowledgePack(): KnowledgePack {
+        knowledgeCache?.let { return it }
+        val loaded = KnowledgePackLoader.loadFromAssets(this)
+        knowledgeCache = loaded
+        return loaded
     }
 
     private fun reprojectReports() {
@@ -1253,6 +1317,10 @@ class MainActivity : AppCompatActivity() {
                         fps,
                         cur,
                         lang,
+                        scene = meta.scene,
+                        knowledge = knowledgePack(),
+                        history = athleteHistory(meta.athleteKey),
+                        athleteAgeBand = meta.athlete?.ageBand,
                     )
                     StageReportJson.save(library.stageReportFile(meta.clipId), report)
                 }
@@ -1496,14 +1564,28 @@ class MainActivity : AppCompatActivity() {
         pagePlayer.visibility = if (next == Page.PLAYER) View.VISIBLE else View.GONE
     }
 
-    private fun showLoading(kind: String) {
-        loadingCaption.text = if (kind == "import") {
+    private fun showLoading(kind: String, percent: Int? = null) {
+        val base = if (kind == "import") {
             I18n.t("Uploading and loading…")
         } else {
             I18n.t("Analyzing pose…")
         }
+        loadingCaption.text = if (percent != null && kind != "import") {
+            "$base $percent%"
+        } else {
+            base
+        }
         loading.visibility = View.VISIBLE
         loading.bringToFront()
+    }
+
+    private fun updateAnalyzeProgress(doneMs: Long, totalMs: Long) {
+        val pct = if (totalMs <= 0L) {
+            0
+        } else {
+            ((doneMs * 100L) / totalMs).toInt().coerceIn(0, 99)
+        }
+        runOnUiThread { showLoading("analyze", pct) }
     }
 
     private fun hideLoadingIfIdle() {
@@ -1633,6 +1715,47 @@ class MainActivity : AppCompatActivity() {
         spinnerGender.setSelection(genderOrder.indexOf(selected).coerceAtLeast(0), false)
     }
 
+    private data class SceneOption(val value: String, val label: String) {
+        override fun toString(): String = label
+    }
+
+    private fun rebuildSceneSpinners(scene: SceneContext?) {
+        bindSceneSpinner(spinnerTerrain, SceneContext.TERRAIN_CHOICES, scene?.terrainType)
+        bindSceneSpinner(spinnerSlope, SceneContext.SLOPE_CHOICES, scene?.slopeBand)
+        bindSceneSpinner(spinnerSnow, SceneContext.SNOW_CHOICES, scene?.snowSurface)
+    }
+
+    private fun bindSceneSpinner(
+        spinner: Spinner,
+        choices: List<Pair<String, String>>,
+        selected: String?,
+    ) {
+        val options = ArrayList<SceneOption>()
+        options.add(SceneOption("", I18n.t("Not sure")))
+        for ((value, labelKey) in choices) {
+            options.add(SceneOption(value, I18n.t(labelKey)))
+        }
+        val adapter = ArrayAdapter(this, R.layout.spinner_item, options)
+        adapter.setDropDownViewResource(R.layout.spinner_item)
+        spinner.adapter = adapter
+        val want = selected.orEmpty()
+        val idx = options.indexOfFirst { it.value == want }.coerceAtLeast(0)
+        spinner.setSelection(idx, false)
+    }
+
+    private fun readScene(): SceneContext {
+        fun selected(spinner: Spinner): String? {
+            return (spinner.selectedItem as? SceneOption)?.value?.ifBlank { null }
+        }
+        val terrain = selected(spinnerTerrain)
+        val slope = selected(spinnerSlope)
+        val snow = selected(spinnerSnow)
+        if (terrain == null && slope == null && snow == null) {
+            return SceneContext()
+        }
+        return SceneContext(terrainType = terrain, slopeBand = slope, snowSurface = snow)
+    }
+
     private fun reloadProfiles(preserveKey: String?) {
         loadingProfile = true
         val options = ArrayList<ProfileOption>()
@@ -1703,6 +1826,44 @@ class MainActivity : AppCompatActivity() {
             null
         }
     }
+
+    private fun showCorrectionDialog() {
+        val meta = playerMeta ?: return
+        val report = playerReportModel ?: return
+        val cur = curriculum()
+        val options = cur.levelIds.ifEmpty { cur.levels.keys.sorted() }
+            .mapNotNull { id -> cur.levels[id]?.takeIf { it.inScope || id == report.stageId }?.let { id to textLevel(it) } }
+        if (options.isEmpty()) {
+            return
+        }
+        val labels = options.map { it.second }.toTypedArray()
+        var selected = options.indexOfFirst { it.first == report.stageId }.coerceAtLeast(0)
+        val noteInput = EditText(this).apply {
+            hint = I18n.t("Note (optional):")
+            setTextColor(ContextCompat.getColor(this@MainActivity, R.color.on_surface))
+            setHintTextColor(0xFF9E9E9E.toInt())
+        }
+        AlertDialog.Builder(this)
+            .setTitle(I18n.t("Correct result"))
+            .setSingleChoiceItems(labels, selected) { _, which -> selected = which }
+            .setView(noteInput)
+            .setPositiveButton(I18n.t("OK")) { _, _ ->
+                val choice = options.getOrNull(selected) ?: return@setPositiveButton
+                ReportCorrectionStore.save(
+                    library.reportCorrectionFile(meta.clipId),
+                    ReportCorrection(
+                        clipId = meta.clipId,
+                        predictedStageId = report.stageId,
+                        correctedStageId = choice.first,
+                        note = noteInput.text?.toString().orEmpty(),
+                    ),
+                )
+            }
+            .setNegativeButton(I18n.t("Cancel"), null)
+            .show()
+    }
+
+    private fun textLevel(spec: LevelSpec): String = CurriculumLoader.locText(spec.name, I18n.language())
 
     private fun MaterialButton.setIconOnly(label: String) {
         text = null

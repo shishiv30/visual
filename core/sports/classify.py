@@ -42,7 +42,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from core.sports.bands import band_for, evaluate
-from core.sports.curriculum import Curriculum, LevelSpec
+from core.sports.curriculum import Curriculum, ExclusionRule, LevelSpec
 from core.sports.history import StageHistory
 from core.sports.metrics import MetricPack
 from core.sports.scene import SceneContext
@@ -75,6 +75,25 @@ REASON_NOTHING_MEASURED = "no_measurable_metrics"
 REASON_NO_CANDIDATES = "no_candidate_stage"
 REASON_NOT_APPLICABLE_AGE = "not_applicable_age_band"
 REASON_SCENE_MISSING = "scene_fact_missing"
+REASON_PARALLEL_STANCE = "parallel_stance_detected"
+
+#: Wedge-family stages are rejected when both signals read as parallel: hip-width
+#: stance and a foot-index wedge below what a real pizza/christie shows in a
+#: quarter view (pose noise can read 8-10 deg on matched skis).
+PARALLEL_STANCE_WIDTH_HI = 0.37
+PARALLEL_WEDGE_ANGLE_HI = 10.0
+_WEDGE_FAMILY_LEVELS = frozenset({"pizza_glide", "pizza", "wedge_christie"})
+
+_DEFAULT_EXCLUSION_RULES: tuple[ExclusionRule, ...] = (
+    ExclusionRule(
+        when={
+            "stance_width_lte": PARALLEL_STANCE_WIDTH_HI,
+            "wedge_angle_lte": PARALLEL_WEDGE_ANGLE_HI,
+        },
+        reject_levels=["pizza_glide", "pizza", "wedge_christie"],
+        reason=REASON_PARALLEL_STANCE,
+    ),
+)
 
 #: Quality-factor reference points. Landmark quality of 0.7 and 80% usable
 #: frames are treated as "as good as it gets"; a single-plane view can only see
@@ -209,6 +228,51 @@ def _age_excluded(level: LevelSpec, age_band: str | None) -> bool:
         if note.id == age_band and note.status == "not_applicable":
             return True
     return False
+
+
+def _parallel_stance_detected(pack: MetricPack) -> bool:
+    """Whether stance and wedge read as matched parallel rather than wedge family."""
+    return bool(_evaluate_exclusion_rules(pack, _DEFAULT_EXCLUSION_RULES))
+
+
+def _when_condition_holds(pack: MetricPack, key: str, threshold: float) -> bool:
+    """Evaluate one ``{metric_id}_lte`` / ``{metric_id}_gte`` condition."""
+    if key.endswith("_lte"):
+        metric_id = key[: -len("_lte")]
+        op = "lte"
+    elif key.endswith("_gte"):
+        metric_id = key[: -len("_gte")]
+        op = "gte"
+    else:
+        return False
+    metric = pack.get(metric_id)
+    if metric is None or metric.value is None:
+        return False
+    value = float(metric.value)
+    if op == "lte":
+        return value <= threshold
+    return value >= threshold
+
+
+def _evaluate_exclusion_rules(
+    pack: MetricPack,
+    rules: list[ExclusionRule] | tuple[ExclusionRule, ...],
+) -> dict[str, str]:
+    """Map rejected level ids to machine-readable reasons."""
+    rejected: dict[str, str] = {}
+    for rule in rules:
+        if not all(
+            _when_condition_holds(pack, key, threshold)
+            for key, threshold in rule.when.items()
+        ):
+            continue
+        for level_id in rule.reject_levels:
+            rejected[level_id] = rule.reason
+    return rejected
+
+
+def _exclusion_rules_for(curriculum: Curriculum) -> list[ExclusionRule]:
+    return list(curriculum.exclusion_rules or _DEFAULT_EXCLUSION_RULES)
 
 
 def _memberships(
@@ -352,6 +416,7 @@ def score_candidates(
 ) -> list[CandidateScore]:
     """Every candidate scored, best first. Rejected rows keep their reason."""
     age_band = getattr(pack.athlete, "age_band", None)
+    excluded = _evaluate_exclusion_rules(pack, _exclusion_rules_for(curriculum))
     rows: list[CandidateScore] = []
     for level in candidate_levels(curriculum, pack.scene):
         memberships, measured = _memberships(pack, level, age_band)
@@ -362,6 +427,8 @@ def score_candidates(
         if _age_excluded(level, age_band):
             rejected = REASON_NOT_APPLICABLE_AGE
             prior = 0.0
+        elif level.id in excluded:
+            rejected = excluded[level.id]
         elif not memberships:
             rejected = REASON_NOTHING_MEASURED
         rows.append(

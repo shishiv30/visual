@@ -20,6 +20,24 @@
     "body": ["ankle"],
     "scored": true
   },
+  "ski_wedge_angle": {
+    "group": "stance_balance",
+    "unit": "deg",
+    "forms": ["A", "T"],
+    "body": ["ankle"],
+    "scored": true,
+    "proxy": true,
+    "proxy_note": "board tip-to-tail vectors; unavailable without ski board detection"
+  },
+  "ski_parallelism": {
+    "group": "stance_balance",
+    "unit": "ratio",
+    "forms": ["A"],
+    "body": ["ankle"],
+    "scored": true,
+    "proxy": true,
+    "proxy_note": "1 - normalized ski wedge; unavailable without ski board detection"
+  },
   "shin_angle_fore_aft": {
     "group": "stance_balance",
     "unit": "deg",

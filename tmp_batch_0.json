@@ -1,0 +1,402 @@
+[
+  {
+    "en": " cm",
+    "zh": " cm"
+  },
+  {
+    "en": " kg",
+    "zh": " kg"
+  },
+  {
+    "en": "--",
+    "zh": "--"
+  },
+  {
+    "en": "3×30s; no collapsed backseat.",
+    "zh": "3 组 × 30 秒，不许塌腰后坐。"
+  },
+  {
+    "en": "3×8 squats; Bulgarian split squat 3×6 each side.",
+    "zh": "双腿深蹲 3×8；保加利亚分腿蹲每侧 3×6。"
+  },
+  {
+    "en": "A light pole touch at each edge change, hands kept in front.",
+    "zh": "每次换刃轻点一次雪杖，双手保持在身前。"
+  },
+  {
+    "en": "A metric that could not be measured says so — it is never shown as a zero.",
+    "zh": "无法测得的指标会如实标注，绝不以 0 分呈现。"
+  },
+  {
+    "en": "A wide stance is mechanically correct at this age; stance width is not penalized.",
+    "zh": "这个年龄段站距偏宽是符合力学的，站距不作扣分。"
+  },
+  {
+    "en": "About hip-width; wider usually means you're still in a wedge.",
+    "zh": "站距约髋宽；过宽说明犁式没收干净。"
+  },
+  {
+    "en": "Allow camera",
+    "zh": "允许相机"
+  },
+  {
+    "en": "Also in this module",
+    "zh": "本模块还包含"
+  },
+  {
+    "en": "Analyze the clip first to open the report.",
+    "zh": "请先完成分析后再查看报告。"
+  },
+  {
+    "en": "Analyzing pose…",
+    "zh": "正在分析姿态…"
+  },
+  {
+    "en": "Angulation",
+    "zh": "折角"
+  },
+  {
+    "en": "Any terrain",
+    "zh": "任意地形"
+  },
+  {
+    "en": "Athlete info required",
+    "zh": "需要运动员信息"
+  },
+  {
+    "en": "Athletic stance on land",
+    "zh": "陆上运动站姿"
+  },
+  {
+    "en": "Available",
+    "zh": "可挑战"
+  },
+  {
+    "en": "Avoid",
+    "zh": "避开"
+  },
+  {
+    "en": "Avoid sharp bumps, jumps, and a too-narrow line.",
+    "zh": "避开尖包、跳台和过窄的线。"
+  },
+  {
+    "en": "Back",
+    "zh": "返回"
+  },
+  {
+    "en": "Back seat",
+    "zh": "后坐"
+  },
+  {
+    "en": "Back-seat finishes",
+    "zh": "出弯后坐"
+  },
+  {
+    "en": "Bad skeleton",
+    "zh": "骨骼差"
+  },
+  {
+    "en": "Balance",
+    "zh": "平衡性"
+  },
+  {
+    "en": "Balance on the outside ski before carving.",
+    "zh": "刻滑前先能把重量放在外侧板上。"
+  },
+  {
+    "en": "Banking share",
+    "zh": "内倒占比"
+  },
+  {
+    "en": "Best conditions",
+    "zh": "最佳雪况"
+  },
+  {
+    "en": "Best match",
+    "zh": "最匹配"
+  },
+  {
+    "en": "Best score {score:.0f}",
+    "zh": "历史最佳 {score:.0f} 分"
+  },
+  {
+    "en": "Bilibili",
+    "zh": "哔哩哔哩"
+  },
+  {
+    "en": "Birthday",
+    "zh": "生日"
+  },
+  {
+    "en": "Black",
+    "zh": "黑道"
+  },
+  {
+    "en": "Black run",
+    "zh": "黑道"
+  },
+  {
+    "en": "Black steep",
+    "zh": "黑色陡坡"
+  },
+  {
+    "en": "Blocker",
+    "zh": "阻断项"
+  },
+  {
+    "en": "Blue",
+    "zh": "蓝道"
+  },
+  {
+    "en": "Blue run",
+    "zh": "蓝道"
+  },
+  {
+    "en": "Boot flex band: {low}-{high}",
+    "zh": "靴硬度范围：{low}-{high}"
+  },
+  {
+    "en": "Bounce both skis together in soft snow to feel the snow push back.",
+    "zh": "在松软雪中两只板一起上下起伏，感受雪面的回弹。"
+  },
+  {
+    "en": "Braking at the finish",
+    "zh": "弯尾刹车"
+  },
+  {
+    "en": "Braking turns",
+    "zh": "刹车式转弯"
+  },
+  {
+    "en": "Branch",
+    "zh": "分支"
+  },
+  {
+    "en": "Bump cadence",
+    "zh": "雪包节奏"
+  },
+  {
+    "en": "Camera",
+    "zh": "拍摄"
+  },
+  {
+    "en": "Camera angle",
+    "zh": "拍摄角度"
+  },
+  {
+    "en": "Camera device",
+    "zh": "摄像头"
+  },
+  {
+    "en": "Camera motion",
+    "zh": "镜头运动"
+  },
+  {
+    "en": "Camera motion could not be judged from this clip.",
+    "zh": "本段无法判断镜头运动。"
+  },
+  {
+    "en": "Camera permission required",
+    "zh": "需要相机权限"
+  },
+  {
+    "en": "Camera preview",
+    "zh": "摄像头预览"
+  },
+  {
+    "en": "Camera unavailable",
+    "zh": "无法使用相机"
+  },
+  {
+    "en": "Camera view",
+    "zh": "拍摄视角"
+  },
+  {
+    "en": "Cancel",
+    "zh": "取消"
+  },
+  {
+    "en": "Carve parallel",
+    "zh": "平行板刻滑"
+  },
+  {
+    "en": "Carve points are heuristics, not FIS carving scores.",
+    "zh": "刻滑要点为经验估分，不是 FIS 刻滑得分。"
+  },
+  {
+    "en": "Carving needs body mass to bend the ski; not applicable below age 13.",
+    "zh": "刻滑需要一定体重才能把雪板压弯；13 岁以下不适用。"
+  },
+  {
+    "en": "Category",
+    "zh": "种类"
+  },
+  {
+    "en": "Center of mass not backseat",
+    "zh": "重心不后坐"
+  },
+  {
+    "en": "Check the rental skis still have edges before the first run.",
+    "zh": "上道前先检查租用雪板的钢边是否还在。"
+  },
+  {
+    "en": "Checkpoint radar (scores)",
+    "zh": "分项雷达（分数）"
+  },
+  {
+    "en": "Checkpoints",
+    "zh": "分项"
+  },
+  {
+    "en": "Choose video or image",
+    "zh": "选择视频或图片"
+  },
+  {
+    "en": "Christie stance",
+    "zh": "半犁站距"
+  },
+  {
+    "en": "Clear up-and-down movement in every turn; a static stance sinks the tips.",
+    "zh": "每个转弯都有明显的上下起伏；站姿僵直会让板头下沉。"
+  },
+  {
+    "en": "Click the filmstrip to seek; green diamonds are saved boxes (click to jump). Drag the blue start/end edges to trim. Shift+wheel zooms. Draw a person box — it saves for this frame; draw again on the same frame to replace.",
+    "zh": "点击胶片跳转；绿色菱形是已记录的框（点击可跳到该帧）。拖蓝色开始/结束边裁剪。Shift+滚轮缩放。在人物上拖框，松手记录到当前帧；同一帧再框选会覆盖该帧。"
+  },
+  {
+    "en": "Click left ski tail",
+    "zh": "点击左板尾"
+  },
+  {
+    "en": "Click left ski tip",
+    "zh": "点击左板头"
+  },
+  {
+    "en": "Click right ski tail",
+    "zh": "点击右板尾"
+  },
+  {
+    "en": "Click right ski tip",
+    "zh": "点击右板头"
+  },
+  {
+    "en": "Clip could not be scored",
+    "zh": "该视频无法评分"
+  },
+  {
+    "en": "Clip {lo:.1f}s → {hi:.1f}s ({dur:.1f}s, max {max:.0f}s)",
+    "zh": "片段 {lo:.1f}s → {hi:.1f}s（{dur:.1f}s，最长 {max:.0f}s）"
+  },
+  {
+    "en": "Close the inside ski",
+    "zh": "出弯收内侧板"
+  },
+  {
+    "en": "Coach (from knowledge base)",
+    "zh": "滑雪教练说明（知识库）"
+  },
+  {
+    "en": "Coach heuristics, not FIS judging or medical advice. 2D pose can misread. Pain or prior injury: see a coach or clinician.",
+    "zh": "滑雪教练经验估分，非 FIS 裁判分，非医疗建议。2D 骨骼会误判。疼痛或旧伤请线下教练/医师。"
+  },
+  {
+    "en": "Coach report (heuristics)",
+    "zh": "教练报告（经验估分）"
+  },
+  {
+    "en": "Common misconception",
+    "zh": "常见误区"
+  },
+  {
+    "en": "Completed",
+    "zh": "已完成"
+  },
+  {
+    "en": "Conditions to avoid",
+    "zh": "应避开的雪况"
+  },
+  {
+    "en": "Confidence",
+    "zh": "置信度"
+  },
+  {
+    "en": "Confidence {pct:.0f}% · separation {sep:.2f}",
+    "zh": "置信度 {pct:.0f}% · 区分度 {sep:.2f}"
+  },
+  {
+    "en": "Control",
+    "zh": "控制力"
+  },
+  {
+    "en": "Control speed with turn shape, not by scraping the tails across the fall line.",
+    "zh": "用转弯弧形控速，而不是把板尾横过落差线搓雪。"
+  },
+  {
+    "en": "Coordination",
+    "zh": "协调性"
+  },
+  {
+    "en": "Copy frame locator",
+    "zh": "复制当前帧定位"
+  },
+  {
+    "en": "Corduroy",
+    "zh": "压雪纹"
+  },
+  {
+    "en": "Core metrics",
+    "zh": "核心指标"
+  },
+  {
+    "en": "Could not open the camera.",
+    "zh": "无法打开摄像头。"
+  },
+  {
+    "en": "Could not read video.",
+    "zh": "无法读取视频。"
+  },
+  {
+    "en": "Cross from edge to edge quickly; a ski left flat slides away on hardpack.",
+    "zh": "两侧立刃之间快速过渡；在硬雪上雪板一放平就会滑走。"
+  },
+  {
+    "en": "Crud",
+    "zh": "杂乱雪"
+  },
+  {
+    "en": "Crud, trees and complex terrain",
+    "zh": "烂雪、树林与复杂地形"
+  },
+  {
+    "en": "Cue",
+    "zh": "口令"
+  },
+  {
+    "en": "Current stage",
+    "zh": "当前级别"
+  },
+  {
+    "en": "Deepest flexion in the middle of the arc, not at the finish — no park-and-ride.",
+    "zh": "最深的蹲屈出现在弧线中段，而不是收弯处——不要立刃后干等。"
+  },
+  {
+    "en": "Delete",
+    "zh": "删除"
+  },
+  {
+    "en": "Delete this clip and its local files? This cannot be undone.",
+    "zh": "删除该条目及本地文件？此操作不可恢复。"
+  },
+  {
+    "en": "Diagnostic",
+    "zh": "参考项"
+  },
+  {
+    "en": "Display only: 2D pose does not score air or ski tips. Train with a coach.",
+    "zh": "仅目录展示：2D 骨骼不评空中与板尖。请线下教练。"
+  },
+  {
+    "en": "Display only: boxes, rails, and jumps are not scored.",
+    "zh": "仅目录展示：箱、杆、跳台不自动打分。"
+  }
+]

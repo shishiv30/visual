@@ -65,6 +65,7 @@ data class ClipMeta(
     val playEndMs: Int? = null,
     val athleteKey: String? = null,
     val athlete: AthleteProfile? = null,
+    val scene: SceneContext? = null,
 )
 
 class Library(private val root: File) {
@@ -84,6 +85,8 @@ class Library(private val root: File) {
     fun stageReportFile(clipId: String): File = File(clipDir(clipId), "stage_report.json")
 
     fun frameFeedbackFile(clipId: String): File = File(clipDir(clipId), "frame_feedback.json")
+
+    fun reportCorrectionFile(clipId: String): File = File(clipDir(clipId), "report_correction.json")
 
     fun saveMeta(meta: ClipMeta) {
         val path = metaFile(meta.clipId)
@@ -221,6 +224,11 @@ class Library(private val root: File) {
             } else {
                 obj.put("athlete", meta.athlete.toJson())
             }
+            if (meta.scene == null) {
+                obj.put("scene", JSONObject.NULL)
+            } else {
+                obj.put("scene", meta.scene.toJson())
+            }
             return obj
         }
 
@@ -264,6 +272,7 @@ class Library(private val root: File) {
                     null
                 },
                 athlete = obj.optJSONObject("athlete")?.let { AthleteProfile.fromJson(it) },
+                scene = SceneContext.fromJson(obj.optJSONObject("scene")),
             )
         }
     }

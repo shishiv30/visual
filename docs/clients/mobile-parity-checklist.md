@@ -2,6 +2,8 @@
 
 Windows PySide6 客户端（[`clients/windows`](../../clients/windows)）是**产品源**。完整界面与跳转见 [windows-product.md](../windows-product.md)。Android 从演示 Demo 接到同一产品时，下面每一条都实际漏过或做错过。做 iOS 时按勾选表走，不要靠「看起来差不多」。
 
+**内容 / 报告 v3：** 产品真源已切到 `curriculum.v3.json` 与十二章报告。桌面↔Android 差距与共享 JSON 合同见 **[`desktop-android-parity-v3.md`](desktop-android-parity-v3.md)**。下文「五章报告」是历史 Android 对照面，新工作以 v3 文档为准。
+
 原则：
 
 - 行为、文案、色值、间距、图标路径以桌面为准，平台只换控件（`UIDocumentPicker` / `UIActivityViewController` / `AVPlayer`），不换产品语义。

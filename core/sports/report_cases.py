@@ -466,7 +466,7 @@ SKID_SHORT = Skier(
     separation_deg=18.0,
     knee_fore_px=4.0,
     pole_spike_px=22.0,
-    shape_power=3.0,
+    shape_power=4.5,
 )
 #: Filmed almost side-on: every lateral metric is suppressed (§3.1).
 PROFILE_VIEW = Skier(

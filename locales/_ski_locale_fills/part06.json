@@ -1,0 +1,1010 @@
+{
+  "Start analysis": {
+    "fr": "Lancer l’analyse",
+    "de": "Analyse starten",
+    "es": "Iniciar análisis",
+    "it": "Avvia analisi",
+    "ja": "分析を開始",
+    "ko": "분석 시작",
+    "pt": "Iniciar análise"
+  },
+  "Static": {
+    "fr": "Fixe",
+    "de": "Statisch",
+    "es": "Fija",
+    "it": "Fissa",
+    "ja": "固定",
+    "ko": "고정",
+    "pt": "Fixa"
+  },
+  "Static camera": {
+    "fr": "Caméra fixe",
+    "de": "Statische Kamera",
+    "es": "Cámara fija",
+    "it": "Camera fissa",
+    "ja": "固定カメラ",
+    "ko": "고정 카메라",
+    "pt": "Câmara fixa"
+  },
+  "Stay centered so you can move onto the new outside ski.": {
+    "fr": "Restez centré pour pouvoir passer sur le nouveau ski extérieur.",
+    "de": "Mittig bleiben, damit du auf den neuen Außenski wechseln kannst.",
+    "es": "Mantente centrado para poder pasar al nuevo esquí exterior.",
+    "it": "Resta centrato così puoi passare sul nuovo sci esterno.",
+    "ja": "ニュートラルに立ち、新しい外側スキーへ移れるように。",
+    "ko": "중심을 잡아 새 바깥쪽 스키로 옮길 수 있게 하세요.",
+    "pt": "Mantenha-se centrado para poder passar para o novo ski exterior."
+  },
+  "Stay in a wedge through the turn; load the outside ski.": {
+    "fr": "Gardez le chasse-neige pendant le virage ; chargez le ski extérieur.",
+    "de": "Im Pflug durch den Schwung bleiben; den Außenski belasten.",
+    "es": "Mantén la cuña durante la curva; carga el esquí exterior.",
+    "it": "Mantieni lo spazzaneve nella curva; carica lo sci esterno.",
+    "ja": "ターン中はプルークのまま。外側スキーに荷重。",
+    "ko": "턴 내내 플루크를 유지하고 바깥쪽 스키에 하중을 주세요.",
+    "pt": "Mantenha a cunha durante a curva; carregue o ski exterior."
+  },
+  "Stay near the fall line": {
+    "fr": "Restez près de la ligne de pente",
+    "de": "Nah an der Falllinie bleiben",
+    "es": "Quédate cerca de la línea de máxima pendiente",
+    "it": "Resta vicino alla linea di massima pendenza",
+    "ja": "フォールライン近くを保つ",
+    "ko": "폴라인 근처를 유지",
+    "pt": "Fique perto da linha de máxima pendente"
+  },
+  "Stay parallel or inclination becomes banking.": {
+    "fr": "Restez parallèle, sinon l’inclinaison devient un banking.",
+    "de": "Parallel bleiben, sonst wird die Neigung zum Banking.",
+    "es": "Mantén el paralelo o la inclinación se vuelve banking.",
+    "it": "Resta parallelo, altrimenti l’inclinazione diventa banking.",
+    "ja": "パラレルを保て。でないと傾きがバンキングになる。",
+    "ko": "패러렐을 유지하세요. 아니면 기울기가 뱅킹이 됩니다.",
+    "pt": "Mantenha o paralelo ou a inclinação vira banking."
+  },
+  "Steep/hard suggestion for fall-line moguls only; still not measured.": {
+    "fr": "Suggestion raide/dure uniquement pour bosses en ligne de pente ; toujours non mesuré.",
+    "de": "Steil/hart-Vorschlag nur für Falllinien-Buckel; weiterhin nicht gemessen.",
+    "es": "Sugerencia empinada/dura solo para baches en máxima pendiente; aún no se mide.",
+    "it": "Suggerimento ripido/duro solo per gobbe in linea di massima pendenza; ancora non misurato.",
+    "ja": "フォールライン・モーグル向けの急/硬提案のみ。計測はしない。",
+    "ko": "폴라인 모글 전용 급경사/하드 제안. 여전히 미측정.",
+    "pt": "Sugestão íngreme/dura só para moguls na linha de máxima pendente; ainda não medido."
+  },
+  "Steeper groomed red run; for medium and short carve heuristics.": {
+    "fr": "Piste rouge damée plus raide ; pour heuristiques carving moyen et court.",
+    "de": "Steilere präparierte rote Piste; für Mittel- und Kurz-Carving-Heuristiken.",
+    "es": "Pista roja pisada más empinada; para heurísticas de carving medio y corto.",
+    "it": "Pista rossa battuta più ripida; per euristiche di carving medio e corto.",
+    "ja": "やや急な整備赤斜面。ミドル／ショート・カービングの経験則向け。",
+    "ko": "더 가파른 정비 레드; 미들·숏 카빙 휴리스틱용.",
+    "pt": "Pista vermelha preparada mais íngreme; para heurísticas de carving médio e curto."
+  },
+  "Steeps": {
+    "fr": "Pentes raides",
+    "de": "Steilhänge",
+    "es": "Pendientes fuertes",
+    "it": "Pendii ripidi",
+    "ja": "急斜面",
+    "ko": "급경사",
+    "pt": "Pendentes íngremes"
+  },
+  "Stem": {
+    "fr": "Stem",
+    "de": "Stemm",
+    "es": "Stem",
+    "it": "Stem",
+    "ja": "ステム",
+    "ko": "스템",
+    "pt": "Stem"
+  },
+  "Stemmed transitions": {
+    "fr": "Transitions en stem",
+    "de": "Gestemmte Übergänge",
+    "es": "Transiciones en stem",
+    "it": "Transizioni in stem",
+    "ja": "ステム遷移",
+    "ko": "스템 전환",
+    "pt": "Transições em stem"
+  },
+  "Stop": {
+    "fr": "Stop",
+    "de": "Stopp",
+    "es": "Parar",
+    "it": "Stop",
+    "ja": "停止",
+    "ko": "정지",
+    "pt": "Parar"
+  },
+  "Straight-run a soft slope and bounce six times, then link the bounces into turns.": {
+    "fr": "Descendez droit une pente douce et rebondissez six fois, puis enchaînez les rebonds en virages.",
+    "de": "Weiche Piste geradeaus und sechsmal federn, dann die Federn zu Schwüngen verbinden.",
+    "es": "Baja en línea por pendiente suave y rebota seis veces; luego encadena los rebotes en curvas.",
+    "it": "Scendi dritto su pendio morbido e rimbalza sei volte, poi collega i rimbalzi in curve.",
+    "ja": "柔らかい斜面を直滑降し六回バウンス、その後バウンスをターンに繋ぐ。",
+    "ko": "부드러운 슬로프를 직활하며 여섯 번 바운스한 뒤, 바운스를 턴으로 연결하세요.",
+    "pt": "Desça em linha numa pendente macia e salte seis vezes; depois encadeie os saltos em curvas."
+  },
+  "Strong": {
+    "fr": "Fort",
+    "de": "Stark",
+    "es": "Fuerte",
+    "it": "Forte",
+    "ja": "強い",
+    "ko": "강함",
+    "pt": "Forte"
+  },
+  "Suggested black run; slope is not measured.": {
+    "fr": "Piste noire suggérée ; la pente n’est pas mesurée.",
+    "de": "Vorgeschlagene schwarze Piste; Neigung nicht gemessen.",
+    "es": "Pista negra sugerida; la pendiente no se mide.",
+    "it": "Pista nera suggerita; la pendenza non è misurata.",
+    "ja": "黒斜面の提案。斜度は未測定。",
+    "ko": "블랙 슬로프 제안. 경사도는 미측정.",
+    "pt": "Pista preta sugerida; a pendente não é medida."
+  },
+  "Suggested blue run; slope is not measured.": {
+    "fr": "Piste bleue suggérée ; la pente n’est pas mesurée.",
+    "de": "Vorgeschlagene blaue Piste; Neigung nicht gemessen.",
+    "es": "Pista azul sugerida; la pendiente no se mide.",
+    "it": "Pista blu suggerita; la pendenza non è misurata.",
+    "ja": "青斜面の提案。斜度は未測定。",
+    "ko": "블루 슬로프 제안. 경사도는 미측정.",
+    "pt": "Pista azul sugerida; a pendente não é medida."
+  },
+  "Suggested green run; slope is not measured.": {
+    "fr": "Piste verte suggérée ; la pente n’est pas mesurée.",
+    "de": "Vorgeschlagene grüne Piste; Neigung nicht gemessen.",
+    "es": "Pista verde sugerida; la pendiente no se mide.",
+    "it": "Pista verde suggerita; la pendenza non è misurata.",
+    "ja": "緑斜面の提案。斜度は未測定。",
+    "ko": "그린 슬로프 제안. 경사도는 미측정.",
+    "pt": "Pista verde sugerida; a pendente não é medida."
+  },
+  "Suggested mogul field; bump shape is not measured.": {
+    "fr": "Champ de bosses suggéré ; la forme des bosses n’est pas mesurée.",
+    "de": "Vorgeschlagenes Buckelfeld; Buckelform nicht gemessen.",
+    "es": "Campo de baches sugerido; la forma del bache no se mide.",
+    "it": "Campo di gobbe suggerito; la forma delle gobbe non è misurata.",
+    "ja": "モーグル畑の提案。バンプ形状は未測定。",
+    "ko": "모글 필드 제안. 범프 형태는 미측정.",
+    "pt": "Campo de moguls sugerido; a forma dos bumps não é medida."
+  },
+  "Suggested off-piste inside the resort boundary; snow depth is not measured.": {
+    "fr": "Hors-piste suggéré dans les limites de la station ; l’épaisseur de neige n’est pas mesurée.",
+    "de": "Vorgeschlagene Offpiste innerhalb der Gebietsgrenze; Schneetiefe nicht gemessen.",
+    "es": "Fuera de pista sugerido dentro del dominio; la profundidad de nieve no se mide.",
+    "it": "Fuori pista suggerito dentro il comprensorio; lo spessore neve non è misurato.",
+    "ja": "ゲレンデ境界内オフピステの提案。雪深は未測定。",
+    "ko": "리조트 경계 내 오프피스테 제안. 설심은 미측정.",
+    "pt": "Fora de pista sugerido dentro do domínio; a profundidade da neve não é medida."
+  },
+  "Suggested park terrain; this app does not score air.": {
+    "fr": "Terrain de park suggéré ; cette appli ne note pas l’air.",
+    "de": "Vorgeschlagenes Park-Gelände; diese App wertet Air nicht.",
+    "es": "Terreno de park sugerido; esta app no puntúa el air.",
+    "it": "Terreno park suggerito; questa app non valuta l’air.",
+    "ja": "パーク地形の提案。このアプリはエアを採点しない。",
+    "ko": "파크 지형 제안. 이 앱은 에어를 채점하지 않습니다.",
+    "pt": "Terreno de park sugerido; esta app não pontua air."
+  },
+  "Suggested red run; slope is not measured.": {
+    "fr": "Piste rouge suggérée ; la pente n’est pas mesurée.",
+    "de": "Vorgeschlagene rote Piste; Neigung nicht gemessen.",
+    "es": "Pista roja sugerida; la pendiente no se mide.",
+    "it": "Pista rossa suggerita; la pendenza non è misurata.",
+    "ja": "赤斜面の提案。斜度は未測定。",
+    "ko": "레드 슬로프 제안. 경사도는 미측정.",
+    "pt": "Pista vermelha sugerida; a pendente não é medida."
+  },
+  "Suggested trail rating": {
+    "fr": "Niveau de piste suggéré",
+    "de": "Vorgeschlagene Pistenbewertung",
+    "es": "Nivel de pista sugerido",
+    "it": "Livello pista suggerito",
+    "ja": "提案ゲレンデ難易度",
+    "ko": "제안 슬로프 등급",
+    "pt": "Classificação de pista sugerida"
+  },
+  "Suggested: {snow} / {terrain}": {
+    "fr": "Suggestion : {snow} / {terrain}",
+    "de": "Vorschlag: {snow} / {terrain}",
+    "es": "Sugerido: {snow} / {terrain}",
+    "it": "Suggerito: {snow} / {terrain}",
+    "ja": "提案：{snow} / {terrain}",
+    "ko": "제안: {snow} / {terrain}",
+    "pt": "Sugerido: {snow} / {terrain}"
+  },
+  "Summary": {
+    "fr": "Résumé",
+    "de": "Zusammenfassung",
+    "es": "Resumen",
+    "it": "Riepilogo",
+    "ja": "要約",
+    "ko": "요약",
+    "pt": "Resumo"
+  },
+  "Switch alpine": {
+    "fr": "Alpine switch",
+    "de": "Switch Alpin",
+    "es": "Switch alpino",
+    "it": "Switch alpino",
+    "ja": "スイッチアルペン",
+    "ko": "스위치 알파인",
+    "pt": "Switch alpine"
+  },
+  "Symptom": {
+    "fr": "Symptôme",
+    "de": "Symptom",
+    "es": "Síntoma",
+    "it": "Sintomo",
+    "ja": "症状",
+    "ko": "증상",
+    "pt": "Sintoma"
+  },
+  "Tactic": {
+    "fr": "Tactique",
+    "de": "Taktik",
+    "es": "Táctica",
+    "it": "Tattica",
+    "ja": "タクティック",
+    "ko": "전술",
+    "pt": "Tática"
+  },
+  "Tech: skeleton criteria (from knowledge base)": {
+    "fr": "Tech : critères squelette (base de connaissances)",
+    "de": "Tech: Skelett-Kriterien (Wissensbasis)",
+    "es": "Tech: criterios de esqueleto (base de conocimiento)",
+    "it": "Tech: criteri scheletro (base di conoscenza)",
+    "ja": "Tech：骨格判定基準（知識ベース）",
+    "ko": "Tech: 스켈레톤 기준（지식 베이스）",
+    "pt": "Tech: critérios de esqueleto (base de conhecimento)"
+  },
+  "Ten linked parallel turns on a blue run, counting one-two through every turn.": {
+    "fr": "Dix virages parallèles enchaînés sur piste bleue, en comptant un-deux à chaque virage.",
+    "de": "Zehn verkettete Parallelschwünge auf blauer Piste, bei jedem Schwung eins-zwei zählen.",
+    "es": "Diez curvas paralelas enlazadas en pista azul, contando uno-dos en cada curva.",
+    "it": "Dieci curve parallele concatenate su pista blu, contando uno-due in ogni curva.",
+    "ja": "青斜面で連続パラレル10本。各ターンでワン・ツーと数える。",
+    "ko": "블루에서 연결 패러렐 10회. 매 턴마다 원-투로 세기.",
+    "pt": "Dez curvas paralelas encadeadas numa pista azul, contando um-dois em cada curva."
+  },
+  "Ten short turns on a blue run; quiet shoulders, hands low.": {
+    "fr": "Dix virages courts sur piste bleue ; épaules calmes, mains basses.",
+    "de": "Zehn Kurzschwünge auf blauer Piste; ruhige Schultern, tiefe Hände.",
+    "es": "Diez curvas cortas en pista azul; hombros quietos, manos bajas.",
+    "it": "Dieci curve corte su pista blu; spalle quiete, mani basse.",
+    "ja": "青斜面でショートターン10本。肩は静か、手は低く。",
+    "ko": "블루에서 숏턴 10회. 어깨는 조용히, 손은 낮게.",
+    "pt": "Dez curvas curtas numa pista azul; ombros quietos, mãos baixas."
+  },
+  "Terrain": {
+    "fr": "Terrain",
+    "de": "Gelände",
+    "es": "Terreno",
+    "it": "Terreno",
+    "ja": "地形",
+    "ko": "지형",
+    "pt": "Terreno"
+  },
+  "Terrain and venue": {
+    "fr": "Terrain et lieu",
+    "de": "Gelände und Ort",
+    "es": "Terreno y lugar",
+    "it": "Terreno e sede",
+    "ja": "地形と会場",
+    "ko": "지형과 장소",
+    "pt": "Terreno e local"
+  },
+  "Terrain needed": {
+    "fr": "Terrain requis",
+    "de": "Gelände erforderlich",
+    "es": "Terreno necesario",
+    "it": "Terreno richiesto",
+    "ja": "地形が必要",
+    "ko": "지형 필요",
+    "pt": "Terreno necessário"
+  },
+  "Terrain, slope and snow are optional — set Terrain to Mogul run for mogul detection.": {
+    "fr": "Terrain, pente et neige sont optionnels — réglez Terrain sur Piste de bosses pour détecter les bosses.",
+    "de": "Gelände, Neigung und Schnee sind optional — setze Gelände auf Buckelpiste für Buckelerkennung.",
+    "es": "Terreno, pendiente y nieve son opcionales — pon Terreno en Pista de baches para detectar moguls.",
+    "it": "Terreno, pendenza e neve sono opzionali — imposta Terreno su Pista gobbe per rilevare le gobbe.",
+    "ja": "地形・斜度・雪質は任意——モーグル検出には地形を「モーグルラン」に。",
+    "ko": "지형·경사·설질은 선택——모글 감지 시 지형을 「모글 런」으로 설정.",
+    "pt": "Terreno, pendente e neve são opcionais — defina Terreno como Pista de moguls para detetar moguls."
+  },
+  "Terrain park": {
+    "fr": "Snowpark",
+    "de": "Terrainpark",
+    "es": "Snowpark",
+    "it": "Snowpark",
+    "ja": "テレインパーク",
+    "ko": "지형 파크",
+    "pt": "Snowpark"
+  },
+  "Groomed piste": {
+    "fr": "Piste damée",
+    "de": "Präparierte Piste",
+    "es": "Pista pisada",
+    "it": "Pista battuta",
+    "ja": "圧雪ゲレンデ",
+    "ko": "정비 슬로프",
+    "pt": "Pista preparada"
+  },
+  "Mogul run": {
+    "fr": "Piste de bosses",
+    "de": "Buckelpiste",
+    "es": "Pista de baches",
+    "it": "Pista gobbe",
+    "ja": "モーグルラン",
+    "ko": "모글 런",
+    "pt": "Pista de moguls"
+  },
+  "Test it": {
+    "fr": "Testez-le",
+    "de": "Ausprobieren",
+    "es": "Pruébalo",
+    "it": "Provalo",
+    "ja": "試す",
+    "ko": "테스트하기",
+    "pt": "Testar"
+  },
+  "The allowance is {n}": {
+    "fr": "La tolérance est de {n}",
+    "de": "Die Zulassung beträgt {n}",
+    "es": "El margen es {n}",
+    "it": "Il margine è {n}",
+    "ja": "許容は {n}",
+    "ko": "허용치는 {n}",
+    "pt": "A margem é {n}"
+  },
+  "The camera follows the skier, so turn rhythm is measured from the body rather than the track.": {
+    "fr": "La caméra suit le skieur : le rythme de virage se mesure sur le corps, pas sur la trace.",
+    "de": "Die Kamera folgt dem Fahrer; der Schwungrhythmus wird am Körper gemessen, nicht an der Spur.",
+    "es": "La cámara sigue al esquiador: el ritmo de curva se mide en el cuerpo, no en la huella.",
+    "it": "La camera segue lo sciatore: il ritmo di curva si misura sul corpo, non sulla traccia.",
+    "ja": "カメラが滑走者を追うため、ターンリズムは軌跡ではなく体から測る。",
+    "ko": "카메라가 스키어를 따라가므로 턴 리듬은 궤적이 아니라 몸에서 측정합니다.",
+    "pt": "A câmara segue o esquiador: o ritmo de curva mede-se no corpo, não no rasto."
+  },
+  "The camera pans during the clip; a fixed camera measures rhythm more reliably.": {
+    "fr": "La caméra fait un panoramique dans le clip ; une caméra fixe mesure le rythme plus fiablement.",
+    "de": "Die Kamera schwenkt im Clip; eine feste Kamera misst den Rhythmus zuverlässiger.",
+    "es": "La cámara panea en el clip; una cámara fija mide el ritmo con más fiabilidad.",
+    "it": "La camera fa panoramica nel clip; una camera fissa misura il ritmo in modo più affidabile.",
+    "ja": "クリップ中にカメラがパンしている。固定カメラの方がリズム計測が安定する。",
+    "ko": "클립 중 카메라가 패닝합니다. 고정 카메라가 리듬을 더 안정적으로 측정합니다.",
+    "pt": "A câmara faz pan no clip; uma câmara fixa mede o ritmo com mais fiabilidade."
+  },
+  "The clip is too short to judge rhythm. Film a whole run of at least eight turns.": {
+    "fr": "Le clip est trop court pour juger le rythme. Filmez une descente d’au moins huit virages.",
+    "de": "Der Clip ist zu kurz für den Rhythmus. Filme eine ganze Abfahrt mit mindestens acht Schwüngen.",
+    "es": "El clip es demasiado corto para juzgar el ritmo. Graba una bajada de al menos ocho curvas.",
+    "it": "Il clip è troppo corto per giudicare il ritmo. Filma una discesa di almeno otto curve.",
+    "ja": "クリップが短くリズムを判定できない。少なくとも8ターンの一連を撮影して。",
+    "ko": "클립이 너무 짧아 리듬을 판단할 수 없습니다. 최소 여덟 턴의 한 런을 촬영하세요.",
+    "pt": "O clip é demasiado curto para julgar o ritmo. Filme uma descida com pelo menos oito curvas."
+  },
+  "The question to answer": {
+    "fr": "La question à trancher",
+    "de": "Die zu beantwortende Frage",
+    "es": "La pregunta a responder",
+    "it": "La domanda da rispondere",
+    "ja": "答えるべき問い",
+    "ko": "답할 질문",
+    "pt": "A pergunta a responder"
+  },
+  "The shoulders keep facing down the pitch while the legs turn underneath.": {
+    "fr": "Les épaules restent face à la pente tandis que les jambes tournent en dessous.",
+    "de": "Die Schultern bleiben talwärts, während die Beine darunter drehen.",
+    "es": "Los hombros siguen mirando valle abajo mientras las piernas giran debajo.",
+    "it": "Le spalle restano verso valle mentre le gambe girano sotto.",
+    "ja": "肩は斜面下向きのまま、脚がその下で回る。",
+    "ko": "어깨는 밸리 방향을 유지하고 그 아래에서 다리가 돕니다.",
+    "pt": "Os ombros mantêm-se virados para baixo da pendente enquanto as pernas giram por baixo."
+  },
+  "The shoulders stay square to the fall line while the skis slip.": {
+    "fr": "Les épaules restent d’équerre à la ligne de pente pendant que les skis dérapent.",
+    "de": "Die Schultern bleiben quer zur Falllinie, während die Ski driften.",
+    "es": "Los hombros quedan al cuadrado con la línea de máxima pendiente mientras los esquís derrapan.",
+    "it": "Le spalle restano perpendicolari alla linea di massima pendenza mentre gli sci derapano.",
+    "ja": "スキーがスキッドする間、肩はフォールラインに正対したまま。",
+    "ko": "스키가 스키드하는 동안 어깨는 폴라인에 정면을 유지합니다.",
+    "pt": "Os ombros ficam ao esquadro com a linha de máxima pendente enquanto os skis derrapam."
+  },
+  "The skeleton is weak in this clip: get closer, keep the skier unoccluded, and avoid flat light.": {
+    "fr": "Le squelette est faible dans ce clip : rapprochez-vous, gardez le skieur dégagé et évitez la lumière plate.",
+    "de": "Das Skelett ist schwach in diesem Clip: näher rangehen, Fahrer frei halten, Flachlicht meiden.",
+    "es": "El esqueleto es débil en este clip: acércate, mantén al esquiador sin oclusión y evita luz plana.",
+    "it": "Lo scheletro è debole in questo clip: avvicinati, tieni lo sciatore libero e evita luce piatta.",
+    "ja": "このクリップの骨格が弱い：寄る、遮られない、フラット光を避ける。",
+    "ko": "이 클립의 스켈레톤이 약합니다: 더 가까이, 스키어가 가려지지 않게, 플랫 라이트를 피하세요.",
+    "pt": "O esqueleto está fraco neste clip: aproxime-se, mantenha o esquiador sem oclusão e evite luz plana."
+  },
+  "The skeleton was too small or incomplete to measure.": {
+    "fr": "Le squelette était trop petit ou incomplet pour mesurer.",
+    "de": "Das Skelett war zu klein oder unvollständig zum Messen.",
+    "es": "El esqueleto era demasiado pequeño o incompleto para medir.",
+    "it": "Lo scheletro era troppo piccolo o incompleto per misurare.",
+    "ja": "骨格が小さすぎるか不完全で測定できない。",
+    "ko": "스켈레톤이 너무 작거나 불완전해 측정할 수 없습니다.",
+    "pt": "O esqueleto era demasiado pequeno ou incompleto para medir."
+  },
+  "The {joints} could not be tracked in this clip.": {
+    "fr": "Les {joints} n’ont pas pu être suivis dans ce clip.",
+    "de": "Die {joints} konnten in diesem Clip nicht getrackt werden.",
+    "es": "No se pudieron rastrear los {joints} en este clip.",
+    "it": "I {joints} non sono stati tracciabili in questo clip.",
+    "ja": "このクリップでは{joints}を追跡できませんでした。",
+    "ko": "이 클립에서 {joints}을(를) 추적할 수 없습니다.",
+    "pt": "Não foi possível seguir os {joints} neste clip."
+  },
+  "This clip is still processing. Play it when it is done.": {
+    "fr": "Ce clip est encore en cours de traitement. Lisez-le une fois terminé.",
+    "de": "Dieser Clip wird noch verarbeitet. Abspielen, wenn fertig.",
+    "es": "Este clip aún se está procesando. Reprodúcelo cuando termine.",
+    "it": "Questo clip è ancora in elaborazione. Riproducilo a fine lavoro.",
+    "ja": "このクリップは処理中です。完了してから再生してください。",
+    "ko": "이 클립은 아직 처리 중입니다. 끝나면 재생하세요.",
+    "pt": "Este clip ainda está a processar. Reproduza quando terminar."
+  },
+  "Three-quarter view": {
+    "fr": "Vue de trois quarts",
+    "de": "Dreiviertelansicht",
+    "es": "Vista de tres cuartos",
+    "it": "Vista a tre quarti",
+    "ja": "斜め前ビュー",
+    "ko": "사분삼 뷰",
+    "pt": "Vista de três quartos"
+  },
+  "Throwing the shoulders wrecks inclination.": {
+    "fr": "Jeter les épaules ruine l’inclinaison.",
+    "de": "Schultern werfen zerstört die Neigung.",
+    "es": "Lanzar los hombros destroza la inclinación.",
+    "it": "Gettare le spalle rovina l’inclinazione.",
+    "ja": "肩を放り出すとインクラインが崩れる。",
+    "ko": "어깨를 던지면 인클리네이션이 무너집니다.",
+    "pt": "Lançar os ombros destrói a inclinação."
+  },
+  "TikTok": {
+    "fr": "TikTok",
+    "de": "TikTok",
+    "es": "TikTok",
+    "it": "TikTok",
+    "ja": "TikTok",
+    "ko": "TikTok",
+    "pt": "TikTok"
+  },
+  "Tip the body into the turn (hips inside the arc). Heuristic only — not a measured edge angle or FIS score.": {
+    "fr": "Inclinez le corps dans le virage (hanches à l’intérieur de l’arc). Heuristique seulement — pas un angle de carre mesuré ni un score FIS.",
+    "de": "Körper in den Schwung neigen (Hüfte innen im Bogen). Nur Heuristik — kein gemessener Kantenwinkel oder FIS-Score.",
+    "es": "Inclina el cuerpo hacia la curva (caderas dentro del arco). Solo heurística — no es ángulo de canto medido ni puntuación FIS.",
+    "it": "Inclina il corpo nella curva (anche dentro l’arco). Solo euristica — non angolo di lama misurato né punteggio FIS.",
+    "ja": "体をターン内側へ傾ける（ヒップは弧の内側）。経験則のみ——実測エッジ角やFIS得点ではない。",
+    "ko": "몸을 턴 안으로 기울이세요(엉덩이는 아크 안쪽). 휴리스틱일 뿐——실측 엣지 각이나 FIS 점수가 아님.",
+    "pt": "Incline o corpo para a curva (ancas dentro do arco). Só heurística — não é ângulo de canto medido nem pontuação FIS."
+  },
+  "Tips close, tails open, stance wider than the hips.": {
+    "fr": "Pointes rapprochées, talons ouverts, écartement plus large que les hanches.",
+    "de": "Spitzen nah, Enden offen, Standbreite weiter als die Hüfte.",
+    "es": "Puntas juntas, colas abiertas, base más ancha que las caderas.",
+    "it": "Punte vicine, code aperte, base più larga del bacino.",
+    "ja": "チップは寄せ、テールは開き、スタンスは腰より広く。",
+    "ko": "팁은 모으고 테일은 벌리며, 스탠스는 엉덩이보다 넓게.",
+    "pt": "Pontas juntas, caudas abertas, base mais larga que as ancas."
+  },
+  "Torso downhill": {
+    "fr": "Torse vers l’aval",
+    "de": "Rumpf talwärts",
+    "es": "Torso valle abajo",
+    "it": "Torso a valle",
+    "ja": "体幹は山下へ",
+    "ko": "몸통 밸리 방향",
+    "pt": "Tronco a vale"
+  },
+  "Torso faces downhill": {
+    "fr": "Le torse fait face à l’aval",
+    "de": "Rumpf schaut talwärts",
+    "es": "El torso mira valle abajo",
+    "it": "Il torso guarda a valle",
+    "ja": "体幹は山下向き",
+    "ko": "몸통이 밸리를 향함",
+    "pt": "O tronco olha a vale"
+  },
+  "Train {name}.": {
+    "fr": "Travaillez {name}.",
+    "de": "Trainiere {name}.",
+    "es": "Entrena {name}.",
+    "it": "Allena {name}.",
+    "ja": "{name}を練習。",
+    "ko": "{name}을(를) 훈련하세요.",
+    "pt": "Treine {name}."
+  },
+  "Train {name}: the standard is {standard}.": {
+    "fr": "Travaillez {name} : le standard est {standard}.",
+    "de": "Trainiere {name}: der Standard ist {standard}.",
+    "es": "Entrena {name}: el estándar es {standard}.",
+    "it": "Allena {name}: lo standard è {standard}.",
+    "ja": "{name}を練習：基準は{standard}。",
+    "ko": "{name} 훈련: 기준은 {standard}.",
+    "pt": "Treine {name}: o padrão é {standard}."
+  },
+  "Training emphasis": {
+    "fr": "Accent d’entraînement",
+    "de": "Trainingsschwerpunkt",
+    "es": "Énfasis de entrenamiento",
+    "it": "Enfasi di allenamento",
+    "ja": "トレーニング重点",
+    "ko": "훈련 중점",
+    "pt": "Ênfase de treino"
+  },
+  "Training venue": {
+    "fr": "Lieu d’entraînement",
+    "de": "Trainingsort",
+    "es": "Lugar de entrenamiento",
+    "it": "Sede di allenamento",
+    "ja": "練習場所",
+    "ko": "훈련 장소",
+    "pt": "Local de treino"
+  },
+  "Trim video (max 2 minutes)": {
+    "fr": "Rogner la vidéo (max 2 minutes)",
+    "de": "Video zuschneiden (max. 2 Minuten)",
+    "es": "Recortar vídeo (máx. 2 minutos)",
+    "it": "Taglia video (max 2 minuti)",
+    "ja": "動画をトリム（最大2分）",
+    "ko": "영상 자르기(최대 2분)",
+    "pt": "Recortar vídeo (máx. 2 minutos)"
+  },
+  "Trough fall-line rhythm": {
+    "fr": "Rythme en creux de ligne de pente",
+    "de": "Rhythmus in der Falllinien-Rinne",
+    "es": "Ritmo en el canal de máxima pendiente",
+    "it": "Ritmo nel canale di massima pendenza",
+    "ja": "トラフ・フォールライン・リズム",
+    "ko": "골 폴라인 리듬",
+    "pt": "Ritmo no canal da linha de máxima pendente"
+  },
+  "Turn amplitude": {
+    "fr": "Amplitude de virage",
+    "de": "Schwungamplitude",
+    "es": "Amplitud de curva",
+    "it": "Ampiezza di curva",
+    "ja": "ターン振幅",
+    "ko": "턴 진폭",
+    "pt": "Amplitude de curva"
+  },
+  "Turn durations stay close to each other; no long traverse between turns.": {
+    "fr": "Les durées de virage restent proches ; pas de longue traversée entre les virages.",
+    "de": "Schwungdauern bleiben nah beieinander; keine lange Schrägfahrt dazwischen.",
+    "es": "Las duraciones de curva se mantienen cercanas; sin travesía larga entre curvas.",
+    "it": "Le durate di curva restano vicine; niente lunga diagonale tra le curve.",
+    "ja": "各ターン時間は揃える。ターン間の長い斜滑降はなし。",
+    "ko": "턴 지속 시간이 비슷해야 합니다. 턴 사이 긴 트래버스는 없습니다.",
+    "pt": "As durações das curvas ficam próximas; sem travessia longa entre curvas."
+  },
+  "Turn faults": {
+    "fr": "Défauts de virage",
+    "de": "Schwungfehler",
+    "es": "Fallos de curva",
+    "it": "Difetti di curva",
+    "ja": "ターンの欠点",
+    "ko": "턴 결함",
+    "pt": "Falhas de curva"
+  },
+  "Turn instead of side-slipping the pitch": {
+    "fr": "Tournez plutôt que de déraper latéralement la pente",
+    "de": "Schwingen statt die Piste seitwärts zu rutschen",
+    "es": "Gira en vez de derrapar de lado la pendiente",
+    "it": "Curva invece di derapare di lato il pendio",
+    "ja": "斜面を横滑りせずターンする",
+    "ko": "슬로프를 옆미끄럼 하지 말고 턴하세요",
+    "pt": "Curve em vez de derrapar de lado a pendente"
+  },
+  "Turn rate": {
+    "fr": "Cadence de virage",
+    "de": "Schwungrate",
+    "es": "Cadencia de curva",
+    "it": "Frequenza di curva",
+    "ja": "ターンレート",
+    "ko": "턴 레이트",
+    "pt": "Cadência de curva"
+  },
+  "Turn shape": {
+    "fr": "Forme de virage",
+    "de": "Schwungform",
+    "es": "Forma de curva",
+    "it": "Forma di curva",
+    "ja": "ターン形状",
+    "ko": "턴 모양",
+    "pt": "Forma de curva"
+  },
+  "Turn-by-turn": {
+    "fr": "Virage par virage",
+    "de": "Schwung für Schwung",
+    "es": "Curva a curva",
+    "it": "Curva per curva",
+    "ja": "ターン別",
+    "ko": "턴별",
+    "pt": "Curva a curva"
+  },
+  "Turns detected": {
+    "fr": "Virages détectés",
+    "de": "Erkannte Schwünge",
+    "es": "Curvas detectadas",
+    "it": "Curve rilevate",
+    "ja": "検出されたターン",
+    "ko": "감지된 턴",
+    "pt": "Curvas detetadas"
+  },
+  "Turns led by the shoulders": {
+    "fr": "Virages menés par les épaules",
+    "de": "Von den Schultern geführte Schwünge",
+    "es": "Curvas lideradas por los hombros",
+    "it": "Curve guidate dalle spalle",
+    "ja": "肩主導のターン",
+    "ko": "어깨가 이끄는 턴",
+    "pt": "Curvas puxadas pelos ombros"
+  },
+  "Two-footed powder bounce": {
+    "fr": "Rebond poudreuse à deux pieds",
+    "de": "Beidbeiniger Powder-Bounce",
+    "es": "Rebote de polvo a dos pies",
+    "it": "Rimbalzo powder a due piedi",
+    "ja": "両足パウダーバウンス",
+    "ko": "양발 파우더 바운스",
+    "pt": "Salto em powder a dois pés"
+  },
+  "Two-footed, rounder turns in soft snow; flex and extend to make the skis surface.": {
+    "fr": "Virages plus ronds à deux pieds en neige souple ; fléchissez et étendez pour faire remonter les skis.",
+    "de": "Beidbeinige, rundere Schwünge im Weichschnee; beugen und strecken, damit die Ski aufschwimmen.",
+    "es": "Curvas más redondas a dos pies en nieve blanda; flexiona y extiende para hacer flotar los esquís.",
+    "it": "Curve più rotonde a due piedi su neve morbida; fletti ed estendi per far affiorare gli sci.",
+    "ja": "軟雪では両足の丸いターン。蹲伸でスキーを浮かせる。",
+    "ko": "부드러운 눈에서 양발의 더 둥근 턴; 굴신으로 스키를 띄우세요.",
+    "pt": "Curvas mais redondas a dois pés na neve macia; flexione e estenda para fazer os skis emergir."
+  },
+  "Unknown": {
+    "fr": "Inconnu",
+    "de": "Unbekannt",
+    "es": "Desconocido",
+    "it": "Sconosciuto",
+    "ja": "不明",
+    "ko": "알 수 없음",
+    "pt": "Desconhecido"
+  },
+  "Undo label point": {
+    "fr": "Annuler le point d’étiquette",
+    "de": "Labelpunkt rückgängig",
+    "es": "Deshacer punto de etiqueta",
+    "it": "Annulla punto etichetta",
+    "ja": "ラベル点を取り消す",
+    "ko": "라벨 점 실행 취소",
+    "pt": "Anular ponto de etiqueta"
+  },
+  "Unlike": {
+    "fr": "Unlike",
+    "de": "Unlike",
+    "es": "Unlike",
+    "it": "Unlike",
+    "ja": "Unlike",
+    "ko": "Unlike",
+    "pt": "Unlike"
+  },
+  "Unscored when the head is not visible in 2D pose.": {
+    "fr": "Non noté si la tête n’est pas visible en pose 2D.",
+    "de": "Unbewertet, wenn der Kopf in der 2D-Pose nicht sichtbar ist.",
+    "es": "Sin puntuar si la cabeza no es visible en pose 2D.",
+    "it": "Non valutato se la testa non è visibile in posa 2D.",
+    "ja": "2Dポーズで頭が見えない場合は採点しない。",
+    "ko": "2D 포즈에서 머리가 보이지 않으면 채점하지 않습니다.",
+    "pt": "Não pontuado se a cabeça não for visível na pose 2D."
+  },
+  "Unspecified": {
+    "fr": "Non précisé",
+    "de": "Unbestimmt",
+    "es": "No especificado",
+    "it": "Non specificato",
+    "ja": "未指定",
+    "ko": "미지정",
+    "pt": "Não especificado"
+  },
+  "Unstable camera, occlusion, or out-of-scope terrain: no stage claim.": {
+    "fr": "Caméra instable, occlusion ou terrain hors portée : pas de niveau affirmé.",
+    "de": "Instabile Kamera, Occlusion oder Gelände außerhalb: kein Stufenanspruch.",
+    "es": "Cámara inestable, oclusión o terreno fuera de alcance: sin afirmación de nivel.",
+    "it": "Camera instabile, occlusione o terreno fuori portata: nessun livello dichiarato.",
+    "ja": "カメラ不安定・遮蔽・対象外地形：段階判定なし。",
+    "ko": "불안정한 카메라, 가림, 범위 밖 지형: 단계 판정 없음.",
+    "pt": "Câmara instável, oclusão ou terreno fora de alcance: sem afirmação de nível."
+  },
+  "Unsupported file type.": {
+    "fr": "Type de fichier non pris en charge.",
+    "de": "Nicht unterstützter Dateityp.",
+    "es": "Tipo de archivo no compatible.",
+    "it": "Tipo di file non supportato.",
+    "ja": "未対応のファイル形式です。",
+    "ko": "지원하지 않는 파일 형식입니다.",
+    "pt": "Tipo de ficheiro não suportado."
+  },
+  "Up-and-down movement": {
+    "fr": "Mouvement haut–bas",
+    "de": "Auf-ab-Bewegung",
+    "es": "Movimiento arriba–abajo",
+    "it": "Movimento su–giù",
+    "ja": "上下動",
+    "ko": "상하 움직임",
+    "pt": "Movimento cima–baixo"
+  },
+  "Uploading and loading…": {
+    "fr": "Téléversement et chargement…",
+    "de": "Hochladen und Laden…",
+    "es": "Subiendo y cargando…",
+    "it": "Caricamento in corso…",
+    "ja": "アップロードと読み込み中…",
+    "ko": "업로드 및 로딩 중…",
+    "pt": "A enviar e a carregar…"
+  },
+  "Upper body down the fall line": {
+    "fr": "Haut du corps face à la ligne de pente",
+    "de": "Oberkörper in die Falllinie",
+    "es": "Tronco hacia la línea de máxima pendiente",
+    "it": "Busto verso la linea di massima pendenza",
+    "ja": "上体はフォールライン方向",
+    "ko": "상체는 폴라인 방향",
+    "pt": "Tronco na linha de máxima pendente"
+  },
+  "Upper-body rotation": {
+    "fr": "Rotation du haut du corps",
+    "de": "Oberkörperdrehung",
+    "es": "Rotación del tronco",
+    "it": "Rotazione del busto",
+    "ja": "上体回旋",
+    "ko": "상체 회전",
+    "pt": "Rotação do tronco"
+  },
+  "Upper-lower separation": {
+    "fr": "Séparation haut–bas",
+    "de": "Ober–Unter-Trennung",
+    "es": "Separación arriba–abajo",
+    "it": "Separazione alto–basso",
+    "ja": "上下分離",
+    "ko": "상하 분리",
+    "pt": "Separação cima–baixo"
+  },
+  "Usable frames": {
+    "fr": "Images exploitables",
+    "de": "Nutzbare Frames",
+    "es": "Fotogramas usables",
+    "it": "Frame utilizzabili",
+    "ja": "有効フレーム",
+    "ko": "사용 가능 프레임",
+    "pt": "Fotogramas utilizáveis"
+  },
+  "View": {
+    "fr": "Vue",
+    "de": "Ansicht",
+    "es": "Vista",
+    "it": "Vista",
+    "ja": "ビュー",
+    "ko": "뷰",
+    "pt": "Vista"
+  },
+  "View angle {deg:.0f}°": {
+    "fr": "Angle de vue {deg:.0f}°",
+    "de": "Blickwinkel {deg:.0f}°",
+    "es": "Ángulo de vista {deg:.0f}°",
+    "it": "Angolo di vista {deg:.0f}°",
+    "ja": "撮影角 {deg:.0f}°",
+    "ko": "시야각 {deg:.0f}°",
+    "pt": "Ângulo de vista {deg:.0f}°"
+  },
+  "Visual Pose": {
+    "fr": "Visual Pose",
+    "de": "Visual Pose",
+    "es": "Visual Pose",
+    "it": "Visual Pose",
+    "ja": "Visual Pose",
+    "ko": "Visual Pose",
+    "pt": "Visual Pose"
+  },
+  "Visual Pose — Windows": {
+    "fr": "Visual Pose — Windows",
+    "de": "Visual Pose — Windows",
+    "es": "Visual Pose — Windows",
+    "it": "Visual Pose — Windows",
+    "ja": "Visual Pose — Windows",
+    "ko": "Visual Pose — Windows",
+    "pt": "Visual Pose — Windows"
+  },
+  "Warning": {
+    "fr": "Avertissement",
+    "de": "Warnung",
+    "es": "Advertencia",
+    "it": "Avviso",
+    "ja": "警告",
+    "ko": "경고",
+    "pt": "Aviso"
+  },
+  "Weakest checkpoint": {
+    "fr": "Point de contrôle le plus faible",
+    "de": "Schwächster Checkpoint",
+    "es": "Checkpoint más débil",
+    "it": "Checkpoint più debole",
+    "ja": "最も弱いチェックポイント",
+    "ko": "가장 약한 체크포인트",
+    "pt": "Checkpoint mais fraco"
+  },
+  "Wedge angle": {
+    "fr": "Angle de chasse-neige",
+    "de": "Pflugwinkel",
+    "es": "Ángulo de cuña",
+    "it": "Angolo di spazzaneve",
+    "ja": "プルーク角",
+    "ko": "플루크 각도",
+    "pt": "Ângulo de cunha"
+  },
+  "Wedge christie": {
+    "fr": "Christie en chasse-neige",
+    "de": "Pflugchristie",
+    "es": "Christie en cuña",
+    "it": "Christie a spazzaneve",
+    "ja": "プルーククリスティー",
+    "ko": "플루크 크리스티",
+    "pt": "Christie em cunha"
+  },
+  "Wedge glide": {
+    "fr": "Glisse en chasse-neige",
+    "de": "Pfluggleiten",
+    "es": "Desliz en cuña",
+    "it": "Scivolata a spazzaneve",
+    "ja": "プルークグライド",
+    "ko": "플루크 글라이드",
+    "pt": "Deslize em cunha"
+  },
+  "Wedge stance": {
+    "fr": "Écartement en chasse-neige",
+    "de": "Pflug-Standbreite",
+    "es": "Base en cuña",
+    "it": "Base a spazzaneve",
+    "ja": "プルークスタンス",
+    "ko": "플루크 스탠스",
+    "pt": "Base em cunha"
+  },
+  "Wedge through the turn": {
+    "fr": "Chasse-neige pendant le virage",
+    "de": "Pflug durch den Schwung",
+    "es": "Cuña durante la curva",
+    "it": "Spazzaneve nella curva",
+    "ja": "ターン中プルーク維持",
+    "ko": "턴 중 플루크 유지",
+    "pt": "Cunha durante a curva"
+  },
+  "Wedge to start, close the inside ski to finish.": {
+    "fr": "Départ en chasse-neige, fermez le ski intérieur pour finir.",
+    "de": "Im Pflug starten, Innenski zum Abschluss schließen.",
+    "es": "Empieza en cuña y cierra el esquí interior al finalizar.",
+    "it": "Parti a spazzaneve e chiudi lo sci interno per finire.",
+    "ja": "プルークで入り、仕上げで内側スキーを寄せる。",
+    "ko": "플루크로 시작해 마무리에서 안쪽 스키를 모으세요.",
+    "pt": "Comece em cunha e feche o ski interior para terminar."
+  },
+  "Wedge to start, gradually match at the finish; do not snap shut.": {
+    "fr": "Départ en chasse-neige, rapprochez progressivement à la fin ; ne claquez pas.",
+    "de": "Im Pflug starten, zum Ende allmählich parallel; nicht zuschlagen.",
+    "es": "Empieza en cuña y iguala poco a poco al final; no cierres de golpe.",
+    "it": "Parti a spazzaneve e avvicina gradualmente in uscita; non chiudere di scatto.",
+    "ja": "プルークで入り、仕上げで徐々に揃える。急に閉じない。",
+    "ko": "플루크로 시작해 마무리에서 서서히 맞추세요. 갑자기 닫지 마세요.",
+    "pt": "Comece em cunha e iguale gradualmente no fim; não feche de chofre."
+  },
+  "Wedge turns": {
+    "fr": "Virages en chasse-neige",
+    "de": "Pflugschwünge",
+    "es": "Curvas en cuña",
+    "it": "Curve a spazzaneve",
+    "ja": "プルークターン",
+    "ko": "플루크 턴",
+    "pt": "Curvas em cunha"
+  },
+  "Wedge-glide on a green run, then open the tails and edge to a stop.": {
+    "fr": "Glissez en chasse-neige sur piste verte, puis ouvrez les talons et carrez jusqu’à l’arrêt.",
+    "de": "Auf grüner Piste im Pflug gleiten, dann Enden öffnen und kanten bis zum Stopp.",
+    "es": "Desliza en cuña en pista verde, luego abre las colas y canta hasta parar.",
+    "it": "Scivola a spazzaneve su pista verde, poi apri le code e metti lama fino all’arresto.",
+    "ja": "緑斜面でプルークグライド後、テールを開きエッジで停止。",
+    "ko": "그린에서 플루크 글라이드 후 테일을 열고 엣지로 정지하세요.",
+    "pt": "Deslize em cunha numa pista verde, depois abra as caudas e cante até parar."
+  },
+  "Weibo": {
+    "fr": "Weibo",
+    "de": "Weibo",
+    "es": "Weibo",
+    "it": "Weibo",
+    "ja": "Weibo",
+    "ko": "Weibo",
+    "pt": "Weibo"
+  },
+  "Weight": {
+    "fr": "Poids",
+    "de": "Gewicht",
+    "es": "Peso",
+    "it": "Peso",
+    "ja": "体重",
+    "ko": "체중",
+    "pt": "Peso"
+  },
+  "What the clip itself could tell us": {
+    "fr": "Ce que le clip lui-même peut nous dire",
+    "de": "Was der Clip selbst verraten kann",
+    "es": "Lo que el propio clip puede decirnos",
+    "it": "Cosa può dirci il clip stesso",
+    "ja": "クリップ自体が示せること",
+    "ko": "클립 자체가 알려줄 수 있는 것",
+    "pt": "O que o próprio clip nos pode dizer"
+  },
+  "Why": {
+    "fr": "Pourquoi",
+    "de": "Warum",
+    "es": "Por qué",
+    "it": "Perché",
+    "ja": "理由",
+    "ko": "이유",
+    "pt": "Porquê"
+  },
+  "Why it matters": {
+    "fr": "Pourquoi c’est important",
+    "de": "Warum es zählt",
+    "es": "Por qué importa",
+    "it": "Perché conta",
+    "ja": "なぜ重要か",
+    "ko": "왜 중요한가",
+    "pt": "Porque é importante"
+  },
+  "Why this stage": {
+    "fr": "Pourquoi ce niveau",
+    "de": "Warum diese Stufe",
+    "es": "Por qué este nivel",
+    "it": "Perché questo livello",
+    "ja": "なぜこの段階か",
+    "ko": "왜 이 단계인가",
+    "pt": "Porque este nível"
+  },
+  "Wrists below the shoulders.": {
+    "fr": "Poignets sous les épaules.",
+    "de": "Handgelenke unter den Schultern.",
+    "es": "Muñecas por debajo de los hombros.",
+    "it": "Polsi sotto le spalle.",
+    "ja": "手首は肩より下。",
+    "ko": "손목은 어깨보다 아래.",
+    "pt": "Pulsos abaixo dos ombros."
+  },
+  "X": {
+    "fr": "X",
+    "de": "X",
+    "es": "X",
+    "it": "X",
+    "ja": "X",
+    "ko": "X",
+    "pt": "X"
+  },
+  "You have it when": {
+    "fr": "C’est acquis quand",
+    "de": "Du hast’s, wenn",
+    "es": "Lo tienes cuando",
+    "it": "Ce l’hai quando",
+    "ja": "できたサイン",
+    "ko": "달성 기준",
+    "pt": "Temos quando"
+  },
+  "YouTube": {
+    "fr": "YouTube",
+    "de": "YouTube",
+    "es": "YouTube",
+    "it": "YouTube",
+    "ja": "YouTube",
+    "ko": "YouTube",
+    "pt": "YouTube"
+  }
+}

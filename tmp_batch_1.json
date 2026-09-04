@@ -1,0 +1,402 @@
+[
+  {
+    "en": "Display only: boxes, rails, and jumps with a coach; the app does not score them.",
+    "zh": "仅目录展示：箱、杆、跳台需教练指导；本 App 不评分。"
+  },
+  {
+    "en": "Display only: this app does not time gates.",
+    "zh": "仅目录展示：本 App 不做旗门计时。"
+  },
+  {
+    "en": "Display only: v2 video does not classify switch.",
+    "zh": "仅目录展示：v2 视频不自动判定倒滑。"
+  },
+  {
+    "en": "Distances are normalized to this skier's leg length.",
+    "zh": "距离按本人腿长归一化。"
+  },
+  {
+    "en": "Do not spin the shoulders with the skis.",
+    "zh": "肩不要跟着板狂转。"
+  },
+  {
+    "en": "Don't land or absorb with locked, straight legs.",
+    "zh": "不要用锁死的直腿落地或缓冲。"
+  },
+  {
+    "en": "Done",
+    "zh": "完成"
+  },
+  {
+    "en": "Dose",
+    "zh": "训练量"
+  },
+  {
+    "en": "Double black",
+    "zh": "双黑道"
+  },
+  {
+    "en": "Double black run",
+    "zh": "双黑道"
+  },
+  {
+    "en": "Download",
+    "zh": "下载"
+  },
+  {
+    "en": "Draw a person box before confirming.",
+    "zh": "请拖出一个人物框后再确定。"
+  },
+  {
+    "en": "Drills",
+    "zh": "训练"
+  },
+  {
+    "en": "Dryland / flat",
+    "zh": "陆地平坦场地"
+  },
+  {
+    "en": "Dynamic parallel: rhythm and poles",
+    "zh": "动态平行式：节奏与用杖"
+  },
+  {
+    "en": "Early edge on firm snow",
+    "zh": "硬雪提早立刃"
+  },
+  {
+    "en": "Easy slope, parallel or wedge: tap the downhill pole each turn.",
+    "zh": "缓坡平行或犁式，每弯轻点山下杖。"
+  },
+  {
+    "en": "Edge angle (proxy)",
+    "zh": "刃角（估算）"
+  },
+  {
+    "en": "Edge changes faster than long-radius.",
+    "zh": "换刃快于大弯。"
+  },
+  {
+    "en": "Edge release and re-set",
+    "zh": "放平立刃再立起"
+  },
+  {
+    "en": "Edge-change time",
+    "zh": "换刃用时"
+  },
+  {
+    "en": "Edging and steering",
+    "zh": "立刃与导向"
+  },
+  {
+    "en": "Effective frame rate",
+    "zh": "有效帧率"
+  },
+  {
+    "en": "Effective {fps:.1f} fps",
+    "zh": "有效帧率 {fps:.1f} fps"
+  },
+  {
+    "en": "Eight each side; if speed builds, reset to a traverse before stopping.",
+    "zh": "每侧 8 次；速度一起来先回到斜滑再刹。"
+  },
+  {
+    "en": "Eight medium turns on the same pitch; cadence between long and short.",
+    "zh": "同一坡面 8 个中弯，频率高于大弯、低于小弯。"
+  },
+  {
+    "en": "Eight straight lines over round, shallow bumps.",
+    "zh": "选圆而浅的包沿沟直滑 8 次。"
+  },
+  {
+    "en": "Eight turns on green or blue; match the inside ski only in the last third of the turn.",
+    "zh": "绿/蓝道做 8 个弯，只在出弯后三分之一并内侧板。"
+  },
+  {
+    "en": "Elastic knees and ankles; not locked.",
+    "zh": "膝踝有弹性，不锁直。"
+  },
+  {
+    "en": "Enter name, height, weight, and ski length, or pick a saved profile.",
+    "zh": "请填写姓名、身高、体重和雪板长度，或选择已存档案。"
+  },
+  {
+    "en": "Equipment",
+    "zh": "装备"
+  },
+  {
+    "en": "Equipment guidance is a starting range from height and weight, not a boot fitting.",
+    "zh": "装备建议是依据身高体重给出的起始范围，不能替代专业量脚定制。"
+  },
+  {
+    "en": "Even turn rhythm",
+    "zh": "转弯节奏均匀"
+  },
+  {
+    "en": "Export failed",
+    "zh": "导出失败"
+  },
+  {
+    "en": "Extend into the new turn and flex through the arc; count the rhythm out loud.",
+    "zh": "换刃时伸展，走弧线时蹲屈；出声数节奏。"
+  },
+  {
+    "en": "Facebook",
+    "zh": "Facebook"
+  },
+  {
+    "en": "Falling-leaf sideslip",
+    "zh": "落叶飘侧滑"
+  },
+  {
+    "en": "Fast edge change, quieter shoulders. End of the groomed carve branch.",
+    "zh": "快换刃，肩更静。平整道刻滑枝终点。"
+  },
+  {
+    "en": "Faster edge changes without losing parallel inclination.",
+    "zh": "快换刃但平行与内倾不能丢。"
+  },
+  {
+    "en": "Faults and fixes",
+    "zh": "常见错误与纠正"
+  },
+  {
+    "en": "Female",
+    "zh": "女"
+  },
+  {
+    "en": "Few high-quality sets; do not train fatigue into poor form.",
+    "zh": "组数少、质量高，避免以疲劳换变形。"
+  },
+  {
+    "en": "Fewer traverses, linked absorption; still no air scoring.",
+    "zh": "少横切，连续吸收，仍不开空中评分。"
+  },
+  {
+    "en": "Filmed almost face-on: fore/aft balance cannot be measured. Film from a quarter angle, behind and to one side.",
+    "zh": "画面几乎正对：前后平衡无法测量。请从斜后方约 45° 拍摄。"
+  },
+  {
+    "en": "Filmed almost side-on: stance, edging and lean cannot be measured. Film from a quarter angle, behind and to one side.",
+    "zh": "画面几乎正侧：站距、立刃和内倾都无法测量。请从斜后方约 45° 拍摄。"
+  },
+  {
+    "en": "Filmed too face-on to measure this.",
+    "zh": "拍摄角度过于正面，该项无法测量。"
+  },
+  {
+    "en": "Filmed too side-on to measure this.",
+    "zh": "拍摄角度过于正侧，该项无法测量。"
+  },
+  {
+    "en": "Filming and disclaimer",
+    "zh": "拍摄与免责声明"
+  },
+  {
+    "en": "Filming and scoring",
+    "zh": "拍摄与评分"
+  },
+  {
+    "en": "Filming checklist for the next clip",
+    "zh": "下次拍摄清单"
+  },
+  {
+    "en": "Filming quality",
+    "zh": "拍摄质量"
+  },
+  {
+    "en": "Firm snow and ice",
+    "zh": "硬雪与冰面"
+  },
+  {
+    "en": "First slide and equipment",
+    "zh": "第一次滑行与装备"
+  },
+  {
+    "en": "Fix cue",
+    "zh": "纠正口令"
+  },
+  {
+    "en": "Flatten both skis to slip sideways, then edge again to stop — neither a locked edge nor a free slide.",
+    "zh": "把两只板放平向侧下方滑，再立刃停住——既不是锁死立刃，也不是失控下滑。"
+  },
+  {
+    "en": "Flex and extend to surface the skis",
+    "zh": "靠蹲伸让雪板浮起"
+  },
+  {
+    "en": "Flex for rhythm",
+    "zh": "膝屈伸给节奏"
+  },
+  {
+    "en": "Flex into the turn",
+    "zh": "入弯降重心"
+  },
+  {
+    "en": "Flex-and-extend rhythm",
+    "zh": "蹲伸节奏练习"
+  },
+  {
+    "en": "Follow",
+    "zh": "跟拍"
+  },
+  {
+    "en": "Follow camera",
+    "zh": "跟拍机位"
+  },
+  {
+    "en": "Follow-cam; one alpine skier in frame.",
+    "zh": "跟拍手机，画面尽量只框一名双板滑者。"
+  },
+  {
+    "en": "For your profile",
+    "zh": "针对你的情况"
+  },
+  {
+    "en": "Format",
+    "zh": "格式"
+  },
+  {
+    "en": "Four posture scores are coach heuristics (0–100), not lab biomechanics; they are not true speed, meter turn radius, or peak ski pressure.",
+    "zh": "姿态四维为教练经验估分评分（0–100），非实验室生物力学测量；不含真实滑行速度、转弯半径米制或板底峰值压力。"
+  },
+  {
+    "en": "Frame locator JSON copied",
+    "zh": "已复制帧定位 JSON"
+  },
+  {
+    "en": "From a gentle traverse, pivot both skis across the hill and set the edges to a stop.",
+    "zh": "从缓坡斜滑降开始，双板同时横切并立刃停下。"
+  },
+  {
+    "en": "From a traverse, pressure the outside ski through a small C, then switch sides.",
+    "zh": "斜滑降开始，外侧加压划小 C，再换另一侧。"
+  },
+  {
+    "en": "From the skid branch: absorb and stay on snow; do not jump.",
+    "zh": "从搓雪枝进入：先吸收贴雪，不要跳。"
+  },
+  {
+    "en": "Front view",
+    "zh": "正面视角"
+  },
+  {
+    "en": "Frontal",
+    "zh": "正面"
+  },
+  {
+    "en": "Gate",
+    "zh": "关键项"
+  },
+  {
+    "en": "Gate metrics decide advancement; the rest are diagnostic.",
+    "zh": "关键项决定能否升级，其余为参考项。"
+  },
+  {
+    "en": "Gates passed",
+    "zh": "已通过关键项"
+  },
+  {
+    "en": "Gender",
+    "zh": "性别"
+  },
+  {
+    "en": "Gentle-slope wedge brake",
+    "zh": "缓坡犁式制动"
+  },
+  {
+    "en": "Glide straight in a wedge and stop on purpose.",
+    "zh": "用犁式板形直线下山并主动停下。"
+  },
+  {
+    "en": "Goal",
+    "zh": "目标"
+  },
+  {
+    "en": "Grant camera access to run pose tracking.",
+    "zh": "请允许相机权限以进行姿态跟踪。"
+  },
+  {
+    "en": "Green",
+    "zh": "绿道"
+  },
+  {
+    "en": "Green run",
+    "zh": "绿道"
+  },
+  {
+    "en": "Groomed-run recreational alpine",
+    "zh": "平整雪道大众滑行"
+  },
+  {
+    "en": "Hands in view",
+    "zh": "双手在身前"
+  },
+  {
+    "en": "Hands low",
+    "zh": "手低"
+  },
+  {
+    "en": "Hard rule",
+    "zh": "硬性规则"
+  },
+  {
+    "en": "Hardpack",
+    "zh": "硬雪"
+  },
+  {
+    "en": "Height",
+    "zh": "身高"
+  },
+  {
+    "en": "Heuristic inclination and parallel stance, not FIS. Learn one-ski first.",
+    "zh": "经验估分内倾与平行，非 FIS。最好先掌握单脚滑。"
+  },
+  {
+    "en": "Heuristic score (0-100, not FIS)",
+    "zh": "经验评分（0-100，非 FIS）"
+  },
+  {
+    "en": "Heuristic: steer with the legs — rotate the femurs so the ski tips turn while the torso stays quiet.",
+    "zh": "经验提示：用腿转向——髋内旋带动板头转向，上身保持安静。"
+  },
+  {
+    "en": "Higher cadence without losing inclination.",
+    "zh": "频率升高仍保持内倾。"
+  },
+  {
+    "en": "Hip internal-rotation steering",
+    "zh": "髋内旋导向"
+  },
+  {
+    "en": "Hips or ankles are missing in much of the clip.",
+    "zh": "本段大部分画面缺少髋或踝关键点。"
+  },
+  {
+    "en": "Hips over the feet",
+    "zh": "髋在脚上方"
+  },
+  {
+    "en": "Hips over the feet; pressure into the ski.",
+    "zh": "髋在脚上方，压力送到板刃。"
+  },
+  {
+    "en": "Hockey stop",
+    "zh": "冰球刹"
+  },
+  {
+    "en": "Hockey-stop capacity",
+    "zh": "冰球刹能力"
+  },
+  {
+    "en": "Hold a clean edge on hardpack: edge early, change edges quickly, no braking scrape.",
+    "zh": "在硬雪或冰面上保持干净的立刃：提早立刃、换刃迅速、不靠搓雪刹车。"
+  },
+  {
+    "en": "How to advance",
+    "zh": "如何进入下一阶段"
+  },
+  {
+    "en": "How to film",
+    "zh": "拍摄说明"
+  }
+]

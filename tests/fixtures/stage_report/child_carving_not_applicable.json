@@ -2635,8 +2635,8 @@
   "kb_stage": "st-06",
   "tier": "full",
   "terrain_id": "blue",
-  "score_0_100": 85.4,
-  "confidence": 0.507,
+  "score_0_100": 92.6,
+  "confidence": 0.886,
   "ready_for_next_stage": true,
   "weakest_checkpoint_id": "",
   "next_level_ids": [
@@ -2647,7 +2647,7 @@
    "chosen_id": "parallel",
    "ambiguous": false,
    "unusable_reason": "",
-   "separation": 0.086,
+   "separation": 0.329,
    "quality_factor": 1.0,
    "candidates": [
     {
@@ -2657,15 +2657,6 @@
      "gate_ratio": 1.0,
      "prior": 0.5,
      "separating_metric_id": "",
-     "rejected_reason": ""
-    },
-    {
-     "stage_id": "pizza",
-     "score": 0.8,
-     "fit": 0.772,
-     "gate_ratio": 1.0,
-     "prior": 0.5,
-     "separating_metric_id": "stance_width",
      "rejected_reason": ""
     },
     {
@@ -2684,6 +2675,15 @@
      "gate_ratio": 0.0,
      "prior": 0.5,
      "separating_metric_id": "hip_over_foot",
+     "rejected_reason": ""
+    },
+    {
+     "stage_id": "dynamic_parallel",
+     "score": 0.361,
+     "fit": 0.338,
+     "gate_ratio": 0.333,
+     "prior": 0.5,
+     "separating_metric_id": "backseat_count",
      "rejected_reason": ""
     },
     {

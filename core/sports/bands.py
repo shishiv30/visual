@@ -337,6 +337,8 @@ DEFAULTS: dict[str, Band] = {
     "stance_width": Band.between(0.14, 0.22, 0.40, 0.58),
     "stance_width_var": Band.lte(0.03, 0.10, 0.22),
     "wedge_angle": Band.lte(3.0, 8.0, 20.0),
+    "ski_wedge_angle": Band.lte(3.0, 8.0, 20.0),
+    "ski_parallelism": Band.gte(0.70, 0.85, 1.0),
     "shin_angle_fore_aft": Band.between(-2.0, 5.0, 25.0, 38.0),
     "hip_over_foot": Band.between(-0.15, -0.05, 0.12, 0.25),
     "com_vertical_travel": Band.gte(0.02, 0.06, 0.16),
@@ -376,11 +378,15 @@ OVERRIDES: dict[str, dict[str, Band]] = {
         # v2 `cp_pg_stance` between 1.15 and 2.5 hip widths, /3 (§3.2).
         "stance_width": Band.between(0.30, 0.40, 0.85, 1.10),
         "wedge_angle": Band.gte(2.0, 10.0, 25.0),
+        "ski_wedge_angle": Band.gte(2.0, 10.0, 25.0),
         "knee_valgus": Band.lte(0.15, 0.40, 0.75),
     },
     "pizza": {
         "stance_width": Band.between(0.28, 0.38, 0.80, 1.05),
-        "wedge_angle": Band.gte(2.0, 8.0, 22.0),
+        # Foot-index noise can read 8-10 deg on parallel skis; real wedge turns
+        # sit well above 12 deg in a quarter view.
+        "wedge_angle": Band.gte(5.0, 12.0, 22.0),
+        "ski_wedge_angle": Band.gte(5.0, 12.0, 22.0),
         "turn_rate": Band.gte(0.06, 0.15, 0.32),
         "turn_amplitude": Band.gte(5.0, 10.0, 26.0),
         "turn_shape_index": Band.gte(0.20, 0.32, 0.55),
@@ -401,6 +407,7 @@ OVERRIDES: dict[str, dict[str, Band]] = {
         # The wedge must fall through the turn, so the median sits low but
         # nonzero, and the *variation* is the real gate.
         "wedge_angle": Band.between(1.0, 3.0, 16.0, 30.0),
+        "ski_wedge_angle": Band.between(1.0, 3.0, 16.0, 30.0),
         "stance_width_var": Band.gte(0.02, 0.06, 0.14),
         "knee_valgus": Band.lte(0.12, 0.35, 0.68),
     },

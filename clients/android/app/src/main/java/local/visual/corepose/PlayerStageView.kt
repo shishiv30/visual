@@ -47,7 +47,7 @@ class PlayerStageView @JvmOverloads constructor(
 object OverlayStamp {
     private val bones = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = 0xFFFFA500.toInt()
-        strokeWidth = 6f
+        strokeWidth = 2f
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
     }
@@ -86,7 +86,7 @@ object OverlayStamp {
             for (joint in OverlayMath.visibleJoints(
                 pose, frame.width, frame.height, out.width, out.height, true,
             )) {
-                canvas.drawCircle(joint.x, joint.y, 8f, joints)
+                canvas.drawCircle(joint.x, joint.y, 2f, joints)
             }
         }
         return out

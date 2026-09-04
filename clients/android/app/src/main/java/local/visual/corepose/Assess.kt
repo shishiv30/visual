@@ -47,75 +47,192 @@ object Assess {
         fps: Double,
         curriculum: Curriculum,
         lang: String,
+        scene: SceneContext? = null,
+        knowledge: KnowledgePack? = null,
+        history: StageHistory? = null,
+        athleteAgeBand: String? = null,
     ): StageReport {
-        val pack = SportsSignals.extractFeatures(frames, fps)
-        val (categoryId, stageId, confidence) = classify(pack)
-        val stage = curriculum.levels[stageId]
+        val features = SportsSignals.extractFeatures(frames, fps)
+        val turns = Turns.segment(frames, fps)
+        val metricsPack = MetricPackBuilder.build(features, turns, scene, athleteAgeBand, fps)
+        val nameFor: (String) -> String = { lid ->
+            curriculum.levels[lid]?.let { text(it.name, lang) } ?: lid
+        }
+        var classification = ClassifyV3.classify(metricsPack, curriculum, history, nameFor)
+        // If classify_v3 cannot score (sparse proxies), fall back to legacy ladder for stage id.
+        if (classification.method == "unusable" || classification.chosenId.isBlank()) {
+            val (legacyCat, legacyStage, legacyConf) = classify(features)
+            if (legacyStage != UNKNOWN && curriculum.levels[legacyStage] != null) {
+                val legacyLevel = curriculum.levels.getValue(legacyStage)
+                classification = Classification(
+                    method = "legacy_ladder",
+                    chosenId = legacyStage,
+                    confidence = legacyConf,
+                    candidates = listOf(
+                        Candidate(
+                            stageId = legacyStage,
+                            stageName = text(legacyLevel.name, lang),
+                            score = legacyConf,
+                            tier = legacyLevel.tier ?: "full",
+                        ),
+                    ),
+                    ambiguous = legacyConf < CONF_GATE,
+                    unusableReason = classification.unusableReason,
+                )
+            }
+        }
+        val stage = curriculum.levels[classification.chosenId]
         if (
+            classification.method == "unusable" ||
             stage == null ||
             !stage.inScope ||
-            confidence < CONF_GATE ||
-            stageId == UNKNOWN
+            classification.chosenId == UNKNOWN
         ) {
-            return unknownReport(clipId, curriculum, lang, pack)
+            return unknownReport(
+                clipId, curriculum, lang, features, scene, turns, classification, metricsPack, history,
+            )
         }
+        val confidence = classification.confidence
+        val scored = ScoreLevel.scoreLevel(metricsPack, stage, knowledge, lang)
         val results = ArrayList<KeypointResult>()
         var heuristic = stage.heuristicNotFisCarve
         for (cid in stage.checkpoints) {
             val spec = curriculum.checkpoints[cid] ?: continue
-            results.add(evalCheckpoint(spec, pack, curriculum, lang))
+            results.add(evalCheckpoint(spec, features, curriculum, lang, turns))
             heuristic = heuristic || spec.heuristicNotFisCarve
         }
-        val score = stageScore(results, confidence, curriculum)
+        val score = ScoreLevel.stageScore(scored, confidence)
         val requiredOk = requiredOk(results, stage, curriculum)
-        val ready = confidence >= CONF_GATE && score >= curriculum.passScore && requiredOk
+        val ready = ScoreLevel.readyForNextStage(
+            scored, confidence, score, curriculum.passScore,
+        ) && requiredOk
         val nextIds = ArrayList<String>()
         val nextNames = ArrayList<String>()
         val nextPlans = ArrayList<LevelPlan>()
         if (ready) {
             for (nid in stage.nextLevels) {
                 val nxt = curriculum.levels[nid] ?: continue
-                if (!nxt.inScope) {
-                    continue
-                }
+                if (!nxt.inScope) continue
                 nextIds.add(nid)
                 nextNames.add(text(nxt.name, lang))
                 nextPlans.add(levelPlan(nxt, curriculum, lang))
             }
         }
-        val weakest = if (ready) "" else weakestId(results)
+        val weakestRow = ScoreLevel.weakest(scored)
+        val weakCheckpoint = if (ready) "" else weakestId(results)
         val catLoc = curriculum.categories[stage.categoryId]
-        val catName = if (catLoc != null) text(catLoc, lang) else categoryId
+        val catName = if (catLoc != null) text(catLoc, lang) else stage.categoryId
         val terrain = curriculum.terrains[stage.terrain]
         val sysDrill = curriculum.drills[curriculum.sysDrill]
+        val kbStageId = KnowledgePackLoader.resolveKbStage(knowledge, stage.id, stage.kbStage)
+        val focus = KnowledgeFocusBuilder.build(knowledge, kbStageId, scored, weakestRow, lang)
+        val tree = SkillTree.buildTree(
+            curriculum, stage.id, history, athleteAgeBand, lang, nameFor,
+        )
+        val filming = buildFilming(metricsPack, classification, lang)
+        val trainingFocus = weakestRow?.let {
+            I18n.t("Focus on {name}", mapOf("name" to it.report.name), lang = lang)
+        }.orEmpty()
+        val howToAdvance = when {
+            ready && nextNames.isNotEmpty() ->
+                I18n.t("Ready for {name}", mapOf("name" to nextNames[0]), lang = lang)
+            weakestRow != null ->
+                I18n.t("Improve {name} to advance", mapOf("name" to weakestRow.report.name), lang = lang)
+            else -> ""
+        }
         return StageReport(
+            schemaVersion = "3.0.0",
             clipId = clipId,
             categoryId = stage.categoryId,
-            stageId = stageId,
+            stageId = stage.id,
             categoryName = catName,
             stageName = text(stage.name, lang),
-            confidence = confidence,
+            confidence = confidence.coerceIn(0.0, 1.0),
             readyForNextStage = ready,
             disclaimer = text(curriculum.disclaimer, lang),
             stageFocus = text(stage.desc, lang),
+            trainingFocus = trainingFocus,
+            howToAdvance = howToAdvance,
             score0100 = score,
             terrainId = stage.terrain,
             terrainName = if (terrain != null) text(terrain.name, lang) else "",
             terrainDesc = if (terrain != null) text(terrain.desc, lang) else "",
-            weakestCheckpointId = weakest,
+            weakestCheckpointId = weakCheckpoint,
             nextLevelIds = nextIds,
             nextLevelNames = nextNames,
             nextPlans = nextPlans,
             sessionPlan = stage.sessionDrills.mapNotNull { did ->
                 curriculum.drills[did]?.let { drillPayload(it, curriculum, lang) }
             },
-            treePath = treePath(curriculum, stageId, lang),
+            treePath = SkillTree.treePathProjection(curriculum, stage.id, nameFor),
             filmSteps = sysDrill?.training?.map { text(it, lang) } ?: emptyList(),
             keypoints = results,
-            scoreSeries = scoreSeries(stage, pack, curriculum),
+            scoreSeries = scoreSeries(stage, features, curriculum),
             heuristicNotFisCarve = heuristic,
-            posture = Posture.scores(pack, results),
+            posture = Posture.scores(features, results),
+            kbStage = kbStageId,
+            tier = stage.tier ?: "full",
+            classification = classification,
+            metrics = scored.map { it.report },
+            turns = Turns.toSummary(turns),
+            tree = tree,
+            knowledgeRef = if (kbStageId.isNotBlank() && knowledge != null) {
+                KnowledgeRef(
+                    kbStage = kbStageId,
+                    packVersion = knowledge.packVersion,
+                    levelId = stage.id,
+                )
+            } else {
+                null
+            },
+            knowledgeFocus = focus,
+            scene = SceneSummary(
+                snowSurface = scene?.snowSurface.orEmpty(),
+                slopeBand = scene?.slopeBand.orEmpty(),
+                viewClass = metricsPack.viewClass,
+                cameraMotion = scene?.cameraMotion.orEmpty(),
+                fpsEffective = metricsPack.fpsEffective,
+                missing = ClassifyV3.missingSceneFacts(curriculum, metricsPack),
+                terrainType = scene?.terrainType.orEmpty(),
+            ),
+            filming = filming,
         )
+    }
+
+    private fun buildFilming(
+        pack: MetricPack,
+        classification: Classification,
+        lang: String,
+    ): List<FilmingIssue> {
+        val issues = ArrayList<FilmingIssue>()
+        if (pack.turnCount < 8) {
+            issues.add(
+                FilmingIssue(
+                    code = "few_turns",
+                    message = I18n.t("Film at least 8 linked turns when you can.", lang = lang),
+                    severity = "info",
+                ),
+            )
+        }
+        if (classification.unusableReason.isNotBlank()) {
+            issues.add(
+                FilmingIssue(
+                    code = classification.unusableReason,
+                    message = I18n.t("Clip quality limited stage detection.", lang = lang),
+                    severity = "warn",
+                ),
+            )
+        }
+        if (pack.viewClass != "quarter" && pack.viewClass.isNotBlank()) {
+            issues.add(
+                FilmingIssue(
+                    code = "view",
+                    message = I18n.t("A three-quarter view shows more of the technique.", lang = lang),
+                    severity = "info",
+                ),
+            )
+        }
+        return issues
     }
 
     private fun mogulStage(pack: FeaturePack): Triple<String, String, Double> {
@@ -226,8 +343,10 @@ object Assess {
         pack: FeaturePack,
         cur: Curriculum,
         lang: String,
+        turns: TurnSegmentation,
     ): KeypointResult {
-        val value = SportsSignals.signalValue(pack, spec.signal)
+        val key = MetricsBridge.measurementKey(spec)
+        val value = if (key != null) SportsSignals.signalValue(pack, key) else null
         val score: Double?
         val status: KeypointStatus
         if (value == null) {
@@ -242,8 +361,8 @@ object Assess {
         } else {
             emptyList()
         }
-        val evidence = if (status != KeypointStatus.UNKNOWN) {
-            evidenceMs(spec, pack, passing = status == KeypointStatus.PASS)
+        val evidence = if (status != KeypointStatus.UNKNOWN && key != null) {
+            evidenceMs(spec, pack, passing = status == KeypointStatus.PASS, signal = key)
         } else {
             null
         }
@@ -258,22 +377,29 @@ object Assess {
             good = desc,
             bad = desc,
             drills = drills,
+            metricId = spec.metric.orEmpty(),
+            totalTurns = turns.count.takeIf { it > 0 },
         )
     }
 
-    private fun evidenceMs(spec: CheckpointSpec, pack: FeaturePack, passing: Boolean): Double? {
+    private fun evidenceMs(
+        spec: CheckpointSpec,
+        pack: FeaturePack,
+        passing: Boolean,
+        signal: String,
+    ): Double? {
         if (pack.series.isEmpty()) {
             return null
         }
         val instant = ArrayList<Pair<Double, Double>>()
         for (sample in pack.series) {
-            val value = SportsSignals.sampleSignal(sample, spec.signal) ?: continue
+            val value = SportsSignals.sampleSignal(sample, signal) ?: continue
             instant.add(sample.tMs to continuousScore(value, spec.threshold))
         }
         if (instant.isNotEmpty()) {
             return if (passing) instant.maxBy { it.second }.first else instant.minBy { it.second }.first
         }
-        if (spec.signal in setOf("turn_freq", "fall_line")) {
+        if (signal in setOf("turn_freq", "fall_line")) {
             val scored = pack.series.mapNotNull { s ->
                 val hx = s.hipX ?: return@mapNotNull null
                 s.tMs to kotlin.math.abs(hx - pack.hipXMean)
@@ -283,7 +409,7 @@ object Assess {
             }
             return scored.maxBy { it.second }.first
         }
-        if (spec.signal in setOf("knee_flex_freq", "knee_flex_amp")) {
+        if (signal in setOf("knee_flex_freq", "knee_flex_amp")) {
             val scored = pack.series.mapNotNull { s ->
                 val flex = s.kneeFlex ?: return@mapNotNull null
                 s.tMs to flex
@@ -293,7 +419,7 @@ object Assess {
             }
             return scored.maxBy { it.second }.first
         }
-        if (spec.signal == "stance_width_std") {
+        if (signal == "stance_width_std") {
             val scored = pack.series.mapNotNull { s ->
                 val w = s.stanceWidth ?: return@mapNotNull null
                 s.tMs to kotlin.math.abs(w - pack.stanceWidth)
@@ -319,9 +445,10 @@ object Assess {
         for (sample in pack.series) {
             val scores = ArrayList<Double>()
             for (spec in specs) {
-                var value = SportsSignals.sampleSignal(sample, spec.signal)
+                val key = MetricsBridge.measurementKey(spec) ?: continue
+                var value = SportsSignals.sampleSignal(sample, key)
                 if (value == null) {
-                    value = SportsSignals.signalValue(pack, spec.signal)
+                    value = SportsSignals.signalValue(pack, key)
                 }
                 if (value == null) {
                     continue
@@ -424,10 +551,19 @@ object Assess {
         cur: Curriculum,
         lang: String,
         pack: FeaturePack,
+        scene: SceneContext? = null,
+        turns: TurnSegmentation = TurnSegmentation(emptyList()),
+        classification: Classification? = null,
+        metricsPack: MetricPack? = null,
+        history: StageHistory? = null,
     ): StageReport {
         val drill = cur.drills[cur.sysDrill]
         val payload = if (drill != null) drillPayload(drill, cur, lang) else DrillPayload()
+        val nameFor: (String) -> String = { lid ->
+            cur.levels[lid]?.let { text(it.name, lang) } ?: lid
+        }
         return StageReport(
+            schemaVersion = "3.0.0",
             clipId = clipId,
             categoryId = SYS_CATEGORY,
             stageId = UNKNOWN,
@@ -452,6 +588,25 @@ object Assess {
                 ),
             ),
             posture = Posture.scores(pack, emptyList()),
+            classification = classification,
+            scene = SceneSummary(
+                snowSurface = scene?.snowSurface.orEmpty(),
+                slopeBand = scene?.slopeBand.orEmpty(),
+                viewClass = metricsPack?.viewClass.orEmpty(),
+                cameraMotion = scene?.cameraMotion.orEmpty(),
+                fpsEffective = metricsPack?.fpsEffective,
+                missing = metricsPack?.let { ClassifyV3.missingSceneFacts(cur, it) }.orEmpty(),
+                terrainType = scene?.terrainType.orEmpty(),
+            ),
+            turns = Turns.toSummary(turns),
+            tree = SkillTree.buildTree(cur, UNKNOWN, history, null, lang, nameFor),
+            filming = listOf(
+                FilmingIssue(
+                    code = classification?.unusableReason?.ifBlank { "unusable" } ?: "unusable",
+                    message = I18n.t("Clip quality limited stage detection.", lang = lang),
+                    severity = "warn",
+                ),
+            ),
         )
     }
 }

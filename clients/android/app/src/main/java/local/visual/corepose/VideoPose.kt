@@ -19,6 +19,10 @@ data class PoseLandmarkers(
 
 object VideoPose {
     const val MAX_MS = 120_000L
+    /** Match Windows normalize long-edge cap for MediaPipe cost. */
+    const val ANALYZE_MAX_EDGE = 720
+    /** Cap sample rate even when source is 60fps (Windows ingest is 30fps). */
+    const val ANALYZE_MAX_FPS = 30.0
 
     fun analyze(
         retriever: MediaMetadataRetriever,
@@ -35,7 +39,8 @@ object VideoPose {
             ?.toLongOrNull()
             ?.coerceAtLeast(0L)
             ?: 0L
-        val fps = if (fpsIn > 1.0) fpsIn else 30.0
+        val srcFps = if (fpsIn > 1.0) fpsIn else 30.0
+        val sampleFps = minOf(srcFps, ANALYZE_MAX_FPS)
         val lo = startMs.coerceAtLeast(0L)
         val hi = endMs.coerceAtMost(durationMs.coerceAtMost(lo + MAX_MS)).coerceAtLeast(lo)
         val rotation = if (Build.VERSION.SDK_INT >= 27) {
@@ -46,8 +51,8 @@ object VideoPose {
                 ?: 0
         }
         val timedSeeds = ClipRange.collectSeeds(seeds, seedBox)
-        val halfMs = ClipRange.halfMs(fps)
-        val stepMs = ClipRange.strideMs(fps)
+        val halfMs = ClipRange.halfMs(sampleFps)
+        val stepMs = ClipRange.strideMs(sampleFps)
         val locator = PoseLocator(device)
         val frames = ArrayList<PoseFrame>()
         var tMs = lo
@@ -60,7 +65,12 @@ object VideoPose {
                 if (bmp !== raw) {
                     raw.recycle()
                 }
-                frames.add(locator.inferFrame(bmp, tMs.toDouble(), timedSeeds, seedBox, halfMs, markers))
+                val (work, scaled) = bmp.forAnalyze(ANALYZE_MAX_EDGE)
+                val inferred = locator.inferFrame(work, tMs.toDouble(), timedSeeds, seedBox, halfMs, markers)
+                frames.add(inferred.remapToSize(bmp.width, bmp.height))
+                if (scaled) {
+                    work.recycle()
+                }
                 bmp.recycle()
             }
             tMs += stepMs
@@ -77,9 +87,13 @@ object VideoPose {
     ): List<PoseFrame> {
         val locator = PoseLocator(device)
         val timed = ClipRange.collectSeeds(seeds, seedBox)
-        return PoseTrack.fillLowScore(
-            listOf(locator.inferFrame(bitmap, 0.0, timed, seedBox, 1e9, markers)),
-        )
+        val (work, scaled) = bitmap.forAnalyze(ANALYZE_MAX_EDGE)
+        val inferred = locator.inferFrame(work, 0.0, timed, seedBox, 1e9, markers)
+        val frame = inferred.remapToSize(bitmap.width, bitmap.height)
+        if (scaled) {
+            work.recycle()
+        }
+        return PoseTrack.fillLowScore(listOf(frame))
     }
 }
 
@@ -239,4 +253,42 @@ private fun Bitmap.rotated(degrees: Int): Bitmap {
     }
     val matrix = Matrix().apply { postRotate(degrees.toFloat()) }
     return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+}
+
+/** Downscale so the long edge is at most [maxEdge]. Second value true when a new bitmap was created. */
+private fun Bitmap.forAnalyze(maxEdge: Int): Pair<Bitmap, Boolean> {
+    val longEdge = maxOf(width, height)
+    if (longEdge <= maxEdge) {
+        return this to false
+    }
+    val scale = maxEdge.toFloat() / longEdge.toFloat()
+    val w = (width * scale).toInt().coerceAtLeast(2)
+    val h = (height * scale).toInt().coerceAtLeast(2)
+    return Bitmap.createScaledBitmap(this, w, h, true) to true
+}
+
+private fun PoseFrame.remapToSize(origW: Int, origH: Int): PoseFrame {
+    if (width == origW && height == origH) {
+        return this
+    }
+    val sx = origW.toFloat() / width.toFloat()
+    val sy = origH.toFloat() / height.toFloat()
+    fun scalePose(pose: CocoPose): CocoPose {
+        return CocoPose(
+            pose.keypoints.map { kp ->
+                CocoKeypoint(kp.x * sx, kp.y * sy, kp.confidence)
+            },
+        )
+    }
+    fun scaleBlaze(joints: List<BlazeJoint>): List<BlazeJoint> {
+        return joints.map { j -> BlazeJoint(j.x * sx, j.y * sy, j.z, j.confidence) }
+    }
+    return PoseFrame(
+        tMs = tMs,
+        poses = poses.map(::scalePose),
+        width = origW,
+        height = origH,
+        blaze33 = scaleBlaze(blaze33),
+        bbox = bbox?.let { BBox(it.x1 * sx, it.y1 * sy, it.x2 * sx, it.y2 * sy) },
+    )
 }

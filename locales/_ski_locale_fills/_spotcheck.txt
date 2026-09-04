@@ -1,0 +1,91 @@
+=== Wedge christie
+  zh: 半犁式滑雪
+  fr: Christie en chasse-neige
+  de: Pflugchristie
+  es: Christie en cuña
+  it: Christie a spazzaneve
+  ja: プルーククリスティー
+  ko: 플루크 크리스티
+  pt: Christie em cunha
+=== hockey stop
+  zh: 冰球刹
+  fr: arrêt hockey
+  de: Hockey-Stopp
+  es: frenada hockey
+  it: hockey stop
+  ja: ホッケーストップ
+  ko: 하키스톱
+  pt: travagem hockey
+=== Mogul absorption
+  zh: 雪包滑行（吸收）
+  fr: Absorption bosses
+  de: Buckel-Absorption
+  es: Absorción en baches
+  it: Assorbimento gobbe
+  ja: モーグル吸収
+  ko: 모글 흡수
+  pt: Absorção em moguls
+=== Short-radius carve
+  zh: 小弯刻滑
+  fr: Carving petit rayon
+  de: Carving kurzer Radius
+  es: Carving de radio corto
+  it: Carving a raggio corto
+  ja: ショートラジウス・カービング
+  ko: 숏 라디우스 카빙
+  pt: Carving de raio curto
+=== Parallel skiing
+  zh: 平行式滑雪
+  fr: Ski parallèle
+  de: Parallelfahren
+  es: Esquí paralelo
+  it: Sci parallelo
+  ja: パラレル滑走
+  ko: 패러렐 스키
+  pt: Ski paralelo
+=== Wedge glide
+  zh: 犁式直滑
+  fr: Glisse en chasse-neige
+  de: Pfluggleiten
+  es: Desliz en cuña
+  it: Scivolata a spazzaneve
+  ja: プルークグライド
+  ko: 플루크 글라이드
+  pt: Deslize em cunha
+=== Quiet upper body
+  zh: 上身静
+  fr: Haut du corps calme
+  de: Ruhiger Oberkörper
+  es: Tronco superior quieto
+  it: Busto quieto
+  ja: 静かな上体
+  ko: 고요한 상체
+  pt: Tronco superior quieto
+=== Sideslip and edge release
+  zh: 侧滑与放平雪板
+  fr: Dérapage latéral et relâchement de carre
+  de: Seitengleiten und Kantenlösung
+  es: Derrape lateral y liberación de canto
+  it: Derapata laterale e rilascio lama
+  ja: サイドスリップとエッジ解放
+  ko: 사이드슬립과 엣지 릴리스
+  pt: Derrapagem lateral e libertação de canto
+=== Wedge mogul run
+  zh: 犁式雪包滑行
+  fr: Descente bosses en chasse-neige
+  de: Buckelpiste im Pflug
+  es: Bajada de baches en cuña
+  it: Discesa gobbe a spazzaneve
+  ja: プルーク・モーグル滑走
+  ko: 플루크 모굴 활주
+  pt: Descida de moguls em cunha
+MISSING Fall line
+=== Mogul fall-line
+  zh: 雪包落差线
+  fr: Ligne de pente bosses
+  de: Buckel-Falllinie
+  es: Línea de máxima pendiente en baches
+  it: Linea di massima pendenza sulle gobbe
+  ja: モーグル・フォールライン
+  ko: 모글 폴라인
+  pt: Linha de máxima pendente em moguls

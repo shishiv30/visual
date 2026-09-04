@@ -1,0 +1,6 @@
+{
+  "case_id": "static_camera",
+  "note": "Placeholder fixture for camera motion baseline tests.",
+  "motion_class": "static",
+  "hip_travel_leg": 4.0
+}

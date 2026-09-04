@@ -1,0 +1,785 @@
+{
+  "Scoring rules (from knowledge base)": {
+    "fr": "Règles de notation (base de connaissances)",
+    "de": "Bewertungsregeln (Wissensbasis)",
+    "es": "Reglas de puntuación (base de conocimiento)",
+    "it": "Regole di valutazione (base di conoscenza)",
+    "ja": "採点ルール（ナレッジベース）",
+    "ko": "채점 규칙(지식 베이스)",
+    "pt": "Regras de pontuação (base de conhecimento)"
+  },
+  "Select the person": {
+    "fr": "Sélectionner la personne",
+    "de": "Person auswählen",
+    "es": "Seleccionar a la persona",
+    "it": "Seleziona la persona",
+    "ja": "人物を選択",
+    "ko": "사람 선택",
+    "pt": "Selecionar a pessoa"
+  },
+  "Separated by": {
+    "fr": "Séparés par",
+    "de": "Getrennt durch",
+    "es": "Separados por",
+    "it": "Separati da",
+    "ja": "区切り",
+    "ko": "구분",
+    "pt": "Separados por"
+  },
+  "Session plan for this stage": {
+    "fr": "Plan de séance pour ce niveau",
+    "de": "Sitzungsplan für diese Stufe",
+    "es": "Plan de sesión para este nivel",
+    "it": "Piano di sessione per questo livello",
+    "ja": "この段階のセッション計画",
+    "ko": "이 단계의 세션 계획",
+    "pt": "Plano de sessão para este nível"
+  },
+  "Set aside because": {
+    "fr": "Mis de côté parce que",
+    "de": "Zurückgestellt weil",
+    "es": "Aplazado porque",
+    "it": "Messo da parte perché",
+    "ja": "保留理由",
+    "ko": "보류 이유",
+    "pt": "Deixado de lado porque"
+  },
+  "Set the edge above the fall line so the ski grips before it points down the hill.": {
+    "fr": "Posez la carre avant la ligne de pente pour que le ski accroche avant de viser la vallée.",
+    "de": "Setze die Kante oberhalb der Falllinie, damit der Ski greift, bevor er talwärts zeigt.",
+    "es": "Planta el canto antes de la línea de máxima pendiente para que el esquí agarre antes de apuntar valle abajo.",
+    "it": "Imposta la lama prima della linea di massima pendenza così lo sci morde prima di puntare a valle.",
+    "ja": "フォールラインの手前でエッジを立て、板が谷を向く前にグリップさせる。",
+    "ko": "폴라인 앞에서 엣지를 세워, 스키가 아래로 향하기 전에 잡아먹게 하세요.",
+    "pt": "Coloque o canto antes da linha de máxima pendente para o ski agarrar antes de apontar para o vale."
+  },
+  "Sets of 8–12 bumps; stop when form fades.": {
+    "fr": "Séries de 8–12 bosses ; arrêtez dès que la forme se dégrade.",
+    "de": "Sätze zu 8–12 Buckeln; stoppen, wenn die Form nachlässt.",
+    "es": "Series de 8–12 baches; para cuando la forma se degrada.",
+    "it": "Serie da 8–12 gobbe; fermati quando la forma cala.",
+    "ja": "8–12バンプを1セット。フォームが崩れたら中断。",
+    "ko": "8–12개 범프를 한 세트; 폼이 무너지면 중단.",
+    "pt": "Séries de 8–12 bossas; pare quando a forma se degrada."
+  },
+  "Setup": {
+    "fr": "Réglages",
+    "de": "Setup",
+    "es": "Configuración",
+    "it": "Setup",
+    "ja": "セットアップ",
+    "ko": "설정",
+    "pt": "Configuração"
+  },
+  "Sex is used only for fit guidance and the injury note; it never changes a score.": {
+    "fr": "Le sexe sert uniquement au conseil d’équipement et à la note blessure ; il ne modifie jamais un score.",
+    "de": "Geschlecht nur für Passform-Hinweise und die Verletzungsnotiz; es ändert nie eine Bewertung.",
+    "es": "El sexo solo sirve para orientación de talla y la nota de lesión; nunca cambia una puntuación.",
+    "it": "Il sesso serve solo per guida alla vestibilità e alla nota infortunio; non cambia mai un punteggio.",
+    "ja": "性別はフィッティング案内とケガ注意のみに使い、得点には影響しません。",
+    "ko": "성별은 피팅 안내와 부상 메모에만 쓰이며 점수를 바꾸지 않습니다.",
+    "pt": "O sexo serve só para orientação de ajuste e a nota de lesão; nunca altera uma pontuação."
+  },
+  "Shallow C-turns while the wedge still brakes; load the outside ski.": {
+    "fr": "Virages en C peu marqués tant que le chasse-neige freine encore ; chargez le ski extérieur.",
+    "de": "Flache C-Schwünge, solange der Pflug noch bremst; Außenski belasten.",
+    "es": "Curvas en C suaves mientras la cuña aún frena; carga el esquí exterior.",
+    "it": "Curve a C poco pronunciate finché lo spazzaneve frena ancora; carica lo sci esterno.",
+    "ja": "プルークがまだブレーキできる浅いCターン。外側板に荷重。",
+    "ko": "플루크가 아직 제동하는 얕은 C턴; 바깥쪽 스키에 하중.",
+    "pt": "Curvas em C suaves enquanto a cunha ainda trava; carregue o ski exterior."
+  },
+  "Shallow C-turns; hip internal rotation steers; the wedge stays.": {
+    "fr": "Virages en C peu marqués ; la rotation interne de hanche oriente ; le chasse-neige reste.",
+    "de": "Flache C-Schwünge; Innenrotation der Hüfte steuert; der Pflug bleibt.",
+    "es": "Curvas en C suaves; la rotación interna de cadera dirige; la cuña se mantiene.",
+    "it": "Curve a C poco pronunciate; la rotazione interna dell’anca guida; lo spazzaneve resta.",
+    "ja": "浅いCターン。股関節内旋で舵取り、プルークは残す。",
+    "ko": "얕은 C턴; 고관절 내회전으로 조향; 플루크 유지.",
+    "pt": "Curvas em C suaves; a rotação interna da anca dirige; a cunha mantém-se."
+  },
+  "Shallow wedge C-turns": {
+    "fr": "Virages en C en chasse-neige peu marqué",
+    "de": "Flache Pflug-C-Schwünge",
+    "es": "Curvas en C en cuña suave",
+    "it": "Curve a C a spazzaneve poco pronunciato",
+    "ja": "浅いプルークのCターン",
+    "ko": "얕은 플루크 C턴",
+    "pt": "Curvas em C em cunha suave"
+  },
+  "Share": {
+    "fr": "Partager",
+    "de": "Teilen",
+    "es": "Compartir",
+    "it": "Condividi",
+    "ja": "共有",
+    "ko": "공유",
+    "pt": "Partilhar"
+  },
+  "Show skis": {
+    "fr": "Afficher les skis",
+    "de": "Ski anzeigen",
+    "es": "Mostrar esquís",
+    "it": "Mostra sci",
+    "ja": "スキーを表示",
+    "ko": "스키 표시",
+    "pt": "Mostrar skis"
+  },
+  "Shin angle": {
+    "fr": "Angle de tibia",
+    "de": "Schienbeinwinkel",
+    "es": "Ángulo de espinilla",
+    "it": "Angolo di tibia",
+    "ja": "スネ角",
+    "ko": "정강이 각도",
+    "pt": "Ângulo da canela"
+  },
+  "Short skidded turns": {
+    "fr": "Virages courts dérapés",
+    "de": "Kurze Driftenschwünge",
+    "es": "Curvas cortas derrapadas",
+    "it": "Curve corte derapate",
+    "ja": "ショートスキッドターン",
+    "ko": "숏 스키드 턴",
+    "pt": "Curvas curtas derrapadas"
+  },
+  "Short skidded-turn rhythm": {
+    "fr": "Rythme de virages courts dérapés",
+    "de": "Rhythmus kurzer Driftenschwünge",
+    "es": "Ritmo de curvas cortas derrapadas",
+    "it": "Ritmo di curve corte derapate",
+    "ja": "ショートスキッドのリズム",
+    "ko": "숏 스키드 턴 리듬",
+    "pt": "Ritmo de curvas curtas derrapadas"
+  },
+  "Short turns on a steep pitch: the upper body faces down the fall line and turn shape controls the speed.": {
+    "fr": "Virages courts en pente raide : le haut du corps face à la ligne de pente, la forme du virage gère la vitesse.",
+    "de": "Kurzschwünge am Steilen: Oberkörper zur Falllinie, Tempo über die Schwungform.",
+    "es": "Curvas cortas en pendiente fuerte: el tronco mira la línea de máxima pendiente y la forma de la curva controla la velocidad.",
+    "it": "Curve corte su pendio ripido: il busto guarda la linea di massima pendenza e la forma della curva regola la velocità.",
+    "ja": "急斜面のショートターン：上体はフォールライン向き、速度はターン形で制御。",
+    "ko": "급한 슬로프의 숏턴: 상체는 폴라인 방향, 속도는 턴 형태로 제어.",
+    "pt": "Curvas curtas em pendente forte: o tronco enfrenta a linha de máxima pendente e a forma da curva controla a velocidade."
+  },
+  "Short-carve cadence": {
+    "fr": "Cadence de carving court",
+    "de": "Kurzcarve-Kadenz",
+    "es": "Cadencia de carving corto",
+    "it": "Cadenza di carving corto",
+    "ja": "ショートカービングのリズム",
+    "ko": "숏 카빙 케이던스",
+    "pt": "Cadência de carving curto"
+  },
+  "Short-radius carve": {
+    "fr": "Carving petit rayon",
+    "de": "Carving kurzer Radius",
+    "es": "Carving de radio corto",
+    "it": "Carving a raggio corto",
+    "ja": "ショートラジウス・カービング",
+    "ko": "숏 라디우스 카빙",
+    "pt": "Carving de raio curto"
+  },
+  "Short-radius carve cadence": {
+    "fr": "Cadence de carving petit rayon",
+    "de": "Kadenz Carving kurzer Radius",
+    "es": "Cadencia de carving de radio corto",
+    "it": "Cadenza di carving a raggio corto",
+    "ja": "ショートラジウス・カービングのリズム",
+    "ko": "숏 라디우스 카빙 케이던스",
+    "pt": "Cadência de carving de raio curto"
+  },
+  "Short-radius skids for speed control; hockey stop required. Then moguls.": {
+    "fr": "Dérapages petit rayon pour freiner ; hockey stop obligatoire. Ensuite les bosses.",
+    "de": "Kurzradius-Drifts zur Tempokontrolle; Hockey-Stopp Pflicht. Dann Buckel.",
+    "es": "Derrapes de radio corto para controlar velocidad; hockey stop obligatorio. Luego baches.",
+    "it": "Derapate a raggio corto per controllare la velocità; hockey stop obbligatorio. Poi le gobbe.",
+    "ja": "ショートラジウス・スキッドで速度制御；ホッケーストップ必須。その後モーグル。",
+    "ko": "숏 라디우스 스키드로 속도 제어; 하키 스톱 필수. 이후 모글.",
+    "pt": "Derrapagens de raio curto para controlar velocidade; hockey stop obrigatório. Depois moguls."
+  },
+  "Short-turn cadence": {
+    "fr": "Cadence de virage court",
+    "de": "Kurzschwung-Kadenz",
+    "es": "Cadencia de curva corta",
+    "it": "Cadenza di curva corta",
+    "ja": "ショートターンのリズム",
+    "ko": "숏턴 케이던스",
+    "pt": "Cadência de curva curta"
+  },
+  "Shorten the legs at the crest, lengthen in the trough; stay on snow, do not jump.": {
+    "fr": "Raccourcissez les jambes au sommet, allongez dans le creux ; restez sur la neige, ne sautez pas.",
+    "de": "Beine auf dem Buckelkamm verkürzen, in der Mulde verlängern; Schnee halten, nicht springen.",
+    "es": "Acorta las piernas en la cresta, alarga en el valle; quédate en la nieve, no saltes.",
+    "it": "Accorcia le gambe sulla cresta, allunga nel canale; resta sulla neve, non saltare.",
+    "ja": "頂で脚を縮め、谷で伸ばす。雪面を離れず、ジャンプしない。",
+    "ko": "정상에서 다리를 줄이고 골에서 늘리세요; 설면에 붙고 점프하지 마세요.",
+    "pt": "Encurte as pernas na crista, alongue no vale; fique na neve, não salte."
+  },
+  "Shorten the radius only after long-radius inclination works.": {
+    "fr": "Raccourcissez le rayon seulement quand l’inclinaison grand rayon fonctionne.",
+    "de": "Radius erst verkürzen, wenn die Neigung im langen Radius sitzt.",
+    "es": "Acorta el radio solo cuando la inclinación de radio largo funciona.",
+    "it": "Accorcia il raggio solo quando l’inclinazione a raggio lungo funziona.",
+    "ja": "ロングの傾動が決まってから半径を短くする。",
+    "ko": "롱 라디우스 기울기가 되면 그다음에야 반경을 줄이세요.",
+    "pt": "Encurte o raio só depois de a inclinação de raio longo funcionar."
+  },
+  "Show you can stop on command with parallel skis (both directions).": {
+    "fr": "Montrez que vous savez vous arrêter sur ordre en skis parallèles (les deux sens).",
+    "de": "Zeige, dass du auf Kommando parallel stoppen kannst (beide Richtungen).",
+    "es": "Demuestra que puedes parar a comando con esquís paralelos (ambos sentidos).",
+    "it": "Mostra di saper fermarti su comando con sci paralleli (entrambe le direzioni).",
+    "ja": "指示でパラレル停止できることを左右両方向で示す。",
+    "ko": "지시하면 패러렐로 멈출 수 있음을 양쪽 방향으로 보이세요.",
+    "pt": "Mostre que consegue parar a comando com skis paralelos (ambos os sentidos)."
+  },
+  "Side or rear-quarter, whole run, little occlusion.": {
+    "fr": "De côté ou trois-quarts arrière, course entière, peu d’occlusion.",
+    "de": "Seitlich oder hintere Schrägansicht, ganze Abfahrt, wenig Verdeckung.",
+    "es": "Lateral o tres cuartos traseros, carrera completa, poca oclusión.",
+    "it": "Laterale o tre quarti posteriori, discesa intera, poca occlusione.",
+    "ja": "側面または斜め後方、全滑走、遮蔽は少なく。",
+    "ko": "측면 또는 후사분면, 전체 활주, 가림 적게.",
+    "pt": "Lateral ou três quartos traseiros, descida completa, pouca oclusão."
+  },
+  "Sideslip and edge release": {
+    "fr": "Dérapage latéral et relâchement de carre",
+    "de": "Seitengleiten und Kantenlösung",
+    "es": "Derrape lateral y liberación de canto",
+    "it": "Derapata laterale e rilascio lama",
+    "ja": "サイドスリップとエッジ解放",
+    "ko": "사이드슬립과 엣지 릴리스",
+    "pt": "Derrapagem lateral e libertação de canto"
+  },
+  "Single-leg strength for the christie close and carve outside ski.": {
+    "fr": "Force unilatérale pour la fermeture christiana et le ski extérieur en carving.",
+    "de": "Einbein-Kraft für den Christie-Schluss und den Carving-Außenski.",
+    "es": "Fuerza a una pierna para el cierre christie y el esquí exterior en carving.",
+    "it": "Forza monopodalica per la chiusura christie e lo sci esterno in carving.",
+    "ja": "クリスティー収束とカービング外側板のための片脚筋力。",
+    "ko": "크리스티 수각과 카빙 바깥 스키를 위한 한발 근력.",
+    "pt": "Força unilateral para o fecho christie e o ski exterior em carving."
+  },
+  "Single-mogul absorption": {
+    "fr": "Absorption d’une bosse",
+    "de": "Einzelbuckel-Absorption",
+    "es": "Absorción de un solo bache",
+    "it": "Assorbimento di una gobba",
+    "ja": "単一モーグル吸収",
+    "ko": "단일 모글 흡수",
+    "pt": "Absorção de um mogul"
+  },
+  "Six large C-turns on a moderate pitch; longer outside leg.": {
+    "fr": "Six grands virages en C sur pente modérée ; jambe extérieure plus longue.",
+    "de": "Sechs große C-Schwünge auf mäßiger Piste; äußeres Bein länger.",
+    "es": "Seis grandes curvas en C en pendiente moderada; pierna exterior más larga.",
+    "it": "Sei grandi curve a C su pendio moderato; gamba esterna più lunga.",
+    "ja": "中斜面で大きなCターンを6回。外側脚を長く。",
+    "ko": "중간 슬로프에서 큰 C턴 6회; 바깥쪽 다리를 더 길게.",
+    "pt": "Seis grandes curvas em C em pendente moderada; perna exterior mais longa."
+  },
+  "Six long turns on firm blue groomers; shorten the radius only while the track stays clean.": {
+    "fr": "Six longs virages sur bleues damées fermes ; raccourcissez le rayon seulement tant que la trace reste nette.",
+    "de": "Sechs lange Schwünge auf festen blauen Pisten; Radius nur verkürzen, solange die Spur sauber bleibt.",
+    "es": "Seis curvas largas en azules pisadas firmes; acorta el radio solo mientras la huella siga limpia.",
+    "it": "Sei curve lunghe su blu battute compatte; accorcia il raggio solo finché la traccia resta pulita.",
+    "ja": "固い青の整地でロングターン6本。跡がきれいな範囲でのみ半径を短く。",
+    "ko": "단단한 블루 정비면에서 롱턴 6회; 자국이 깨끗할 때만 반경을 줄이세요.",
+    "pt": "Seis curvas longas em azuis preparadas firmes; encurte o raio só enquanto o rasto se mantém limpo."
+  },
+  "Six traverses per side; put the ski down if you wobble.": {
+    "fr": "Six traversées par côté ; reposez le ski si vous vacillez.",
+    "de": "Sechs Quergänge je Seite; Ski absetzen, wenn du wackelst.",
+    "es": "Seis travesías por lado; baja el esquí si te tambaleas.",
+    "it": "Sei diagonali per lato; appoggia lo sci se barcolli.",
+    "ja": "片側6本のトラバース。ぐらついたら板を下ろす。",
+    "ko": "쪽당 트래버스 6회; 흔들리면 스키를 내리세요.",
+    "pt": "Seis travessias por lado; baixe o ski se oscilar."
+  },
+  "Skeleton quality": {
+    "fr": "Qualité du squelette",
+    "de": "Skelettqualität",
+    "es": "Calidad del esqueleto",
+    "it": "Qualità dello scheletro",
+    "ja": "スケルトン品質",
+    "ko": "스켈레톤 품질",
+    "pt": "Qualidade do esqueleto"
+  },
+  "Ski length": {
+    "fr": "Longueur de ski",
+    "de": "Skilänge",
+    "es": "Longitud del esquí",
+    "it": "Lunghezza sci",
+    "ja": "スキー長",
+    "ko": "스키 길이",
+    "pt": "Comprimento do ski"
+  },
+  "Ski length band: {low}-{high} cm": {
+    "fr": "Plage de longueur de ski : {low}-{high} cm",
+    "de": "Skilängenband: {low}-{high} cm",
+    "es": "Rango de longitud de esquí: {low}-{high} cm",
+    "it": "Fascia lunghezza sci: {low}-{high} cm",
+    "ja": "スキー長帯: {low}-{high} cm",
+    "ko": "스키 길이 대역: {low}-{high} cm",
+    "pt": "Faixa de comprimento do ski: {low}-{high} cm"
+  },
+  "Ski label saved": {
+    "fr": "Étiquette de ski enregistrée",
+    "de": "Ski-Label gespeichert",
+    "es": "Etiqueta de esquí guardada",
+    "it": "Etichetta sci salvata",
+    "ja": "スキーラベルを保存しました",
+    "ko": "스키 라벨 저장됨",
+    "pt": "Etiqueta de ski guardada"
+  },
+  "Skill tree": {
+    "fr": "Arbre de compétences",
+    "de": "Skill-Baum",
+    "es": "Árbol de habilidades",
+    "it": "Albero delle skill",
+    "ja": "スキルツリー",
+    "ko": "스킬 트리",
+    "pt": "Árvore de competências"
+  },
+  "Slightly lower in the turn; elastic knees.": {
+    "fr": "Un peu plus bas dans le virage ; genoux élastiques.",
+    "de": "Im Schwung etwas tiefer; elastische Knie.",
+    "es": "Un poco más bajo en la curva; rodillas elásticas.",
+    "it": "Un po’ più basso in curva; ginocchia elastiche.",
+    "ja": "ターン中はやや低く。膝は弾力的に。",
+    "ko": "턴 중 조금 낮게; 탄성 있는 무릎.",
+    "pt": "Um pouco mais baixo na curva; joelhos elásticos."
+  },
+  "Slip down and across, forward then back, with the torso facing downhill.": {
+    "fr": "Glissez vers le bas et en travers, avant puis arrière, torse face à la vallée.",
+    "de": "Talwärts und quer gleiten, vor und zurück, Rumpf talwärts.",
+    "es": "Desliza abajo y al través, adelante y atrás, con el tronco mirando valle abajo.",
+    "it": "Scivola in basso e di traverso, avanti poi indietro, busto rivolto a valle.",
+    "ja": "下方向と横切に滑らせ、前後へ。胴は谷向きのまま。",
+    "ko": "아래로·가로로 미끄러지며 앞뒤로; 몸통은 계곡 방향.",
+    "pt": "Deslize para baixo e ao atravessar, frente e depois atrás, com o tronco virado para o vale."
+  },
+  "Slope": {
+    "fr": "Pente",
+    "de": "Hangneigung",
+    "es": "Pendiente",
+    "it": "Pendenza",
+    "ja": "斜度",
+    "ko": "경사",
+    "pt": "Pendente"
+  },
+  "Slope band": {
+    "fr": "Plage de pente",
+    "de": "Neigungsband",
+    "es": "Rango de pendiente",
+    "it": "Fascia di pendenza",
+    "ja": "斜度帯",
+    "ko": "경사 대역",
+    "pt": "Faixa de pendente"
+  },
+  "Slush": {
+    "fr": "Soupe",
+    "de": "Sulz",
+    "es": "Nieve mojada",
+    "it": "Neve bagnata",
+    "ja": "シャーベット雪",
+    "ko": "슬러시",
+    "pt": "Neve molhada"
+  },
+  "Snow and slope are optional — leave them at not sure and the report still runs.": {
+    "fr": "Neige et pente sont optionnels — laissez « pas sûr », le rapport s’exécute quand même.",
+    "de": "Schnee und Neigung sind optional — bei „unsicher“ läuft der Bericht trotzdem.",
+    "es": "Nieve y pendiente son opcionales — déjalos en no seguro y el informe se genera igual.",
+    "it": "Neve e pendenza sono opzionali — lasciali su non sicuro e il report parte lo stesso.",
+    "ja": "雪質と斜度は任意——「不明」のままでもレポートは生成されます。",
+    "ko": "설질과 경사는 선택 — 「잘 모르겠음」으로 둬도 리포트는 생성됩니다.",
+    "pt": "Neve e pendente são opcionais — deixe em «não tenho a certeza» e o relatório corre na mesma."
+  },
+  "Snow surface": {
+    "fr": "Surface de neige",
+    "de": "Schneeoberfläche",
+    "es": "Superficie de nieve",
+    "it": "Superficie nevosa",
+    "ja": "雪面",
+    "ko": "설면",
+    "pt": "Superfície de neve"
+  },
+  "Soft": {
+    "fr": "Souple",
+    "de": "Weich",
+    "es": "Blando",
+    "it": "Morbido",
+    "ja": "柔らかい",
+    "ko": "부드러움",
+    "pt": "Macio"
+  },
+  "Soft ankles, knees, and hips; center of mass over mid-foot.": {
+    "fr": "Chevilles, genoux et hanches souples ; centre de masse sur le mi-pied.",
+    "de": "Weiche Knöchel, Knie und Hüften; Masseschwerpunkt über der Fußmitte.",
+    "es": "Tobillos, rodillas y caderas blandos; centro de masa sobre el mediopié.",
+    "it": "Caviglie, ginocchia e anche morbide; baricentro sul mediopiede.",
+    "ja": "足首・膝・股関節を柔らかく。重心は足中部の上。",
+    "ko": "발목·무릎·고관절을 부드럽게; 무게중심은 발 중앙 위.",
+    "pt": "Tornozelos, joelhos e ancas macios; centro de massa sobre o médio-pé."
+  },
+  "Soft knees and ankles": {
+    "fr": "Genoux et chevilles souples",
+    "de": "Weiche Knie und Knöchel",
+    "es": "Rodillas y tobillos blandos",
+    "it": "Ginocchia e caviglie morbide",
+    "ja": "柔らかい膝と足首",
+    "ko": "부드러운 무릎과 발목",
+    "pt": "Joelhos e tornozelos macios"
+  },
+  "Soft snow": {
+    "fr": "Neige souple",
+    "de": "Weicher Schnee",
+    "es": "Nieve blanda",
+    "it": "Neve morbida",
+    "ja": "柔らかい雪",
+    "ko": "부드러운 눈",
+    "pt": "Neve macia"
+  },
+  "Soft, ungroomed snow just off a marked run; stay inside the resort boundary.": {
+    "fr": "Neige souple non damée juste hors piste balisée ; restez dans les limites de la station.",
+    "de": "Weicher, unpräparierter Schnee direkt neben der markierten Piste; im Gebietsgrenze bleiben.",
+    "es": "Nieve blanda sin pisar justo fuera de una pista marcada; quédate dentro del dominio.",
+    "it": "Neve morbida non battuta appena fuori da una pista segnata; resta nel comprensorio.",
+    "ja": "マークされたコース脇の未圧雪の柔らかい雪。ゲレンデ境界内に留まる。",
+    "ko": "표시 슬로프 바로 옆의 비정비 부드러운 눈; 리조트 경계 안에 머무르세요.",
+    "pt": "Neve macia não preparada logo ao lado de uma pista marcada; fique dentro do domínio."
+  },
+  "Some checkpoints for this stage could not be measured in this clip.": {
+    "fr": "Certains points de contrôle de ce niveau n’ont pas pu être mesurés dans ce clip.",
+    "de": "Einige Checkpoints dieser Stufe konnten in diesem Clip nicht gemessen werden.",
+    "es": "Algunos checkpoints de este nivel no se pudieron medir en este clip.",
+    "it": "Alcuni checkpoint di questo livello non sono misurabili in questa clip.",
+    "ja": "この段階の一部チェックポイントはこのクリップで測定できませんでした。",
+    "ko": "이 단계의 일부 체크포인트를 이 클립에서 측정하지 못했습니다.",
+    "pt": "Alguns checkpoints deste nível não puderam ser medidos neste clipe."
+  },
+  "Specialization and self-coaching": {
+    "fr": "Spécialisation et auto-coaching",
+    "de": "Spezialisierung und Selbstcoaching",
+    "es": "Especialización y autoentrenamiento",
+    "it": "Specializzazione e auto-coaching",
+    "ja": "専門化とセルフコーチング",
+    "ko": "전문화와 셀프 코칭",
+    "pt": "Especialização e auto-coaching"
+  },
+  "Speed": {
+    "fr": "Vitesse",
+    "de": "Tempo",
+    "es": "Velocidad",
+    "it": "Velocità",
+    "ja": "スピード",
+    "ko": "속도",
+    "pt": "Velocidade"
+  },
+  "Stop labeling skis": {
+    "fr": "Arrêter d’étiqueter les skis",
+    "de": "Ski-Labeln beenden",
+    "es": "Dejar de etiquetar esquís",
+    "it": "Interrompi etichettatura sci",
+    "ja": "スキーのラベリングを停止",
+    "ko": "스키 라벨링 중지",
+    "pt": "Parar de etiquetar skis"
+  },
+  "Squats and split squats": {
+    "fr": "Squats et fentes",
+    "de": "Kniebeugen und Ausfallschritte",
+    "es": "Sentadillas y zancadas",
+    "it": "Squat e affondi",
+    "ja": "スクワットとスプリットスクワット",
+    "ko": "스쿼트와 스플릿 스쿼트",
+    "pt": "Agachamentos e lunges"
+  },
+  "Stability": {
+    "fr": "Stabilité",
+    "de": "Stabilität",
+    "es": "Estabilidad",
+    "it": "Stabilità",
+    "ja": "安定性",
+    "ko": "안정성",
+    "pt": "Estabilidade"
+  },
+  "Stability over time (time × frame score)": {
+    "fr": "Stabilité dans le temps (temps × score d’image)",
+    "de": "Stabilität über die Zeit (Zeit × Frame-Score)",
+    "es": "Estabilidad en el tiempo (tiempo × puntuación de fotograma)",
+    "it": "Stabilità nel tempo (tempo × punteggio frame)",
+    "ja": "時間経過の安定性（時間 × フレーム得点）",
+    "ko": "시간 안정성(시간 × 프레임 점수)",
+    "pt": "Estabilidade ao longo do tempo (tempo × pontuação de fotograma)"
+  },
+  "Stable follow-cam, one skier, side or rear-quarter.": {
+    "fr": "Caméra en suivi stable, un skieur, de côté ou trois-quarts arrière.",
+    "de": "Stabile Follow-Cam, ein Skifahrer, seitlich oder hintere Schrägansicht.",
+    "es": "Cámara en seguimiento estable, un esquiador, lateral o tres cuartos traseros.",
+    "it": "Camera a seguire stabile, un sciatore, laterale o tre quarti posteriori.",
+    "ja": "安定したフォロー撮影、スキーヤー1人、側面または斜め後方。",
+    "ko": "안정적인 팔로우 촬영, 스키어 1명, 측면 또는 후사분면.",
+    "pt": "Câmara a seguir estável, um esquiador, lateral ou três quartos traseiros."
+  },
+  "Stage": {
+    "fr": "Niveau",
+    "de": "Stufe",
+    "es": "Nivel",
+    "it": "Livello",
+    "ja": "段階",
+    "ko": "단계",
+    "pt": "Nível"
+  },
+  "Stage cannot be judged when the shot is unstable, occluded, or out of curriculum scope.": {
+    "fr": "Le niveau ne peut pas être jugé si le plan est instable, occulté ou hors programme.",
+    "de": "Stufe nicht beurteilbar bei wackligem, verdecktem oder lehrplanfremdem Material.",
+    "es": "El nivel no se puede juzgar si el plano es inestable, ocluido o fuera del currículo.",
+    "it": "Il livello non è giudicabile se l’inquadratura è instabile, occlusa o fuori curriculum.",
+    "ja": "映像が不安定・遮蔽・カリキュラム外のときは段階を判定できません。",
+    "ko": "촬영이 불안정·가림·커리큘럼 범위 밖이면 단계를 판정할 수 없습니다.",
+    "pt": "O nível não pode ser julgado se o plano for instável, ocluído ou fora do currículo."
+  },
+  "Stage focus": {
+    "fr": "Focus du niveau",
+    "de": "Stufenfokus",
+    "es": "Enfoque del nivel",
+    "it": "Focus del livello",
+    "ja": "段階の焦点",
+    "ko": "단계 초점",
+    "pt": "Foco do nível"
+  },
+  "Stage tutorial": {
+    "fr": "Tutoriel du niveau",
+    "de": "Stufen-Tutorial",
+    "es": "Tutorial del nivel",
+    "it": "Tutorial del livello",
+    "ja": "段階チュートリアル",
+    "ko": "단계 튜토리얼",
+    "pt": "Tutorial do nível"
+  },
+  "Stance and balance": {
+    "fr": "Position et équilibre",
+    "de": "Stand und Balance",
+    "es": "Postura y equilibrio",
+    "it": "Assetto ed equilibrio",
+    "ja": "スタンスとバランス",
+    "ko": "스탠스와 균형",
+    "pt": "Postura e equilíbrio"
+  },
+  "Stance width": {
+    "fr": "Écartement",
+    "de": "Standbreite",
+    "es": "Ancho de base",
+    "it": "Larghezza di base",
+    "ja": "スタンス幅",
+    "ko": "스탠스 폭",
+    "pt": "Largura de base"
+  },
+  "Stance width change": {
+    "fr": "Variation d’écartement",
+    "de": "Standbreitenwechsel",
+    "es": "Cambio de ancho de base",
+    "it": "Variazione di base",
+    "ja": "スタンス幅の変化",
+    "ko": "스탠스 폭 변화",
+    "pt": "Variação da largura de base"
+  },
+  "Stance width varies; not a locked wedge the whole turn.": {
+    "fr": "L’écartement varie ; ce n’est pas un chasse-neige figé tout le virage.",
+    "de": "Standbreite variiert; kein starrer Pflug den ganzen Schwung.",
+    "es": "El ancho de base varía; no es una cuña bloqueada todo el giro.",
+    "it": "La base varia; non è uno spazzaneve bloccato per tutta la curva.",
+    "ja": "スタンス幅は変化する。ターン全体で固まったプルークではない。",
+    "ko": "스탠스 폭이 변함; 턴 내내 고정된 플루크가 아님.",
+    "pt": "A largura de base varia; não é uma cunha travada em toda a curva."
+  },
+  "Standard": {
+    "fr": "Critère",
+    "de": "Standard",
+    "es": "Estándar",
+    "it": "Standard",
+    "ja": "基準",
+    "ko": "기준",
+    "pt": "Padrão"
+  },
+  "Standard: a clean, narrow track on hardpack with no scraped-out tail.": {
+    "fr": "Critère : trace nette et étroite sur neige dure, sans queue raclée.",
+    "de": "Standard: saubere, schmale Spur auf Hartschnee ohne ausgekratztes Heck.",
+    "es": "Estándar: huella limpia y estrecha en nieve dura, sin cola raspada.",
+    "it": "Standard: traccia pulita e stretta su neve dura, senza coda raschiata.",
+    "ja": "基準：硬雪に細くきれいな軌跡、テールの擦過なし。",
+    "ko": "기준: 하드팩에 깨끗하고 좁은 자국, 테일 스크레이프 없음.",
+    "pt": "Padrão: rasto limpo e estreito em neve dura, sem cauda raspada."
+  },
+  "Standard: a clear edge change, not an upright scrape.": {
+    "fr": "Critère : un changement de carre net, pas un raclage debout.",
+    "de": "Standard: klarer Kantenwechsel, kein aufrechtes Schaben.",
+    "es": "Estándar: cambio de canto claro, no un raspado erguido.",
+    "it": "Standard: cambio lama netto, non una raschiata eretta.",
+    "ja": "基準：はっきりしたエッジチェンジで、直立の擦過ではない。",
+    "ko": "기준: 명확한 엣지 체인지, 직립 스크레이프 아님.",
+    "pt": "Padrão: mudança de canto clara, não uma raspagem erecta."
+  },
+  "Standard: both skis surface together; no single-ski dive.": {
+    "fr": "Critère : les deux skis remontent ensemble ; pas de plongée sur un ski.",
+    "de": "Standard: beide Ski schwimmen zusammen auf; kein Eintauchen eines Skis.",
+    "es": "Estándar: ambos esquís afloran juntos; sin hundirse uno solo.",
+    "it": "Standard: entrambi gli sci affiorano insieme; niente affondo su uno sci.",
+    "ja": "基準：両板が同時に浮く。片板だけ沈み込まない。",
+    "ko": "기준: 양 스키가 함께 떠오름; 한쪽만 잠기지 않음.",
+    "pt": "Padrão: ambos os skis emergem juntos; sem afundar um só."
+  },
+  "Standard: glide on the outside ski; the inside ski taps the snow without taking weight.": {
+    "fr": "Critère : glissez sur le ski extérieur ; le ski intérieur tapote la neige sans prendre de poids.",
+    "de": "Standard: auf dem Außenski gleiten; Innenski tippt den Schnee ohne Last.",
+    "es": "Estándar: desliza sobre el esquí exterior; el interior toca la nieve sin cargar.",
+    "it": "Standard: scivola sullo sci esterno; lo sci interno sfiora la neve senza carico.",
+    "ja": "基準：外側板で滑走。内側板は荷重せず雪を軽くタップ。",
+    "ko": "기준: 바깥 스키로 활주; 안쪽은 하중 없이 설면을 톡톡.",
+    "pt": "Padrão: deslize no ski exterior; o interior toca a neve sem carregar."
+  },
+  "Standard: hip over ankle in profile; knees unlocked.": {
+    "fr": "Critère : hanche au-dessus de la cheville de profil ; genoux déverrouillés.",
+    "de": "Standard: Hüfte über dem Knöchel im Profil; Knie nicht durchgedrückt.",
+    "es": "Estándar: cadera sobre el tobillo de perfil; rodillas desbloqueadas.",
+    "it": "Standard: anca sopra la caviglia di profilo; ginocchia sbloccate.",
+    "ja": "基準：側面で股関節が足首の上。膝はロックしない。",
+    "ko": "기준: 측면에서 고관절이 발목 위; 무릎 잠금 없음.",
+    "pt": "Padrão: anca sobre o tornozelo de perfil; joelhos desbloqueados."
+  },
+  "Standard: hips incline into the turn, shoulders quiet, stance parallel.": {
+    "fr": "Critère : les hanches s’inclinent dans le virage, épaules calmes, skis parallèles.",
+    "de": "Standard: Hüften neigen in den Schwung, Schultern ruhig, Parallelstellung.",
+    "es": "Estándar: las caderas se inclinan a la curva, hombros quietos, postura paralela.",
+    "it": "Standard: le anche inclinano nella curva, spalle quiete, assetto parallelo.",
+    "ja": "基準：股関節がターンへ傾き、肩は静か、スタンスはパラレル。",
+    "ko": "기준: 고관절이 턴으로 기울고 어깨는 고요, 패러렐 스탠스.",
+    "pt": "Padrão: as ancas inclinam na curva, ombros quietos, postura paralela."
+  },
+  "Standard: hips stay near the fall line; the knees still do the work.": {
+    "fr": "Critère : les hanches restent près de la ligne de pente ; les genoux font encore le travail.",
+    "de": "Standard: Hüften nahe der Falllinie; die Knie leisten die Arbeit.",
+    "es": "Estándar: las caderas se quedan cerca de la línea de máxima pendiente; las rodillas siguen trabajando.",
+    "it": "Standard: le anche restano vicino alla linea di massima pendenza; le ginocchia fanno ancora il lavoro.",
+    "ja": "基準：股関節はフォールライン付近。仕事は膝がする。",
+    "ko": "기준: 고관절은 폴라인 근처; 일은 무릎이 함.",
+    "pt": "Padrão: as ancas ficam perto da linha de máxima pendente; os joelhos continuam a trabalhar."
+  },
+  "Standard: knees track over the toes; pelvis level.": {
+    "fr": "Critère : les genoux suivent les orteils ; bassin de niveau.",
+    "de": "Standard: Knie über den Zehen; Becken waagerecht.",
+    "es": "Estándar: las rodillas siguen los dedos; pelvis nivelada.",
+    "it": "Standard: le ginocchia seguono le punte; bacino livellato.",
+    "ja": "基準：膝がつま先の上を通り、骨盤は水平。",
+    "ko": "기준: 무릎이 발가락 위를 따르고 골반은 수평.",
+    "pt": "Padrão: os joelhos acompanham os dedos; pélvis nivelada."
+  },
+  "Standard: left-right symmetry, even quieter shoulders.": {
+    "fr": "Critère : symétrie gauche-droite, épaules encore plus calmes.",
+    "de": "Standard: Links-Rechts-Symmetrie, noch ruhigere Schultern.",
+    "es": "Estándar: simetría izquierda-derecha, hombros aún más quietos.",
+    "it": "Standard: simmetria sinistra-destra, spalle ancora più quiete.",
+    "ja": "基準：左右対称で、肩はさらに静か。",
+    "ko": "기준: 좌우 대칭, 어깨는 더 고요.",
+    "pt": "Padrão: simetria esquerda-direita, ombros ainda mais quietos."
+  },
+  "Standard: linked S-track, no dart to the edge; the wedge stays through the turn.": {
+    "fr": "Critère : trace en S enchaînée, pas de ruée vers le bord ; le chasse-neige reste dans le virage.",
+    "de": "Standard: verkettete S-Spur, kein Schuss zum Rand; der Pflug bleibt im Schwung.",
+    "es": "Estándar: huella en S enlazada, sin lanzarse al borde; la cuña se mantiene en la curva.",
+    "it": "Standard: traccia a S concatenata, senza scatto verso il bordo; lo spazzaneve resta in curva.",
+    "ja": "基準：連続S軌跡で端へ突っ込まない。ターン中プルークは残る。",
+    "ko": "기준: 연결 S 자국, 가장자리로 돌진하지 않음; 턴 중 플루크 유지.",
+    "pt": "Padrão: rasto em S encadeado, sem disparo para a margem; a cunha mantém-se na curva."
+  },
+  "Standard: no long traverse between turns; knees flex and extend.": {
+    "fr": "Critère : pas de longue traversée entre les virages ; genoux qui fléchissent et s’étendent.",
+    "de": "Standard: keine lange Querfahrt zwischen Schwüngen; Knie beugen und strecken.",
+    "es": "Estándar: sin travesía larga entre curvas; las rodillas flexionan y extienden.",
+    "it": "Standard: niente lunga diagonale tra le curve; ginocchia che flettono ed estendono.",
+    "ja": "基準：ターン間の長いトラバースなし。膝の屈伸あり。",
+    "ko": "기준: 턴 사이 긴 트래버스 없음; 무릎 굴신.",
+    "pt": "Padrão: sem travessia longa entre curvas; joelhos fletem e estendem."
+  },
+  "Standard: on replay, the wrists stay below the shoulders.": {
+    "fr": "Critère : au ralenti, les poignets restent sous les épaules.",
+    "de": "Standard: in der Wiederholung bleiben die Handgelenke unter den Schultern.",
+    "es": "Estándar: en la repetición, las muñecas quedan por debajo de los hombros.",
+    "it": "Standard: in replay, i polsi restano sotto le spalle.",
+    "ja": "基準：リプレイで手首が肩より下。",
+    "ko": "기준: 리플레이에서 손목이 어깨 아래.",
+    "pt": "Padrão: no replay, os pulsos ficam abaixo dos ombros."
+  },
+  "Standard: quiet torso, large knee travel, no straight-leg slam.": {
+    "fr": "Critère : torse calme, grand débattement de genou, pas d’impact jambe tendue.",
+    "de": "Standard: ruhiger Rumpf, großer Kniehub, kein Schlag mit gestrecktem Bein.",
+    "es": "Estándar: torso quieto, gran recorrido de rodilla, sin impacto de pierna recta.",
+    "it": "Standard: busto quieto, grande escursione del ginocchio, niente impatto a gamba tesa.",
+    "ja": "基準：胴は静か、膝の振幅は大きく、伸ばし脚の叩きつけなし。",
+    "ko": "기준: 몸통 고요, 무릎 가동 큼, 펴진 다리 착지 충격 없음.",
+    "pt": "Padrão: tronco quieto, grande curso do joelho, sem impacto de perna esticada."
+  },
+  "Standard: stance narrows in the last third of the turn, still stable.": {
+    "fr": "Critère : l’écartement se resserre au dernier tiers du virage, toujours stable.",
+    "de": "Standard: Standbreite verengt sich im letzten Drittel des Schwungs, bleibt stabil.",
+    "es": "Estándar: la base se estrecha en el último tercio de la curva, aún estable.",
+    "it": "Standard: la base si restringe nell’ultimo terzo della curva, ancora stabile.",
+    "ja": "基準：ターン後半1/3でスタンスが狭まり、なお安定。",
+    "ko": "기준: 턴 마지막 1/3에서 스탠스가 좁아지되 안정 유지.",
+    "pt": "Padrão: a base estreita no último terço da curva, ainda estável."
+  },
+  "Standard: stop on a mark both ways; skis parallel, not in a wedge.": {
+    "fr": "Critère : arrêt sur une marque dans les deux sens ; skis parallèles, pas en chasse-neige.",
+    "de": "Standard: Stopp auf Markierung beide Richtungen; parallel, nicht im Pflug.",
+    "es": "Estándar: parada en una marca en ambos sentidos; esquís paralelos, no en cuña.",
+    "it": "Standard: stop su un segno in entrambe le direzioni; sci paralleli, non a spazzaneve.",
+    "ja": "基準：両方向で目印に停止。板はパラレルでプルークではない。",
+    "ko": "기준: 양방향으로 표지에 정지; 패러렐이지 플루크 아님.",
+    "pt": "Padrão: paragem numa marca nos dois sentidos; skis paralelos, não em cunha."
+  },
+  "Standard: ten stops, tips close, torso facing downhill.": {
+    "fr": "Critère : dix arrêts, spatules rapprochées, torse face à la vallée.",
+    "de": "Standard: zehn Stopps, Spitzen nah, Rumpf talwärts.",
+    "es": "Estándar: diez paradas, puntas juntas, tronco mirando valle abajo.",
+    "it": "Standard: dieci stop, punte vicine, busto rivolto a valle.",
+    "ja": "基準：10回停止、チップ接近、胴は谷向き。",
+    "ko": "기준: 정지 10회, 팁 가깝게, 몸통 계곡 방향.",
+    "pt": "Padrão: dez paragens, pontas próximas, tronco virado para o vale."
+  },
+  "Standard: the same count on every turn, with the deepest flexion in the middle of the arc.": {
+    "fr": "Critère : le même décompte à chaque virage, flexion la plus profonde au milieu de l’arc.",
+    "de": "Standard: derselbe Count in jedem Schwung, tiefste Beugung in der Bogenmitte.",
+    "es": "Estándar: el mismo conteo en cada curva, con la flexión más profunda en el medio del arco.",
+    "it": "Standard: lo stesso conteggio a ogni curva, flessione più profonda a metà arco.",
+    "ja": "基準：毎ターン同じカウント。最深屈曲は弧の中ほど。",
+    "ko": "기준: 매 턴 같은 카운트, 가장 깊은 굴곡은 아크 중간.",
+    "pt": "Padrão: a mesma contagem em cada curva, com a flexão mais profunda a meio do arco."
+  },
+  "Standard: the shoulders keep facing down the pitch through every pivot.": {
+    "fr": "Critère : les épaules restent face à la pente à chaque pivot.",
+    "de": "Standard: Schultern bleiben bei jedem Pivot talwärts zur Piste.",
+    "es": "Estándar: los hombros siguen mirando valle abajo en cada pivote.",
+    "it": "Standard: le spalle restano rivolte a valle a ogni pivot.",
+    "ja": "基準：毎ピボットで肩は斜面下向きのまま。",
+    "ko": "기준: 매 피벗에서 어깨가 슬로프 아래를 향함.",
+    "pt": "Padrão: os ombros mantêm-se virados para baixo da pendente em cada pivot."
+  },
+  "Standard: the skis start to turn while the shoulders still face downhill.": {
+    "fr": "Critère : les skis commencent à tourner alors que les épaules restent face à la vallée.",
+    "de": "Standard: die Ski beginnen zu drehen, während die Schultern noch talwärts zeigen.",
+    "es": "Estándar: los esquís empiezan a girar mientras los hombros siguen mirando valle abajo.",
+    "it": "Standard: gli sci iniziano a virare mentre le spalle restano rivolte a valle.",
+    "ja": "基準：肩がまだ谷を向いたまま板が回り始める。",
+    "ko": "기준: 어깨가 아직 계곡을 향한 채 스키가 돌기 시작.",
+    "pt": "Padrão: os skis começam a virar enquanto os ombros ainda enfrentam o vale."
+  },
+  "Standard: the skis stay across the hill and the torso does not turn with them.": {
+    "fr": "Critère : les skis restent en travers de la pente et le torse ne tourne pas avec eux.",
+    "de": "Standard: die Ski bleiben quer zum Hang und der Rumpf dreht nicht mit.",
+    "es": "Estándar: los esquís se mantienen transversales a la pendiente y el tronco no gira con ellos.",
+    "it": "Standard: gli sci restano di traverso al pendio e il busto non gira con loro.",
+    "ja": "基準：板は斜面横断のまま、胴は一緒に回らない。",
+    "ko": "기준: 스키는 사면을 가로지른 채, 몸통은 함께 돌지 않음.",
+    "pt": "Padrão: os skis ficam transversais à pendente e o tronco não roda com eles."
+  }
+}

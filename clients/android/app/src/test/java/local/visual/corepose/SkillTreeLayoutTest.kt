@@ -28,8 +28,8 @@ class SkillTreeLayoutTest {
 
     @Test
     fun heightCoversEveryNode() {
-        assertEquals(32, SkillTreeLayout.heightPx(0, 1f))
-        assertEquals(96, SkillTreeLayout.heightPx(3, 1f))
-        assertEquals(192, SkillTreeLayout.heightPx(3, 2f))
+        assertEquals(36, SkillTreeLayout.heightPx(0, 1f))
+        assertEquals(108, SkillTreeLayout.heightPx(3, 1f))
+        assertEquals(216, SkillTreeLayout.heightPx(3, 2f))
     }
 }

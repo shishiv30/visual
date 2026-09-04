@@ -55,6 +55,10 @@ yarn-error.log*
 *.ckpt
 models/*.task
 models/**/*.task
+models/ski/*.onnx
+
+# --- Ski CV datasets (WSESeg, self-clip labels) ---
+data/ski/
 
 # --- Native / C++ build artifacts ---
 native/**/build/
