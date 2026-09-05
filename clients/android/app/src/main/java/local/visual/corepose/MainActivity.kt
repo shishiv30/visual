@@ -643,10 +643,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun importUri(uri: Uri) {
+        val mime = contentResolver.getType(uri).orEmpty()
+        val name = uri.lastPathSegment.orEmpty().lowercase()
+        val isImage = mime.startsWith("image/") || listOf(".jpg", ".jpeg", ".png", ".webp", ".bmp").any { name.endsWith(it) }
+        if (isImage) {
+            doIngest(uri, 0L, null)
+            return
+        }
+        // Probe duration on a background thread to avoid ANR, then decide whether to trim
+        cameraExecutor.execute {
+            val durationMs = ingest.probeDurationMs(uri)
+            runOnUiThread {
+                if (durationMs != null && durationMs > Library.MAX_MS) {
+                    showTrimDialog(uri, durationMs)
+                } else {
+                    doIngest(uri, 0L, null)
+                }
+            }
+        }
+    }
+
+    private fun showTrimDialog(uri: Uri, durationMs: Long) {
+        val dialog = TrimDialogFragment.newInstance(durationMs)
+        dialog.onConfirm = { startMs, endMs -> doIngest(uri, startMs, endMs) }
+        dialog.onCancel = { pendingImport = false; goList() }
+        dialog.show(supportFragmentManager, TrimDialogFragment.TAG)
+    }
+
+    private fun doIngest(uri: Uri, trimStartMs: Long, trimEndMs: Long?) {
         showLoading("import")
         cameraExecutor.execute {
             try {
-                ingest.fromUri(uri)
+                ingest.fromUri(uri, trimStartMs, trimEndMs)
                 runOnUiThread {
                     hideLoadingIfIdle()
                     goList()

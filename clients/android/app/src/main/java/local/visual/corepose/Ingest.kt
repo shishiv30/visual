@@ -15,11 +15,24 @@ class Ingest(
     private val context: android.content.Context,
     private val library: Library,
 ) {
-    fun fromUri(uri: Uri): ClipMeta {
+    fun fromUri(uri: Uri, trimStartMs: Long = 0L, trimEndMs: Long? = null): ClipMeta {
         val mime = context.contentResolver.getType(uri).orEmpty()
         val name = uri.lastPathSegment.orEmpty().lowercase()
         val image = mime.startsWith("image/") || IMAGE_EXT.any { name.endsWith(it) }
-        return if (image) fromImage(uri) else fromVideo(uri)
+        return if (image) fromImage(uri) else fromVideo(uri, trimStartMs, trimEndMs)
+    }
+
+    /** Returns the duration in ms for the given URI without copying the file, or null if unreadable. */
+    fun probeDurationMs(uri: Uri): Long? {
+        val retriever = MediaMetadataRetriever()
+        return try {
+            retriever.setDataSource(context, uri)
+            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLongOrNull()
+        } catch (_: Exception) {
+            null
+        } finally {
+            retriever.release()
+        }
     }
 
     fun fromFile(file: File, image: Boolean = false): ClipMeta {
@@ -40,13 +53,13 @@ class Ingest(
         }
     }
 
-    private fun fromVideo(uri: Uri): ClipMeta {
+    private fun fromVideo(uri: Uri, trimStartMs: Long = 0L, trimEndMs: Long? = null): ClipMeta {
         val clipId = library.newClipId()
         val dir = library.clipDir(clipId)
         dir.mkdirs()
         val dest = File(dir, "clip.mp4")
         copyUri(uri, dest)
-        return finishVideo(clipId, dest)
+        return finishVideo(clipId, dest, trimStartMs, trimEndMs)
     }
 
     private fun fromImage(uri: Uri): ClipMeta {
@@ -58,7 +71,12 @@ class Ingest(
         return finishImage(clipId, dest)
     }
 
-    private fun finishVideo(clipId: String, dest: File): ClipMeta {
+    private fun finishVideo(
+        clipId: String,
+        dest: File,
+        trimStartMs: Long = 0L,
+        trimEndMs: Long? = null,
+    ): ClipMeta {
         val retriever = MediaMetadataRetriever()
         try {
             retriever.setDataSource(dest.absolutePath)
@@ -77,24 +95,32 @@ class Ingest(
                 height = tmp
             }
             val durationMs = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-                ?.toIntOrNull()
-                ?: 0
+                ?.toLongOrNull()
+                ?: 0L
             val fps = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_CAPTURE_FRAMERATE)
                 ?.toDoubleOrNull()
                 ?: 30.0
-            writeThumb(retriever, library.thumbFile(clipId))
-            val playEnd = if (durationMs > Library.MAX_MS) Library.MAX_MS.toInt() else null
+            val thumbAtMs = trimStartMs.coerceAtLeast(0L)
+            writeThumbAt(retriever, library.thumbFile(clipId), thumbAtMs)
+            // Determine effective play window from trim params or auto-cap
+            val effectiveStart = trimStartMs.coerceAtLeast(0L).coerceAtMost(durationMs)
+            val effectiveEnd: Long? = when {
+                trimEndMs != null -> trimEndMs.coerceAtMost(durationMs)
+                durationMs > Library.MAX_MS -> effectiveStart + Library.MAX_MS
+                else -> null
+            }
             val meta = ClipMeta(
                 clipId = clipId,
                 createdAt = Library.createdAtIso(),
                 displayName = Library.displayNameNow(),
-                durationMs = durationMs,
+                durationMs = durationMs.toInt(),
                 width = width.coerceAtLeast(1),
                 height = height.coerceAtLeast(1),
                 fps = fps,
                 kind = ClipKind.VIDEO,
                 status = ClipStatus.PENDING,
-                playEndMs = playEnd,
+                playStartMs = effectiveStart.toInt(),
+                playEndMs = effectiveEnd?.toInt(),
             )
             library.saveMeta(meta)
             return meta
@@ -132,8 +158,9 @@ class Ingest(
         } ?: throw IllegalStateException("Could not read video.")
     }
 
-    private fun writeThumb(retriever: MediaMetadataRetriever, dest: File) {
-        val frame = retriever.getFrameAtTime(0L, MediaMetadataRetriever.OPTION_CLOSEST)
+    private fun writeThumbAt(retriever: MediaMetadataRetriever, dest: File, atMs: Long) {
+        val frame = retriever.getFrameAtTime(atMs * 1000L, MediaMetadataRetriever.OPTION_CLOSEST)
+            ?: retriever.getFrameAtTime(0L, MediaMetadataRetriever.OPTION_CLOSEST)
             ?: return
         writeThumbBitmap(frame, dest)
         frame.recycle()
