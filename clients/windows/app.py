@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from PySide6.QtGui import QResizeEvent
+from PySide6.QtGui import QIcon, QResizeEvent
 from PySide6.QtWidgets import QApplication, QMainWindow, QStackedWidget  # noqa: E402
 
 from clients.windows.pipeline.analyze import AnalysisQueue  # noqa: E402
@@ -178,11 +178,19 @@ class MainWindow(QMainWindow):
         self._on_seed(clip_id)
 
 
+#: Runtime window/taskbar icon. .ico/.icns in the same folder are for a future
+#: packaged build (PyInstaller --icon / py2app iconfile) — QIcon itself just
+#: wants a raster image and works identically cross-platform from the PNG.
+APP_ICON = Path(__file__).resolve().parent / "assets" / "icon.png"
+
+
 def main() -> int:
     app = QApplication(sys.argv)
     apply_dark_palette(app)
     app.setStyleSheet(app_stylesheet())
     install_pointer_buttons(app)
+    if APP_ICON.is_file():
+        app.setWindowIcon(QIcon(str(APP_ICON)))
     window = MainWindow()
     window.show()
     return app.exec()
