@@ -27,6 +27,7 @@ data class FrameSample(
     val quiet: Double? = null,
     val hipX: Double? = null,
     val hipY: Double? = null,
+    val reliable: Boolean = false,
 )
 
 data class FeaturePack(
@@ -72,6 +73,17 @@ object SportsSignals {
     const val R_WRIST = 16
     const val NOSE = 0
     const val CONF_MIN = 0.25
+
+    // A frame can clear CONF_MIN (so it still contributes a value) yet have a
+    // core joint tracked so weakly -- occluded by snow spray, motion blur, a
+    // mid-turn self-occlusion -- that its coordinates are noise rather than
+    // signal. That noise then reads as "the most extreme frame" and gets
+    // handed to the coach as photographic evidence of a fault that was never
+    // there. Evidence selection (unlike the aggregate value itself) needs a
+    // stricter bar: see FrameSample.reliable / Assess.evidenceMs. Distinct
+    // from CONF_MIN and from PoseTrack.JOINT_CONF_MIN -- do not conflate.
+    const val EVIDENCE_CORE_CONF_MIN = 0.5
+    private val CORE_LANDMARKS = intArrayOf(L_SHOULDER, R_SHOULDER, L_HIP, R_HIP, L_KNEE, R_KNEE, L_ANKLE, R_ANKLE)
 
     private val clipSignals = setOf(
         "stance_width",
@@ -194,6 +206,7 @@ object SportsSignals {
                     quiet = if (ls != null && rs != null) quiet.last() else null,
                     hipX = hipsX.lastOrNull(),
                     hipY = hipsY.lastOrNull(),
+                    reliable = coreReliable(frame),
                 ),
             )
         }
@@ -296,6 +309,25 @@ object SportsSignals {
             "upper_quiet" -> sample.quiet
             else -> null
         }
+    }
+
+    /**
+     * True only if every CORE_LANDMARKS joint (shoulders, hips, knees, ankles)
+     * is tracked with confidence >= EVIDENCE_CORE_CONF_MIN in this frame. Used
+     * only to keep evidence-frame selection off a noisy frame -- see
+     * EVIDENCE_CORE_CONF_MIN. Deliberately not used to gate the metric values
+     * themselves, which already have their own per-joint CONF_MIN gate above.
+     */
+    private fun coreReliable(frame: AssessFrame): Boolean {
+        if (frame.blaze33.size < 33) {
+            return false
+        }
+        for (idx in CORE_LANDMARKS) {
+            if (frame.blaze33[idx].confidence < EVIDENCE_CORE_CONF_MIN) {
+                return false
+            }
+        }
+        return true
     }
 
     private fun xy(frame: AssessFrame, index: Int): DoubleArray? {

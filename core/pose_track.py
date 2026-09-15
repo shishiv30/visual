@@ -27,6 +27,13 @@ TORSO_NAMES = (
     "left_hip",
     "right_hip",
 )
+BLAZE_N = 33
+#: Below this, one landmark (not necessarily the whole pose) is weak enough
+#: that ``stabilize_weak_joints`` will try to bridge it from neighbors before
+#: any per-metric consumer has to gate it out. Above it, the joint is left
+#: alone even though a metric's own, usually stricter, confidence gate may
+#: still discount or drop it later.
+JOINT_CONF_MIN = 0.35
 
 
 def frame_score(result: CoreInferenceResult) -> float:
@@ -287,4 +294,103 @@ def stabilize_pose_sequence(frames: list[AnalyzedFrame]) -> list[AnalyzedFrame]:
         _blend_analyzed(frames, i + 1, left_i, right_i)
         replaced[i] = True
         replaced[i + 1] = True
+    return frames
+
+
+def _lerp_joint(left: BlazeJoint, right: BlazeJoint, weight: float) -> BlazeJoint:
+    return BlazeJoint(
+        x=_lerp(left.x, right.x, weight),
+        y=_lerp(left.y, right.y, weight),
+        z=_lerp(left.z, right.z, weight),
+        confidence=min(1.0, min(left.confidence, right.confidence) * INTERP_CONF_SCALE),
+    )
+
+
+def _hold_joint(anchor: BlazeJoint) -> BlazeJoint:
+    return BlazeJoint(
+        x=anchor.x,
+        y=anchor.y,
+        z=anchor.z,
+        confidence=min(1.0, anchor.confidence * INTERP_CONF_SCALE),
+    )
+
+
+def stabilize_weak_joints(
+    frames: list[AnalyzedFrame], conf_min: float = JOINT_CONF_MIN
+) -> list[AnalyzedFrame]:
+    """Bridge one landmark's short confidence dip from its own neighbors.
+
+    ``fill_low_score_poses`` already does this at the whole-pose level, keyed
+    off the frame's overall score. That leaves the common ski case
+    unaddressed: the torso tracks perfectly all the way through a turn but one
+    ankle or foot drops out for a few frames — occluded by snow spray, motion
+    blur, or a self-occlusion at full flex — while the rest of the skeleton
+    stays confident. A frame like that never triggers the whole-frame path
+    (its overall score is fine), so the weak joint used to sit at its raw,
+    noisy coordinates until a metric's own confidence gate dropped it or (the
+    bug this fixes) it became the "most extreme" sample and got shown to the
+    coach as evidence.
+
+    This runs per landmark index, independently of every other joint, with
+    the exact same ``MAX_GAP_MS``/``HOLD_MS`` policy as the whole-frame
+    version: a short gap flanked by two well-tracked samples is linearly
+    interpolated between them; a gap open on only one side is held from
+    that side, decaying via ``INTERP_CONF_SCALE`` so it is never mistaken for
+    a fresh measurement; a gap with no well-tracked anchor on either side
+    (or longer than ``MAX_GAP_MS``) is left alone, since there is nothing
+    real to interpolate from. Every per-metric confidence gate downstream
+    (``turns.landmark_arrays``' CONF_MIN, the evidence-frame bar) still
+    applies on top of this — it only gives those gates a better-populated
+    series to gate over, it does not replace them.
+    """
+    n = len(frames)
+    if n < 2:
+        return frames
+    for j in range(BLAZE_N):
+        conf = [
+            frame.blaze33[j].confidence
+            if frame.blaze33 is not None and len(frame.blaze33) > j
+            else 0.0
+            for frame in frames
+        ]
+        i = 0
+        while i < n:
+            if conf[i] >= conf_min:
+                i += 1
+                continue
+            k = i
+            while k < n and conf[k] < conf_min:
+                k += 1
+            left_i = i - 1 if i > 0 and conf[i - 1] >= conf_min else None
+            right_i = k if k < n and conf[k] >= conf_min else None
+            if left_i is not None and right_i is not None:
+                t_left = frames[left_i].t_ms
+                t_right = frames[right_i].t_ms
+                if 0.0 < (t_right - t_left) <= MAX_GAP_MS:
+                    left_joint = frames[left_i].blaze33[j]
+                    right_joint = frames[right_i].blaze33[j]
+                    span = t_right - t_left
+                    for m in range(i, k):
+                        joints = frames[m].blaze33
+                        if joints is None or len(joints) <= j:
+                            continue
+                        w = (frames[m].t_ms - t_left) / span
+                        joints[j] = _lerp_joint(left_joint, right_joint, w)
+            elif left_i is not None:
+                t_left = frames[left_i].t_ms
+                left_joint = frames[left_i].blaze33[j]
+                for m in range(i, k):
+                    if frames[m].t_ms - t_left <= HOLD_MS:
+                        joints = frames[m].blaze33
+                        if joints is not None and len(joints) > j:
+                            joints[j] = _hold_joint(left_joint)
+            elif right_i is not None:
+                t_right = frames[right_i].t_ms
+                right_joint = frames[right_i].blaze33[j]
+                for m in range(i, k):
+                    if t_right - frames[m].t_ms <= HOLD_MS:
+                        joints = frames[m].blaze33
+                        if joints is not None and len(joints) > j:
+                            joints[j] = _hold_joint(right_joint)
+            i = k
     return frames

@@ -40,7 +40,7 @@ enum VideoPose {
             }
             tMs += stepMs
         }
-        return PoseTrack.fillLowScore(frames)
+        return PoseTrack.fillLowScore(PoseTrack.stabilizeWeakJoints(frames))
     }
 
     static func analyzeBitmap(
@@ -53,7 +53,9 @@ enum VideoPose {
         let locator = PoseLocator(device: device)
         let timed = ClipRange.collectSeeds(seeds, seedBox: seedBox)
         return PoseTrack.fillLowScore(
-            [locator.inferFrame(image, tMs: 0, seeds: timed, seedBox: seedBox, halfMs: 1e9, markers: markers)]
+            PoseTrack.stabilizeWeakJoints(
+                [locator.inferFrame(image, tMs: 0, seeds: timed, seedBox: seedBox, halfMs: 1e9, markers: markers)]
+            )
         )
     }
 

@@ -12,7 +12,11 @@ from clients.windows.pipeline.clip_range import (
     play_window_ms,
     seed_at,
 )
-from core.pose_track import fill_low_score_poses, stabilize_pose_sequence
+from core.pose_track import (
+    fill_low_score_poses,
+    stabilize_pose_sequence,
+    stabilize_weak_joints,
+)
 from core.person_roi import blend_hist, build_hist, denorm_box, search
 from core.sports.assess import assess_clip
 from core.sports.profile import AthleteContext
@@ -185,6 +189,11 @@ class AnalysisWorker(QObject):
                 )
             index += 1
         cap.release()
+        # Per-joint bridging first (an ankle/foot dropout inside an otherwise
+        # well-tracked frame never trips the whole-frame checks below, which
+        # key off the overall pose score), then the existing whole-frame
+        # low-score fill and spike correction.
+        stabilize_weak_joints(frames)
         fill_low_score_poses(frames)
         stabilize_pose_sequence(frames)
         return ClipAnalysis(

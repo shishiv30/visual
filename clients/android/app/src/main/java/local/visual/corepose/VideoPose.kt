@@ -75,7 +75,7 @@ object VideoPose {
             }
             tMs += stepMs
         }
-        return PoseTrack.fillLowScore(frames)
+        return PoseTrack.fillLowScore(PoseTrack.stabilizeWeakJoints(frames))
     }
 
     fun analyzeBitmap(

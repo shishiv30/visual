@@ -13,6 +13,13 @@ struct FrameSample {
     var quiet: Double? = nil
     var hipX: Double? = nil
     var hipY: Double? = nil
+    /// True only if every core landmark (shoulders, hips, knees, ankles) was
+    /// tracked at >= `SportsSignals.evidenceCoreConfMin` confidence in this
+    /// frame. Used only to keep evidence-frame selection off a noisy frame
+    /// (see `SportsSignals.evidenceCoreConfMin`) -- it does not gate any of
+    /// the signal values above, which already have their own confMin gate in
+    /// `SportsSignals.xy`.
+    var reliable: Bool = true
 }
 
 struct FeaturePack {
@@ -58,6 +65,16 @@ enum SportsSignals {
     static let rWrist = 16
     static let nose = 0
     static let confMin: Float = 0.25
+    /// A frame can clear `confMin`'s gate (so it still contributes a value)
+    /// yet have a core joint tracked so weakly -- occluded by snow spray,
+    /// motion blur, a mid-turn self-occlusion -- that its coordinates are
+    /// noise rather than signal. That noise then reads as "the most extreme
+    /// frame" and gets handed to the coach as photographic evidence of a
+    /// fault that was never there. Evidence selection (unlike the signal
+    /// value itself) needs a stricter bar: see `Assess.evidenceMs`'s use of
+    /// `FrameSample.reliable`.
+    static let evidenceCoreConfMin: Float = 0.5
+    static let coreLandmarks = [lShoulder, rShoulder, lHip, rHip, lKnee, rKnee, lAnkle, rAnkle]
 
     private static let clipSignals: Set<String> = [
         "stance_width",
@@ -180,7 +197,8 @@ enum SportsSignals {
                     gazeOk: nosePt != nil ? gaze.last : nil,
                     quiet: (ls != nil && rs != nil) ? quiet.last : nil,
                     hipX: hipsX.last,
-                    hipY: hipsY.last
+                    hipY: hipsY.last,
+                    reliable: isReliable(frame)
                 )
             )
         }
@@ -283,6 +301,16 @@ enum SportsSignals {
         case "upper_quiet": return sample.quiet
         default: return nil
         }
+    }
+
+    /// See `evidenceCoreConfMin`: true only if every core landmark clears
+    /// that stricter bar in this frame.
+    private static func isReliable(_ frame: AssessFrame) -> Bool {
+        guard frame.blaze33.count >= 33 else { return false }
+        for idx in coreLandmarks where frame.blaze33[idx].confidence < evidenceCoreConfMin {
+            return false
+        }
+        return true
     }
 
     private static func xy(_ frame: AssessFrame, _ index: Int) -> [Double]? {

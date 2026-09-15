@@ -391,8 +391,17 @@ object Assess {
         if (pack.series.isEmpty()) {
             return null
         }
+        // Restrict the candidate pool to frames whose core landmarks (shoulders,
+        // hips, knees, ankles) were confidently tracked, so a weakly-tracked
+        // ankle/knee/hip never gets shown as photographic evidence of a fault
+        // that was actually a skeleton glitch. Falls back to every sample if no
+        // frame in the clip clears that stricter bar, so a low-quality clip
+        // still gets an evidence link rather than none at all. This does not
+        // change the metric's computed value/score -- only which frame is shown.
+        val reliableSeries = pack.series.filter { it.reliable }
+        val candidates = reliableSeries.ifEmpty { pack.series }
         val instant = ArrayList<Pair<Double, Double>>()
-        for (sample in pack.series) {
+        for (sample in candidates) {
             val value = SportsSignals.sampleSignal(sample, signal) ?: continue
             instant.add(sample.tMs to continuousScore(value, spec.threshold))
         }
@@ -400,36 +409,36 @@ object Assess {
             return if (passing) instant.maxBy { it.second }.first else instant.minBy { it.second }.first
         }
         if (signal in setOf("turn_freq", "fall_line")) {
-            val scored = pack.series.mapNotNull { s ->
+            val scored = candidates.mapNotNull { s ->
                 val hx = s.hipX ?: return@mapNotNull null
                 s.tMs to kotlin.math.abs(hx - pack.hipXMean)
             }
             if (scored.isEmpty()) {
-                return pack.series.first().tMs
+                return candidates.first().tMs
             }
             return scored.maxBy { it.second }.first
         }
         if (signal in setOf("knee_flex_freq", "knee_flex_amp")) {
-            val scored = pack.series.mapNotNull { s ->
+            val scored = candidates.mapNotNull { s ->
                 val flex = s.kneeFlex ?: return@mapNotNull null
                 s.tMs to flex
             }
             if (scored.isEmpty()) {
-                return pack.series.first().tMs
+                return candidates.first().tMs
             }
             return scored.maxBy { it.second }.first
         }
         if (signal == "stance_width_std") {
-            val scored = pack.series.mapNotNull { s ->
+            val scored = candidates.mapNotNull { s ->
                 val w = s.stanceWidth ?: return@mapNotNull null
                 s.tMs to kotlin.math.abs(w - pack.stanceWidth)
             }
             if (scored.isEmpty()) {
-                return pack.series.first().tMs
+                return candidates.first().tMs
             }
             return scored.maxBy { it.second }.first
         }
-        return pack.series.first().tMs
+        return candidates.first().tMs
     }
 
     private fun scoreSeries(

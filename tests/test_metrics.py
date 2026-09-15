@@ -207,6 +207,35 @@ def test_evidence_is_an_integer_timestamp_inside_the_clip() -> None:
         assert -1 <= item.evidence_ms <= last + 1
 
 
+def test_evidence_never_points_at_a_weakly_tracked_frame() -> None:
+    """A frame with noisy-but-not-gated ankle tracking must not be "evidence".
+
+    Real BlazePose output on ski footage regularly reports a joint at
+    confidence in the 0.3-0.6 band during snow spray / self-occlusion —
+    above ``turns.CONF_MIN`` (0.25, so it still counts toward the metric's
+    value) but low enough that its coordinates are noise. If that noise makes
+    the frame the series' extreme sample, the old ``_evidence_extreme`` would
+    hand it to the coach as a screenshot "proving" a fault that was actually
+    a tracking glitch on an otherwise clean carve.
+    """
+    clip = F.parallel_skier()
+    corrupt_i = len(clip.frames) // 2
+    joints = clip.frames[corrupt_i].blaze33
+    assert joints is not None
+    for index in (27, 28):  # L_ANKLE, R_ANKLE
+        joint = joints[index]
+        joint.confidence = 0.35  # clears CONF_MIN, fails EVIDENCE_CORE_CONF_MIN
+    # Blow the ankles apart so this frame is the stance_width outlier.
+    joints[27].x -= 400.0
+    joints[28].x += 400.0
+
+    pack = _pack(clip)
+    stance = pack.metrics["stance_width"]
+    corrupt_t_ms = clip.frames[corrupt_i].t_ms
+    assert stance.evidence_ms is not None
+    assert abs(stance.evidence_ms - corrupt_t_ms) > 1.0
+
+
 # --- view gating (§3.1) -----------------------------------------------------
 
 

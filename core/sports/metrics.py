@@ -206,6 +206,14 @@ CORE_LANDMARKS = (
     L_ANKLE,
     R_ANKLE,
 )
+#: A frame can clear ``landmark_arrays``' CONF_MIN=0.25 gate (so it still
+#: contributes a value) yet have a core joint tracked so weakly — occluded by
+#: snow spray, motion blur, a mid-turn self-occlusion — that its coordinates
+#: are noise rather than signal. That noise then reads as "the most extreme
+#: frame" and gets handed to the coach as photographic evidence of a fault
+#: that was never there. Evidence selection (unlike the aggregate value
+#: itself) needs a stricter bar: see ``_evidence_extreme``'s ``reliable`` mask.
+EVIDENCE_CORE_CONF_MIN = 0.5
 #: Slug per BlazePose index the catalog can require, so a suppressed metric can
 #: name the joint that was absent instead of saying "not measured".
 LANDMARK_SLUGS: dict[int, str] = {
@@ -1594,6 +1602,7 @@ class _Builder:
         missing_landmarks: frozenset[int] = frozenset(),
         camera_motion: str = "static",
         steering_compensated: bool = False,
+        reliable_frames: np.ndarray | None = None,
     ) -> None:
         self.view = view
         self.athlete = athlete
@@ -1604,6 +1613,10 @@ class _Builder:
         self.missing_landmarks = missing_landmarks
         self.camera_motion = camera_motion
         self.steering_compensated = steering_compensated
+        #: Per-frame bool: every ``CORE_LANDMARKS`` joint tracked with
+        #: confidence >= ``EVIDENCE_CORE_CONF_MIN`` (see that constant). Used
+        #: to keep evidence-frame selection from pointing at a noisy frame.
+        self.reliable_frames = reliable_frames
 
     def camera_follow_blocks(self, spec: MetricSpec) -> MetricValue | None:
         if (
@@ -1750,14 +1763,28 @@ class _Builder:
 
 
 def _evidence_extreme(
-    t_ms: np.ndarray, series: np.ndarray, centre: float | None
+    t_ms: np.ndarray,
+    series: np.ndarray,
+    centre: float | None,
+    reliable: np.ndarray | None = None,
 ) -> float | None:
     """Timestamp of the sample farthest from ``centre``.
 
     That is the frame the report should link to: the most extreme instance is
-    what a coach wants to look at, not an average-looking one.
+    what a coach wants to look at, not an average-looking one — *unless* the
+    extremity is tracking noise rather than technique. ``reliable`` (per-frame,
+    from ``_Builder.reliable_frames``) restricts the search to frames whose
+    core landmarks were confidently tracked, so a frame with a weakly-tracked
+    ankle/knee/hip never gets shown as photographic evidence of a fault that
+    was actually a skeleton glitch. Falls back to every finite sample if no
+    frame clears that stricter bar, so a low-quality clip still gets an
+    evidence link rather than none at all.
     """
     good = np.isfinite(series)
+    if reliable is not None:
+        stricter = good & reliable
+        if np.any(stricter):
+            good = stricter
     if not np.any(good) or centre is None:
         return None
     idx = np.argmax(np.abs(series[good] - centre))
@@ -1829,7 +1856,7 @@ def _add_frame_metric(
         value,
         samples=samples,
         per_turn=per_turn,
-        evidence_ms=_evidence_extreme(t_ms, series, value),
+        evidence_ms=_evidence_extreme(t_ms, series, value, reliable=builder.reliable_frames),
         side=side,
     )
 
@@ -2005,7 +2032,7 @@ def _combine_sides(
         samples=_count(stacked),
         per_turn=per_turn,
         evidence_ms=_evidence_extreme(
-            t_ms, per_side["left"], float(np.mean(values))
+            t_ms, per_side["left"], float(np.mean(values)), reliable=builder.reliable_frames
         ),
     )
 
@@ -2802,6 +2829,20 @@ def _landmark_quality(arrays: LandmarkArrays) -> float:
     return float(np.mean(np.min(core, axis=1)))
 
 
+def _reliable_frames(arrays: LandmarkArrays) -> np.ndarray:
+    """Per-frame: every core landmark tracked at >= ``EVIDENCE_CORE_CONF_MIN``.
+
+    Used only to keep evidence-frame selection off a noisy frame — see
+    ``EVIDENCE_CORE_CONF_MIN``. Deliberately not used to gate the metric
+    values themselves, which already have their own per-joint CONF_MIN gate
+    in :func:`core.sports.turns.landmark_arrays`.
+    """
+    if arrays.n == 0:
+        return np.zeros(0, dtype=bool)
+    core = arrays.conf[:, list(CORE_LANDMARKS)]
+    return np.min(core, axis=1) >= EVIDENCE_CORE_CONF_MIN
+
+
 # ---------------------------------------------------------------------------
 # entry point
 # ---------------------------------------------------------------------------
@@ -2876,6 +2917,7 @@ def compute_metrics(
         missing_landmarks=_missing_landmarks(arrays),
         camera_motion=camera_motion,
         steering_compensated=signal.tangent_source == "compensated",
+        reliable_frames=_reliable_frames(arrays),
     )
     out: dict[str, MetricValue] = {}
     if scale.ok:
