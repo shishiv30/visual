@@ -1,0 +1,125 @@
+name: Release builds
+
+# Builds all four clients and attaches them to a GitHub Release.
+#
+# - Windows / macOS: PyInstaller, from scripts/packaging/visualpose.spec (verified
+#   locally on macOS before this workflow was written — see that file's header).
+# - Android: Gradle debug build (self-signed debug key, sideloadable, not a
+#   Play-Store release — see docs/publishing.md for what release signing needs).
+# - iOS: build-only verification (xcodebuild, unsigned). Apple requires a paid
+#   Developer Program membership + distribution certificate to produce an
+#   installable .ipa; without those secrets this job proves the app still
+#   compiles but cannot publish a downloadable iOS artifact — see
+#   docs/publishing.md.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r clients/windows/requirements.txt
+          pip install -r requirements-mediapipe.txt
+          pip install pyinstaller
+      - run: python scripts/download_pose_landmarker.py
+      - run: pyinstaller scripts/packaging/visualpose.spec --noconfirm
+      - shell: pwsh
+        run: Compress-Archive -Path dist/VisualPose -DestinationPath VisualPose-Windows-x64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VisualPose-Windows-x64
+          path: VisualPose-Windows-x64.zip
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install --upgrade pip
+          pip install -r clients/windows/requirements.txt
+          pip install -r requirements-mediapipe.txt
+          pip install pyinstaller
+      - run: python scripts/download_pose_landmarker.py
+      - run: pyinstaller scripts/packaging/visualpose.spec --noconfirm
+      - run: ditto -c -k --sequesterRsrc --keepParent dist/VisualPose.app VisualPose-macOS.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VisualPose-macOS
+          path: VisualPose-macOS.zip
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager --install "ndk;28.1.13356709" "cmake;3.22.1"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/download_pose_landmarker.py
+      - run: cd clients/android && ./gradlew assembleDebug --no-daemon
+      - run: cp clients/android/app/build/outputs/apk/debug/app-debug.apk VisualPose-Android-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VisualPose-Android-debug
+          path: VisualPose-Android-debug.apk
+
+  ios-verify:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 scripts/download_pose_landmarker.py
+      - run: python3 scripts/generate_ios_xcodeproj.py
+      - run: cd clients/ios && pod install
+      - run: |
+          cd clients/ios
+          xcodebuild build \
+            -workspace VisualPose.xcworkspace \
+            -scheme VisualPose \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO
+
+  publish-release:
+    needs: [windows, macos, android, ios-verify]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/VisualPose-Windows-x64/VisualPose-Windows-x64.zip
+            artifacts/VisualPose-macOS/VisualPose-macOS.zip
+            artifacts/VisualPose-Android-debug/VisualPose-Android-debug.apk
+          body: |
+            Desktop (Windows/macOS) and Android builds are attached below.
+            iOS has no downloadable artifact yet — see docs/publishing.md for
+            why (needs an Apple Developer Program certificate).
+
+            Android APK is debug-signed for direct install/testing, not a
+            Play Store release.
+          generate_release_notes: true
