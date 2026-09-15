@@ -189,6 +189,11 @@ def _chevron_pixmap(color: QColor, size: int = 16, *, down: bool = False) -> QPi
     return pix
 
 
+def _set_chevron_icon(button: QPushButton, size: int, expanded: bool) -> None:
+    """Shared by every checkable disclosure button (chapter and branch)."""
+    button.setIcon(QIcon(_chevron_pixmap(STEEL, size, down=expanded)))
+
+
 class ReportChapter(QWidget):
     """Chapter block: gray 32px title, 16px gap, then panel grid.
 
@@ -245,10 +250,7 @@ class ReportChapter(QWidget):
     def _sync_chevron(self) -> None:
         if self._button is None:
             return
-        expanded = self._button.isChecked()
-        self._button.setIcon(
-            QIcon(_chevron_pixmap(STEEL, 16, down=expanded))
-        )
+        _set_chevron_icon(self._button, 16, self._button.isChecked())
 
     def is_collapsible(self) -> bool:
         return self._collapsible
@@ -542,6 +544,10 @@ class SkillTreeRoute(QWidget):
             )
 
 
+def _row_state(node: TreeNodeV3) -> str:
+    return node.state.value if isinstance(node.state, NodeState) else str(node.state)
+
+
 def order_tree_rows(nodes: list[TreeNodeV3]) -> list[tuple[TreeNodeV3, int]]:
     """Lay the whole progression out as rows: piste spine, branches indented.
 
@@ -752,11 +758,39 @@ class SkillTreeView(QWidget):
                 widget.setParent(None)
                 widget.deleteLater()
 
+    def _branch_groups(self) -> list[tuple[str, list[int]]]:
+        """Contiguous runs of side-branch rows (indent > 0), grouped by branch.
+
+        ``order_tree_rows`` only ever produces indent 0 (piste) or indent 1
+        (every side branch), so a branch never needs to nest inside another.
+        """
+        groups: list[tuple[str, list[int]]] = []
+        branch: str | None = None
+        indices: list[int] = []
+        for i, (node, indent) in enumerate(self._rows):
+            if indent == 0:
+                if indices:
+                    groups.append((branch or "piste", indices))
+                    indices = []
+                branch = None
+                continue
+            this_branch = node.branch or "piste"
+            if this_branch != branch:
+                if indices:
+                    groups.append((branch or "piste", indices))
+                branch = this_branch
+                indices = []
+            indices.append(i)
+        if indices:
+            groups.append((branch or "piste", indices))
+        return groups
+
     def set_nodes(self, nodes: list[TreeNodeV3], clip_id_map: dict[str, str] | None = None) -> None:
         self._clip_id_map = clip_id_map or {}
         self._clear()
         self._nodes = list(nodes)
         self._rows = order_tree_rows(self._nodes)
+        self._branch_rows: dict[int, list[QWidget]] = {}
         if not self._rows:
             empty = QLabel(t("—"))
             empty.setObjectName("reportTreeMeta")
@@ -764,6 +798,20 @@ class SkillTreeView(QWidget):
             self.updateGeometry()
             return
         indents = [indent for _, indent in self._rows]
+        groups = self._branch_groups()
+        group_of_index: dict[int, int] = {}
+        expanded_by_group: dict[int, bool] = {}
+        for gi, (_branch, idxs) in enumerate(groups):
+            for idx in idxs:
+                group_of_index[idx] = gi
+            # Default: only the branch holding the current stage starts open
+            # (the piste spine itself is indent 0 and never grouped here) —
+            # readability follow-up, design doc §8.
+            expanded_by_group[gi] = any(
+                _row_state(self._rows[idx][0]) == NodeState.CURRENT.value
+                for idx in idxs
+            )
+
         for i, (node, indent) in enumerate(self._rows):
             has_above = i > 0 and indents[i - 1] >= indent
             has_below = i + 1 < len(indents) and indents[i + 1] >= indent
@@ -771,7 +819,73 @@ class SkillTreeView(QWidget):
             through: tuple[int, ...] = ()
             if indent > 0 and any(d == 0 for d in indents[i + 1 :]):
                 through = (0,)
-            self._layout.addWidget(self._row_widget(node, indent, has_above, has_below, elbow, through))
+
+            gi = group_of_index.get(i)
+            if gi is not None and groups[gi][1][0] == i:
+                branch_id, idxs = groups[gi]
+                self._layout.addWidget(
+                    self._branch_header_widget(
+                        branch_id, idxs, gi, expanded_by_group[gi],
+                        has_above=has_above, through=through,
+                    )
+                )
+                # The header now owns the elbow into the branch; the first
+                # row just continues the branch's own dashed column.
+                elbow = False
+                has_above = True
+
+            row_widget = self._row_widget(node, indent, has_above, has_below, elbow, through)
+            if indent > 0:
+                gi = group_of_index[i]
+                self._branch_rows.setdefault(gi, []).append(row_widget)
+                row_widget.setVisible(expanded_by_group[gi])
+            self._layout.addWidget(row_widget)
+        self.updateGeometry()
+
+    def _branch_header_widget(
+        self,
+        branch: str,
+        idxs: list[int],
+        group_index: int,
+        expanded: bool,
+        *,
+        has_above: bool,
+        through: tuple[int, ...],
+    ) -> QWidget:
+        lead_node = self._rows[idxs[0]][0]
+        color = tree_node_color(_row_state(lead_node), lead_node.tier or "full")
+        row = QWidget()
+        row.setObjectName("skillTreeRow")
+        box = QHBoxLayout(row)
+        box.setContentsMargins(0, 0, 0, 0)
+        box.setSpacing(12)
+        box.addWidget(
+            _SpineCell(
+                indent=1,
+                color=color,
+                state=_row_state(lead_node),
+                has_above=has_above,
+                has_below=True,
+                elbow=True,
+                through=through,
+            )
+        )
+        label = BRANCH_LABELS.get(branch, branch)
+        button = QPushButton(f"{t(label)} · {t('{n} stages', n=len(idxs))}")
+        button.setObjectName("branchDisclosure")
+        button.setCheckable(True)
+        button.setChecked(expanded)
+        button.setCursor(Qt.CursorShape.PointingHandCursor)
+        button.setIconSize(QSize(14, 14))
+        _set_chevron_icon(button, 14, expanded)
+        button.toggled.connect(lambda checked, gi=group_index, btn=button: self._set_branch_expanded(gi, checked, btn))
+        box.addWidget(button, stretch=1)
+        return row
+
+    def _set_branch_expanded(self, group_index: int, expanded: bool, button: QPushButton) -> None:
+        _set_chevron_icon(button, 14, expanded)
+        for widget in self._branch_rows.get(group_index, []):
+            widget.setVisible(expanded)
         self.updateGeometry()
 
     def _row_widget(
@@ -783,7 +897,7 @@ class SkillTreeView(QWidget):
         elbow: bool,
         through: tuple[int, ...],
     ) -> QWidget:
-        state = node.state.value if isinstance(node.state, NodeState) else str(node.state)
+        state = _row_state(node)
         color = tree_node_color(state, node.tier or "full")
         clickable = state in ("completed", "current", "inferred")
         if clickable:

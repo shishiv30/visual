@@ -13,6 +13,7 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
     private let chromeScroll = UIScrollView()
     private let timeline = TimelineStripView()
     private let report = ReportPanelView()
+    private let reportScroll = UIScrollView()
     private let back = FloatingBackButton()
 
     private let btnPlay = PoseButtons.chrome(icon: "play")
@@ -71,6 +72,10 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
         timeline.onPlayhead = { [weak self] tMs in self?.seekPlayer(Int64(tMs), pause: false) }
         timeline.setTrimEnabled(false)
         report.onSeek = { [weak self] tMs in self?.seekPlayer(Int64(tMs), pause: true) }
+        report.onJumpToSkillTree = { [weak self] in
+            guard let self else { return }
+            self.report.scrollToSkillTreeChapter(in: self.reportScroll)
+        }
 
         let chrome = UIStackView(arrangedSubviews: [
             btnPlay, btnLocator, btnSpeed, btnLike, btnUnlike, btnSkeleton, btnDownload, btnShare,
@@ -109,7 +114,6 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
             chromeScroll.heightAnchor.constraint(equalToConstant: 60),
         ])
 
-        let reportScroll = UIScrollView()
         reportScroll.showsVerticalScrollIndicator = false
         reportScroll.addSubview(report)
         report.translatesAutoresizingMaskIntoConstraints = false

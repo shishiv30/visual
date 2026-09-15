@@ -382,6 +382,16 @@ def app_stylesheet() -> str:
     QPushButton#chapterDisclosure:disabled { color: #9e9e9e; background: transparent; }
     QWidget#skillTreeView { background: transparent; }
     QWidget#skillTreeRow { background: transparent; }
+    QPushButton#branchDisclosure {
+        min-height: 32px;
+        text-align: left;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: #9e9e9e;
+        font-weight: 600;
+    }
+    QPushButton#branchDisclosure:hover { color: #b0bec5; background: transparent; }
     QLabel#reportTreeName { color: #f5f5f5; font-weight: 600; }
     QLabel#reportTreeNameMuted { color: #9e9e9e; }
     QLabel#reportTreeMeta { color: #b0bec5; }

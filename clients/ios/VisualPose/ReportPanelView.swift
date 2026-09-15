@@ -2,8 +2,11 @@ import UIKit
 
 final class ReportPanelView: UIView {
     var onSeek: ((Int) -> Void)?
+    var onJumpToSkillTree: (() -> Void)?
 
     private let empty = UILabel()
+    private let heroCard = UIStackView()
+    private let heroSpacer = UIView()
     private let blocks = (0..<5).map { _ in UIStackView() }
     private let chapters = (0..<5).map { _ in UIStackView() }
     private let titles = (0..<5).map { _ in UILabel() }
@@ -25,6 +28,11 @@ final class ReportPanelView: UIView {
         empty.font = .systemFont(ofSize: 16)
         empty.numberOfLines = 0
         root.addArrangedSubview(empty)
+        heroCard.axis = .vertical
+        heroCard.isHidden = true
+        root.addArrangedSubview(heroCard)
+        heroSpacer.heightAnchor.constraint(equalToConstant: Theme.spaceChapter - Theme.spaceText).isActive = true
+        root.addArrangedSubview(heroSpacer)
         for i in 0..<5 {
             titles[i].textColor = Theme.title
             titles[i].font = .systemFont(ofSize: 32)
@@ -64,6 +72,12 @@ final class ReportPanelView: UIView {
         report = next
         let has = next != nil
         empty.isHidden = has
+        heroCard.isHidden = !has
+        heroSpacer.isHidden = !has
+        heroCard.arrangedSubviews.forEach {
+            heroCard.removeArrangedSubview($0)
+            $0.removeFromSuperview()
+        }
         for i in 0..<5 {
             blocks[i].isHidden = !has
             chapters[i].arrangedSubviews.forEach {
@@ -72,11 +86,44 @@ final class ReportPanelView: UIView {
             }
         }
         guard let next else { return }
+        fillHero(next)
         fillCh1(next)
         fillCh2(next)
         fillCh3(next)
         fillCh4(next)
         fillCh5(next)
+    }
+
+    /// Scrolls the given scroll view so the Skill tree chapter (chapter 4, "Next steps"
+    /// plan cards notwithstanding — the tree itself lives in chapter index 3) is visible.
+    func scrollToSkillTreeChapter(in scrollView: UIScrollView, animated: Bool = true) {
+        let frame = blocks[3].convert(blocks[3].bounds, to: scrollView)
+        scrollView.scrollRectToVisible(frame, animated: animated)
+    }
+
+    /// "Level & next step" hero card — first thing in the scrollable report, ahead of
+    /// Chapter 1 (Summary). Not sticky: it scrolls away with the rest of the content.
+    private func fillHero(_ report: StageReport) {
+        let inner = card()
+        inner.addArrangedSubview(iconRow([(ReportTheme.medalColor(stageId: report.stageId), "trophy")], report.stageName))
+        let pct = String(format: "%.0f", report.confidence * 100)
+        inner.addArrangedSubview(meta(I18n.t("Confidence {pct:.0f}%", vars: ["pct": pct])))
+        if let topName = report.nextLevelNames.first {
+            let link = UIButton(type: .system)
+            link.setTitle(I18n.t("Next up: {name}", vars: ["name": topName]), for: .normal)
+            link.setTitleColor(Theme.link, for: .normal)
+            link.titleLabel?.font = .systemFont(ofSize: 15)
+            link.titleLabel?.numberOfLines = 0
+            link.contentHorizontalAlignment = .left
+            link.addAction(UIAction { [weak self] _ in self?.onJumpToSkillTree?() }, for: .touchUpInside)
+            inner.addArrangedSubview(link)
+        } else {
+            let fallback = report.readyForNextStage
+                ? I18n.t("Passed this level. Choose a next level on the skill tree.")
+                : I18n.t("Not passed — train the lowest-scoring checkpoint.")
+            inner.addArrangedSubview(meta(fallback))
+        }
+        heroCard.addArrangedSubview(wrapCard(inner))
     }
 
     private func fillCh1(_ report: StageReport) {
@@ -168,8 +215,19 @@ final class ReportPanelView: UIView {
             let ready = card()
             ready.addArrangedSubview(advice(I18n.t("Passed this level. Choose a next level on the skill tree.")))
             chapters[2].addArrangedSubview(wrapCard(ready))
-            for plan in report.nextPlans {
-                chapters[2].addArrangedSubview(wrapCard(planCard(plan)))
+            let topId = report.nextLevelIds.first ?? ""
+            let topName = report.nextLevelNames.first ?? ""
+            func isRecommended(_ plan: LevelPlan) -> Bool {
+                if !topId.isEmpty { return plan.levelId == topId }
+                if !topName.isEmpty { return plan.levelName == topName }
+                return false
+            }
+            // Recommended plan first; each element's flag is computed once
+            // (a partition, not a pairwise comparator) to match the
+            // key-based sort used on the other two platforms.
+            let sortedPlans = report.nextPlans.filter(isRecommended) + report.nextPlans.filter { !isRecommended($0) }
+            for plan in sortedPlans {
+                chapters[2].addArrangedSubview(wrapCard(planCard(plan, recommended: isRecommended(plan)), accent: isRecommended(plan)))
             }
             return
         }
@@ -204,7 +262,25 @@ final class ReportPanelView: UIView {
         tree.setRoute(report.treePath)
         inner.addArrangedSubview(tree)
         if report.readyForNextStage, !report.nextLevelNames.isEmpty {
-            inner.addArrangedSubview(meta("\(I18n.t("Next stage")): \(report.nextLevelNames.joined(separator: " · "))"))
+            let perRow = 2
+            let names = report.nextLevelNames
+            for start in stride(from: 0, to: names.count, by: perRow) {
+                let row = UIStackView()
+                row.axis = .horizontal
+                row.alignment = .leading
+                row.spacing = 8
+                for i in start..<min(start + perRow, names.count) {
+                    let recommended = i == 0
+                    let text = recommended
+                        ? I18n.t("Recommended next: {name}", vars: ["name": names[i]])
+                        : names[i]
+                    row.addArrangedSubview(chip(text, accent: recommended))
+                }
+                let spacer = UIView()
+                spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
+                row.addArrangedSubview(spacer)
+                inner.addArrangedSubview(row)
+            }
         }
         chapters[3].addArrangedSubview(wrapCard(inner))
     }
@@ -222,8 +298,11 @@ final class ReportPanelView: UIView {
         chapters[4].addArrangedSubview(wrapCard(inner))
     }
 
-    private func planCard(_ plan: LevelPlan) -> UIStackView {
+    private func planCard(_ plan: LevelPlan, recommended: Bool) -> UIStackView {
         let inner = card()
+        if recommended {
+            inner.addArrangedSubview(chip(I18n.t("Recommended next"), accent: true))
+        }
         if !plan.levelName.isEmpty {
             inner.addArrangedSubview(iconRow([(ReportTheme.medalColor(stageId: plan.levelId), "trophy")], plan.levelName))
         }
@@ -292,12 +371,16 @@ final class ReportPanelView: UIView {
         return stack
     }
 
-    private func wrapCard(_ inner: UIView) -> UIStackView {
+    private func wrapCard(_ inner: UIView, accent: Bool = false) -> UIStackView {
         let shell = UIStackView()
         shell.axis = .vertical
         shell.alignment = .fill
-        shell.backgroundColor = Theme.card
+        shell.backgroundColor = accent ? Theme.deepPurple.withAlphaComponent(0.35) : Theme.card
         shell.layer.cornerRadius = Theme.cardRadius
+        if accent {
+            shell.layer.borderWidth = 1
+            shell.layer.borderColor = Theme.currentTree.cgColor
+        }
         shell.clipsToBounds = true
         shell.addArrangedSubview(inner)
         let spacer = UIView()
@@ -305,6 +388,26 @@ final class ReportPanelView: UIView {
         spacer.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         shell.addArrangedSubview(spacer)
         return shell
+    }
+
+    /// A small pill-shaped label used for next-step chips (gate/accent style for the
+    /// top-priority "Recommended next" entry, neutral for the rest).
+    private func chip(_ text: String, accent: Bool) -> UIView {
+        let wrap = UIStackView()
+        wrap.axis = .vertical
+        wrap.isLayoutMarginsRelativeArrangement = true
+        wrap.layoutMargins = UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10)
+        wrap.backgroundColor = accent ? Theme.currentTree : Theme.ringTrack
+        wrap.layer.cornerRadius = 14
+        wrap.clipsToBounds = true
+        wrap.setContentHuggingPriority(.required, for: .horizontal)
+        let label = UILabel()
+        label.text = text
+        label.textColor = accent ? Theme.deepPurple : Theme.paper
+        label.font = accent ? .boldSystemFont(ofSize: 13) : .systemFont(ofSize: 13)
+        label.numberOfLines = 0
+        wrap.addArrangedSubview(label)
+        return wrap
     }
 
     private func equalHeightRow() -> UIStackView {

@@ -45,4 +45,48 @@ enum SkillTreeLayout {
     static func textX(_ density: Float) -> Float {
         (lineXDp + dotRadiusDp + textGapDp) * density
     }
+
+    /// Contiguous runs of same-branch, non-piste rows (readability follow-up: the skill
+    /// tree collapses side branches off the piste spine — app-spec §5 Ch 6). Mirrors
+    /// desktop's `SkillTreeView._branch_groups` in clients/windows/ui/report_layout.py.
+    /// The piste spine is never grouped — `order_tree_rows` never nests a branch inside
+    /// another branch on desktop, and iOS's `treePath` likewise only ever attaches side
+    /// branches one level off the spine, so a group's rows are always contiguous.
+    static func branchGroups(_ nodes: [TreeNode]) -> [(branch: String, indices: [Int])] {
+        var groups: [(String, [Int])] = []
+        var branch: String?
+        var indices: [Int] = []
+        func flush() {
+            if !indices.isEmpty { groups.append((branch ?? "piste", indices)) }
+        }
+        for (i, node) in nodes.enumerated() {
+            let b = node.branch.isEmpty ? "piste" : node.branch
+            if b == "piste" {
+                flush()
+                indices = []
+                branch = nil
+                continue
+            }
+            if b != branch {
+                flush()
+                branch = b
+                indices = []
+            }
+            indices.append(i)
+        }
+        flush()
+        return groups
+    }
+
+    /// English display key for a branch id — pass through `I18n.t` for the localized label.
+    static func branchLabelKey(_ branch: String) -> String {
+        switch branch {
+        case "piste": return "Piste"
+        case "moguls": return "Moguls"
+        case "offpiste": return "Off-piste"
+        case "park": return "Park"
+        case "race": return "Race"
+        default: return branch
+        }
+    }
 }

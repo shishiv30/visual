@@ -394,12 +394,12 @@ housekeeping. This ordering is the user requirement: measurement first, curricul
 
 | # | Chapter | Source | Notes |
 |---|---|---|---|
-| 1 | Summary | report | Stage, score ring, confidence, four posture rings, terrain badge |
+| 1 | Summary | report | Stage, score ring, confidence, four posture rings, terrain badge — stage name also anchored by a "Level & next step" header card, first in the scrollable report ahead of this chapter (added on top of v3, readability follow-up) |
 | 2 | Why this stage | classifier | Top-2 candidates, the separating metric, view/scene/quality badges |
 | 3 | Core metrics | metrics | Per-stage ordered metrics: value, unit, score ring, rubric, reliability, evidence link |
 | 4 | Turn-by-turn | segmentation | Turn count, L/R symmetry, per-turn strip chart, faulty-turn callouts |
 | 5 | Checkpoints | curriculum | Gate list with the *N of M* phrasing and the pass standard |
-| 6 | Skill tree | curriculum | Completed / current / next, with locked reasons (§8) |
+| 6 | Skill tree | curriculum | Completed / current / next, with locked reasons (§8); the top-priority next level (`next_level_names[0]`) is marked "Recommended next" and its plan card sorts first, but every next level and plan card stays visible |
 | 7 | Stage tutorial | knowledge base | Goal, why it matters, key skills with cues and misconceptions |
 | 8 | Drills | knowledge base | Name, purpose, steps, dose, success indicator; the ones targeting the weakest metric first |
 | 9 | Faults and fixes | knowledge base | Matched to the skier's own failing metrics, not the generic list |
@@ -452,6 +452,19 @@ requirement that the skill tree cover completed, current and future stages.
 
 History source: `clients/windows/store/library.py` gains `list_reports_for_athlete(athlete_key)`;
 the store already snapshots `athlete_key` onto `ClipMeta` (`library.py:51-52`).
+
+**Readability follow-up (post-v3):** `next_level_names` used to render as a single joined
+`"Next stage: A · B"` label with no way to tell which stage to prioritize. It now renders as
+individual chips, with `next_level_names[0]` styled distinctly ("Recommended next", accent color)
+and its matching `next_plans` entry sorted to the top — this is presentation-only, no `TreeNode`
+schema change. See `docs/app-spec.md` §4/§5 for the current, canonical description.
+
+The tree itself was, per §8, rendering the **whole** progression including every branch, which on
+a curriculum with several side branches made the current stage hard to find. Side branches
+(`branch != "piste"`) are now collapsible, defaulting to collapsed except the one branch that
+contains the `current` node — a disclosure row ("{Branch} · N stages") replaces the branch's rows
+when collapsed. The piste spine is always fully shown; this only affects side branches, and is
+presentation-only (no `TreeNodeV3` schema change, no change to `order_tree_rows`'s row ordering).
 
 ---
 

@@ -344,8 +344,14 @@ timestamp            string ISO 8601
 - Line chart of score_series (frame-by-frame score, 0–100)
 - Tappable to seek
 
-**Report panel (scrollable, below timeline):**
-- 12-chapter report — see §5
+**Level & next step header (first card in the scrollable report, ahead of Ch 1):**
+- Own card, first thing in the scroll — anchors "what level am I at" and "what's next" so it's the first thing read, ahead of the rest of the report's detail
+- Stage name/icon (mirrors Ch 1's stage row) + confidence chip
+- Single top-priority next step: the first entry of `next_level_names`, or `how_to_advance` text when no next level is applicable — tapping/clicking scrolls to Chapter 6 (Skill tree)
+- Hidden when no report is loaded, same as the chapters
+
+**Report panel (scrollable):**
+- Header card above, then the 12-chapter report — see §5
 
 **Correction dialog:**
 - "Correct result" button in Ch 1 → shows correction dialog
@@ -360,12 +366,12 @@ All chapter titles and UI strings come from `locales/strings.json` via `I18n.t()
 
 | # | ID | Title (i18n key) | Default | Content |
 |---|---|---|---|---|
-| 1 | summary | "Summary" | Expanded | Stage name + trophy icon; terrain + suggested trail rating; pass/fail gate message; score ring (0–100, heuristic); confidence ring; 4 posture rings (stability / coordination / control / balance); ScoreTimelineView; "Correct result" button |
+| 1 | summary | "Summary" | Expanded | Stage name + trophy icon (also anchored by the header card above the report, see §4); terrain + suggested trail rating; pass/fail gate message; score ring (0–100, heuristic); confidence ring; 4 posture rings (stability / coordination / control / balance); ScoreTimelineView; "Correct result" button |
 | 2 | why_stage | "Why this stage" | Expanded | Classification candidates (top 2): fit %, gate %, prior %, score %; quality chips (view angle / camera motion / snow / slope / terrain / fps); scene missing facts |
 | 3 | core_metrics | "Core metrics" | Expanded | Legend: "Gate metrics decide advancement; diagnostic metrics explain the skiing." Per metric card: name, Gate/Diagnostic label, rubric chip (Pass/Not yet/Strong/Not rated), score ring, left/right values, faulty-turn count, evidence-time seek link |
 | 4 | turns | "Turn-by-turn" | Expanded | Turn count (left / right); mean duration; rhythm CV; TurnStripView; per-turn detail rows with seek links |
 | 5 | checkpoints | "Checkpoints" | Expanded | Weakest checkpoint card (if not passed); per-checkpoint: score ring, Pass/Not yet chip, good/bad coaching text, faulty-turn count, evidence-time seek link, drill lines |
-| 6 | skill_tree | "Skill tree" | Expanded | Vertical tree (white dashed connector); node states: completed = filled purple, current = light purple, inferred = medium purple, available = grey, locked = dark grey; next stage names; LevelPlan cards with drills/venues |
+| 6 | skill_tree | "Skill tree" | Expanded | Vertical tree (white dashed connector); node states: completed = filled purple, current = light purple, inferred = medium purple, available = grey, locked = dark grey; next stage names shown as individual chips, with the top-priority one (`next_level_names[0]`) marked "Recommended next" in accent color; full LevelPlan cards with drills/venues for every next stage, with the plan matching the recommended stage shown first and visually distinguished — all next stages/plans remain visible, only the ordering/emphasis changes. Side branches (moguls/off-piste/park/race off the piste spine) are collapsible: only the branch containing the current stage is expanded by default, every other branch starts collapsed behind a "{Branch} · N stages" disclosure row, tap to expand/collapse — the piste spine itself is never collapsed |
 | 7 | tutorial | "Stage tutorial" | **Collapsed** | From kb.v1.json: goal, why it matters, skills with name/description/cues/misconceptions (ordered by knowledge_focus.skill_ids if set) |
 | 8 | drills | "Drills" | **Collapsed** | From kb.v1.json ordered by knowledge_focus.drill_ids: name, purpose, setup, steps, dose (max 8 drills) |
 | 9 | faults | "Faults and fixes" | **Collapsed** | From kb.v1.json ordered by knowledge_focus.fault_ids: name, looks like, symptom, injury risk, fix cues (max 8 faults) |

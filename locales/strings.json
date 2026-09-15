@@ -801,6 +801,16 @@
       "ko": "신뢰도",
       "pt": "Confiança"
     },
+    "Confidence {pct:.0f}%": {
+      "zh": "置信度 {pct:.0f}%",
+      "fr": "Confiance {pct:.0f}%",
+      "de": "Konfidenz {pct:.0f}%",
+      "es": "Confianza {pct:.0f}%",
+      "it": "Confidenza {pct:.0f}%",
+      "ja": "信頼度 {pct:.0f}%",
+      "ko": "신뢰도 {pct:.0f}%",
+      "pt": "Confiança {pct:.0f}%"
+    },
     "Confidence {pct:.0f}% · separation {sep:.2f}": {
       "zh": "置信度 {pct:.0f}% · 区分度 {sep:.2f}",
       "fr": "Confiance {pct:.0f}% · séparation {sep:.2f}",
@@ -2861,6 +2871,16 @@
       "ko": "다음 단계",
       "pt": "Próximos passos"
     },
+    "Next up: {name}": {
+      "zh": "接下来：{name}",
+      "fr": "Prochaine étape : {name}",
+      "de": "Als Nächstes: {name}",
+      "es": "Siguiente: {name}",
+      "it": "Prossimo: {name}",
+      "ja": "次は：{name}",
+      "ko": "다음: {name}",
+      "pt": "A seguir: {name}"
+    },
     "No box": {
       "zh": "未框选",
       "fr": "Pas de cadre",
@@ -3840,6 +3860,26 @@
       "ja": "理由",
       "ko": "이유",
       "pt": "Motivo"
+    },
+    "Recommended next": {
+      "zh": "推荐下一步",
+      "fr": "Recommandé ensuite",
+      "de": "Empfohlen als Nächstes",
+      "es": "Recomendado a continuación",
+      "it": "Consigliato successivo",
+      "ja": "おすすめの次のステップ",
+      "ko": "추천 다음 단계",
+      "pt": "Recomendado a seguir"
+    },
+    "Recommended next: {name}": {
+      "zh": "推荐下一步：{name}",
+      "fr": "Recommandé ensuite : {name}",
+      "de": "Empfohlen als Nächstes: {name}",
+      "es": "Recomendado a continuación: {name}",
+      "it": "Consigliato successivo: {name}",
+      "ja": "おすすめの次のステップ：{name}",
+      "ko": "추천 다음 단계: {name}",
+      "pt": "Recomendado a seguir: {name}"
     },
     "Record": {
       "zh": "录制",
@@ -6500,6 +6540,16 @@
       "ja": "{n}セット",
       "ko": "{n}세트",
       "pt": "{n} séries"
+    },
+    "{n} stages": {
+      "zh": "{n} 个阶段",
+      "fr": "{n} niveaux",
+      "de": "{n} Stufen",
+      "es": "{n} niveles",
+      "it": "{n} livelli",
+      "ja": "{n}段階",
+      "ko": "{n}단계",
+      "pt": "{n} níveis"
     },
     "{n} turns": {
       "zh": "{n} 个弯",

@@ -48,6 +48,7 @@ from clients.windows.ui.report_layout import (
     ReportCard,
     ReportChapter,
     ReportGrid,
+    ReportLink,
     SkillTreeRoute,
     SkillTreeView,
     add_chip_rows,
@@ -355,6 +356,13 @@ class StageReportPanel(QWidget):
         self._empty.setObjectName("reportEmpty")
         self._empty.setWordWrap(True)
 
+        # "Level & next step" header (design doc §4/§5, readability
+        # follow-up): the current stage and the single top-priority next step
+        # get their own card at the top of the scrolling report, ahead of
+        # chapter 1, so they read at a glance before the rest of the detail.
+        self._hero = ReportCard()
+        self._hero.setObjectName("reportGateCard")
+
         self._gauge = ScorePieChart()
         self._timeline = ScoreTimelineChart()
         self._timeline.seekRequested.connect(self.seekRequested.emit)
@@ -366,6 +374,7 @@ class StageReportPanel(QWidget):
         body.setContentsMargins(8, 8, 8, 8)
         body.setSpacing(SPACE_CHAPTER)
         body.addWidget(self._empty)
+        body.addWidget(self._hero)
         self._chapters: dict[str, ReportChapter] = {}
         for chapter_id, _title_key, _fill, collapsible in CHAPTERS:
             box = ReportChapter(collapsible=collapsible)
@@ -429,6 +438,7 @@ class StageReportPanel(QWidget):
         self._report = report
         has = report is not None
         self._empty.setVisible(not has)
+        self._update_hero(report)
         for chapter_id, _title, _fill, _collapsible in CHAPTERS:
             self._chapters[chapter_id].grid().clear()
         if report is None:
@@ -444,6 +454,53 @@ class StageReportPanel(QWidget):
             filled = bool(getattr(self, fill_name)(report))
             box.grid().finish()
             box.setVisible(filled)
+
+    # --- persistent header ------------------------------------------------
+
+    def _update_hero(self, report: StageReport | None) -> None:
+        """Rebuild the "Level & next step" header card, first in the scroll.
+
+        Kept separate from chapter 1 so the current level and the single
+        top-priority next step are the very first thing read, ahead of the
+        rest of the report — see design doc §4/§5.
+        """
+        body = self._hero.body()
+        while body.count():
+            item = body.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.setParent(None)
+                widget.deleteLater()
+        if report is None:
+            self._hero.setVisible(False)
+            return
+        self._hero.setVisible(True)
+        body.addWidget(
+            IconTextRow(
+                [("trophy", level_medal_color(report.stage_id))],
+                report.stage_name,
+                object_name="reportAdvice",
+            )
+        )
+        conf_label = QLabel(t("Confidence {pct:.0f}%", pct=report.confidence * 100.0))
+        conf_label.setObjectName("reportMeta")
+        body.addWidget(conf_label)
+
+        next_name = report.next_level_names[0] if report.next_level_names else ""
+        if next_name:
+            cta = ReportLink(t("Next up: {name}", name=next_name))
+            cta.clicked.connect(self._jump_to_skill_tree)
+            body.addWidget(cta)
+        elif report.how_to_advance:
+            advance = QLabel(report.how_to_advance)
+            advance.setObjectName("reportAdvice")
+            advance.setWordWrap(True)
+            body.addWidget(advance)
+
+    def _jump_to_skill_tree(self) -> None:
+        box = self._chapters.get("skill_tree")
+        if box is not None and box.isVisible():
+            self._scroll.ensureWidgetVisible(box)
 
     # --- knowledge pack -------------------------------------------------
 
@@ -1016,15 +1073,29 @@ class StageReportPanel(QWidget):
             card.body().addWidget(route)
 
         if report.next_level_names:
-            extra = QLabel(
-                t("Next stage: {names}", names=" · ".join(report.next_level_names))
-            )
-            extra.setObjectName("reportMeta")
-            extra.setWordWrap(True)
-            card.body().addWidget(extra)
+            # The first name is the top-priority next step (design doc §7/§8):
+            # give it its own accent chip instead of burying it in a joined
+            # "A · B" sentence, so the reader can tell which one to train next.
+            chips: list[tuple[str, str]] = [
+                (t("Recommended next: {name}", name=report.next_level_names[0]), "gate")
+            ]
+            chips.extend((name, "info") for name in report.next_level_names[1:])
+            add_chip_rows(card.body(), chips, per_row=2)
         grid.add(card, per_row=1)
-        for plan in report.next_plans:
-            grid.add(self._plan_card(plan), per_row=1)
+
+        top_level_id = report.next_level_ids[0] if report.next_level_ids else None
+        top_level_name = report.next_level_names[0] if report.next_level_names else None
+
+        def _is_recommended(plan: dict) -> bool:
+            if top_level_id and str(plan.get("level_id") or "") == top_level_id:
+                return True
+            return bool(top_level_name) and str(plan.get("level_name") or "") == top_level_name
+
+        # Keep every plan (design decision: don't cut choices), just sort the
+        # one matching the recommended level to the front and mark it.
+        plans = sorted(report.next_plans, key=lambda plan: 0 if _is_recommended(plan) else 1)
+        for plan in plans:
+            grid.add(self._plan_card(plan, recommended=_is_recommended(plan)), per_row=1)
         return True
 
     # --- chapter 7: stage tutorial --------------------------------------
@@ -1308,8 +1379,12 @@ class StageReportPanel(QWidget):
         else:
             link.setToolTip(t("Open the report on the player page to jump to this frame."))
 
-    def _plan_card(self, plan: dict) -> ReportCard:
+    def _plan_card(self, plan: dict, *, recommended: bool = False) -> ReportCard:
         card = ReportCard()
+        if recommended:
+            # Same accent border as the gate-metric cards: one consistent
+            # "this is the important one" visual language across the report.
+            card.setObjectName("reportGateCard")
         level_id = str(plan.get("level_id") or "")
         # ``next_plans`` is an untyped list[dict]: a null value would otherwise
         # render as the literal string "None".
@@ -1322,6 +1397,8 @@ class StageReportPanel(QWidget):
                     object_name="reportAdvice",
                 )
             )
+        if recommended:
+            add_chip_rows(card.body(), [(t("Recommended next"), "gate")], per_row=1)
         lines = self._drill_lines(plan.get("drills") or [])
         for venue in plan.get("venues") or []:
             lines.append(f"{t('Training venue')}: {venue.get('name', '')}")

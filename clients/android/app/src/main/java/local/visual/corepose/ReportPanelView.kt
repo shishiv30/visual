@@ -1,13 +1,16 @@
 package local.visual.corepose
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
+import kotlin.math.max
 
 class ReportPanelView @JvmOverloads constructor(
     context: Context,
@@ -35,6 +38,18 @@ class ReportPanelView @JvmOverloads constructor(
     )
 
     private val empty = TextView(context)
+
+    // "Level & next step" header (app-spec.md §4/§5, readability follow-up):
+    // the current stage and single top-priority next step get their own
+    // card, first in the scrollable report ahead of chapter 1 — it is NOT
+    // sticky, it scrolls away with the rest of the content.
+    private val heroContent = LinearLayout(context).apply {
+        orientation = VERTICAL
+        val pad = dp(ReportTheme.PAGE_INSET)
+        setPadding(pad, pad, pad, pad)
+    }
+    private lateinit var heroShell: LinearLayout
+
     private val chapters = Array(chapterSpecs.size) { LinearLayout(context) }
     private val titles = Array(chapterSpecs.size) { TextView(context) }
     private val blocks = Array(chapterSpecs.size) { LinearLayout(context) }
@@ -48,6 +63,11 @@ class ReportPanelView @JvmOverloads constructor(
         empty.setTextColor(ReportTheme.TITLE)
         empty.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
         addView(empty, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
+        heroShell = wrapCard(heroContent, accent = true)
+        addView(
+            heroShell,
+            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply { topMargin = 0 },
+        )
         for (i in chapterSpecs.indices) {
             titles[i].setTextColor(ReportTheme.TITLE)
             titles[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 32f)
@@ -65,7 +85,9 @@ class ReportPanelView @JvmOverloads constructor(
             addView(
                 blocks[i],
                 LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
-                    topMargin = if (i == 0) 0 else dp(ReportTheme.SPACE_CHAPTER)
+                    // The hero header now sits above chapter 0, so every
+                    // chapter block (0 included) gets the usual gap above it.
+                    topMargin = dp(ReportTheme.SPACE_CHAPTER)
                 },
             )
         }
@@ -95,6 +117,7 @@ class ReportPanelView @JvmOverloads constructor(
         report = next
         val has = next != null
         empty.visibility = if (has) GONE else VISIBLE
+        updateHero(next)
         for (i in chapterSpecs.indices) {
             blocks[i].visibility = GONE
             chapters[i].removeAllViews()
@@ -212,6 +235,45 @@ class ReportPanelView @JvmOverloads constructor(
         correctCard.addView(correct)
         chapters[0].addView(wrapCard(correctCard), panelParams())
         finishChapter(0)
+    }
+
+    /**
+     * Rebuild the "Level & next step" header, first in the scroll ahead of
+     * chapter 1 (app-spec.md §4). Hidden when there's no report loaded.
+     */
+    private fun updateHero(report: StageReport?) {
+        heroContent.removeAllViews()
+        if (report == null) {
+            heroShell.visibility = GONE
+            return
+        }
+        heroShell.visibility = VISIBLE
+        heroContent.addView(
+            iconRow(listOf(ReportTheme.medalColor(report.stageId) to "trophy"), report.stageName),
+        )
+        heroContent.addView(
+            meta(I18n.t("Confidence {pct:.0f}%", mapOf("pct" to String.format("%.0f", report.confidence * 100.0)))),
+        )
+        val nextName = report.nextLevelNames.firstOrNull()
+        if (!nextName.isNullOrBlank()) {
+            heroContent.addView(linkText(I18n.t("Next up: {name}", mapOf("name" to nextName))) { scrollToSkillTree() })
+        } else if (report.howToAdvance.isNotBlank()) {
+            heroContent.addView(advice(report.howToAdvance))
+        }
+        applyVerticalGaps(heroContent, dp(ReportTheme.SPACE_TEXT))
+    }
+
+    private fun scrollToSkillTree() {
+        val treeIndex = 5 // "Skill tree" chapter, see chapterSpecs above
+        val block = blocks[treeIndex]
+        if (block.visibility != VISIBLE) {
+            return
+        }
+        var p = parent
+        while (p != null && p !is ScrollView) {
+            p = p.parent
+        }
+        (p as? ScrollView)?.let { scroll -> scroll.post { scroll.smoothScrollTo(0, block.top) } }
     }
 
     private fun fillWhy(report: StageReport) {
@@ -510,7 +572,15 @@ class ReportPanelView @JvmOverloads constructor(
             tree.setTree(report.tree)
             card.addView(tree, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
             if (report.nextLevelNames.isNotEmpty()) {
-                card.addView(meta("${I18n.t("Next stage")}: ${report.nextLevelNames.joinToString(" · ")}"))
+                // Readability follow-up (app-spec.md §5): individual chips
+                // instead of a single joined "Next stage: A · B" label, with
+                // the top-priority one visually marked "Recommended next".
+                val chips = ArrayList<Pair<String, Boolean>>()
+                chips.add(I18n.t("Recommended next: {name}", mapOf("name" to report.nextLevelNames[0])) to true)
+                for (name in report.nextLevelNames.drop(1)) {
+                    chips.add(name to false)
+                }
+                chipRows(card, chips, perRow = 2)
             }
             chapters[5].addView(wrapCard(card), panelParams())
         } else if (report.treePath.isNotEmpty()) {
@@ -520,8 +590,18 @@ class ReportPanelView @JvmOverloads constructor(
             card.addView(tree, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
             chapters[5].addView(wrapCard(card), panelParams())
         }
-        for (plan in report.nextPlans) {
-            chapters[5].addView(wrapCard(planCard(plan)), panelParams())
+        val topLevelId = report.nextLevelIds.firstOrNull()
+        val topLevelName = report.nextLevelNames.firstOrNull()
+        fun isRecommended(plan: LevelPlan): Boolean {
+            if (!topLevelId.isNullOrBlank() && plan.levelId == topLevelId) return true
+            return !topLevelName.isNullOrBlank() && plan.levelName == topLevelName
+        }
+        // Keep every plan (design decision: don't cut choices), just sort the
+        // one matching the recommended level to the front and mark it.
+        val plans = report.nextPlans.sortedBy { if (isRecommended(it)) 0 else 1 }
+        for (plan in plans) {
+            val recommended = isRecommended(plan)
+            chapters[5].addView(wrapCard(planCard(plan, recommended), accent = recommended), panelParams())
         }
         finishChapter(5)
     }
@@ -735,10 +815,13 @@ class ReportPanelView @JvmOverloads constructor(
 
     private fun Double.format1(): String = String.format("%.1f", this)
 
-    private fun planCard(plan: LevelPlan): LinearLayout {
+    private fun planCard(plan: LevelPlan, recommended: Boolean = false): LinearLayout {
         val card = card()
         if (plan.levelName.isNotBlank()) {
             card.addView(iconRow(listOf(ReportTheme.medalColor(plan.levelId) to "trophy"), plan.levelName))
+        }
+        if (recommended) {
+            chipRows(card, listOf(I18n.t("Recommended next") to true), perRow = 1)
         }
         addLines(card, drillLines(plan.drills, plan.venues), paper = true)
         return card
@@ -831,7 +914,7 @@ class ReportPanelView @JvmOverloads constructor(
         }
     }
 
-    private fun wrapCard(inner: View): LinearLayout {
+    private fun wrapCard(inner: View, accent: Boolean = false): LinearLayout {
         if (inner is LinearLayout) {
             applyVerticalGaps(inner, dp(ReportTheme.SPACE_TEXT))
         }
@@ -841,12 +924,60 @@ class ReportPanelView @JvmOverloads constructor(
         shell.background = GradientDrawable().apply {
             setColor(ReportTheme.CARD)
             cornerRadius = dp(10).toFloat()
+            // Same accent border as the gate-metric look: one consistent
+            // "this is the important one" visual language across the report.
+            if (accent) setStroke(dp(1), ReportTheme.DEEP_PURPLE)
         }
         shell.addView(inner, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT))
         val spacer = View(context)
         spacer.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         shell.addView(spacer, LayoutParams(LayoutParams.MATCH_PARENT, 0, 1f))
         return shell
+    }
+
+    /** Pill-shaped chip, accent = the gate/"recommended" look. */
+    private fun chip(text: String, accent: Boolean): TextView {
+        return TextView(context).apply {
+            this.text = text
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f)
+            val padH = dp(10)
+            val padV = dp(4)
+            setPadding(padH, padV, padH, padV)
+            setTextColor(if (accent) ReportTheme.LIGHT_PURPLE else ReportTheme.TITLE)
+            background = GradientDrawable().apply {
+                cornerRadius = dp(10).toFloat()
+                setStroke(dp(1), if (accent) ReportTheme.DEEP_PURPLE else 0xFF3D3D3D.toInt())
+                setColor(if (accent) 0xFF221A35.toInt() else Color.TRANSPARENT)
+            }
+        }
+    }
+
+    /** Chips wrapped into fixed-width rows; Android has no stock flow layout. */
+    private fun chipRows(parent: LinearLayout, chips: List<Pair<String, Boolean>>, perRow: Int = 2) {
+        val n = max(1, perRow)
+        var row: LinearLayout? = null
+        chips.forEachIndexed { i, (text, accent) ->
+            if (i % n == 0) {
+                row = LinearLayout(context).apply { orientation = HORIZONTAL }
+                parent.addView(
+                    row,
+                    panelParams().apply { topMargin = if (i == 0) 0 else dp(ReportTheme.SPACE_TEXT) },
+                )
+            }
+            row?.addView(
+                chip(text, accent),
+                LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT).apply { marginEnd = dp(8) },
+            )
+        }
+    }
+
+    private fun linkText(label: String, onClick: () -> Unit): TextView {
+        return TextView(context).apply {
+            text = label
+            setTextColor(ReportTheme.LINK)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+            setOnClickListener { onClick() }
+        }
     }
 
     private fun equalHeightRow(): LinearLayout {

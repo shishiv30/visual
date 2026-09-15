@@ -47,6 +47,9 @@ struct TreeNode {
     var id: String
     var name: String
     var current: Bool = false
+    /// "piste" for the main progression spine (never collapsed), or a side-branch id
+    /// ("moguls" / "offpiste" / "park" / "race") — readability follow-up, app-spec §5 Ch 6.
+    var branch: String = "piste"
 }
 
 struct FrameScorePoint {
@@ -122,7 +125,7 @@ enum StageReportJson {
             "film_steps": report.filmSteps,
             "keypoints": report.keypoints.map { keypointJson($0) },
             "score_series": report.scoreSeries.map { ["t_ms": $0.tMs, "score": $0.score] },
-            "tree_path": report.treePath.map { ["id": $0.id, "name": $0.name, "current": $0.current] },
+            "tree_path": report.treePath.map { ["id": $0.id, "name": $0.name, "current": $0.current, "branch": $0.branch] },
             "next_plans": report.nextPlans.map { planJson($0) },
             "session_plan": report.sessionPlan.map { drillJson($0) },
         ]
@@ -156,7 +159,8 @@ enum StageReportJson {
             return TreeNode(
                 id: Json.optString(node, "id"),
                 name: Json.optString(node, "name"),
-                current: Json.optBool(node, "current")
+                current: Json.optBool(node, "current"),
+                branch: Json.optString(node, "branch", "piste")
             )
         }
         let postureObj = Json.optObject(obj, "posture")

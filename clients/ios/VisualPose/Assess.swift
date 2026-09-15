@@ -242,41 +242,52 @@ enum Assess {
         )
     }
 
+    /// Restricts `items` (tMs, score, reliable) to the reliable subset when
+    /// that subset is non-empty, falling back to every sample otherwise --
+    /// mirrors core.sports.metrics._evidence_extreme's `reliable` gating: a
+    /// clip never loses evidence entirely, it just prefers a trustworthy
+    /// frame when one exists. See `SportsSignals.evidenceCoreConfMin`.
+    private static func reliablePool(_ items: [(Double, Double, Bool)]) -> [(Double, Double)] {
+        let strict = items.filter { $0.2 }
+        return (strict.isEmpty ? items : strict).map { ($0.0, $0.1) }
+    }
+
     private static func evidenceMs(_ spec: CheckpointSpec, _ pack: FeaturePack, passing: Bool) -> Double? {
         if pack.series.isEmpty { return nil }
-        var instant: [(Double, Double)] = []
+        var instant: [(Double, Double, Bool)] = []
         for sample in pack.series {
             guard let value = SportsSignals.sampleSignal(sample, name: spec.signal) else { continue }
-            instant.append((sample.tMs, continuousScore(value, spec.threshold)))
+            instant.append((sample.tMs, continuousScore(value, spec.threshold), sample.reliable))
         }
         if !instant.isEmpty {
+            let pool = reliablePool(instant)
             return passing
-                ? instant.max(by: { $0.1 < $1.1 })?.0
-                : instant.min(by: { $0.1 < $1.1 })?.0
+                ? pool.max(by: { $0.1 < $1.1 })?.0
+                : pool.min(by: { $0.1 < $1.1 })?.0
         }
         if spec.signal == "turn_freq" || spec.signal == "fall_line" {
-            let scored = pack.series.compactMap { s -> (Double, Double)? in
+            let scored = pack.series.compactMap { s -> (Double, Double, Bool)? in
                 guard let hx = s.hipX else { return nil }
-                return (s.tMs, abs(hx - pack.hipXMean))
+                return (s.tMs, abs(hx - pack.hipXMean), s.reliable)
             }
             if scored.isEmpty { return pack.series.first?.tMs }
-            return scored.max(by: { $0.1 < $1.1 })?.0
+            return reliablePool(scored).max(by: { $0.1 < $1.1 })?.0
         }
         if spec.signal == "knee_flex_freq" || spec.signal == "knee_flex_amp" {
-            let scored = pack.series.compactMap { s -> (Double, Double)? in
+            let scored = pack.series.compactMap { s -> (Double, Double, Bool)? in
                 guard let flex = s.kneeFlex else { return nil }
-                return (s.tMs, flex)
+                return (s.tMs, flex, s.reliable)
             }
             if scored.isEmpty { return pack.series.first?.tMs }
-            return scored.max(by: { $0.1 < $1.1 })?.0
+            return reliablePool(scored).max(by: { $0.1 < $1.1 })?.0
         }
         if spec.signal == "stance_width_std" {
-            let scored = pack.series.compactMap { s -> (Double, Double)? in
+            let scored = pack.series.compactMap { s -> (Double, Double, Bool)? in
                 guard let w = s.stanceWidth else { return nil }
-                return (s.tMs, abs(w - pack.stanceWidth))
+                return (s.tMs, abs(w - pack.stanceWidth), s.reliable)
             }
             if scored.isEmpty { return pack.series.first?.tMs }
-            return scored.max(by: { $0.1 < $1.1 })?.0
+            return reliablePool(scored).max(by: { $0.1 < $1.1 })?.0
         }
         return pack.series.first?.tMs
     }
@@ -350,6 +361,22 @@ enum Assess {
         )
     }
 
+    /// categoryId → branch id, mirroring Android's `SkillTree.BRANCH_BY_CATEGORY`
+    /// (readability follow-up, app-spec §5 Ch 6 / design doc §8).
+    private static let branchByCategory: [String: String] = [
+        "alpine_piste": "piste",
+        "alpine_moguls": "moguls",
+        "alpine_offpiste": "offpiste",
+        "park": "park",
+        "alpine_race": "race",
+        "alpine_switch": "park",
+    ]
+
+    private static func branchFor(_ cur: Curriculum, _ lid: String) -> String {
+        guard let spec = cur.levels[lid] else { return "piste" }
+        return branchByCategory[spec.categoryId] ?? "piste"
+    }
+
     private static func treePath(_ cur: Curriculum, _ stageId: String, _ lang: String) -> [TreeNode] {
         var parent: [String: String] = [:]
         for (lid, spec) in cur.levels {
@@ -368,21 +395,34 @@ enum Assess {
             cursor = parent[cursor] ?? ""
         }
         chain.reverse()
-        var nodes: [TreeNode] = []
-        for lid in chain {
-            guard let spec = cur.levels[lid] else { continue }
-            nodes.append(TreeNode(id: lid, name: text(spec.name, lang), current: lid == stageId))
-        }
         cursor = stageId
-        var seenFuture = Set(nodes.map(\.id))
+        var seenFuture = Set(chain)
         while true {
             guard let spec = cur.levels[cursor], !spec.nextLevels.isEmpty else { break }
             let nxt = spec.nextLevels[0]
             if seenFuture.contains(nxt) { break }
-            guard let nextSpec = cur.levels[nxt] else { break }
-            nodes.append(TreeNode(id: nxt, name: text(nextSpec.name, lang), current: false))
+            guard cur.levels[nxt] != nil else { break }
+            chain.append(nxt)
             seenFuture.insert(nxt)
             cursor = nxt
+        }
+        // The chain above is the piste spine (indent 0, never collapsed). Any other
+        // next_levels off a spine stage are attached right after it as one-level, no
+        // deeper — recursing would put a branch node > 1 deep, which order_tree_rows
+        // never does on desktop either (see report_layout.py order_tree_rows docstring).
+        var nodes: [TreeNode] = []
+        var addedSide: Set<String> = []
+        for lid in chain {
+            guard let spec = cur.levels[lid] else { continue }
+            nodes.append(TreeNode(id: lid, name: text(spec.name, lang), current: lid == stageId, branch: "piste"))
+            for (i, nid) in spec.nextLevels.enumerated() where i > 0 {
+                guard !seenFuture.contains(nid), !addedSide.contains(nid), let nextSpec = cur.levels[nid] else { continue }
+                let branch = branchFor(cur, nid)
+                guard branch != "piste" else { continue }
+                nodes.append(TreeNode(id: nid, name: text(nextSpec.name, lang), current: false, branch: branch))
+                addedSide.insert(nid)
+                seenFuture.insert(nid)
+            }
         }
         return nodes
     }
