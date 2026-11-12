@@ -79,7 +79,7 @@ if is_macos:
         bundle_identifier="local.visual.corepose",
         info_plist={
             "NSCameraUsageDescription": "Visual Pose uses the camera to record ski clips for pose analysis.",
-            "CFBundleShortVersionString": "0.1.0",
+            "CFBundleShortVersionString": "0.1.1",
             "NSHighResolutionCapable": True,
         },
     )
