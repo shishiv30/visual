@@ -119,6 +119,40 @@ enum TimelineMath {
         return best
     }
 
+    /// Fine-scrub rates, picked by how far the finger has slid off the strip vertically.
+    static let scrubRates: [Double] = [1.0, 0.5, 0.25, 0.1]
+
+    /// Vertical distance of a touch from the strip band [top, bottom]; 0 while inside.
+    static func offStripPx(y: Double, top: Double, bottom: Double) -> Double {
+        if y < top { return top - y }
+        if y > bottom { return y - bottom }
+        return 0
+    }
+
+    /// Scrub-speed multiplier (1, 1/2, 1/4, 1/10): every `bandPx` the finger moves away from
+    /// the strip, a horizontal finger movement maps to a smaller time delta (iOS-style fine scrubbing).
+    static func scrubRate(offStripPx: Double, bandPx: Double) -> Double {
+        guard bandPx > 0, offStripPx > 0 else { return scrubRates[0] }
+        let band = min(max(Int(offStripPx / bandPx), 0), scrubRates.count - 1)
+        return scrubRates[band]
+    }
+
+    /// Time delta for a horizontal finger delta at the given zoom and scrub rate.
+    static func dxToMs(dxPx: Double, durationMs: Double, viewportWidth: Int, zoom: Double, rate: Double) -> Double {
+        let content = contentWidthPx(viewportWidth: viewportWidth, zoom: zoom)
+        return dxPx / content * max(1.0, durationMs) * rate
+    }
+
+    /// Auto-scroll step (px per frame) while a handle is dragged near the viewport edges.
+    /// Negative scrolls toward the start; 0 outside the edge zones. `x` is viewport-relative.
+    static func edgeAutoScrollPx(x: Double, viewportWidth: Int, zonePx: Double, maxStepPx: Double) -> Double {
+        guard zonePx > 0 else { return 0 }
+        let w = Double(viewportWidth)
+        if x < zonePx { return -maxStepPx * min(1.0, (zonePx - x) / zonePx) }
+        if x > w - zonePx { return maxStepPx * min(1.0, (x - (w - zonePx)) / zonePx) }
+        return 0
+    }
+
     static func formatRulerTime(_ tMs: Double, fine: Bool) -> String {
         let totalS = max(0.0, tMs / 1000.0)
         let minutes = Int(totalS / 60)

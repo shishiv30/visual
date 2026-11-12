@@ -164,3 +164,33 @@ final class PlayerExportTests: XCTestCase {
         XCTAssertTrue(url.contains("Visual%20Pose"))
     }
 }
+
+final class TimelineScrubTests: XCTestCase {
+    func testOffStripDistanceIsZeroInsideBand() {
+        XCTAssertEqual(TimelineMath.offStripPx(y: 40, top: 0, bottom: 78), 0)
+        XCTAssertEqual(TimelineMath.offStripPx(y: 100, top: 0, bottom: 78), 22)
+        XCTAssertEqual(TimelineMath.offStripPx(y: -30, top: 0, bottom: 78), 30)
+    }
+
+    func testScrubRateSlowsWithDistanceFromStrip() {
+        XCTAssertEqual(TimelineMath.scrubRate(offStripPx: 0, bandPx: 48), 1.0)
+        XCTAssertEqual(TimelineMath.scrubRate(offStripPx: 47, bandPx: 48), 1.0)
+        XCTAssertEqual(TimelineMath.scrubRate(offStripPx: 48, bandPx: 48), 0.5)
+        XCTAssertEqual(TimelineMath.scrubRate(offStripPx: 100, bandPx: 48), 0.25)
+        XCTAssertEqual(TimelineMath.scrubRate(offStripPx: 150, bandPx: 48), 0.1)
+        XCTAssertEqual(TimelineMath.scrubRate(offStripPx: 5000, bandPx: 48), 0.1)
+    }
+
+    func testDxToMsScalesWithZoomAndRate() {
+        XCTAssertEqual(TimelineMath.dxToMs(dxPx: 10, durationMs: 10_000, viewportWidth: 200, zoom: 1, rate: 1), 500, accuracy: 1e-9)
+        XCTAssertEqual(TimelineMath.dxToMs(dxPx: 10, durationMs: 10_000, viewportWidth: 200, zoom: 2, rate: 1), 250, accuracy: 1e-9)
+        XCTAssertEqual(TimelineMath.dxToMs(dxPx: 10, durationMs: 10_000, viewportWidth: 200, zoom: 1, rate: 0.1), 50, accuracy: 1e-9)
+    }
+
+    func testEdgeAutoScrollOnlyNearEdges() {
+        XCTAssertEqual(TimelineMath.edgeAutoScrollPx(x: 100, viewportWidth: 200, zonePx: 32, maxStepPx: 14), 0)
+        XCTAssertEqual(TimelineMath.edgeAutoScrollPx(x: 16, viewportWidth: 200, zonePx: 32, maxStepPx: 14), -7, accuracy: 1e-9)
+        XCTAssertEqual(TimelineMath.edgeAutoScrollPx(x: -20, viewportWidth: 200, zonePx: 32, maxStepPx: 14), -14, accuracy: 1e-9)
+        XCTAssertEqual(TimelineMath.edgeAutoScrollPx(x: 184, viewportWidth: 200, zonePx: 32, maxStepPx: 14), 7, accuracy: 1e-9)
+    }
+}

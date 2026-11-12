@@ -7,9 +7,12 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.Rect
 import android.graphics.RectF
 import android.media.MediaMetadataRetriever
+import android.os.Build
 import android.util.AttributeSet
+import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
@@ -26,10 +29,20 @@ class TimelineStripView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
-    enum class DragKind { NONE, IN_HANDLE, OUT_HANDLE, PLAYHEAD, PAN }
+    enum class DragKind { NONE, IN_HANDLE, OUT_HANDLE, EITHER_HANDLE, PLAYHEAD, TAP_OR_PAN, PAN }
 
     var onPlayhead: ((Int) -> Unit)? = null
     var onRange: ((Int, Int) -> Unit)? = null
+
+    /**
+     * true when a continuous drag (handle / playhead scrub) starts, false when it ends.
+     * Listeners should decode cheap preview frames while true and the exact frame on false.
+     */
+    var onScrubbing: ((Boolean) -> Unit)? = null
+
+    /** True while the user is dragging a handle or the playhead. */
+    var isScrubbing: Boolean = false
+        private set
 
     private val density = resources.displayMetrics.density
     private val rulerH = dp(22)
@@ -39,7 +52,10 @@ class TimelineStripView @JvmOverloads constructor(
     private val handleStroke = 8f * density
     private val handleWing = 14f * density
     private val handleHit = dp(28)
-    private val playheadHit = dp(8)
+    private val playheadHit = dp(16)
+    private val scrubBand = dp(48).toDouble()
+    private val autoScrollZone = dp(32).toDouble()
+    private val autoScrollStep = dp(14).toDouble()
     private val panSlop = ViewConfiguration.get(context).scaledTouchSlop.toFloat()
     private val barH = dp(12)
 
@@ -80,13 +96,34 @@ class TimelineStripView @JvmOverloads constructor(
     private var drag = DragKind.NONE
     private var pressX = 0f
     private var pressScroll = 0.0
-    private var panning = false
+    private var lastX = 0f
+    private var activePointer = MotionEvent.INVALID_POINTER_ID
+    // Time value the current drag is steering; moved by finger deltas (not absolute x) so the
+    // handle never jumps to the finger and fine-scrub rates can apply.
+    private var grabMs = 0.0
+    private var scrubRate = 1.0
     private var trimEnabled = true
+    private val bubbleRect = RectF()
+    private val autoScroll = object : Runnable {
+        override fun run() {
+            if (!stepAutoScroll()) {
+                return
+            }
+            postOnAnimation(this)
+        }
+    }
+    private var autoScrolling = false
     private var thumbExecutor = Executors.newSingleThreadExecutor()
 
     private val scaleDetector = ScaleGestureDetector(
         context,
         object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+                drag = DragKind.NONE
+                endScrub()
+                return true
+            }
+
             override fun onScale(detector: ScaleGestureDetector): Boolean {
                 applyZoom(zoom * detector.scaleFactor, detector.focusX.toDouble())
                 return true
@@ -118,6 +155,10 @@ class TimelineStripView @JvmOverloads constructor(
 
     fun clear() {
         path = null
+        drag = DragKind.NONE
+        removeCallbacks(autoScroll)
+        autoScrolling = false
+        endScrub()
         synchronized(retrieverLock) {
             retriever?.release()
             retriever = null
@@ -140,6 +181,8 @@ class TimelineStripView @JvmOverloads constructor(
         outMs = clamped.second
         invalidate()
     }
+
+    fun playheadMs(): Int = playheadMs
 
     fun setPlayheadMs(tMs: Int) {
         playheadMs = tMs.coerceIn(0, durationMs)
@@ -168,6 +211,22 @@ class TimelineStripView @JvmOverloads constructor(
         thumbExecutor = Executors.newSingleThreadExecutor()
     }
 
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        // Android 10+ gesture navigation claims the screen edges for "back". The In/Out handles
+        // default to t=0 and t=end, i.e. right next to both edges, so presses on them were being
+        // stolen by the system. Opt the strip's two edge columns out of the back gesture.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val w = right - left
+            val h = bottom - top
+            val edge = edgePad + handleHit
+            systemGestureExclusionRects = listOf(
+                Rect(0, 0, min(w, edge), h),
+                Rect(max(0, w - edge), 0, w, h),
+            )
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (path == null) {
@@ -176,80 +235,207 @@ class TimelineStripView @JvmOverloads constructor(
         scaleDetector.onTouchEvent(event)
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                activePointer = event.getPointerId(0)
                 pressX = event.x
+                lastX = event.x
                 pressScroll = scrollXpx
-                panning = false
+                scrubRate = 1.0
                 parent.requestDisallowInterceptTouchEvent(true)
                 val hit = hit(event.x)
-                if (hit == DragKind.IN_HANDLE || hit == DragKind.OUT_HANDLE) {
+                if (hit == DragKind.IN_HANDLE || hit == DragKind.OUT_HANDLE || hit == DragKind.EITHER_HANDLE) {
                     drag = hit
-                    if (hit == DragKind.IN_HANDLE) {
-                        emitPlayhead(inMs)
-                    } else {
-                        emitPlayhead(outMs)
+                    grabMs = if (hit == DragKind.OUT_HANDLE) outMs.toDouble() else inMs.toDouble()
+                    performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+                    beginScrub()
+                    if (hit != DragKind.EITHER_HANDLE) {
+                        emitPlayhead(grabMs.roundToInt())
                     }
+                    invalidate()
                     return true
                 }
                 val keyMs = hitKeyframe(event.x)
                 if (keyMs != null) {
                     drag = DragKind.NONE
                     emitPlayhead(keyMs)
+                    invalidate()
                     return true
                 }
-                drag = if (hit == DragKind.NONE) DragKind.PLAYHEAD else hit
-                when (drag) {
-                    DragKind.PLAYHEAD -> {
-                        if (hit == DragKind.NONE) {
-                            seekToX(event.x)
-                        }
+                if (hit == DragKind.PLAYHEAD || zoom <= 1.0 + 1e-6) {
+                    // Unzoomed: press anywhere = jump + scrub. On the playhead: scrub from it.
+                    drag = DragKind.PLAYHEAD
+                    if (hit != DragKind.PLAYHEAD) {
+                        emitPlayhead(msOf(event.x))
                     }
-                    else -> Unit
+                    grabMs = playheadMs.toDouble()
+                    beginScrub()
+                } else {
+                    // Zoomed: a drag on empty film pans; only a clean tap seeks (on UP).
+                    drag = DragKind.TAP_OR_PAN
                 }
+                invalidate()
                 return true
             }
             MotionEvent.ACTION_POINTER_DOWN -> {
                 drag = DragKind.NONE
+                endScrub()
+                return true
+            }
+            MotionEvent.ACTION_POINTER_UP -> {
+                val upId = event.getPointerId(event.actionIndex)
+                if (upId == activePointer) {
+                    val keep = if (event.actionIndex == 0) 1 else 0
+                    activePointer = event.getPointerId(keep)
+                    lastX = event.getX(keep)
+                }
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
                 if (scaleDetector.isInProgress) {
                     return true
                 }
-                val dx = event.x - pressX
-                if (drag == DragKind.PLAYHEAD && !panning && zoom > 1.0 + 1e-6 && abs(dx) > panSlop) {
+                val idx = event.findPointerIndex(activePointer)
+                if (idx < 0) {
+                    return true
+                }
+                val x = event.getX(idx)
+                val y = event.getY(idx)
+                val dx = x - lastX
+                lastX = x
+                if (drag == DragKind.EITHER_HANDLE) {
+                    if (abs(x - pressX) <= panSlop / 2f) {
+                        return true
+                    }
+                    // Handles overlap: the first move direction decides which one is grabbed.
+                    drag = if (x < pressX) DragKind.IN_HANDLE else DragKind.OUT_HANDLE
+                    grabMs = if (drag == DragKind.IN_HANDLE) inMs.toDouble() else outMs.toDouble()
+                    applyDrag((x - pressX).toDouble())
+                    invalidate()
+                    return true
+                }
+                if (drag == DragKind.TAP_OR_PAN && abs(x - pressX) > panSlop) {
                     drag = DragKind.PAN
-                    panning = true
                 }
                 when (drag) {
-                    DragKind.PAN -> setScroll(pressScroll - dx)
-                    DragKind.IN_HANDLE -> {
-                        val clamped = TimelineMath.clampRange(msOf(event.x), outMs, durationMs)
-                        inMs = clamped.first
-                        outMs = clamped.second
-                        emitPlayhead(inMs)
-                        onRange?.invoke(inMs, outMs)
+                    DragKind.PAN -> setScroll(pressScroll - (x - pressX))
+                    DragKind.IN_HANDLE, DragKind.OUT_HANDLE, DragKind.PLAYHEAD -> {
+                        scrubRate = TimelineMath.scrubRate(
+                            TimelineMath.offStripPx(y.toDouble(), 0.0, (rulerH + filmH).toDouble()),
+                            scrubBand,
+                        )
+                        applyDrag(dx.toDouble())
+                        ensureAutoScroll()
                     }
-                    DragKind.OUT_HANDLE -> {
-                        val clamped = TimelineMath.clampRange(inMs, msOf(event.x), durationMs)
-                        inMs = clamped.first
-                        outMs = clamped.second
-                        emitPlayhead(outMs)
-                        onRange?.invoke(inMs, outMs)
-                    }
-                    DragKind.PLAYHEAD -> seekToX(event.x)
-                    DragKind.NONE -> Unit
+                    else -> Unit
                 }
                 invalidate()
                 return true
             }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                drag = DragKind.NONE
-                panning = false
-                parent.requestDisallowInterceptTouchEvent(false)
+            MotionEvent.ACTION_UP -> {
+                if (drag == DragKind.TAP_OR_PAN) {
+                    emitPlayhead(msOf(event.x))
+                }
+                finishGesture()
+                return true
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                finishGesture()
                 return true
             }
         }
         return true
+    }
+
+    private fun finishGesture() {
+        drag = DragKind.NONE
+        activePointer = MotionEvent.INVALID_POINTER_ID
+        parent.requestDisallowInterceptTouchEvent(false)
+        endScrub()
+        invalidate()
+    }
+
+    /** Move the dragged handle / playhead by a finger delta [dxPx], scaled by the scrub rate. */
+    private fun applyDrag(dxPx: Double) {
+        grabMs += TimelineMath.dxToMs(dxPx, durationMs.toDouble(), viewportW(), zoom, scrubRate)
+        when (drag) {
+            DragKind.IN_HANDLE -> {
+                grabMs = grabMs.coerceIn(0.0, max(0, outMs - TimelineMath.MIN_RANGE_MS).toDouble())
+                val clamped = TimelineMath.clampRange(grabMs.roundToInt(), outMs, durationMs)
+                if (clamped.first != inMs || clamped.second != outMs) {
+                    inMs = clamped.first
+                    outMs = clamped.second
+                    onRange?.invoke(inMs, outMs)
+                }
+                emitPlayhead(inMs)
+            }
+            DragKind.OUT_HANDLE -> {
+                val lo = min(durationMs, inMs + TimelineMath.MIN_RANGE_MS).toDouble()
+                grabMs = grabMs.coerceIn(lo, durationMs.toDouble())
+                val clamped = TimelineMath.clampRange(inMs, grabMs.roundToInt(), durationMs)
+                if (clamped.first != inMs || clamped.second != outMs) {
+                    inMs = clamped.first
+                    outMs = clamped.second
+                    onRange?.invoke(inMs, outMs)
+                }
+                emitPlayhead(outMs)
+            }
+            DragKind.PLAYHEAD -> {
+                grabMs = grabMs.coerceIn(0.0, durationMs.toDouble())
+                emitPlayhead(grabMs.roundToInt())
+            }
+            else -> Unit
+        }
+    }
+
+    private fun ensureAutoScroll() {
+        if (autoScrolling || zoom <= 1.0 + 1e-6) {
+            return
+        }
+        autoScrolling = true
+        postOnAnimation(autoScroll)
+    }
+
+    /** One auto-scroll frame; returns false when auto-scrolling should stop. */
+    private fun stepAutoScroll(): Boolean {
+        val active = drag == DragKind.IN_HANDLE || drag == DragKind.OUT_HANDLE || drag == DragKind.PLAYHEAD
+        if (!active || zoom <= 1.0 + 1e-6) {
+            autoScrolling = false
+            return false
+        }
+        val step = TimelineMath.edgeAutoScrollPx(
+            (lastX - edgePad).toDouble(),
+            viewportW(),
+            autoScrollZone,
+            autoScrollStep,
+        )
+        if (step != 0.0) {
+            val before = scrollXpx
+            setScroll(scrollXpx + step)
+            val moved = scrollXpx - before
+            if (moved != 0.0) {
+                // Content slid under a still finger: carry the grabbed time with it (rate 1).
+                val keep = scrubRate
+                scrubRate = 1.0
+                applyDrag(moved)
+                scrubRate = keep
+                invalidate()
+            }
+        }
+        return true
+    }
+
+    private fun beginScrub() {
+        if (!isScrubbing) {
+            isScrubbing = true
+            onScrubbing?.invoke(true)
+        }
+    }
+
+    private fun endScrub() {
+        scrubRate = 1.0
+        if (isScrubbing) {
+            isScrubbing = false
+            onScrubbing?.invoke(false)
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -270,6 +456,37 @@ class TimelineStripView @JvmOverloads constructor(
         strokePaint.strokeCap = Paint.Cap.BUTT
         canvas.drawLine(x, 0f, x, (rulerH + filmH).toFloat(), strokePaint)
         paintScrollBar(canvas)
+        paintScrubBubble(canvas)
+    }
+
+    /** Exact time (and fine-scrub rate) above the finger while dragging — the finger hides the handle. */
+    private fun paintScrubBubble(canvas: Canvas) {
+        val tMs = when (drag) {
+            DragKind.IN_HANDLE -> inMs
+            DragKind.OUT_HANDLE -> outMs
+            DragKind.PLAYHEAD -> playheadMs
+            else -> return
+        }
+        val secs = tMs / 1000.0
+        var label = String.format(java.util.Locale.US, "%d:%05.2f", (secs / 60).toInt(), secs % 60)
+        if (scrubRate < 1.0) {
+            label += "  " + rateLabel(scrubRate)
+        }
+        val padH = 6f * density
+        val w = textPaint.measureText(label) + padH * 2
+        val h = rulerH.toFloat() - 2f
+        val cx = xOf(tMs.toDouble()).coerceIn(w / 2f, width - w / 2f)
+        bubbleRect.set(cx - w / 2f, 1f, cx + w / 2f, 1f + h)
+        fillPaint.color = blue
+        canvas.drawRoundRect(bubbleRect, h / 2f, h / 2f, fillPaint)
+        val baseline = bubbleRect.centerY() - (textPaint.descent() + textPaint.ascent()) / 2f
+        canvas.drawText(label, bubbleRect.left + padH, baseline, textPaint)
+    }
+
+    private fun rateLabel(rate: Double): String = when {
+        rate >= 0.5 -> "½×"
+        rate >= 0.25 -> "¼×"
+        else -> "⅒×"
     }
 
     private fun paintRuler(canvas: Canvas) {
@@ -345,10 +562,11 @@ class TimelineStripView @JvmOverloads constructor(
         val x = xOf(tMs.toDouble())
         val top = rulerH.toFloat()
         val bot = (rulerH + filmH).toFloat()
+        val active = (start && drag == DragKind.IN_HANDLE) || (!start && drag == DragKind.OUT_HANDLE)
         val half = handleStroke / 2f
-        fillPaint.color = blue
+        fillPaint.color = if (active) passGreen else blue
         canvas.drawRect(x - half, top, x + half, bot, fillPaint)
-        strokePaint.color = blue
+        strokePaint.color = fillPaint.color
         strokePaint.strokeWidth = handleStroke
         strokePaint.strokeCap = Paint.Cap.SQUARE
         if (start) {
@@ -423,8 +641,10 @@ class TimelineStripView @JvmOverloads constructor(
         }
         inflight[key] = ensureExecutor().submit {
             val bmp = try {
+                // Filmstrip cells don't need frame accuracy; the nearest sync frame decodes in a
+                // fraction of the time and keeps the shared hardware decoder free for the preview.
                 synchronized(retrieverLock) {
-                    retriever?.getFrameAtTime(key * 1000L, MediaMetadataRetriever.OPTION_CLOSEST)
+                    retriever?.getFrameAtTime(key * 1000L, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
                 }
             } catch (_: Exception) {
                 null
@@ -469,6 +689,10 @@ class TimelineStripView @JvmOverloads constructor(
             val outHit = outDist <= handleHit
             when {
                 inHit && outHit -> {
+                    // Handles nearly on top of each other: let the first move direction decide.
+                    if (abs(inDist - outDist) < dp(8)) {
+                        return DragKind.EITHER_HANDLE
+                    }
                     return if (inDist <= outDist) DragKind.IN_HANDLE else DragKind.OUT_HANDLE
                 }
                 inHit -> return DragKind.IN_HANDLE

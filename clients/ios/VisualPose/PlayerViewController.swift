@@ -41,6 +41,14 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
     private var startAfterSeek = false
     private var pendingSeekMs: Int64 = 0
     private var generator: AVAssetImageGenerator?
+    private lazy var scrubber = FrameScrubber(maxSize: PrepareViewController.previewDecodeSize()) { [weak self] _, image in
+        self?.setPausedImage(image)
+    }
+    // Latest seek requested while another was in flight ("chase time", Apple QA1820).
+    private var queuedSeekMs: Int64?
+    private var queuedSeekStart = false
+    private var queuedSeekFast = false
+    private var activeSeekFast = false
     private var hudTMs: Int64 = 0
     private var hudVideoFrame = 0
     private var hudPoseI: Int?
@@ -69,7 +77,14 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
         btnDownload.addAction(UIAction { [weak self] _ in self?.downloadOverlay() }, for: .touchUpInside)
         btnShare.addAction(UIAction { [weak self] _ in self?.showShareMenu() }, for: .touchUpInside)
         stage.onTap = { [weak self] in self?.showChrome(autoHide: self?.playing == true) }
-        timeline.onPlayhead = { [weak self] tMs in self?.seekPlayer(Int64(tMs), pause: false) }
+        timeline.onPlayhead = { [weak self] tMs in
+            guard let self else { return }
+            self.seekPlayer(Int64(tMs), pause: false, scrubbing: self.timeline.isScrubbing)
+        }
+        timeline.onScrubbing = { [weak self] active in
+            guard let self, !active else { return }
+            self.seekPlayer(Int64(self.timeline.currentPlayheadMs), pause: false)
+        }
         timeline.setTrimEnabled(false)
         report.onSeek = { [weak self] tMs in self?.seekPlayer(Int64(tMs), pause: true) }
         report.onJumpToSkillTree = { [weak self] in
@@ -188,6 +203,7 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
             gen.requestedTimeToleranceBefore = .zero
             gen.requestedTimeToleranceAfter = .zero
             generator = gen
+            scrubber.bind(url: media)
             let item = AVPlayerItem(asset: asset)
             let player = AVPlayer(playerItem: item)
             player.actionAtItemEnd = .pause
@@ -257,8 +273,10 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
         playerEnded = false
         seekPending = false
         startAfterSeek = false
+        queuedSeekMs = nil
         hidePausedFrame()
         generator = nil
+        scrubber.clear()
         meta = nil
         reportModel = nil
         feedback = FrameFeedback.empty("")
@@ -298,19 +316,40 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
         showChrome(autoHide: false)
     }
 
-    private func seekClosest(_ tMs: Int64, startWhenDone: Bool) {
+    /// Only one seek is ever in flight; requests arriving meanwhile replace a single queued target
+    /// issued from `onSeekComplete`. Firing a zero-tolerance seek per touch move made AVPlayer
+    /// cancel/restart decodes constantly and scrubbing lag far behind the finger.
+    /// `fast` lets AVPlayer land on a nearby sync frame and is used while the finger moves.
+    private func seekClosest(_ tMs: Int64, startWhenDone: Bool, fast: Bool = false) {
         guard let player else { return }
         let clamped = ClipRange.clampPlayheadMs(tMs, startMs: playStartMs, endMs: playEndMs)
+        if seekPending {
+            queuedSeekStart = queuedSeekStart || startWhenDone || startAfterSeek
+            queuedSeekMs = clamped
+            queuedSeekFast = fast
+            startAfterSeek = false
+            return
+        }
         pendingSeekMs = clamped
         seekPending = true
         startAfterSeek = startWhenDone
+        activeSeekFast = fast
         let time = CMTime(value: clamped, timescale: 1000)
-        player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
+        let tolerance: CMTime = fast ? .positiveInfinity : .zero
+        player.seek(to: time, toleranceBefore: tolerance, toleranceAfter: tolerance) { [weak self] _ in
             self?.onSeekComplete()
         }
     }
 
     private func onSeekComplete() {
+        if let queued = queuedSeekMs {
+            queuedSeekMs = nil
+            seekPending = false
+            let start = queuedSeekStart
+            queuedSeekStart = false
+            seekClosest(queued, startWhenDone: start, fast: queuedSeekFast)
+            return
+        }
         seekPending = false
         if startAfterSeek {
             startAfterSeek = false
@@ -323,7 +362,7 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
             btnPlay.accessibilityLabel = I18n.t("Pause")
             showChrome(autoHide: true)
         } else if !playing {
-            showPausedFrame(pendingSeekMs)
+            scrubber.request(Int(pendingSeekMs), precise: !activeSeekFast)
         }
         updateHud(pendingSeekMs)
     }
@@ -354,7 +393,7 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
         showChrome(autoHide: true)
     }
 
-    private func seekPlayer(_ tMs: Int64, pause: Bool) {
+    private func seekPlayer(_ tMs: Int64, pause: Bool, scrubbing: Bool = false) {
         let clamped = ClipRange.clampPlayheadMs(tMs, startMs: playStartMs, endMs: playEndMs)
         if pause, playing {
             player?.pause()
@@ -366,10 +405,10 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
         playerEnded = false
         timeline.setPlayheadMs(Int(clamped))
         if !playing {
-            showPausedFrame(clamped)
+            scrubber.request(Int(clamped), precise: !scrubbing)
             updateHud(clamped)
         }
-        seekClosest(clamped, startWhenDone: false)
+        seekClosest(clamped, startWhenDone: false, fast: scrubbing)
         showChrome(autoHide: playing)
     }
 
@@ -401,6 +440,13 @@ final class PlayerViewController: UIViewController, UIDocumentPickerDelegate {
             imageView.image = UIImage(cgImage: cg)
             imageView.isHidden = false
         }
+    }
+
+    /// Async counterpart of `showPausedFrame`, used while scrubbing.
+    private func setPausedImage(_ image: UIImage) {
+        guard !playing, meta?.kind == .video else { return }
+        imageView.image = image
+        imageView.isHidden = false
     }
 
     private func hidePausedFrame() {

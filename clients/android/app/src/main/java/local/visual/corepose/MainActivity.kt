@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
     private var pendingImport = false
 
     private var prepareMeta: ClipMeta? = null
-    private var prepareRetriever: MediaMetadataRetriever? = null
+    private var prepareScrubber: FrameScrubber? = null
     private var prepareFrame: Bitmap? = null
     private var prepareTMs = 0
     private var prepareInMs = 0
@@ -188,6 +188,12 @@ class MainActivity : AppCompatActivity() {
     private var pendingSeekMs = 0L
     private var seekRetries = 0
     private var playerRetriever: MediaMetadataRetriever? = null
+    private var playerScrubber: FrameScrubber? = null
+    // Latest seek requested while another was still in flight (latest wins, see seekClosest).
+    private var queuedSeekMs: Long? = null
+    private var queuedSeekStart = false
+    private var queuedSeekFast = false
+    private var activeSeekFast = false
     private var pausedFrame: Bitmap? = null
     private var hudTMs = 0L
     private var hudVideoFrame = 0
@@ -295,7 +301,10 @@ class MainActivity : AppCompatActivity() {
         overlayHandler.removeCallbacks(overlayTicker)
         recordHandler.removeCallbacksAndMessages(null)
         releasePlayer()
-        prepareRetriever?.release()
+        prepareScrubber?.release()
+        prepareScrubber = null
+        playerScrubber?.release()
+        playerScrubber = null
         cameraExecutor.shutdown()
         recording?.stop()
         cameraProvider?.unbindAll()
@@ -380,6 +389,7 @@ class MainActivity : AppCompatActivity() {
                 overlayHandler.removeCallbacks(overlayTicker)
                 playerSeekPending = false
                 startAfterSeek = false
+                queuedSeekMs = null
                 player?.release()
                 player = null
                 playing = false
@@ -409,7 +419,14 @@ class MainActivity : AppCompatActivity() {
         btnDownload.setOnClickListener { downloadOverlay() }
         btnShare.setOnClickListener { showShareMenu() }
         playerStage.onTap = { showPlayerChrome(autoHide = playing) }
-        playerTimeline.onPlayhead = { tMs -> seekPlayer(tMs.toLong(), pause = false) }
+        playerTimeline.onPlayhead = { tMs ->
+            seekPlayer(tMs.toLong(), pause = false, scrubbing = playerTimeline.isScrubbing)
+        }
+        playerTimeline.onScrubbing = { active ->
+            if (!active) {
+                seekPlayer(playerTimeline.playheadMs().toLong(), pause = false)
+            }
+        }
         playerTimeline.setTrimEnabled(false)
         playerReport.onSeek = { tMs -> seekPlayer(tMs.toLong(), pause = true) }
         playerReport.onCorrectResult = { showCorrectionDialog() }
@@ -423,7 +440,12 @@ class MainActivity : AppCompatActivity() {
         }
         prepareTimeline.onPlayhead = { tMs ->
             prepareTMs = tMs
-            showPrepareFrame()
+            showPrepareFrame(precise = !prepareTimeline.isScrubbing)
+        }
+        prepareTimeline.onScrubbing = { active ->
+            if (!active) {
+                showPrepareFrame(precise = true)
+            }
         }
         prepareTimeline.onRange = { startMs, endMs ->
             prepareInMs = startMs
@@ -864,9 +886,7 @@ class MainActivity : AppCompatActivity() {
             prepareCanvas.post { prepareCanvas.setBoxNorm(seedNear(prepareTMs.toDouble())?.box) }
         } else {
             prepareTimeline.visibility = View.VISIBLE
-            val retriever = MediaMetadataRetriever()
-            retriever.setDataSource(media.absolutePath)
-            prepareRetriever = retriever
+            ensurePrepareScrubber().bind(media.absolutePath)
             val (start, end) = Library.playWindowMs(meta)
             if (meta.playEndMs != null) {
                 prepareOutMs = end.toInt()
@@ -884,18 +904,44 @@ class MainActivity : AppCompatActivity() {
         refreshPrepareLabels()
     }
 
-    private fun showPrepareFrame() {
-        val retriever = prepareRetriever ?: return
-        val bmp = retriever.getFrameAtTime(prepareTMs * 1000L, MediaMetadataRetriever.OPTION_CLOSEST)
-        val old = prepareFrame
-        prepareFrame = bmp
-        prepareCanvas.setFrame(bmp)
-        if (old != null && old != bmp && !old.isRecycled) {
-            old.recycle()
-        }
+    /**
+     * Show the frame at [prepareTMs]. Decoding is asynchronous (see [FrameScrubber]); while the
+     * timeline is being dragged pass `precise = false` so a cheap sync-frame preview is used.
+     */
+    private fun showPrepareFrame(precise: Boolean = true) {
+        prepareScrubber?.request(prepareTMs, precise)
         prepareCanvas.post { prepareCanvas.setBoxNorm(seedNear(prepareTMs.toDouble())?.box) }
         prepareTimeline.setPlayheadMs(prepareTMs)
         refreshPrepareLabels()
+    }
+
+    private fun ensurePrepareScrubber(): FrameScrubber {
+        prepareScrubber?.let { return it }
+        val side = previewDecodeSide()
+        return FrameScrubber(side, side) { _, bmp -> setPrepareFrame(bmp) }.also { prepareScrubber = it }
+    }
+
+    /** Decode previews no larger than the screen; full 4K bitmaps are pure decode/copy overhead. */
+    private fun previewDecodeSide(): Int {
+        val dm = resources.displayMetrics
+        return max(dm.widthPixels, dm.heightPixels).coerceAtLeast(640)
+    }
+
+    private fun setPrepareFrame(bmp: Bitmap) {
+        if (prepareMeta == null) {
+            bmp.recycle()
+            return
+        }
+        val old = prepareFrame
+        prepareFrame = bmp
+        prepareCanvas.setFrame(bmp)
+        if (old == null || old.width != bmp.width || old.height != bmp.height) {
+            // First frame (or a new size): the seed box can only be placed once a frame exists.
+            prepareCanvas.post { prepareCanvas.setBoxNorm(seedNear(prepareTMs.toDouble())?.box) }
+        }
+        if (old != null && old != bmp && !old.isRecycled) {
+            old.recycle()
+        }
     }
 
     private fun refreshPrepareLabels() {
@@ -1075,6 +1121,7 @@ class MainActivity : AppCompatActivity() {
         player = null
         playerSeekPending = false
         startAfterSeek = false
+        queuedSeekMs = null
         val media = MediaPlayer()
         player = media
         media.setDataSource(file.absolutePath)
@@ -1117,6 +1164,25 @@ class MainActivity : AppCompatActivity() {
         } catch (_: Exception) {
             next.release()
         }
+        val scrubber = playerScrubber ?: FrameScrubber(previewDecodeSide(), previewDecodeSide()) { _, bmp ->
+            setPausedFrame(bmp)
+        }.also { playerScrubber = it }
+        scrubber.bind(file.absolutePath)
+    }
+
+    /** Async counterpart of [showPausedVideoFrame], used while scrubbing. */
+    private fun setPausedFrame(bmp: Bitmap) {
+        if (playing || playerMeta == null) {
+            bmp.recycle()
+            return
+        }
+        val old = pausedFrame
+        pausedFrame = bmp
+        playerImage.setImageBitmap(bmp)
+        playerImage.visibility = View.VISIBLE
+        if (old != null && old != bmp && !old.isRecycled) {
+            old.recycle()
+        }
     }
 
     private fun showPausedVideoFrame(tMs: Long) {
@@ -1145,17 +1211,40 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun seekClosest(tMs: Long, startWhenDone: Boolean) {
+    /**
+     * Seek the player. Only one seek is ever in flight: requests that arrive meanwhile replace a
+     * single queued target, which is issued from [onPlayerSeekComplete]. Firing a SEEK_CLOSEST per
+     * touch move used to pile decoder work up and made scrubbing lag far behind the finger.
+     * [fast] seeks to the nearest sync frame (cheap) and is used while the finger is moving.
+     */
+    private fun seekClosest(tMs: Long, startWhenDone: Boolean, fast: Boolean = false) {
         val media = player ?: return
         val clamped = ClipRange.clampPlayheadMs(tMs, playStartMs, playEndMs)
+        if (playerSeekPending) {
+            queuedSeekStart = queuedSeekStart || startWhenDone || startAfterSeek
+            queuedSeekMs = clamped
+            queuedSeekFast = fast
+            startAfterSeek = false
+            return
+        }
         pendingSeekMs = clamped
         playerSeekPending = true
         startAfterSeek = startWhenDone
         seekRetries = 0
-        media.seekTo(clamped, MediaPlayer.SEEK_CLOSEST)
+        activeSeekFast = fast
+        media.seekTo(clamped, if (fast) MediaPlayer.SEEK_CLOSEST_SYNC else MediaPlayer.SEEK_CLOSEST)
     }
 
     private fun onPlayerSeekComplete(media: MediaPlayer) {
+        val queued = queuedSeekMs
+        if (queued != null) {
+            queuedSeekMs = null
+            playerSeekPending = false
+            val start = queuedSeekStart
+            queuedSeekStart = false
+            seekClosest(queued, startWhenDone = start, fast = queuedSeekFast)
+            return
+        }
         val reported = media.currentPosition.toLong()
         if (startAfterSeek && reported < playStartMs && seekRetries < 2) {
             seekRetries += 1
@@ -1177,7 +1266,7 @@ class MainActivity : AppCompatActivity() {
             overlayHandler.post(overlayTicker)
             showPlayerChrome(autoHide = true)
         } else if (!playing) {
-            showPausedVideoFrame(pendingSeekMs)
+            playerScrubber?.request(pendingSeekMs.toInt(), precise = !activeSeekFast)
         }
         updatePlayerHud(pendingSeekMs)
     }
@@ -1208,7 +1297,7 @@ class MainActivity : AppCompatActivity() {
         showPlayerChrome(autoHide = true)
     }
 
-    private fun seekPlayer(tMs: Long, pause: Boolean) {
+    private fun seekPlayer(tMs: Long, pause: Boolean, scrubbing: Boolean = false) {
         val clamped = ClipRange.clampPlayheadMs(tMs, playStartMs, playEndMs)
         if (pause && playing) {
             player?.pause()
@@ -1221,10 +1310,10 @@ class MainActivity : AppCompatActivity() {
         playerEnded = false
         playerTimeline.setPlayheadMs(clamped.toInt())
         if (!playing) {
-            showPausedVideoFrame(clamped)
+            playerScrubber?.request(clamped.toInt(), precise = !scrubbing)
             updatePlayerHud(clamped)
         }
-        seekClosest(clamped, startWhenDone = false)
+        seekClosest(clamped, startWhenDone = false, fast = scrubbing)
         showPlayerChrome(autoHide = playing)
     }
 
@@ -1558,9 +1647,12 @@ class MainActivity : AppCompatActivity() {
         playerEnded = false
         playerSeekPending = false
         startAfterSeek = false
+        queuedSeekMs = null
         hidePausedVideoFrame()
         playerRetriever?.release()
         playerRetriever = null
+        playerScrubber?.release()
+        playerScrubber = null
         pendingPlayerFile = null
         playerMeta = null
         playerReportModel = null
@@ -1575,8 +1667,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun releasePrepare() {
         prepareTimeline.clear()
-        prepareRetriever?.release()
-        prepareRetriever = null
+        prepareScrubber?.release()
+        prepareScrubber = null
         prepareCanvas.setFrame(null)
         prepareFrame?.recycle()
         prepareFrame = null

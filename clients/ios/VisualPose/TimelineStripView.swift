@@ -2,10 +2,16 @@ import AVFoundation
 import UIKit
 
 final class TimelineStripView: UIView {
-    enum DragKind { case none, inHandle, outHandle, playhead, pan }
+    enum DragKind { case none, inHandle, outHandle, eitherHandle, playhead, tapOrPan, pan }
 
     var onPlayhead: ((Int) -> Void)?
     var onRange: ((Int, Int) -> Void)?
+    /// true when a continuous drag (handle / playhead scrub) starts, false when it ends.
+    /// Listeners should decode cheap preview frames while true and the exact frame on false.
+    var onScrubbing: ((Bool) -> Void)?
+    /// True while the user is dragging a handle or the playhead.
+    private(set) var isScrubbing = false
+    var currentPlayheadMs: Int { playheadMs }
 
     private let rulerH: CGFloat = 22
     private let filmH: CGFloat = 56
@@ -14,7 +20,10 @@ final class TimelineStripView: UIView {
     private let handleStroke: CGFloat = 8
     private let handleWing: CGFloat = 14
     private let handleHit: CGFloat = 28
-    private let playheadHit: CGFloat = 8
+    private let playheadHit: CGFloat = 16
+    private let scrubBand = 48.0
+    private let autoScrollZone = 32.0
+    private let autoScrollStep = 14.0
     private let panSlop: CGFloat = 10
     private let barH: CGFloat = 12
 
@@ -44,7 +53,13 @@ final class TimelineStripView: UIView {
     private var drag = DragKind.none
     private var pressX: CGFloat = 0
     private var pressScroll = 0.0
-    private var panning = false
+    private var lastX: CGFloat = 0
+    private weak var trackedTouch: UITouch?
+    // Time value the current drag is steering; moved by finger deltas, see applyDrag.
+    private var grabMs = 0.0
+    private var scrubRate = 1.0
+    private var displayLink: CADisplayLink?
+    private let haptic = UISelectionFeedbackGenerator()
     private var trimEnabled = true
     private let thumbQueue = DispatchQueue(label: "visualpose.timeline.thumbs")
 
@@ -78,8 +93,11 @@ final class TimelineStripView: UIView {
         let asset = AVAsset(url: url)
         let gen = AVAssetImageGenerator(asset: asset)
         gen.appliesPreferredTrackTransform = true
-        gen.requestedTimeToleranceBefore = .zero
-        gen.requestedTimeToleranceAfter = .zero
+        // Filmstrip cells don't need frame accuracy; letting the generator pick a nearby sync
+        // frame is far cheaper and keeps the decoder free for the preview frame.
+        let tolerance = CMTime(value: 500, timescale: 1000)
+        gen.requestedTimeToleranceBefore = tolerance
+        gen.requestedTimeToleranceAfter = tolerance
         gen.maximumSize = CGSize(width: cellW * 2, height: filmH * 2)
         generator = gen
         isHidden = false
@@ -88,6 +106,9 @@ final class TimelineStripView: UIView {
 
     func clear() {
         mediaURL = nil
+        drag = .none
+        trackedTouch = nil
+        endScrub()
         generator = nil
         inflight.removeAll()
         thumbs.removeAll()
@@ -118,72 +139,205 @@ final class TimelineStripView: UIView {
     }
 
     @objc private func pinched(_ gr: UIPinchGestureRecognizer) {
+        if gr.state == .began {
+            // Two fingers: this is a zoom, not a handle drag.
+            drag = .none
+            trackedTouch = nil
+            endScrub()
+        }
         applyZoom(zoom * Double(gr.scale), anchorX: Double(gr.location(in: self).x))
         gr.scale = 1
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard mediaURL != nil, let touch = touches.first else { return }
+        guard mediaURL != nil else { return }
+        if trackedTouch != nil {
+            // A second finger joined: hand over to the pinch recognizer.
+            drag = .none
+            trackedTouch = nil
+            endScrub()
+            setNeedsDisplay()
+            return
+        }
+        guard let touch = touches.first else { return }
+        trackedTouch = touch
         let x = touch.location(in: self).x
         pressX = x
+        lastX = x
         pressScroll = scrollXpx
-        panning = false
+        scrubRate = 1
         let hit = hit(x)
-        if hit == .inHandle || hit == .outHandle {
+        if hit == .inHandle || hit == .outHandle || hit == .eitherHandle {
             drag = hit
-            emitPlayhead(hit == .inHandle ? inMs : outMs)
+            grabMs = Double(hit == .outHandle ? outMs : inMs)
+            haptic.selectionChanged()
+            haptic.prepare()
+            beginScrub()
+            if hit != .eitherHandle {
+                emitPlayhead(Int(grabMs.rounded()))
+            }
+            setNeedsDisplay()
             return
         }
         if let keyMs = hitKeyframe(x) {
             drag = .none
             emitPlayhead(keyMs)
+            setNeedsDisplay()
             return
         }
-        drag = hit == .none ? .playhead : hit
-        if drag == .playhead, hit == .none {
-            seekToX(x)
+        if hit == .playhead || zoom <= 1.0 + 1e-6 {
+            // Unzoomed: press anywhere = jump + scrub. On the playhead: scrub from it.
+            drag = .playhead
+            if hit != .playhead {
+                emitPlayhead(msOf(x))
+            }
+            grabMs = Double(playheadMs)
+            beginScrub()
+        } else {
+            // Zoomed: a drag on empty film pans; only a clean tap seeks (on touch up).
+            drag = .tapOrPan
         }
+        setNeedsDisplay()
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let x = touch.location(in: self).x
-        let dx = x - pressX
-        if drag == .playhead, !panning, zoom > 1.0 + 1e-6, abs(dx) > panSlop {
+        guard let touch = trackedTouch, touches.contains(touch) else { return }
+        let p = touch.location(in: self)
+        let x = p.x
+        let dx = x - lastX
+        lastX = x
+        if drag == .eitherHandle {
+            if abs(x - pressX) <= panSlop / 2 { return }
+            // Handles overlap: the first move direction decides which one is grabbed.
+            drag = x < pressX ? .inHandle : .outHandle
+            grabMs = Double(drag == .inHandle ? inMs : outMs)
+            applyDrag(Double(x - pressX))
+            setNeedsDisplay()
+            return
+        }
+        if drag == .tapOrPan, abs(x - pressX) > panSlop {
             drag = .pan
-            panning = true
         }
         switch drag {
         case .pan:
-            setScroll(pressScroll - Double(dx))
-        case .inHandle:
-            let clamped = TimelineMath.clampRange(inMs: msOf(x), outMs: outMs, durationMs: durationMs)
-            inMs = clamped.0
-            outMs = clamped.1
-            emitPlayhead(inMs)
-            onRange?(inMs, outMs)
-        case .outHandle:
-            let clamped = TimelineMath.clampRange(inMs: inMs, outMs: msOf(x), durationMs: durationMs)
-            inMs = clamped.0
-            outMs = clamped.1
-            emitPlayhead(outMs)
-            onRange?(inMs, outMs)
-        case .playhead:
-            seekToX(x)
-        case .none:
+            setScroll(pressScroll - Double(x - pressX))
+        case .inHandle, .outHandle, .playhead:
+            scrubRate = TimelineMath.scrubRate(
+                offStripPx: TimelineMath.offStripPx(y: Double(p.y), top: 0, bottom: Double(rulerH + filmH)),
+                bandPx: scrubBand
+            )
+            applyDrag(Double(dx))
+            ensureAutoScroll()
+        default:
             break
         }
         setNeedsDisplay()
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        drag = .none
-        panning = false
+        guard let touch = trackedTouch, touches.contains(touch) else { return }
+        if drag == .tapOrPan {
+            emitPlayhead(msOf(touch.location(in: self).x))
+        }
+        finishGesture()
     }
 
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = trackedTouch, touches.contains(touch) else { return }
+        finishGesture()
+    }
+
+    private func finishGesture() {
         drag = .none
-        panning = false
+        trackedTouch = nil
+        endScrub()
+        setNeedsDisplay()
+    }
+
+    /// Move the dragged handle / playhead by a finger delta, scaled by the scrub rate. Deltas
+    /// (not absolute x) mean the handle never jumps to the finger on press.
+    private func applyDrag(_ dxPx: Double) {
+        grabMs += TimelineMath.dxToMs(
+            dxPx: dxPx, durationMs: Double(durationMs), viewportWidth: Int(viewportW()), zoom: zoom, rate: scrubRate
+        )
+        switch drag {
+        case .inHandle:
+            grabMs = min(max(grabMs, 0), Double(max(0, outMs - TimelineMath.minRangeMs)))
+            let clamped = TimelineMath.clampRange(inMs: Int(grabMs.rounded()), outMs: outMs, durationMs: durationMs)
+            if clamped.0 != inMs || clamped.1 != outMs {
+                inMs = clamped.0
+                outMs = clamped.1
+                onRange?(inMs, outMs)
+            }
+            emitPlayhead(inMs)
+        case .outHandle:
+            let lo = Double(min(durationMs, inMs + TimelineMath.minRangeMs))
+            grabMs = min(max(grabMs, lo), Double(durationMs))
+            let clamped = TimelineMath.clampRange(inMs: inMs, outMs: Int(grabMs.rounded()), durationMs: durationMs)
+            if clamped.0 != inMs || clamped.1 != outMs {
+                inMs = clamped.0
+                outMs = clamped.1
+                onRange?(inMs, outMs)
+            }
+            emitPlayhead(outMs)
+        case .playhead:
+            grabMs = min(max(grabMs, 0), Double(durationMs))
+            emitPlayhead(Int(grabMs.rounded()))
+        default:
+            break
+        }
+    }
+
+    private func ensureAutoScroll() {
+        guard displayLink == nil, zoom > 1.0 + 1e-6 else { return }
+        let link = CADisplayLink(target: self, selector: #selector(autoScrollTick))
+        link.add(to: .main, forMode: .common)
+        displayLink = link
+    }
+
+    private func stopAutoScroll() {
+        displayLink?.invalidate()
+        displayLink = nil
+    }
+
+    @objc private func autoScrollTick() {
+        let active = drag == .inHandle || drag == .outHandle || drag == .playhead
+        guard active, zoom > 1.0 + 1e-6 else {
+            stopAutoScroll()
+            return
+        }
+        let step = TimelineMath.edgeAutoScrollPx(
+            x: Double(lastX - edgePad),
+            viewportWidth: Int(viewportW()),
+            zonePx: autoScrollZone,
+            maxStepPx: autoScrollStep
+        )
+        guard step != 0 else { return }
+        let before = scrollXpx
+        setScroll(scrollXpx + step)
+        let moved = scrollXpx - before
+        if moved != 0 {
+            // Content slid under a still finger: carry the grabbed time with it (rate 1).
+            let keep = scrubRate
+            scrubRate = 1
+            applyDrag(moved)
+            scrubRate = keep
+            setNeedsDisplay()
+        }
+    }
+
+    private func beginScrub() {
+        guard !isScrubbing else { return }
+        isScrubbing = true
+        onScrubbing?(true)
+    }
+
+    private func endScrub() {
+        scrubRate = 1
+        stopAutoScroll()
+        guard isScrubbing else { return }
+        isScrubbing = false
+        onScrubbing?(false)
     }
 
     override func draw(_ rect: CGRect) {
@@ -204,6 +358,38 @@ final class TimelineStripView: UIView {
         play.lineWidth = 2
         play.stroke()
         paintScrollBar()
+        paintScrubBubble()
+    }
+
+    /// Exact time (and fine-scrub rate) above the finger while dragging — the finger hides the handle.
+    private func paintScrubBubble() {
+        let tMs: Int
+        switch drag {
+        case .inHandle: tMs = inMs
+        case .outHandle: tMs = outMs
+        case .playhead: tMs = playheadMs
+        default: return
+        }
+        let secs = Double(tMs) / 1000
+        var label = String(
+            format: "%d:%05.2f", locale: Locale(identifier: "en_US"), Int(secs / 60), secs.truncatingRemainder(dividingBy: 60)
+        )
+        if scrubRate < 1 {
+            label += "  " + (scrubRate >= 0.5 ? "½×" : scrubRate >= 0.25 ? "¼×" : "⅒×")
+        }
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: UIFont.monospacedDigitSystemFont(ofSize: 11, weight: .semibold),
+            .foregroundColor: paper,
+        ]
+        let text = label as NSString
+        let size = text.size(withAttributes: attrs)
+        let w = size.width + 12
+        let h = rulerH - 2
+        let cx = min(max(xOf(Double(tMs)), w / 2), bounds.width - w / 2)
+        let rect = CGRect(x: cx - w / 2, y: 1, width: w, height: h)
+        blue.setFill()
+        UIBezierPath(roundedRect: rect, cornerRadius: h / 2).fill()
+        text.draw(at: CGPoint(x: rect.minX + 6, y: rect.midY - size.height / 2), withAttributes: attrs)
     }
 
     private func paintRuler() {
@@ -282,9 +468,11 @@ final class TimelineStripView: UIView {
         let top = rulerH
         let bot = rulerH + filmH
         let half = handleStroke / 2
-        blue.setFill()
+        let active = (start && drag == .inHandle) || (!start && drag == .outHandle)
+        let color = active ? passGreen : blue
+        color.setFill()
         UIBezierPath(rect: CGRect(x: x - half, y: top, width: handleStroke, height: bot - top)).fill()
-        blue.setStroke()
+        color.setStroke()
         let wing = UIBezierPath()
         wing.lineWidth = handleStroke
         wing.lineCapStyle = .square
@@ -371,6 +559,8 @@ final class TimelineStripView: UIView {
             let inHit = inDist <= handleHit
             let outHit = outDist <= handleHit
             if inHit && outHit {
+                // Handles nearly on top of each other: let the first move direction decide.
+                if abs(inDist - outDist) < 8 { return .eitherHandle }
                 return inDist <= outDist ? .inHandle : .outHandle
             }
             if inHit { return .inHandle }
@@ -445,5 +635,136 @@ final class TimelineStripView: UIView {
             zoom: zoom,
             scrollX: scrollXpx
         ).rounded())
+    }
+}
+
+/// Off-main-thread, latest-wins video frame loader for scrubbing.
+///
+/// `AVAssetImageGenerator.copyCGImage` with zero tolerance decodes from the previous sync frame
+/// up to the target at full resolution; calling it on the main thread for every `touchesMoved`
+/// blocked touch delivery, so trim handles lagged and then jumped. This class decodes on a
+/// serial queue, keeps only the newest pending request, uses a fast nearest-sync-frame decode
+/// while scrubbing and refines to the exact frame once the finger rests (or on release).
+final class FrameScrubber {
+    static let settleSeconds = 0.12
+
+    private struct Req {
+        let tMs: Int
+        let precise: Bool
+        let seq: Int
+        let gen: Int
+    }
+
+    private let queue = DispatchQueue(label: "visualpose.frame.scrubber", qos: .userInteractive)
+    private let lock = NSLock()
+    private let maxSize: CGSize
+    private let onFrame: (Int, UIImage) -> Void
+
+    // Guarded by `lock`.
+    private var pending: Req?
+    private var drainQueued = false
+    private var seq = 0
+    private var gen = 0
+    private var fastGen: AVAssetImageGenerator?
+    private var exactGen: AVAssetImageGenerator?
+
+    // Main thread only.
+    private var deliveredSeq = -1
+    private var lastTMs = -1
+    private var lastPrecise = false
+    private var settle: DispatchWorkItem?
+
+    init(maxSize: CGSize, onFrame: @escaping (Int, UIImage) -> Void) {
+        self.maxSize = maxSize
+        self.onFrame = onFrame
+    }
+
+    func bind(url: URL) {
+        let asset = AVAsset(url: url)
+        let fast = AVAssetImageGenerator(asset: asset)
+        fast.appliesPreferredTrackTransform = true
+        fast.maximumSize = maxSize
+        fast.requestedTimeToleranceBefore = .positiveInfinity
+        fast.requestedTimeToleranceAfter = .positiveInfinity
+        let exact = AVAssetImageGenerator(asset: asset)
+        exact.appliesPreferredTrackTransform = true
+        exact.maximumSize = maxSize
+        exact.requestedTimeToleranceBefore = .zero
+        exact.requestedTimeToleranceAfter = .zero
+        lock.lock()
+        gen += 1
+        pending = nil
+        fastGen = fast
+        exactGen = exact
+        lock.unlock()
+        cancelSettle()
+        lastTMs = -1
+        deliveredSeq = -1
+    }
+
+    func clear() {
+        lock.lock()
+        gen += 1
+        pending = nil
+        fastGen = nil
+        exactGen = nil
+        lock.unlock()
+        cancelSettle()
+        lastTMs = -1
+    }
+
+    /// Request the frame at `tMs`. Safe to call on every touch move. Main thread only.
+    func request(_ tMs: Int, precise: Bool) {
+        guard tMs >= 0 else { return }
+        if tMs == lastTMs, lastPrecise || !precise { return }
+        cancelSettle()
+        lastTMs = tMs
+        lastPrecise = precise
+        lock.lock()
+        seq += 1
+        pending = Req(tMs: tMs, precise: precise, seq: seq, gen: gen)
+        let shouldQueue = !drainQueued
+        drainQueued = true
+        lock.unlock()
+        if shouldQueue {
+            queue.async { [weak self] in self?.drain() }
+        }
+        if !precise {
+            let item = DispatchWorkItem { [weak self] in
+                guard let self else { return }
+                self.request(self.lastTMs, precise: true)
+            }
+            settle = item
+            DispatchQueue.main.asyncAfter(deadline: .now() + Self.settleSeconds, execute: item)
+        }
+    }
+
+    private func cancelSettle() {
+        settle?.cancel()
+        settle = nil
+    }
+
+    private func drain() {
+        lock.lock()
+        let req = pending
+        pending = nil
+        drainQueued = false
+        let generator: AVAssetImageGenerator? = req.flatMap { $0.precise ? exactGen : fastGen }
+        let currentGen = gen
+        lock.unlock()
+        guard let req, let generator, req.gen == currentGen else { return }
+        let time = CMTime(value: CMTimeValue(req.tMs), timescale: 1000)
+        guard let cg = try? generator.copyCGImage(at: time, actualTime: nil) else { return }
+        let image = UIImage(cgImage: cg)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.lock.lock()
+            let live = req.gen == self.gen
+            self.lock.unlock()
+            // Drop results already superseded on screen, or from a previous video.
+            guard live, req.seq >= self.deliveredSeq else { return }
+            self.deliveredSeq = req.seq
+            self.onFrame(req.tMs, image)
+        }
     }
 }

@@ -116,6 +116,54 @@ object TimelineMath {
         return best
     }
 
+    /** Fine-scrub rates, picked by how far the finger has slid off the strip vertically. */
+    val SCRUB_RATES = doubleArrayOf(1.0, 0.5, 0.25, 0.1)
+
+    /**
+     * Vertical distance of a touch from the strip band [top, bottom]; 0 while inside.
+     */
+    fun offStripPx(y: Double, top: Double, bottom: Double): Double {
+        return when {
+            y < top -> top - y
+            y > bottom -> y - bottom
+            else -> 0.0
+        }
+    }
+
+    /**
+     * Scrub-speed multiplier (1, 1/2, 1/4, 1/10): every [bandPx] the finger moves away from
+     * the strip, a horizontal finger movement maps to a smaller time delta (iOS-style fine scrubbing).
+     */
+    fun scrubRate(offStripPx: Double, bandPx: Double): Double {
+        if (bandPx <= 0.0 || offStripPx <= 0.0) {
+            return SCRUB_RATES[0]
+        }
+        val band = (offStripPx / bandPx).toInt().coerceIn(0, SCRUB_RATES.size - 1)
+        return SCRUB_RATES[band]
+    }
+
+    /** Time delta for a horizontal finger delta at the given zoom and scrub rate. */
+    fun dxToMs(dxPx: Double, durationMs: Double, viewportWidth: Int, zoom: Double, rate: Double): Double {
+        val content = contentWidthPx(viewportWidth, zoom)
+        return dxPx / content * max(1.0, durationMs) * rate
+    }
+
+    /**
+     * Auto-scroll step (px per frame) while a handle is dragged near the viewport edges.
+     * Negative scrolls toward the start; 0 outside the edge zones. [x] is viewport-relative.
+     */
+    fun edgeAutoScrollPx(x: Double, viewportWidth: Int, zonePx: Double, maxStepPx: Double): Double {
+        if (zonePx <= 0.0) {
+            return 0.0
+        }
+        val w = viewportWidth.toDouble()
+        return when {
+            x < zonePx -> -maxStepPx * min(1.0, (zonePx - x) / zonePx)
+            x > w - zonePx -> maxStepPx * min(1.0, (x - (w - zonePx)) / zonePx)
+            else -> 0.0
+        }
+    }
+
     fun formatRulerTime(tMs: Double, fine: Boolean): String {
         val totalS = max(0.0, tMs / 1000.0)
         val minutes = (totalS / 60).toInt()

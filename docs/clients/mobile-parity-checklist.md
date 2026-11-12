@@ -51,7 +51,9 @@ Windows PySide6 客户端（[`clients/windows`](../../clients/windows)）是**�
 - [ ] **信箱（aspect fit / contain）**：完整帧，不裁切铺满。准备画布、播放舞台、导出叠图用同一套 contain 变换。Android 曾用 fill/cover，骨架与人错位。
 - [ ] Overlay 层与视频层 **同一尺寸、同一 letterbox**。不要按解码 buffer 画、按 view 显示（或反过来）。
 - [ ] 点画面画人框：触摸坐标要 **unmapContain** 回源像素，再存 `seeds[]`。
-- [ ] 播放暂停/拖胶片：显示的那一帧必须是 **最接近的实际帧**（iOS：`AVAssetImageGenerator` tolerance 尽量小；Android 踩过 ticker 在 `currentPosition==0` 时反复 seek、以及暂停时骨架对不上静帧）。
+- [ ] 播放暂停/拖胶片：**松手或手指停留 120ms 后**显示的那一帧必须是 **最接近的实际帧**（iOS：精确 generator tolerance 为 0；Android `OPTION_CLOSEST`；Android 踩过 ticker 在 `currentPosition==0` 时反复 seek、以及暂停时骨架对不上静帧）。
+- [ ] **拖动过程中绝不在主线程同步解码**：精确解码要从上一个关键帧解到目标帧，单帧 50–300ms，每次 move 调一次会卡住触摸事件，手柄先滞后再跳（这是曾经「触屏几乎没法精确选区」的根因）。统一走 `FrameScrubber`：后台线程、只保留最新请求（latest-wins）；拖动中解最近关键帧（iOS tolerance ∞ / Android `OPTION_CLOSEST_SYNC`），停留或松手再精确解码；预览解码尺寸不超过屏幕。
+- [ ] 播放器拖动 seek：同一时间 **只允许一个 seek 在途**，期间新请求只覆盖一个排队目标（Apple QA1820 “chase time”）；拖动中用快速 seek（iOS tolerance ∞ / Android `SEEK_CLOSEST_SYNC`），松手补一次精确 seek。
 - [ ] 开播顺序：**先 seek 到逻辑入点，seek 完成后再 play**。不要 play 后再 seek，也不要在 position 仍为 0 时被 HUD 定时器再次 seek。
 - [ ] 逻辑区间 `play_start_ms`–`play_end_ms`：只播这段；出点后停在出点，再播从入点起。寻帧不得超出该区间。原文件不裁。
 - [ ] 图片片段：隐藏 Play、Speed、胶片条；画面 + 单帧 overlay。
@@ -63,6 +65,14 @@ Windows PySide6 客户端（[`clients/windows`](../../clients/windows)）是**�
 - [ ] 布局自上而下：信箱画面 → `m:ss / m:ss` → 胶片条 → 运动员两列表单 → Start analysis → 只读区间说明。
 - [ ] **不要**在画面上方放长说明（Android 去掉后画面才够大）。
 - [ ] 胶片：**可拖**蓝/紫入出点；**绿菱形** = 已存人框关键帧（点菱形跳到该帧）。与播放页菱形不是同一数据。
+- [ ] 胶片触屏手感（iOS / Android 一致）：
+  - 按下手柄**不跳**：按相对位移移动（记录抓取时间值），不是把手柄放到手指的绝对位置。
+  - **精细拖动**：手指离开胶片条上下每 48pt/dp 一档，速度 1× → ½× → ¼× → ⅒×；拖动时标尺上方气泡显示 `m:ss.ss` 与当前倍率。
+  - 两手柄重叠时按**第一次移动方向**决定拖入点（左）还是出点（右）。
+  - 放大后：空白处拖动 = 平移，**只有干净的轻点**才跳帧；拖手柄到边缘 32pt 内自动滚动。
+  - 第二根手指落下 = 缩放，立即结束手柄拖动；Android 只跟踪当前 pointer id。
+  - Android 10+：胶片条两侧边缘设 `systemGestureExclusionRects`，否则默认在 0 和结尾的手柄会被系统返回手势吃掉。
+- [ ] 人框触屏手感：拖角 = 调整大小（对角固定）；框内拖 = 整体移动；框外拖过 slop = 画新框；**轻点不清除已有框**；框限制在画面信箱区域内；过小的框松手时恢复原框。
 - [ ] 同一帧再画覆盖；不同时刻可多框。
 - [ ] 表单：Saved profile / New；Name、Birthday（`MM/dd/yyyy`）、Height cm、Gender（Unspecified/Female/Male/Other）、Weight kg、Ski length。缺框 → `No box`；缺档案 → `Athlete info required`。
 - [ ] Start analysis 成功后回列表，状态 Processing，全屏遮罩 `Analyzing pose…`。导入遮罩 `Uploading and loading…`。

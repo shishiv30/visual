@@ -33,7 +33,9 @@ final class PrepareViewController: UIViewController {
     private let inputSki = UITextField()
 
     private var meta: ClipMeta?
-    private var generator: AVAssetImageGenerator?
+    private lazy var scrubber = FrameScrubber(maxSize: PrepareViewController.previewDecodeSize()) { [weak self] _, image in
+        self?.setFrameImage(image)
+    }
     private var prepareTMs = 0
     private var prepareInMs = 0
     private var prepareOutMs: Int?
@@ -76,8 +78,12 @@ final class PrepareViewController: UIViewController {
         inputBirthday.addAction(UIAction { [weak self] _ in self?.showBirthdayPicker() }, for: .touchUpInside)
         canvas.boxCommitted = { [weak self] in self?.commitBox() }
         timeline.onPlayhead = { [weak self] tMs in
-            self?.prepareTMs = tMs
-            self?.showFrame()
+            guard let self else { return }
+            self.prepareTMs = tMs
+            self.showFrame(precise: !self.timeline.isScrubbing)
+        }
+        timeline.onScrubbing = { [weak self] active in
+            if !active { self?.showFrame(precise: true) }
         }
         timeline.onRange = { [weak self] startMs, endMs in
             self?.prepareInMs = startMs
@@ -172,12 +178,7 @@ final class PrepareViewController: UIViewController {
             }
         } else {
             timeline.isHidden = false
-            let asset = AVAsset(url: media)
-            let gen = AVAssetImageGenerator(asset: asset)
-            gen.appliesPreferredTrackTransform = true
-            gen.requestedTimeToleranceBefore = .zero
-            gen.requestedTimeToleranceAfter = .zero
-            generator = gen
+            scrubber.bind(url: media)
             let window = Library.playWindowMs(meta)
             if meta.playEndMs != nil {
                 prepareOutMs = Int(window.1)
@@ -215,24 +216,42 @@ final class PrepareViewController: UIViewController {
 
     func releasePrepare() {
         timeline.clear()
-        generator = nil
+        scrubber.clear()
         canvas.setFrame(nil)
         meta = nil
         prepareSeeds.removeAll()
     }
 
-    private func showFrame() {
-        guard let generator else { return }
-        let time = CMTime(value: CMTimeValue(prepareTMs), timescale: 1000)
-        if let cg = try? generator.copyCGImage(at: time, actualTime: nil) {
-            canvas.setFrame(UIImage(cgImage: cg))
-        }
+    /// Decoding is asynchronous (see `FrameScrubber`); while the timeline is being dragged pass
+    /// `precise: false` so a cheap nearest-sync-frame preview is used.
+    private func showFrame(precise: Bool = true) {
+        scrubber.request(prepareTMs, precise: precise)
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             self.canvas.setBoxNorm(self.seedNear(Double(self.prepareTMs))?.box)
         }
         timeline.setPlayheadMs(prepareTMs)
         refreshLabels()
+    }
+
+    private func setFrameImage(_ image: UIImage) {
+        guard meta != nil else { return }
+        let first = canvas.hasFrameSize(image.size) == false
+        canvas.setFrame(image)
+        if first {
+            // First frame (or a new size): the seed box can only be placed once a frame exists.
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                self.canvas.setBoxNorm(self.seedNear(Double(self.prepareTMs))?.box)
+            }
+        }
+    }
+
+    /// Decode previews no larger than the screen; full 4K frames are pure decode/copy overhead.
+    static func previewDecodeSize() -> CGSize {
+        let b = UIScreen.main.nativeBounds
+        let side = max(640, max(b.width, b.height))
+        return CGSize(width: side, height: side)
     }
 
     private func refreshLabels() {
