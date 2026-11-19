@@ -4,6 +4,13 @@ import UIKit
 
 enum VideoPose {
     static let maxMs: Int64 = 120_000
+    /// Match Windows normalize long-edge cap for MediaPipe cost.
+    static let analyzeMaxEdge = 720
+    /// Cap sample rate even when source is 60fps.
+    static let analyzeMaxFps = 30.0
+    /// Frame-seek tolerance: allows AVFoundation to return the nearest I-frame,
+    /// which is ~5-10x faster than exact zero-tolerance seeks on mobile.
+    static let seekTolerance = CMTime(value: 1, timescale: 10) // ±100 ms
 
     static func analyze(
         asset: AVAsset,
@@ -18,7 +25,8 @@ enum VideoPose {
     ) -> [PoseFrame] {
         let durationSec = CMTimeGetSeconds(asset.duration)
         let durationMs = durationSec.isFinite ? max(Int64(durationSec * 1000), 0) : 0
-        let fps = fpsIn > 1.0 ? fpsIn : 30.0
+        let srcFps = fpsIn > 1.0 ? fpsIn : 30.0
+        let fps = min(srcFps, analyzeMaxFps)
         let lo = max(startMs, 0)
         let hi = max(min(endMs, min(durationMs, lo + maxMs)), lo)
         let timedSeeds = ClipRange.collectSeeds(seeds, seedBox: seedBox)
@@ -27,8 +35,8 @@ enum VideoPose {
         let locator = PoseLocator(device: device)
         let generator = AVAssetImageGenerator(asset: asset)
         generator.appliesPreferredTrackTransform = true
-        generator.requestedTimeToleranceBefore = .zero
-        generator.requestedTimeToleranceAfter = .zero
+        generator.requestedTimeToleranceBefore = seekTolerance
+        generator.requestedTimeToleranceAfter = seekTolerance
         var frames: [PoseFrame] = []
         var tMs = lo
         while tMs <= hi {
@@ -86,9 +94,12 @@ final class PoseLocator {
         halfMs: Double,
         markers: PoseLandmarkers
     ) -> PoseFrame {
-        let w = PoseImage.pixelWidth(image)
-        let h = PoseImage.pixelHeight(image)
-        let pixels = PoseImage.argbPixels(image)
+        let (work, didScale) = PoseImage.forAnalyze(image, maxEdge: VideoPose.analyzeMaxEdge)
+        let origW = PoseImage.pixelWidth(image)
+        let origH = PoseImage.pixelHeight(image)
+        let w = PoseImage.pixelWidth(work)
+        let h = PoseImage.pixelHeight(work)
+        let pixels = PoseImage.argbPixels(work)
         let hit = ClipRange.seedAt(tMs: tMs, seeds: seeds, halfMs: halfMs)
         if let hit {
             box = PersonRoi.denormBox(hit.box, width: w, height: h)
@@ -99,7 +110,7 @@ final class PoseLocator {
         } else if let hist, let box {
             self.box = PersonRoi.search(pixels: pixels, width: w, height: h, hist: hist, prev: box)
         }
-        let mapped = detect(image, tMs: Int64(tMs), roi: box, markers: markers)
+        let mapped = detect(work, tMs: Int64(tMs), roi: box, markers: markers)
         if !mapped.poses.isEmpty && !mapped.bboxes.isEmpty {
             let det = mapped.bboxes[0]
             box = PixelBox(x1: Double(det.x1), y1: Double(det.y1), x2: Double(det.x2), y2: Double(det.y2))
@@ -111,7 +122,8 @@ final class PoseLocator {
         }
         let pose = mapped.poses.first
         let blaze = mapped.blazePeople.first ?? []
-        return PoseFrame(
+        // Remap keypoints back to original resolution if we downscaled for analysis.
+        let frame = PoseFrame(
             tMs: Int64(tMs),
             poses: pose.map { [$0] } ?? [],
             width: w,
@@ -119,6 +131,7 @@ final class PoseLocator {
             blaze33: blaze,
             bbox: mapped.bboxes.first
         )
+        return didScale ? frame.remapToSize(origW, origH) : frame
     }
 
     private func detect(
@@ -271,5 +284,17 @@ enum PoseImage {
         return renderer.image { _ in
             image.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
         }
+    }
+
+    /// Downscale so the long edge is at most maxEdge. Returns (image, didScale).
+    static func forAnalyze(_ image: UIImage, maxEdge: Int) -> (UIImage, Bool) {
+        let w = pixelWidth(image)
+        let h = pixelHeight(image)
+        let longEdge = max(w, h)
+        if longEdge <= maxEdge { return (image, false) }
+        let s = Float(maxEdge) / Float(longEdge)
+        let nw = max(Int(Float(w) * s), 2)
+        let nh = max(Int(Float(h) * s), 2)
+        return (scaled(image, width: nw, height: nh), true)
     }
 }

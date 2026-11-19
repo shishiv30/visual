@@ -49,9 +49,9 @@ final class PoseEngine {
         options.baseOptions.delegate = gpu ? .GPU : .CPU
         options.runningMode = mode
         options.numPoses = numPoses
-        options.minPoseDetectionConfidence = 0.5
-        options.minPosePresenceConfidence = 0.5
-        options.minTrackingConfidence = 0.5
+        options.minPoseDetectionConfidence = 0.6
+        options.minPosePresenceConfidence = 0.6
+        options.minTrackingConfidence = 0.55
         return try PoseLandmarker(options: options)
     }
 

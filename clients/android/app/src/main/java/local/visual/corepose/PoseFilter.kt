@@ -5,9 +5,15 @@ object PoseFilter {
     const val MAX_HEIGHT_OVER_SHOULDER = 4.5
     const val MAX_FULL_HEIGHT_FRAC = 0.90
     const val MIN_FULL_WIDTH_FRAC = 0.35
-    const val MIN_SHOULDER_VIS = 0.30f
-    const val MIN_HEAD_VIS = 0.20f
-    const val EMA_ALPHA = 0.45f
+    const val MIN_SHOULDER_VIS = 0.35f
+    const val MIN_HEAD_VIS = 0.25f
+    // Higher alpha = more weight on the current detection = less positional lag.
+    // 0.45 caused visible skeleton drift on fast skier turns; 0.65 is more responsive.
+    const val EMA_ALPHA = 0.65f
+    // When a confident joint jumps more than this fraction of torso length, bypass
+    // EMA entirely so the skeleton snaps to the new position instead of drifting.
+    const val EMA_SNAP_DIST = 0.30f
+    const val EMA_SNAP_CONF = 0.60f
     const val CROP_PAD = 0.28
     const val TALL_CROP_KEEP_BOTTOM = 0.55
 
@@ -139,14 +145,25 @@ object PoseFilter {
         if (prevKps.size != currKps.size) {
             return curr
         }
+        val torso = torsoLength(curr.poses[0]).toFloat().coerceAtLeast(1f)
         val mixed = currKps.mapIndexed { i, b ->
             val a = prevKps[i]
             if (b.confidence < 0.2f) {
                 CocoKeypoint(a.x, a.y, b.confidence)
             } else {
+                val dx = b.x - a.x
+                val dy = b.y - a.y
+                val dist = kotlin.math.sqrt((dx * dx + dy * dy).toDouble()).toFloat()
+                // Snap to raw detection when the joint moves fast and confidence is high,
+                // so the skeleton follows sudden movements instead of drifting behind.
+                val alpha = if (b.confidence >= EMA_SNAP_CONF && dist / torso > EMA_SNAP_DIST) {
+                    1f
+                } else {
+                    EMA_ALPHA
+                }
                 CocoKeypoint(
-                    EMA_ALPHA * b.x + (1f - EMA_ALPHA) * a.x,
-                    EMA_ALPHA * b.y + (1f - EMA_ALPHA) * a.y,
+                    alpha * b.x + (1f - alpha) * a.x,
+                    alpha * b.y + (1f - alpha) * a.y,
                     b.confidence,
                 )
             }

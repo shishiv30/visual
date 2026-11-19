@@ -45,9 +45,11 @@ class PoseEngine(private val context: Context) {
             )
             .setRunningMode(mode)
             .setNumPoses(numPoses)
-            .setMinPoseDetectionConfidence(0.5f)
-            .setMinPosePresenceConfidence(0.5f)
-            .setMinTrackingConfidence(0.5f)
+            // Higher thresholds: fewer false-positive detections that corrupt EMA,
+            // at the cost of slightly fewer detected poses in ambiguous frames.
+            .setMinPoseDetectionConfidence(0.6f)
+            .setMinPosePresenceConfidence(0.6f)
+            .setMinTrackingConfidence(0.55f)
         return PoseLandmarker.createFromOptions(context, builder.build())
     }
 

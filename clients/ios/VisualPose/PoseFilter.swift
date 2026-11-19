@@ -5,9 +5,13 @@ enum PoseFilter {
     static let maxHeightOverShoulder = 4.5
     static let maxFullHeightFrac = 0.90
     static let minFullWidthFrac = 0.35
-    static let minShoulderVis: Float = 0.30
-    static let minHeadVis: Float = 0.20
-    static let emaAlpha: Float = 0.45
+    static let minShoulderVis: Float = 0.35
+    static let minHeadVis: Float = 0.25
+    // Higher alpha = more weight on the current detection = less positional lag.
+    static let emaAlpha: Float = 0.65
+    // Bypass EMA when a confident joint jumps more than this fraction of torso length.
+    static let emaSnapDist: Float = 0.30
+    static let emaSnapConf: Float = 0.60
     static let cropPad = 0.28
     static let tallCropKeepBottom = 0.55
 
@@ -126,14 +130,22 @@ enum PoseFilter {
         let prevKps = prev.poses[0].keypoints
         let currKps = curr.poses[0].keypoints
         if prevKps.count != currKps.count { return curr }
+        let torso = Float(torsoLength(curr.poses[0])).magnitude > 0
+            ? Float(torsoLength(curr.poses[0]))
+            : 1.0
         let mixed: [CocoKeypoint] = currKps.enumerated().map { i, b in
             let a = prevKps[i]
             if b.confidence < 0.2 {
                 return CocoKeypoint(x: a.x, y: a.y, confidence: b.confidence)
             }
+            let dx = b.x - a.x
+            let dy = b.y - a.y
+            let dist = sqrt(dx * dx + dy * dy)
+            // Snap to raw detection when the joint moves fast and confidence is high.
+            let alpha: Float = (b.confidence >= emaSnapConf && dist / torso > emaSnapDist) ? 1 : emaAlpha
             return CocoKeypoint(
-                x: emaAlpha * b.x + (1 - emaAlpha) * a.x,
-                y: emaAlpha * b.y + (1 - emaAlpha) * a.y,
+                x: alpha * b.x + (1 - alpha) * a.x,
+                y: alpha * b.y + (1 - alpha) * a.y,
                 confidence: b.confidence
             )
         }
